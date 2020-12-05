@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BHS.Web</name>
+    </assembly>
+    <members>
+        <member name="M:BHS.Web.Controllers.AuthorController.GetVisibleAuthors">
+            <summary>
+            Get all visible authors
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.AuthorController.GetAuthor(System.String)">
+            <summary>
+            Get an author
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.AuthorController.GetAuthorPosts(System.String)">
+            <summary>
+            Get the posts of an author
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.BlogController.SearchPosts(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Get all posts, with optional search criteria
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.BlogController.GetPost(System.Int32)">
+            <summary>
+            Get a post
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.BlogController.GetPostCategories(System.Int32)">
+            <summary>
+            Get the categories of a post
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.BlogController.GetCategory(System.Int32)">
+            <summary>
+            Get a category
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.BlogController.GetCategoryPosts(System.Int32)">
+            <summary>
+            Get the posts of a category
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.ContactUsController.Post(BHS.Contracts.ContactAlertRequest)">
+            <summary>
+            Add a request for being contacted.
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.PhotosController.GetPhoto(System.Int32)">
+            <summary>
+            Get a photo
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.PhotosController.GetAlbums">
+            <summary>
+            Get all albums
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.PhotosController.GetAlbum(System.Int32)">
+            <summary>
+            Get an album
+            </summary>
+        </member>
+        <member name="M:BHS.Web.Controllers.PhotosController.GetAlbumPhotos(System.Int32)">
+            <summary>
+            Get the photos of an album
+            </summary>
+        </member>
+    </members>
+</doc>

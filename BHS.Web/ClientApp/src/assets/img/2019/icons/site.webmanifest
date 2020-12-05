@@ -1,0 +1,22 @@
+{
+    "lang": "en-US",
+    "name": "Belton Historical",
+    "short_name": "Belton Historical",
+    "description": "A non-profit, charitable organization whose purpose is to record, preserve and present the history of Belton and the surrounding area.",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "/assets/img/2019/icons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/img/2019/icons/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#0489f8",
+    "background_color": "#0489f8",
+    "display": "standalone"
+}

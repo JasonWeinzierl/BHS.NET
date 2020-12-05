@@ -1,0 +1,70 @@
+<header>
+  <div class="brand">The Belton Historical Society</div>
+  <div class="address-bar">
+    <address>
+      P.O Box 1144 | Belton, MO 64012 | <a href="tel:+18163223977">816-322-3977</a>
+    </address>
+  </div>
+
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="['/']">The Belton Historical Society</a>
+      <button type="button"
+              class="navbar-toggler collapsed"
+              data-toggle="collapse"
+              aria-controls="navbarSupportedContent"
+              data-target="#navbarSupportedContent"
+              [attr.aria-expanded]="isExpanded"
+              aria-label="Toggle navgiation"
+              (click)="toggle()"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div
+      class="navbar-collapse collapse"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/apps/blog']" [routerLinkActive]="['active']">News</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false">Content</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" [routerLink]="['/apps/photos']" [routerLinkActive]="['active']">Photos</a>
+            <a class="dropdown-item" [routerLink]="['/apps/location']" [routerLinkActive]="['active']">The Museum</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/apps/members']" [routerLinkActive]="['active']">Members</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/contact']" [routerLinkActive]="['active']">Contact Us</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false">About</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" [routerLink]="['/whoweare']" [routerLinkActive]="['active']">Who We Are</a>
+            <a class="dropdown-item" [routerLink]="['/bylawsandleadership']" [routerLinkActive]="['active']">By-laws and Leadership</a>
+            <a class="dropdown-item" [routerLink]="['/donate']" [routerLinkActive]="['active']">Donate</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/about']" [routerLinkActive]="['active']">About this Site</a>
+            <a class="dropdown-item" [routerLink]="['/termsofservice']" [routerLinkActive]="['active']">Terms of Service</a>
+            <a class="dropdown-item" [routerLink]="['/privacypolicy']" [routerLinkActive]="['active']">Privacy Policy</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

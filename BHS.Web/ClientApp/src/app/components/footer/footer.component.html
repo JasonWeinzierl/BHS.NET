@@ -1,0 +1,21 @@
+<footer>
+  <div class="container">
+    <ul class="list-inline text-muted text-center small">
+      <li class="list-inline-item">
+        <a [routerLink]="['/about']">About this Site</a>
+      </li>
+      <li class="list-inline-item">
+        <a [routerLink]="['/contact']">Contact Us</a>
+      </li>
+      <li class="list-inline-item">
+        Copyright &copy; <time datetime="2011">2011</time>&ndash;<time [attr.datetime]="year">{{year}}</time>
+      </li>
+      <li class="list-inline-item">
+        <a [routerLink]="['/termsofservice']">Terms of Service</a>
+      </li>
+      <li class="list-inline-item">
+        <a [routerLink]="['/privacypolicy']">Privacy Policy</a>
+      </li>
+    </ul>
+  </div>
+</footer>

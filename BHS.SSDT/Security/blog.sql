@@ -1,0 +1,4 @@
+﻿CREATE SCHEMA [blog]
+    AUTHORIZATION [dbo];
+
+

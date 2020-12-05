@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab:400,600');
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+
+body {
+  background: darkgray url('/assets/img/2019/webtreats_wood-pattern3-512.jpg') repeat;
+  /* 1.25 space for footer */
+  margin-bottom: 4.25rem;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* gray text is a failure of design */
+  color: #000;
+  font-family: "Josefin Slab","Helvetica Neue",Helvetica,Arial,serif;
+  font-weight: 600;
+  letter-spacing: 0.0625rem;
+}
+
+p, dl, ol, ul {
+  color: #000;
+  font-size: 1.25rem;
+}
+
+.card {
+  /* space out vertical */
+  margin-bottom: 1.25rem;
+  /* opacity */
+  background: rgba(255,255,255,0.9);
+}
+
+/* substitute for adding .card-text to every item */
+.card-body > :last-child,
+.card-footer > :last-child {
+    margin-bottom: 0;
+}
