@@ -7,11 +7,11 @@ namespace BHS.BusinessLogic.Blog
 {
     public interface IBlogService
     {
-        Task<Post> GetPost(int id);
+        Task<Post> GetPost(string slug);
         Task<IEnumerable<Post>> SearchPosts(string text, DateTime? from, DateTime? to);
-        Task<IEnumerable<Category>> GetCategoriesByPost(int id);
-        Task<Category> GetCategory(int id);
-        Task<IEnumerable<Post>> GetPostsByCategory(int id);
+        Task<IEnumerable<Category>> GetCategoriesByPost(string slug);
+        Task<Category> GetCategory(string slug);
+        Task<IEnumerable<Post>> GetPostsByCategory(string slug);
         Task<IEnumerable<Post>> GetPostsByAuthor(string username);
     }
 }

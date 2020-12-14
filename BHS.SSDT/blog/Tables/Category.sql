@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [blog].[Category] (
-    [Id]         INT           IDENTITY(1,1) CONSTRAINT PK_BlogCategory PRIMARY KEY,
-    [Name]       NVARCHAR (50) NULL,
-    [IsVisible]  BIT           NOT NULL
+    [Slug] VARCHAR(127) NOT NULL CONSTRAINT PK_Category PRIMARY KEY,
+    [Name] NVARCHAR (127) NOT NULL,
+    CONSTRAINT CK_Category_Slug_Alphanumeric CHECK ([Slug] NOT LIKE '%[^A-Z0-9-]%')
 );

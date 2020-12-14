@@ -12,28 +12,27 @@ namespace BHS.DataAccess.Repositories
     {
         public CategoryRepository(IDbConnectionFactory factory) : base(factory) { }
 
-        public async Task<Category> GetById(int id)
+        public async Task<Category> GetBySlug(string slug)
         {
-            return (await ExecuteReaderAsync<List<Category>>(Constants.bhsConnectionStringName, "blog.Category_GetById", cmd =>
+            return (await ExecuteReaderAsync<List<Category>>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@id", id, DbType.Int32));
+                cmd.Parameters.Add(CreateParameter(cmd, "@slug", slug, DbType.Int32));
             }, FillCategories)).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<Category>> GetByPostId(int postId)
+        public async Task<IEnumerable<Category>> GetByPostSlug(string postSlug)
         {
-            return await ExecuteReaderAsync<List<Category>>(Constants.bhsConnectionStringName, "blog.Category_GetByPostId", cmd =>
+            return await ExecuteReaderAsync<List<Category>>(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@postId", postId, DbType.Int32));
+                cmd.Parameters.Add(CreateParameter(cmd, "@postSlug", postSlug, DbType.Int32));
             }, FillCategories);
         }
 
         private void FillCategories(IDataReader dr, ref List<Category> models)
         {
             var model = new Category(
-                ToInt(dr["Id"]),
-                ToString(dr["Name"]),
-                ToBool(dr["IsVisible"])
+                ToString(dr["Slug"]),
+                ToString(dr["Name"])
                 );
             models.Add(model);
         }

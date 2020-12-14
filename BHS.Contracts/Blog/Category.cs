@@ -1,7 +1,6 @@
 ﻿namespace BHS.Contracts.Blog
 {
     public record Category(
-        int Id,
-        string Name,
-        bool IsVisible);
+        string Slug,
+        string Name);
 }

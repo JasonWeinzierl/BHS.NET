@@ -3,12 +3,12 @@
 namespace BHS.Contracts.Blog
 {
     public record Post(
-        int Id,
+        string Slug,
         string Title,
-        string BodyContent,
-        string FilePath,
+        string ContentMarkdown,
+        Uri FilePath,
         int? PhotosAlbumId,
-        bool IsVisible,
         int AuthorId,
-        DateTimeOffset PublishDate);
+        DateTimeOffset DatePublished,
+        DateTimeOffset DateLastModified);
 }

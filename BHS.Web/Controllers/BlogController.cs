@@ -32,9 +32,9 @@ namespace BHS.Web.Controllers
         /// Get a post
         /// </summary>
         [HttpGet("posts/{id}")]
-        public async Task<ActionResult<Post>> GetPost(int id)
+        public async Task<ActionResult<Post>> GetPost(string slug)
         {
-            var post = await _blogService.GetPost(id);
+            var post = await _blogService.GetPost(slug);
             if (post is null) return NotFound();
             return Ok(post);
         }
@@ -43,9 +43,9 @@ namespace BHS.Web.Controllers
         /// Get the categories of a post
         /// </summary>
         [HttpGet("posts/{id}/categories")]
-        public async Task<ActionResult<IEnumerable<Category>>> GetPostCategories(int id)
+        public async Task<ActionResult<IEnumerable<Category>>> GetPostCategories(string slug)
         {
-            return Ok(await _blogService.GetCategoriesByPost(id));
+            return Ok(await _blogService.GetCategoriesByPost(slug));
         }
 
         ///// <summary>
@@ -93,9 +93,9 @@ namespace BHS.Web.Controllers
         /// Get a category
         /// </summary>
         [HttpGet("categories/{id}")]
-        public async Task<ActionResult<Category>> GetCategory(int id)
+        public async Task<ActionResult<Category>> GetCategory(string slug)
         {
-            var category = await _blogService.GetCategory(id);
+            var category = await _blogService.GetCategory(slug);
             if (category is null) return NotFound();
             return Ok(category);
         }
@@ -104,9 +104,9 @@ namespace BHS.Web.Controllers
         /// Get the posts of a category
         /// </summary>
         [HttpGet("categories/{id}/posts")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetCategoryPosts(int id)
+        public async Task<ActionResult<IEnumerable<Post>>> GetCategoryPosts(string slug)
         {
-            return Ok(await _blogService.GetPostsByCategory(id));
+            return Ok(await _blogService.GetPostsByCategory(slug));
         }
 
         ///// <summary>

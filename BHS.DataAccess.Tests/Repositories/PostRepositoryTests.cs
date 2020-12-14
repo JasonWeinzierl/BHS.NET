@@ -22,20 +22,20 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetById_FillsResult()
         {
-            var post = new Post(1, default, default, default, default, default, default, default);
+            var post = new Post("a", default, default, default, default, default, default, default);
             MockData.ReaderResultset = ModelsFlattener.ToDataTable(new Post[] { post });
 
-            var result = await Subject.GetById(1);
+            var result = await Subject.GetBySlug("a");
 
             Assert.NotNull(result);
-            Assert.Equal(post.Id, result.Id);
+            Assert.Equal(post.Slug, result.Slug);
             Assert.Equal(post.Title, result.Title);
-            Assert.Equal(post.BodyContent, result.BodyContent);
+            Assert.Equal(post.ContentMarkdown, result.ContentMarkdown);
             Assert.Equal(post.FilePath, result.FilePath);
             Assert.Equal(post.PhotosAlbumId, result.PhotosAlbumId);
-            Assert.Equal(post.IsVisible, result.IsVisible);
             Assert.Equal(post.AuthorId, result.AuthorId);
-            Assert.Equal(post.PublishDate, result.PublishDate);
+            Assert.Equal(post.DatePublished, result.DatePublished);
+            Assert.Equal(post.DateLastModified, result.DateLastModified);
         }
 
         [Fact]
@@ -43,13 +43,13 @@ namespace BHS.DataAccess.Repositories.Tests
         {
             MockData.ReaderResultset = new DataTable();
 
-            _ = await Subject.GetById(1);
+            _ = await Subject.GetBySlug("a");
 
             Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("blog.Post_GetById", MockData.CommandText);
+            Assert.Equal("blog.Post_GetBySlug", MockData.CommandText);
 
-            Assert.Equal("@id", MockData.Parameters[0].ParameterName);
-            Assert.Equal(1, MockData.Parameters[0].Value);
+            Assert.Equal("@slug", MockData.Parameters[0].ParameterName);
+            Assert.Equal("a", MockData.Parameters[0].Value);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace BHS.DataAccess.Repositories
 {
     public interface ICategoryRepository
     {
-        Task<Category> GetById(int id);
-        Task<IEnumerable<Category>> GetByPostId(int postId);
+        Task<Category> GetBySlug(string slug);
+        Task<IEnumerable<Category>> GetByPostSlug(string postSlug);
     }
 }

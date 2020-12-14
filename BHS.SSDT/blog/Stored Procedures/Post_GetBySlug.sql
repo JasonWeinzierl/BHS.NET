@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE [blog].[Post_GetByAuthorId]
+﻿CREATE PROCEDURE [blog].[Post_GetBySlug]
 (
-	@authorId INT
+	@slug VARCHAR(127)
 )
 AS
 BEGIN
@@ -13,5 +13,5 @@ BEGIN
 			, [DatePublished]
 			, [DateLastModified]
 	FROM	[blog].[Post_View]
-	WHERE	[AuthorId] = @authorId;
+	WHERE	[Slug] = @slug;
 END

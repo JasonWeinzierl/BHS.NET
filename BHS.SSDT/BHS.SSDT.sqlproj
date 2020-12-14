@@ -22,7 +22,8 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <GenerateCreateScript>False</GenerateCreateScript>
+    <GenerateCreateScript>True</GenerateCreateScript>
+    <DacApplicationName>BHS.SSDT</DacApplicationName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -34,6 +35,7 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -46,6 +48,8 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <SqlTargetName>BHS</SqlTargetName>
+    <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
@@ -67,13 +71,14 @@
     <Folder Include="dbo\User Defined Types\" />
     <Folder Include="blog\Stored Procedures\" />
     <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="blog\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\blog.sql" />
     <Build Include="Security\photos.sql" />
     <Build Include="blog\Tables\Category.sql" />
     <Build Include="blog\Tables\Post.sql" />
-    <Build Include="blog\Tables\PostCategory.sql" />
+    <Build Include="blog\Tables\PostCategoryEvent.sql" />
     <Build Include="dbo\Tables\Author.sql" />
     <Build Include="dbo\Tables\ContactAlert.sql" />
     <Build Include="dbo\Tables\Log.sql" />
@@ -84,15 +89,23 @@
     <Build Include="dbo\User Defined Types\IntList.sql" />
     <Build Include="dbo\User Defined Types\NullableIntList.sql" />
     <Build Include="dbo\User Defined Types\LongList.sql" />
-    <Build Include="blog\Stored Procedures\Post_GetById.sql" />
+    <Build Include="blog\Stored Procedures\Post_GetBySlug.sql" />
     <Build Include="blog\Stored Procedures\Post_Search.sql" />
-    <Build Include="blog\Stored Procedures\Post_GetByCategoryId.sql" />
+    <Build Include="blog\Stored Procedures\Post_GetByCategorySlug.sql" />
     <Build Include="blog\Stored Procedures\Post_GetByAuthorId.sql" />
-    <Build Include="blog\Stored Procedures\Category_GetById.sql" />
-    <Build Include="blog\Stored Procedures\Category_GetByPostId.sql" />
+    <Build Include="blog\Stored Procedures\Category_GetBySlug.sql" />
+    <Build Include="blog\Stored Procedures\Category_GetByPostSlug.sql" />
     <Build Include="dbo\Stored Procedures\ContactAlert_Insert.sql" />
     <Build Include="dbo\Stored Procedures\Author_GetByUserName.sql" />
     <Build Include="dbo\Stored Procedures\Author_GetAll.sql" />
+    <Build Include="blog\Tables\PostRevision.sql" />
+    <Build Include="blog\Tables\PostPublication.sql" />
+    <Build Include="blog\Tables\PostDeletion.sql" />
+    <Build Include="blog\Views\PostCategory_View.sql" />
+    <Build Include="blog\Views\PostDeletion_View.sql" />
+    <Build Include="blog\Views\PostLatestRevision_View.sql" />
+    <Build Include="blog\Views\PostFirstRevisionDate_View.sql" />
+    <Build Include="blog\Views\Post_View.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BHS.SSDT.refactorlog" />

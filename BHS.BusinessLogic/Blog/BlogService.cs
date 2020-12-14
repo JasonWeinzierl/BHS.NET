@@ -26,24 +26,24 @@ namespace BHS.BusinessLogic.Blog
             _logger = logger;
         }
 
-        public Task<Category> GetCategory(int id)
+        public Task<Category> GetCategory(string slug)
         {
-            return _categoryRepository.GetById(id);
+            return _categoryRepository.GetBySlug(slug);
         }
 
-        public Task<IEnumerable<Post>> GetPostsByCategory(int id)
+        public Task<IEnumerable<Post>> GetPostsByCategory(string slug)
         {
-            return _postRepository.GetByCategoryId(id);
+            return _postRepository.GetByCategorySlug(slug);
         }
 
-        public Task<Post> GetPost(int id)
+        public Task<Post> GetPost(string slug)
         {
-            return _postRepository.GetById(id);
+            return _postRepository.GetBySlug(slug);
         }
 
-        public Task<IEnumerable<Category>> GetCategoriesByPost(int id)
+        public Task<IEnumerable<Category>> GetCategoriesByPost(string slug)
         {
-            return _categoryRepository.GetByPostId(id);
+            return _categoryRepository.GetByPostSlug(slug);
         }
 
         public async Task<IEnumerable<Post>> GetPostsByAuthor(string username)

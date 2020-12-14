@@ -13,11 +13,11 @@ namespace BHS.DataAccess.Repositories
     {
         public PostRepository(IDbConnectionFactory factory) : base(factory) { }
 
-        public async Task<Post> GetById(int id)
+        public async Task<Post> GetBySlug(string slug)
         {
-            return (await ExecuteReaderAsync<List<Post>>(Constants.bhsConnectionStringName, "blog.Post_GetById", cmd =>
+            return (await ExecuteReaderAsync<List<Post>>(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@id", id, DbType.Int32));
+                cmd.Parameters.Add(CreateParameter(cmd, "@slug", slug));
             }, FillPosts)).FirstOrDefault();
         }
 
@@ -31,11 +31,11 @@ namespace BHS.DataAccess.Repositories
             }, FillPosts);
         }
 
-        public async Task<IEnumerable<Post>> GetByCategoryId(int categoryId)
+        public async Task<IEnumerable<Post>> GetByCategorySlug(string categorySlug)
         {
-            return await ExecuteReaderAsync<List<Post>>(Constants.bhsConnectionStringName, "blog.Post_GetByCategoryId", cmd =>
+            return await ExecuteReaderAsync<List<Post>>(Constants.bhsConnectionStringName, "blog.Post_GetByCategorySlug", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@categoryId", categoryId));
+                cmd.Parameters.Add(CreateParameter(cmd, "@categorySlug", categorySlug));
             }, FillPosts);
         }
 
@@ -50,14 +50,14 @@ namespace BHS.DataAccess.Repositories
         private void FillPosts(IDataReader dr, ref List<Post> models)
         {
             var model = new Post(
-                ToInt(dr["Id"]),
+                ToString(dr["Slug"]),
                 ToString(dr["Title"]),
-                ToString(dr["BodyContent"]),
-                ToString(dr["FilePath"]),
+                ToString(dr["ContentMarkdown"]),
+                ToUri(dr["FilePath"]),
                 ToNullableInt(dr["PhotosAlbumId"]),
-                ToBool(dr["IsVisible"]),
                 ToInt(dr["AuthorId"]),
-                ToDateTimeOffset(dr["PublishDate"])
+                ToDateTimeOffset(dr["DatePublished"]),
+                ToDateTimeOffset(dr["DateLastModified"])
                 );
             models.Add(model);
         }

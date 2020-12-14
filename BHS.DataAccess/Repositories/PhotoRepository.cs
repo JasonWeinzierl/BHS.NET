@@ -1,10 +1,8 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.DataAccess.Core;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
@@ -32,12 +30,10 @@ namespace BHS.DataAccess.Repositories
 
         private void FillPhotos(IDataReader dr, ref List<Photo> models)
         {
-            Uri.TryCreate(ToString(dr["ImagePath"]), UriKind.RelativeOrAbsolute, out Uri imagePath);
-
             var model = new Photo(
                 ToInt(dr["id"]),
                 ToString(dr["Name"]),
-                imagePath,
+                ToUri(dr["ImagePath"]),
                 ToBool(dr["IsVisible"]),
                 ToDateTimeOffset(dr["DatePosted"]),
                 ToNullableInt(dr["AuthorId"])
