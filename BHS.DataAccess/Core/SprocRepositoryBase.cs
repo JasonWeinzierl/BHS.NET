@@ -340,6 +340,12 @@ namespace BHS.DataAccess.Core
                 _ => throw new InvalidCastException($"Failure to cast {cell} to {typeof(bool).FullName}."),
             };
         }
+
+        protected static Uri ToUri(object cell, UriKind uriKind = UriKind.RelativeOrAbsolute)
+        {
+            Uri.TryCreate(ToString(cell), UriKind.RelativeOrAbsolute, out Uri uri);
+            return uri;
+        }
         #endregion
 
         #region Parameter Converters
