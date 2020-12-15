@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [blog].[Post_GetByCategorySlug]
+﻿CREATE PROCEDURE [blog].[PostPreview_GetByCategorySlug]
 (
 	@categorySlug INT
 )
@@ -7,11 +7,8 @@ BEGIN
 	SELECT	[Slug]
 			, [Title]
 			, [ContentMarkdown]
-			, [FilePath]
-			, [PhotosAlbumId]
 			, [AuthorId]
 			, [DatePublished]
-			, [DateLastModified]
 	FROM	[blog].[Post_View] p JOIN
 			[blog].[PostCategory_View] pc ON pc.[PostSlug] = p.[Slug]
 	WHERE	pc.[CategorySlug] = @categorySlug;

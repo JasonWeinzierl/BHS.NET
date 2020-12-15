@@ -8,10 +8,10 @@ namespace BHS.BusinessLogic.Blog
     public interface IBlogService
     {
         Task<Post> GetPost(string slug);
-        Task<IEnumerable<Post>> SearchPosts(string text, DateTime? from, DateTime? to);
+        IAsyncEnumerable<PostPreview> SearchPosts(string text, DateTime? from, DateTime? to);
         Task<IEnumerable<Category>> GetCategoriesByPost(string slug);
         Task<Category> GetCategory(string slug);
-        Task<IEnumerable<Post>> GetPostsByCategory(string slug);
-        Task<IEnumerable<Post>> GetPostsByAuthor(string username);
+        IAsyncEnumerable<PostPreview> GetPostsByCategory(string slug);
+        IAsyncEnumerable<PostPreview> GetPostsByAuthor(string username);
     }
 }

@@ -47,9 +47,9 @@ namespace BHS.Web.Controllers
         /// Get the posts of an author
         /// </summary>
         [HttpGet("{username}/posts")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetAuthorPosts(string username)
+        public ActionResult<IAsyncEnumerable<PostPreview>> GetAuthorPosts(string username)
         {
-            var posts = await _blogService.GetPostsByAuthor(username);
+            var posts = _blogService.GetPostsByAuthor(username);
             if (posts == default) return NotFound();
             return Ok(posts);
         }

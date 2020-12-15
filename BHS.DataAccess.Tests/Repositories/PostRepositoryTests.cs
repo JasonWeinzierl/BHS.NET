@@ -1,26 +1,29 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.DataAccess.Tests;
+using System;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace BHS.DataAccess.Repositories.Tests
 {
     public class PostRepositoryTests
     {
-        private readonly IPostRepository Subject;
+        private readonly PostRepository Subject;
 
         private readonly MockDataSource MockData = new MockDataSource();
+        //private readonly ITestOutputHelper _output;
 
-        // todo: inject helper to writeline test messages
-        public PostRepositoryTests()
+        public PostRepositoryTests(/*ITestOutputHelper output*/)
         {
-            var connectionFactory = MockData.CreateDbConnectionFactory();
-            Subject = new PostRepository(connectionFactory.Object);
+            Subject = new PostRepository(MockData.CreateDbConnectionFactory().Object);
+            //_output = output;
         }
 
         [Fact]
-        public async Task GetById_FillsResult()
+        public async Task GetBySlug_FillsResult()
         {
             var post = new Post("a", default, default, default, default, default, default, default);
             MockData.ReaderResultset = ModelsFlattener.ToDataTable(new Post[] { post });
@@ -39,7 +42,7 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
-        public async Task GetById_Bindings()
+        public async Task GetBySlug_Bindings()
         {
             MockData.ReaderResultset = new DataTable();
 

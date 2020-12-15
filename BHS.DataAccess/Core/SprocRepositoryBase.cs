@@ -71,7 +71,7 @@ namespace BHS.DataAccess.Core
 
         #region ExecuteReader
         /// <summary>
-        /// Action to read data from <seealso cref="IDataReader"/> into the model.
+        /// Action to read data from <seealso cref="IDataReader"/> into instantiated model.
         /// </summary>
         /// <typeparam name="T"> Type of concrete model to fill. </typeparam>
         /// <param name="dr"> Data reader to read from. </param>
@@ -81,7 +81,7 @@ namespace BHS.DataAccess.Core
         /// <summary>
         /// Execute command text and read result.  By default, commandText is treated as a stored procedure name.
         /// </summary>
-        /// <typeparam name="TOutput"> Type of model to fill with returned values. </typeparam>
+        /// <typeparam name="TOutput"> Type of model to fill with returned resultset. </typeparam>
         /// <param name="connectionStringName"> The database connection string name. </param>
         /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
         /// <param name="configureCommand"> Action to configure the <seealso cref="IDbCommand"/>. This should be used to add parameters to the command. </param>
@@ -105,6 +105,40 @@ namespace BHS.DataAccess.Core
             }
 
             return outputModel;
+        }
+
+        /// <summary>
+        /// Function to get model from <seealso cref="IDataRecord"/>.
+        /// </summary>
+        /// <typeparam name="TModel"> Type of model to get from record. </typeparam>
+        /// <param name="dr"> Data record to access column values from. </param>
+        /// <returns> Instance of model resulting from record. </returns>
+        protected delegate TModel RecordDelegate<TModel>(IDataRecord dr);
+
+        /// <summary>
+        /// Execute command text and yield a model for each record.  By default, commandText is treated as a store procedure name.
+        /// </summary>
+        /// <typeparam name="TModel"> Type of model to get from each record. </typeparam>
+        /// <param name="connectionStringName"> The database connection string name. </param>
+        /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
+        /// <param name="configureCommand"> Action to configure the <seealso cref="IDbCommand"/>. This should be used to add parameters to the command. </param>
+        /// <param name="getModel"> Delegate to get model from each record. </param>
+        /// <returns> Models filled from the resultset. </returns>
+        protected async IAsyncEnumerable<TModel> ExecuteReaderAsync<TModel>(string connectionStringName, string commandText, Action<IDbCommand> configureCommand, RecordDelegate<TModel> getModel)
+        {
+            using var connection = Factory.CreateConnection(connectionStringName);
+            await connection.OpenAsync();
+
+            using var command = connection.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = commandText;
+            configureCommand?.Invoke(command);
+
+            using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                yield return getModel(reader);
+            }
         }
         #endregion
 
@@ -343,7 +377,7 @@ namespace BHS.DataAccess.Core
 
         protected static Uri ToUri(object cell, UriKind uriKind = UriKind.RelativeOrAbsolute)
         {
-            Uri.TryCreate(ToString(cell), UriKind.RelativeOrAbsolute, out Uri uri);
+            Uri.TryCreate(ToString(cell), uriKind, out Uri uri);
             return uri;
         }
         #endregion

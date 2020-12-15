@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [blog].[Post_GetByAuthorId]
+﻿CREATE PROCEDURE [blog].[PostPreview_GetByAuthorId]
 (
 	@authorId INT
 )
@@ -7,11 +7,8 @@ BEGIN
 	SELECT	[Slug]
 			, [Title]
 			, [ContentMarkdown]
-			, [FilePath]
-			, [PhotosAlbumId]
 			, [AuthorId]
 			, [DatePublished]
-			, [DateLastModified]
 	FROM	[blog].[Post_View]
 	WHERE	[AuthorId] = @authorId;
 END

@@ -27,5 +27,23 @@ namespace BHS.DataAccess.Tests
 
             return table;
         }
+
+        public static DataTable ToDataTable(IEnumerable<PostPreview> postPreviews)
+        {
+            var table = new DataTable();
+
+            table.Columns.Add(nameof(PostPreview.Slug), typeof(string));
+            table.Columns.Add(nameof(PostPreview.Title), typeof(string));
+            table.Columns.Add(nameof(PostPreview.ContentPreview), typeof(string));
+            table.Columns.Add(nameof(PostPreview.AuthorId), typeof(int));
+            table.Columns.Add(nameof(PostPreview.DatePublished), typeof(DateTimeOffset));
+
+            foreach (var post in postPreviews)
+            {
+                table.Rows.Add(post.Slug, post.Title, post.ContentPreview, post.AuthorId, post.DatePublished);
+            }
+
+            return table;
+        }
     }
 }

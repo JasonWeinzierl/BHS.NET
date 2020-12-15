@@ -23,15 +23,15 @@ namespace BHS.Web.Controllers
         /// Get all posts, with optional search criteria
         /// </summary>
         [HttpGet("posts")]
-        public async Task<ActionResult<IEnumerable<Post>>> SearchPosts(string q, DateTime? from, DateTime? to)
+        public ActionResult<IAsyncEnumerable<PostPreview>> SearchPosts(string q, DateTime? from, DateTime? to)
         {
-            return Ok(await _blogService.SearchPosts(q, from, to));
+            return Ok(_blogService.SearchPosts(q, from, to));
         }
 
         /// <summary>
         /// Get a post
         /// </summary>
-        [HttpGet("posts/{id}")]
+        [HttpGet("posts/{slug}")]
         public async Task<ActionResult<Post>> GetPost(string slug)
         {
             var post = await _blogService.GetPost(slug);
@@ -42,7 +42,7 @@ namespace BHS.Web.Controllers
         /// <summary>
         /// Get the categories of a post
         /// </summary>
-        [HttpGet("posts/{id}/categories")]
+        [HttpGet("posts/{slug}/categories")]
         public async Task<ActionResult<IEnumerable<Category>>> GetPostCategories(string slug)
         {
             return Ok(await _blogService.GetCategoriesByPost(slug));
@@ -92,7 +92,7 @@ namespace BHS.Web.Controllers
         /// <summary>
         /// Get a category
         /// </summary>
-        [HttpGet("categories/{id}")]
+        [HttpGet("categories/{slug}")]
         public async Task<ActionResult<Category>> GetCategory(string slug)
         {
             var category = await _blogService.GetCategory(slug);
@@ -103,10 +103,10 @@ namespace BHS.Web.Controllers
         /// <summary>
         /// Get the posts of a category
         /// </summary>
-        [HttpGet("categories/{id}/posts")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetCategoryPosts(string slug)
+        [HttpGet("categories/{slug}/posts")]
+        public ActionResult<IAsyncEnumerable<PostPreview>> GetCategoryPosts(string slug)
         {
-            return Ok(await _blogService.GetPostsByCategory(slug));
+            return Ok(_blogService.GetPostsByCategory(slug));
         }
 
         ///// <summary>

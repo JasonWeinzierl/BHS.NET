@@ -57,6 +57,7 @@ namespace BHS.Web
             services.AddSingleton<IDbConnectionFactory, SqlConnectionFactory>();
 
             services.AddSingleton<IPostRepository, PostRepository>();
+            services.AddSingleton<IPostPreviewRepository, PostPreviewRepository>();
             services.AddSingleton<ICategoryRepository, CategoryRepository>();
             services.AddSingleton<IAuthorRepository, AuthorRepository>();
             services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();

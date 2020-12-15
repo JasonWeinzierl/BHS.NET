@@ -1,5 +1,6 @@
 using BHS.DataAccess.Core;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,35 +15,43 @@ namespace BHS.DataAccess.Tests
     /// </summary>
     public class MockDataSource
     {
-        // todo: throw if these are null and needed
         /// <summary>
-        /// Resultset returned from Reader query.
+        /// Gets or sets a value for Reader queries.
         /// </summary>
+        /// <value>
+        /// DataTable of flattened model(s) to be resultset.
+        /// </value>
         public DataTable ReaderResultset { get; set; }
         /// <summary>
-        /// Cell returned from Scalar query.
+        /// Gets or sets a value for Scalar queries.
         /// </summary>
+        /// <value>
+        /// Object to be first cell's value.
+        /// </value>
         public object ScalarCell { get; set; }
         /// <summary>
-        /// Number of rows affected returned from NonQuery.
+        /// Gets or sets a value for NonQuery queries.
         /// </summary>
-        public int NonQueryRowsAffected { get; set; }
+        /// <value>
+        /// Integer to be number of rows affected by NonQuery.
+        /// </value>
+        public int? NonQueryRowsAffected { get; set; }
 
 
         /// <summary>
-        /// Name of connection string requested when creating latest connection.
+        /// Gets name of connection string requested when creating latest connection.
         /// </summary>
         public string ConnectionStringName { get; private set; }
         /// <summary>
-        /// List of parameters bound to mock command.
+        /// Gets list of parameters bound to mock command.
         /// </summary>
         public IList<IDbDataParameter> Parameters { get; private set; }
         /// <summary>
-        /// Command text assigned to mock command.
+        /// Gets command text assigned to mock command.
         /// </summary>
         public string CommandText { get; private set; }
         /// <summary>
-        /// Command type set to mock command.
+        /// Gets command type set to mock command.
         /// </summary>
         public CommandType CommandType { get; private set; }
 
@@ -91,11 +100,11 @@ namespace BHS.DataAccess.Tests
                 .Returns(() => new MockDbDataParameter());
 
             cmd.Setup(c => c.ExecuteReader())
-                .Returns(() => ReaderResultset.CreateDataReader());
+                .Returns(() => ReaderResultset?.CreateDataReader() ?? throw new InvalidOperationException(nameof(ReaderResultset) + " must have value."));
             cmd.Setup(c => c.ExecuteScalar())
-                .Returns(() => ScalarCell);
+                .Returns(() => ScalarCell ?? throw new InvalidOperationException(nameof(ScalarCell) + " must have value."));
             cmd.Setup(c => c.ExecuteNonQuery())
-                .Returns(() => NonQueryRowsAffected);
+                .Returns(() => NonQueryRowsAffected ?? throw new InvalidOperationException(nameof(NonQueryRowsAffected) + " must have value."));
 
             cmd.SetupSet(c => c.CommandText = It.IsAny<string>())
                 .Callback<string>(cmdText => CommandText = cmdText);

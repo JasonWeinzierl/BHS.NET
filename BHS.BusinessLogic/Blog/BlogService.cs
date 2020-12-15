@@ -10,17 +10,20 @@ namespace BHS.BusinessLogic.Blog
     public class BlogService : IBlogService
     {
         private readonly IPostRepository _postRepository;
+        private readonly IPostPreviewRepository _postPreviewRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly ILogger _logger;
 
         public BlogService(
             IPostRepository postRepository,
+            IPostPreviewRepository postPreviewRepository,
             ICategoryRepository categoryRepository,
             IAuthorRepository authorRepository,
             ILogger<BlogService> logger)
         {
             _postRepository = postRepository;
+            _postPreviewRepository = postPreviewRepository;
             _categoryRepository = categoryRepository;
             _authorRepository = authorRepository;
             _logger = logger;
@@ -31,9 +34,9 @@ namespace BHS.BusinessLogic.Blog
             return _categoryRepository.GetBySlug(slug);
         }
 
-        public Task<IEnumerable<Post>> GetPostsByCategory(string slug)
+        public IAsyncEnumerable<PostPreview> GetPostsByCategory(string slug)
         {
-            return _postRepository.GetByCategorySlug(slug);
+            return _postPreviewRepository.GetByCategorySlug(slug);
         }
 
         public Task<Post> GetPost(string slug)
@@ -46,16 +49,19 @@ namespace BHS.BusinessLogic.Blog
             return _categoryRepository.GetByPostSlug(slug);
         }
 
-        public async Task<IEnumerable<Post>> GetPostsByAuthor(string username)
+        public async IAsyncEnumerable<PostPreview> GetPostsByAuthor(string username)
         {
             var author = await _authorRepository.GetByUserName(username);
+            if (author == default)
+                yield break;
 
-            return author == default ? default : await _postRepository.GetByAuthorId(author.Id);
+            await foreach (var postPreview in _postPreviewRepository.GetByAuthorId(author.Id))
+                yield return postPreview;
         }
 
-        public Task<IEnumerable<Post>> SearchPosts(string text, DateTime? from, DateTime? to)
+        public IAsyncEnumerable<PostPreview> SearchPosts(string text, DateTime? from, DateTime? to)
         {
-            return _postRepository.Search(text, from, to);
+            return _postPreviewRepository.Search(text, from, to);
         }
     }
 }

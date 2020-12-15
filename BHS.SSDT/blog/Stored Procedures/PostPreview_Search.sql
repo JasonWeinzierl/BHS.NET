@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [blog].[Post_Search]
+﻿CREATE PROCEDURE [blog].[PostPreview_Search]
 (
 	@searchText VARCHAR(255),
 	@fromDate DateTimeOffset = NULL,
@@ -9,11 +9,8 @@ BEGIN
 	SELECT	[Slug]
 			, [Title]
 			, [ContentMarkdown]
-			, [FilePath]
-			, [PhotosAlbumId]
 			, [AuthorId]
 			, [DatePublished]
-			, [DateLastModified]
 	FROM	[blog].[Post_View]
 	WHERE	[ContentMarkdown] LIKE CONCAT('%', @searchText, '%')
 			AND (@fromDate IS NULL OR @fromDate <= [DatePublished])
