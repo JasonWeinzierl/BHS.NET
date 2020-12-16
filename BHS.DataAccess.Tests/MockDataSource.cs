@@ -57,9 +57,9 @@ namespace BHS.DataAccess.Tests
 
 
         /// <summary>
-        /// Sets a value for Reader queries.
-        /// Public properties will be the columns
-        /// with each model as a row.
+        /// Sets resultset for Reader queries.
+        /// Columsn are defined by public properties,
+        /// and each model will be a row.
         /// </summary>
         /// <typeparam name="T"> Type of model to put in each row. </typeparam>
         /// <param name="models"> Models to be loaded into the resultset. </param>
