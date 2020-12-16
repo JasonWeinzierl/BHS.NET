@@ -33,7 +33,7 @@ namespace BHS.DataAccess.Repositories
             return new Photo(
                 ToInt(dr["id"]),
                 ToString(dr["Name"]),
-                ToUri(dr["ImagePath"]),
+                ToUri(dr["ImageUri"]),
                 ToBool(dr["IsVisible"]),
                 ToDateTimeOffset(dr["DatePosted"]),
                 ToNullableInt(dr["AuthorId"])
