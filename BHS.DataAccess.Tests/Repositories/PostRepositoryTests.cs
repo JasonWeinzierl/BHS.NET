@@ -1,11 +1,9 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.DataAccess.Tests;
-using System;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
+//using Xunit.Abstractions;
 
 namespace BHS.DataAccess.Repositories.Tests
 {
@@ -26,7 +24,7 @@ namespace BHS.DataAccess.Repositories.Tests
         public async Task GetBySlug_FillsResult()
         {
             var post = new Post("a", default, default, default, default, default, default, default);
-            MockData.ReaderResultset = ModelsFlattener.ToDataTable(new Post[] { post });
+            MockData.SetReaderResultset(new Post[] { post });
 
             var result = await Subject.GetBySlug("a");
 
@@ -42,7 +40,7 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
-        public async Task GetBySlug_Bindings()
+        public async Task GetBySlug_Command()
         {
             MockData.ReaderResultset = new DataTable();
 

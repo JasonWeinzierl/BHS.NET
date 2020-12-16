@@ -1,10 +1,8 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.DataAccess.Tests;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,8 +22,8 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task Search_FillsResult()
         {
-            var postPreview = new PostPreview("a", default, default, default, default);
-            MockData.ReaderResultset = ModelsFlattener.ToDataTable(new PostPreview[] { postPreview });
+            var postPreview = new PostPreview("b", "c", "d", 1, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)));
+            MockData.SetReaderResultset(new PostPreview[] { postPreview });
 
             var result = await Subject.Search("a", default, default).FirstOrDefaultAsync();
 
@@ -38,7 +36,7 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
-        public async Task Search_Bindings()
+        public async Task Search_Command()
         {
             MockData.ReaderResultset = new DataTable();
             var start = new DateTimeOffset(2020, 12, 14, 20, 43, 0, TimeSpan.FromHours(-6));
@@ -58,7 +56,7 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
-        public async Task GetByCategorySlug_Bindings()
+        public async Task GetByCategorySlug_Command()
         {
             MockData.ReaderResultset = new DataTable();
 
@@ -72,7 +70,7 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
-        public async Task GetByAuthorId_Bindings()
+        public async Task GetByAuthorId_Command()
         {
             MockData.ReaderResultset = new DataTable();
 
