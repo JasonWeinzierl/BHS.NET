@@ -57,6 +57,33 @@ namespace BHS.DataAccess.Tests
 
 
         /// <summary>
+        /// Sets a value for Reader queries.
+        /// Public properties will be the columns
+        /// with each model as a row.
+        /// </summary>
+        /// <typeparam name="T"> Type of model to put in each row. </typeparam>
+        /// <param name="models"> Models to be loaded into the resultset. </param>
+        public void SetReaderResultset<T>(IEnumerable<T> models)
+        {
+            var properties = typeof(T).GetProperties();
+
+            var table = new DataTable();
+            foreach (var propertyInfo in properties)
+            {
+                table.Columns.Add(propertyInfo.Name, Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType);
+            }
+
+            foreach (var model in models)
+            {
+                var values = properties.Select(propertyInfo => propertyInfo.GetValue(model));
+
+                table.Rows.Add(values.ToArray());
+            }
+
+            ReaderResultset = table;
+        }
+
+        /// <summary>
         /// Creates mock factory that creates mock connections.
         /// </summary>
         public Mock<IDbConnectionFactory> CreateDbConnectionFactory()
