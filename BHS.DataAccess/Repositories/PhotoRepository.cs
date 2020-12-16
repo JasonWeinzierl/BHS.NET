@@ -14,23 +14,23 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<Photo> GetById(int id)
         {
-            return (await ExecuteReaderAsync<List<Photo>>(Constants.bhsConnectionStringName, "photos.Photo_GetById", cmd =>
+            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Photo_GetById", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@id", id, DbType.Int32));
-            }, FillPhotos)).FirstOrDefault();
+            }, GetPhoto).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Photo>> GetByAlbumId(int albumId)
+        public IAsyncEnumerable<Photo> GetByAlbumId(int albumId)
         {
-            return await ExecuteReaderAsync<List<Photo>>(Constants.bhsConnectionStringName, "photos.Photo_GetByAlbumId", cmd =>
+            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Photo_GetByAlbumId", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@albumId", albumId, DbType.Int32));
-            }, FillPhotos);
+            }, GetPhoto);
         }
 
-        private void FillPhotos(IDataReader dr, ref List<Photo> models)
+        private static Photo GetPhoto(IDataRecord dr)
         {
-            var model = new Photo(
+            return new Photo(
                 ToInt(dr["id"]),
                 ToString(dr["Name"]),
                 ToUri(dr["ImagePath"]),
@@ -38,7 +38,6 @@ namespace BHS.DataAccess.Repositories
                 ToDateTimeOffset(dr["DatePosted"]),
                 ToNullableInt(dr["AuthorId"])
                 );
-            models.Add(model);
         }
     }
 }

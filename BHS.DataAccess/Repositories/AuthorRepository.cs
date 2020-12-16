@@ -12,31 +12,30 @@ namespace BHS.DataAccess.Repositories
     {
         public AuthorRepository(IDbConnectionFactory factory) : base(factory) { }
 
-        public async Task<IEnumerable<Author>> GetAll(bool doIncludeHidden = false)
+        public IAsyncEnumerable<Author> GetAll(bool doIncludeHidden = false)
         {
-            return await ExecuteReaderAsync<List<Author>>(Constants.bhsConnectionStringName, "dbo.Author_GetAll", cmd =>
+            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.Author_GetAll", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@doIncludeHidden", doIncludeHidden, DbType.Boolean));
-            }, FillAuthors);
+            }, GetAuthor);
         }
 
         public async Task<Author> GetByUserName(string userName)
         {
-            return (await ExecuteReaderAsync<List<Author>>(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", cmd =>
+            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@userName", userName));
-            }, FillAuthors)).FirstOrDefault();
+            }, GetAuthor).SingleOrDefaultAsync();
         }
 
-        private void FillAuthors(IDataReader dr, ref List<Author> models)
+        private static Author GetAuthor(IDataRecord dr)
         {
-            var model = new Author(
+            return new Author(
                 ToInt(dr["Id"]),
                 ToString(dr["DisplayName"]),
                 ToString(dr["Name"]),
                 ToBool(dr["IsVisible"])
                 );
-            models.Add(model);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace BHS.DataAccess.Repositories
     public interface IPhotoRepository
     {
         Task<Photo> GetById(int id);
-        Task<IEnumerable<Photo>> GetByAlbumId(int albumId);
+        IAsyncEnumerable<Photo> GetByAlbumId(int albumId);
     }
 }

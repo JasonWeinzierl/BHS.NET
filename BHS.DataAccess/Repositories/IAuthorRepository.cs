@@ -7,6 +7,6 @@ namespace BHS.DataAccess.Repositories
     public interface IAuthorRepository
     {
         Task<Author> GetByUserName(string userName);
-        Task<IEnumerable<Author>> GetAll(bool doIncludeHidden = false);
+        IAsyncEnumerable<Author> GetAll(bool doIncludeHidden = false);
     }
 }

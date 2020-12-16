@@ -14,27 +14,26 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<Category> GetBySlug(string slug)
         {
-            return (await ExecuteReaderAsync<List<Category>>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", cmd =>
+            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@slug", slug, DbType.Int32));
-            }, FillCategories)).FirstOrDefault();
+            }, GetCategory).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Category>> GetByPostSlug(string postSlug)
+        public IAsyncEnumerable<Category> GetByPostSlug(string postSlug)
         {
-            return await ExecuteReaderAsync<List<Category>>(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", cmd =>
+            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@postSlug", postSlug, DbType.Int32));
-            }, FillCategories);
+            }, GetCategory);
         }
 
-        private void FillCategories(IDataReader dr, ref List<Category> models)
+        private static Category GetCategory(IDataRecord dr)
         {
-            var model = new Category(
+            return new Category(
                 ToString(dr["Slug"]),
                 ToString(dr["Name"])
                 );
-            models.Add(model);
         }
     }
 }

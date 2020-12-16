@@ -1,6 +1,5 @@
 ﻿using BHS.Contracts;
 using BHS.DataAccess.Core;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,18 +13,18 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<ContactAlert> Insert(ContactAlertRequest contactRequest)
         {
-            return (await ExecuteReaderAsync<List<ContactAlert>>(Constants.bhsConnectionStringName, "dbo.ContactAlert_Insert", cmd =>
+            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.ContactAlert_Insert", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@name", contactRequest.Name));
                 cmd.Parameters.Add(CreateParameter(cmd, "@emailAddress", contactRequest.EmailAddress));
                 cmd.Parameters.Add(CreateParameter(cmd, "@message", contactRequest.Message));
                 cmd.Parameters.Add(CreateParameter(cmd, "@dateRequested", contactRequest.DateRequested, DbType.DateTimeOffset));
-            }, FillContactAlerts)).FirstOrDefault();
+            }, GetContactAlert).SingleOrDefaultAsync();
         }
 
-        private void FillContactAlerts(IDataReader dr, ref List<ContactAlert> models)
+        private static ContactAlert GetContactAlert(IDataRecord dr)
         {
-            var model = new ContactAlert(
+            return new ContactAlert(
                 ToInt(dr["Id"]),
                 ToString(dr["Name"]),
                 ToString(dr["EmailAddress"]),
@@ -33,7 +32,6 @@ namespace BHS.DataAccess.Repositories
                 ToNullableDateTimeOffset(dr["DateRequested"]),
                 ToDateTimeOffset(dr["DateCreated"])
                 );
-            models.Add(model);
         }
     }
 }

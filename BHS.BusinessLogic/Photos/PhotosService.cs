@@ -22,7 +22,7 @@ namespace BHS.BusinessLogic.Photos
             _logger = logger;
         }
 
-        public Task<IEnumerable<Album>> GetAlbums(bool doIncludeHidden = false)
+        public IAsyncEnumerable<Album> GetAlbums(bool doIncludeHidden = false)
         {
             return _albumRepository.GetAll(doIncludeHidden);
         }
@@ -32,7 +32,7 @@ namespace BHS.BusinessLogic.Photos
             return _albumRepository.GetById(id);
         }
 
-        public Task<IEnumerable<Photo>> GetPhotosByAlbum(int id)
+        public IAsyncEnumerable<Photo> GetPhotosByAlbum(int id)
         {
             return _photoRepository.GetByAlbumId(id);
         }

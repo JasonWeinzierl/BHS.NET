@@ -27,9 +27,9 @@ namespace BHS.Web.Controllers
         /// Get all visible authors
         /// </summary>
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<Author>>> GetVisibleAuthors()
+        public ActionResult<IAsyncEnumerable<Author>> GetVisibleAuthors()
         {
-            return Ok(await _authorService.GetAuthors());
+            return Ok(_authorService.GetAuthors());
         }
 
         /// <summary>

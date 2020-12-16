@@ -9,7 +9,7 @@ namespace BHS.BusinessLogic.Blog
     {
         Task<Post> GetPost(string slug);
         IAsyncEnumerable<PostPreview> SearchPosts(string text, DateTime? from, DateTime? to);
-        Task<IEnumerable<Category>> GetCategoriesByPost(string slug);
+        IAsyncEnumerable<Category> GetCategoriesByPost(string slug);
         Task<Category> GetCategory(string slug);
         IAsyncEnumerable<PostPreview> GetPostsByCategory(string slug);
         IAsyncEnumerable<PostPreview> GetPostsByAuthor(string username);

@@ -15,23 +15,23 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<Album> GetById(int id)
         {
-            return (await ExecuteReaderAsync<List<Album>>(Constants.bhsConnectionStringName, "photos.Album_GetById", cmd =>
+            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Album_GetById", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@id", id, DbType.Int32));
-            }, FillAlbums)).FirstOrDefault();
+            }, GetAlbum).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Album>> GetAll(bool doIncludeHidden = false)
+        public IAsyncEnumerable<Album> GetAll(bool doIncludeHidden = false)
         {
-            return await ExecuteReaderAsync<List<Album>>(Constants.bhsConnectionStringName, "photos.Album_GetAll", cmd =>
+            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Album_GetAll", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@doIncludeHidden", doIncludeHidden, DbType.Boolean));
-            }, FillAlbums);
+            }, GetAlbum);
         }
 
-        private void FillAlbums(IDataReader dr, ref List<Album> models)
+        private static Album GetAlbum(IDataRecord dr)
         {
-            var model = new Album(
+            return new Album(
                 ToInt(dr["Id"]),
                 ToString(dr["Name"]),
                 ToString(dr["Description"]),
@@ -41,7 +41,6 @@ namespace BHS.DataAccess.Repositories
                 ToDateTimeOffset(dr["DateUpdated"]),
                 ToNullableInt(dr["AuthorId"])
                 );
-            models.Add(model);
         }
     }
 }

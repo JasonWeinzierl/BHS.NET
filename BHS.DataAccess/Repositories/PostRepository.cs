@@ -16,10 +16,10 @@ namespace BHS.DataAccess.Repositories
             return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@slug", slug));
-            }, GetPost).FirstOrDefaultAsync();
+            }, GetPost).SingleOrDefaultAsync();
         }
 
-        private Post GetPost(IDataRecord dr)
+        private static Post GetPost(IDataRecord dr)
         {
             return new Post(
                 ToString(dr["Slug"]),
