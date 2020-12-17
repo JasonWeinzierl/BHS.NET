@@ -279,19 +279,19 @@ namespace BHS.DataAccess.Core
         }
 
         /// <summary>
-        /// Cast cell to float
+        /// Cast cell to double
         /// </summary>
-        protected static float ToFloat(object cell)
+        protected static double ToDouble(object cell)
         {
-            return ToNullableFloat(cell) ?? float.NaN;
+            return ToNullableDouble(cell) ?? double.NaN;
         }
 
         /// <summary>
-        /// Cast cell to nullable float
+        /// Cast cell to nullable double
         /// </summary>
-        protected static float? ToNullableFloat(object cell)
+        protected static double? ToNullableDouble(object cell)
         {
-            return cell == DBNull.Value ? default(float?) : float.Parse(cell.ToString());
+            return cell == DBNull.Value ? default(double?) : double.Parse(cell.ToString());
         }
 
         /// <summary>
