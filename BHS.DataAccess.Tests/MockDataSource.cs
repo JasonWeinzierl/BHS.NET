@@ -58,12 +58,25 @@ namespace BHS.DataAccess.Tests
 
         /// <summary>
         /// Sets resultset for Reader queries.
-        /// Columsn are defined by public properties,
+        /// Columns are defined by public properties,
         /// and each model will be a row.
         /// </summary>
         /// <typeparam name="T"> Type of model to put in each row. </typeparam>
         /// <param name="models"> Models to be loaded into the resultset. </param>
         public void SetReaderResultset<T>(IEnumerable<T> models)
+        {
+            ReaderResultset = CreateResultset(models);
+        }
+
+        /// <summary>
+        /// Create DataTable from models.
+        /// Columns are defined by public properties,
+        /// and each model will be a row.
+        /// </summary>
+        /// <typeparam name="T"> Type of model to put in each row. </typeparam>
+        /// <param name="models"> Models to be loaded into a DataTable. </param>
+        /// <returns> A DataTable loaded with the models. </returns>
+        public static DataTable CreateResultset<T>(IEnumerable<T> models)
         {
             var properties = typeof(T).GetProperties();
 
@@ -80,7 +93,7 @@ namespace BHS.DataAccess.Tests
                 table.Rows.Add(values.ToArray());
             }
 
-            ReaderResultset = table;
+            return table;
         }
 
         /// <summary>
