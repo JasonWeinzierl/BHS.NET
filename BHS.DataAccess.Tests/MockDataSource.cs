@@ -76,7 +76,7 @@ namespace BHS.DataAccess.Tests
         /// <typeparam name="T"> Type of model to put in each row. </typeparam>
         /// <param name="models"> Models to be loaded into a DataTable. </param>
         /// <returns> A DataTable loaded with the models. </returns>
-        public static DataTable CreateResultset<T>(IEnumerable<T> models)
+        public static DataTable CreateResultset<T>(IEnumerable<T> models = null)
         {
             var properties = typeof(T).GetProperties();
 
@@ -86,11 +86,14 @@ namespace BHS.DataAccess.Tests
                 table.Columns.Add(propertyInfo.Name, Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType);
             }
 
-            foreach (var model in models)
+            if (models != null)
             {
-                var values = properties.Select(propertyInfo => propertyInfo.GetValue(model));
+                foreach (var model in models)
+                {
+                    var values = properties.Select(propertyInfo => propertyInfo.GetValue(model));
 
-                table.Rows.Add(values.ToArray());
+                    table.Rows.Add(values.ToArray());
+                }
             }
 
             return table;
