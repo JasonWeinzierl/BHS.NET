@@ -208,7 +208,7 @@ namespace BHS.DataAccess.Core
             command.CommandText = commandText;
             configureCommand?.Invoke(command);
 
-            await command.ExecuteNonQueryAsync();
+            _ = await command.ExecuteNonQueryAsync();
             return readParameters(command);
         }
         #endregion
