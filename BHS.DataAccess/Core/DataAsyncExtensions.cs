@@ -18,7 +18,7 @@ namespace BHS.DataAccess.Core
             }
             else
             {
-                await Task.Run(() => self.Open());
+                await Task.Run(self.Open);
             }
         }
 
@@ -35,7 +35,7 @@ namespace BHS.DataAccess.Core
             }
             else
             {
-                return await Task.Run(() => self.ExecuteScalar());
+                return await Task.Run(self.ExecuteScalar);
             }
         }
 
@@ -53,7 +53,7 @@ namespace BHS.DataAccess.Core
             }
             else
             {
-                return await Task.Run(() => self.ExecuteReader());
+                return await Task.Run(self.ExecuteReader);
             }
         }
 
@@ -69,7 +69,7 @@ namespace BHS.DataAccess.Core
             }
             else
             {
-                return await Task.Run(() => self.Read());
+                return await Task.Run(self.Read);
             }
         }
 
@@ -86,7 +86,7 @@ namespace BHS.DataAccess.Core
             }
             else
             {
-                return await Task.Run(() => self.ExecuteNonQuery());
+                return await Task.Run(self.ExecuteNonQuery);
             }
         }
     }
