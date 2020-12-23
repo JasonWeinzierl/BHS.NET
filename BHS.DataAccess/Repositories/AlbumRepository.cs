@@ -1,6 +1,5 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.DataAccess.Core;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -32,14 +31,14 @@ namespace BHS.DataAccess.Repositories
         private static Album GetAlbum(IDataRecord dr)
         {
             return new Album(
-                ToInt(dr["Id"]),
-                ToString(dr["Name"]),
-                ToString(dr["Description"]),
-                ToNullableInt(dr["BannerPhotoId"]),
-                ToNullableInt(dr["BlogPostId"]),
-                ToBool(dr["IsVisible"]),
-                ToDateTimeOffset(dr["DateUpdated"]),
-                ToNullableInt(dr["AuthorId"])
+                dr.CastInt("Id"),
+                dr.CastString("Name"),
+                dr.CastString("Description"),
+                dr.CastNullableInt("BannerPhotoId"),
+                dr.CastNullableInt("BlogPostId"),
+                dr.CastBool("IsVisible"),
+                dr.CastDateTimeOffset("DateUpdated"),
+                dr.CastNullableInt("AuthorId")
                 );
         }
     }

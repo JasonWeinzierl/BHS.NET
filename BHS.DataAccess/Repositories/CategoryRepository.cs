@@ -31,8 +31,8 @@ namespace BHS.DataAccess.Repositories
         private static Category GetCategory(IDataRecord dr)
         {
             return new Category(
-                ToString(dr["Slug"]),
-                ToString(dr["Name"])
+                dr.CastString("Slug"),
+                dr.CastString("Name")
                 );
         }
     }

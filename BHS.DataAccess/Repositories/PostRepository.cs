@@ -22,14 +22,14 @@ namespace BHS.DataAccess.Repositories
         private static Post GetPost(IDataRecord dr)
         {
             return new Post(
-                ToString(dr["Slug"]),
-                ToString(dr["Title"]),
-                ToString(dr["ContentMarkdown"]),
-                ToUri(dr["FilePath"]),
-                ToNullableInt(dr["PhotosAlbumId"]),
-                ToInt(dr["AuthorId"]),
-                ToDateTimeOffset(dr["DatePublished"]),
-                ToDateTimeOffset(dr["DateLastModified"]));
+                dr.CastString("Slug"),
+                dr.CastString("Title"),
+                dr.CastString("ContentMarkdown"),
+                dr.CastUri("FilePath"),
+                dr.CastNullableInt("PhotosAlbumId"),
+                dr.CastInt("AuthorId"),
+                dr.CastDateTimeOffset("DatePublished"),
+                dr.CastDateTimeOffset("DateLastModified"));
         }
     }
 }

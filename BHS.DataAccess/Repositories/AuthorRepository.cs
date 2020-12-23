@@ -31,10 +31,10 @@ namespace BHS.DataAccess.Repositories
         private static Author GetAuthor(IDataRecord dr)
         {
             return new Author(
-                ToInt(dr["Id"]),
-                ToString(dr["DisplayName"]),
-                ToString(dr["Name"]),
-                ToBool(dr["IsVisible"])
+                dr.CastInt("Id"),
+                dr.CastString("DisplayName"),
+                dr.CastString("Name"),
+                dr.CastBool("IsVisible")
                 );
         }
     }

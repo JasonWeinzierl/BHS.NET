@@ -25,12 +25,12 @@ namespace BHS.DataAccess.Repositories
         private static ContactAlert GetContactAlert(IDataRecord dr)
         {
             return new ContactAlert(
-                ToInt(dr["Id"]),
-                ToString(dr["Name"]),
-                ToString(dr["EmailAddress"]),
-                ToString(dr["Message"]),
-                ToNullableDateTimeOffset(dr["DateRequested"]),
-                ToDateTimeOffset(dr["DateCreated"])
+                dr.CastInt("Id"),
+                dr.CastString("Name"),
+                dr.CastString("EmailAddress"),
+                dr.CastString("Message"),
+                dr.CastNullableDateTimeOffset("DateRequested"),
+                dr.CastDateTimeOffset("DateCreated")
                 );
         }
     }

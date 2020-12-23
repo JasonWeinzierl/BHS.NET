@@ -40,11 +40,11 @@ namespace BHS.DataAccess.Repositories
         private static PostPreview GetPostPreview(IDataRecord dr)
         {
             return new PostPreview(
-                ToString(dr["Slug"]),
-                ToString(dr["Title"]),
-                ToString(dr["ContentPreview"]),
-                ToInt(dr["AuthorId"]),
-                ToDateTimeOffset(dr["DatePublished"])
+                dr.CastString("Slug"),
+                dr.CastString("Title"),
+                dr.CastString("ContentPreview"),
+                dr.CastInt("AuthorId"),
+                dr.CastDateTimeOffset("DatePublished")
                 );
         }
     }

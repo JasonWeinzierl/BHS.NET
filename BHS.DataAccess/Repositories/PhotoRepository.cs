@@ -31,12 +31,12 @@ namespace BHS.DataAccess.Repositories
         private static Photo GetPhoto(IDataRecord dr)
         {
             return new Photo(
-                ToInt(dr["id"]),
-                ToString(dr["Name"]),
-                ToUri(dr["ImageUri"]),
-                ToBool(dr["IsVisible"]),
-                ToDateTimeOffset(dr["DatePosted"]),
-                ToNullableInt(dr["AuthorId"])
+                dr.CastInt("id"),
+                dr.CastString("Name"),
+                dr.CastUri("ImageUri"),
+                dr.CastBool("IsVisible"),
+                dr.CastDateTimeOffset("DatePosted"),
+                dr.CastNullableInt("AuthorId")
                 );
         }
     }

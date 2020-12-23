@@ -13,129 +13,25 @@ namespace BHS.DataAccess.Core.Tests
     {
         private readonly TestRepository testRepo;
         private readonly MockDataSource MockData = new MockDataSource();
-        private readonly EachPrimitiveType someModel;
 
         public SprocRepositoryBaseTests()
         {
             testRepo = new TestRepository(MockData.CreateDbConnectionFactory().Object);
-            someModel = new EachPrimitiveType(
-                int.MaxValue + 1L,
-                int.MinValue - 1L,
-                short.MaxValue + 1,
-                short.MinValue - 1,
-                byte.MaxValue + 1,
-                byte.MinValue - 1,
-                255,
-                0,
-                1.1F,
-                2.2F,
-                3.3M,
-                4.4M,
-                "querty",
-                'x',
-                '\0',
-                new DateTimeOffset(2020, 12, 16, 18, 35, 0, TimeSpan.FromHours(-6)),
-                new DateTimeOffset(2020, 12, 16, 18, 36, 0, TimeSpan.FromHours(-6)),
-                true,
-                true
-                );
         }
 
         [Fact]
         public async Task ExecuteReaderAsync_ReadsAllData()
         {
-            var table = MockDataSource.CreateResultset(new EachPrimitiveType[] { someModel });
-            var row1null = table.NewRow();
-            table.Rows.Add(row1null);
-            foreach (DataColumn c in table.Columns)
-                row1null[c.ColumnName] = DBNull.Value;
+            var table = new DataTable();
+            table.Columns.Add("Col1");
+            table.Rows.Add("val1");
+            table.Rows.Add(DBNull.Value);
             MockData.ReaderResultset = table;
 
             var result = await testRepo.ReadResultset().ToListAsync();
 
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
-
-            Assert.Equal(someModel.LongNumber, result[0].LongNumber);
-            Assert.Equal(someModel.NullableLongNumber, result[0].NullableLongNumber);
-            Assert.Equal(someModel.Integer, result[0].Integer);
-            Assert.Equal(someModel.NullableInteger, result[0].NullableInteger);
-            Assert.Equal(someModel.Short, result[0].Short);
-            Assert.Equal(someModel.NullableShort, result[0].NullableShort);
-            Assert.Equal(someModel.Byte, result[0].Byte);
-            Assert.Equal(someModel.NullableByte, result[0].NullableByte);
-            Assert.Equal(someModel.DoubleNumber, result[0].DoubleNumber);
-            Assert.Equal(someModel.NullableDoubleNumber, result[0].NullableDoubleNumber);
-            Assert.Equal(someModel.DecimalNumber, result[0].DecimalNumber);
-            Assert.Equal(someModel.NullableDecimalNumber, result[0].NullableDecimalNumber);
-            Assert.Equal(someModel.String, result[0].String);
-            Assert.Equal(someModel.Character, result[0].Character);
-            Assert.Equal(someModel.NullableCharacter, result[0].NullableCharacter);
-            Assert.Equal(someModel.Boolean, result[0].Boolean);
-            Assert.Equal(someModel.NullableBoolean, result[0].NullableBoolean);
-
-            var utcDate = new DateTimeOffset(2020, 12, 17, 0, 35, 0, TimeSpan.FromHours(0));
-            Assert.Equal(utcDate, result[0].Date);
-
-            var nullableUtcDate = new DateTimeOffset(2020, 12, 17, 0, 36, 0, TimeSpan.FromHours(0));
-            Assert.Equal(nullableUtcDate, result[0].NullableDate);
-
-            Assert.Equal(default, result[1].LongNumber);
-            Assert.Equal(default, result[1].NullableLongNumber);
-            Assert.Equal(default, result[1].Integer);
-            Assert.Equal(default, result[1].NullableInteger);
-            Assert.Equal(default, result[1].Short);
-            Assert.Equal(default, result[1].NullableShort);
-            Assert.Equal(default, result[1].Byte);
-            Assert.Equal(default, result[1].NullableByte);
-            Assert.True(double.IsNaN(result[1].DoubleNumber));
-            Assert.Equal(default, result[1].NullableDoubleNumber);
-            Assert.Equal(default, result[1].DecimalNumber);
-            Assert.Equal(default, result[1].NullableDecimalNumber);
-            Assert.Equal(default, result[1].String);
-            Assert.Equal(default, result[1].Character);
-            Assert.Equal(default, result[1].NullableCharacter);
-            Assert.Equal(default, result[1].Date);
-            Assert.Equal(default, result[1].NullableDate);
-            Assert.Equal(default, result[1].Boolean);
-            Assert.Equal(default, result[1].NullableBoolean);
-        }
-
-        [Fact]
-        public async Task ToBool_ReadsInt()
-        {
-            var table = MockDataSource.CreateResultset<EachPrimitiveType>();
-            table.Columns["Boolean"].DataType = typeof(int);
-            var row = table.NewRow();
-            table.Rows.Add(row);
-            row["Boolean"] = 1;
-            row = table.NewRow();
-            table.Rows.Add(row);
-            row["Boolean"] = 0;
-            MockData.ReaderResultset = table;
-
-            var result = await testRepo.ReadResultset().ToListAsync();
-
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Count);
-            Assert.True(result[0].Boolean);
-            Assert.False(result[1].Boolean);
-        }
-
-        [Fact]
-        public Task ToBool_ThrowsOnInvalidInt()
-        {
-            var table = MockDataSource.CreateResultset<EachPrimitiveType>();
-            table.Columns["Boolean"].DataType = typeof(int);
-            var row = table.NewRow();
-            table.Rows.Add(row);
-            row["Boolean"] = 3;
-            MockData.ReaderResultset = table;
-
-            return Assert.ThrowsAsync<InvalidCastException>(async () =>
-            {
-                _ = await testRepo.ReadResultset().ToListAsync();
-            });
         }
 
         [Fact]
@@ -243,9 +139,9 @@ namespace BHS.DataAccess.Core.Tests
         {
             public TestRepository(IDbConnectionFactory factory) : base(factory) { }
 
-            public IAsyncEnumerable<EachPrimitiveType> ReadResultset()
+            public IAsyncEnumerable<string> ReadResultset()
             {
-                return ExecuteReaderAsync("connstr", "Get", null, Get);
+                return ExecuteReaderAsync("connstr", "Get", null, dr => "Value");
             }
 
             public Task<int> ReadScalar()
@@ -273,53 +169,6 @@ namespace BHS.DataAccess.Core.Tests
             public static DataTable CreateDataTable(IEnumerable<int?> nullableInts) => ToDataTable(nullableInts);
             public static DataTable CreateDataTable(IEnumerable<string> strings) => ToDataTable(strings);
             public static DataTable CreateDataTable(IEnumerable<long> longs) => ToDataTable(longs);
-
-            public static EachPrimitiveType Get(IDataRecord dr)
-            {
-                return new EachPrimitiveType(
-                    ToLong(dr["LongNumber"]),
-                    ToNullableLong(dr["NullableLongNumber"]),
-                    ToInt(dr["Integer"]),
-                    ToNullableInt(dr["NullableInteger"]),
-                    ToShort(dr["Short"]),
-                    ToNullableShort(dr["NullableShort"]),
-                    ToByte(dr["Byte"]),
-                    ToNullableByte(dr["NullableByte"]),
-                    ToDouble(dr["DoubleNumber"]),
-                    ToNullableDouble(dr["NullableDoubleNumber"]),
-                    ToDecimal(dr["DecimalNumber"]),
-                    ToNullableDecimal(dr["NullableDecimalNumber"]),
-                    ToString(dr["String"]),
-                    ToChar(dr["Character"]),
-                    ToNullableChar(dr["NullableCharacter"]),
-                    ToDateTimeOffset(dr["Date"]),
-                    ToNullableDateTimeOffset(dr["NullableDate"]),
-                    ToBool(dr["Boolean"]),
-                    ToNullableBool(dr["NullableBoolean"])
-                    );
-            }
         }
-
-        public record EachPrimitiveType(
-            long LongNumber,
-            long? NullableLongNumber,
-            int Integer,
-            int? NullableInteger,
-            short Short,
-            short? NullableShort,
-            byte Byte,
-            byte? NullableByte,
-            double DoubleNumber,
-            double? NullableDoubleNumber,
-            decimal DecimalNumber,
-            decimal? NullableDecimalNumber,
-            string String,
-            char Character,
-            char? NullableCharacter,
-            DateTimeOffset Date,
-            DateTimeOffset? NullableDate,
-            bool Boolean,
-            bool? NullableBoolean
-            );
     }
 }
