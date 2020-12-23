@@ -1,4 +1,5 @@
 ﻿using BHS.Contracts;
+using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
 using System.Data;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
         public AuthorRepositoryTests()
         {
-            Subject = new AuthorRepository(MockData.CreateDbConnectionFactory().Object);
+            Subject = new AuthorRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
         }
 
         [Fact]

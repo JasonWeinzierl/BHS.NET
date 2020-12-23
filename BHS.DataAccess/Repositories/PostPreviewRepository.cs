@@ -9,11 +9,11 @@ namespace BHS.DataAccess.Repositories
     public class PostPreviewRepository : SprocRepositoryBase
         , IPostPreviewRepository
     {
-        public PostPreviewRepository(IDbConnectionFactory factory) : base(factory) { }
+        public PostPreviewRepository(IQuerier querier) : base(querier) { }
 
         public IAsyncEnumerable<PostPreview> Search(string text, DateTimeOffset? from, DateTimeOffset? to)
         {
-            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_Search", cmd =>
+            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_Search", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@searchText", text));
                 cmd.Parameters.Add(CreateParameter(cmd, "@fromDate", from, DbType.DateTimeOffset));
@@ -23,7 +23,7 @@ namespace BHS.DataAccess.Repositories
 
         public IAsyncEnumerable<PostPreview> GetByCategorySlug(string categorySlug)
         {
-            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", cmd =>
+            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@categorySlug", categorySlug));
             }, GetPostPreview);
@@ -31,7 +31,7 @@ namespace BHS.DataAccess.Repositories
 
         public IAsyncEnumerable<PostPreview> GetByAuthorId(int authorId)
         {
-            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", cmd =>
+            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@authorId", authorId));
             }, GetPostPreview);

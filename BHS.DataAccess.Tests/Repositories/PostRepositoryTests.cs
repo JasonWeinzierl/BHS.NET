@@ -1,4 +1,5 @@
 ﻿using BHS.Contracts.Blog;
+using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
 using System.Data;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
         public PostRepositoryTests(/*ITestOutputHelper output*/)
         {
-            Subject = new PostRepository(MockData.CreateDbConnectionFactory().Object);
+            Subject = new PostRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
             //_output = output;
         }
 

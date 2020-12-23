@@ -10,11 +10,11 @@ namespace BHS.DataAccess.Repositories
     public class AuthorRepository : SprocRepositoryBase
         , IAuthorRepository
     {
-        public AuthorRepository(IDbConnectionFactory factory) : base(factory) { }
+        public AuthorRepository(IQuerier querier) : base(querier) { }
 
         public IAsyncEnumerable<Author> GetAll(bool doIncludeHidden = false)
         {
-            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.Author_GetAll", cmd =>
+            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.Author_GetAll", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@doIncludeHidden", doIncludeHidden, DbType.Boolean));
             }, GetAuthor);
@@ -22,7 +22,7 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<Author> GetByUserName(string userName)
         {
-            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", cmd =>
+            return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@userName", userName));
             }, GetAuthor).SingleOrDefaultAsync();

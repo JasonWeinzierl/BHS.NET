@@ -1,4 +1,5 @@
 ﻿using BHS.Contracts.Photos;
+using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
 using System.Data;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace BHS.DataAccess.Repositories.Tests
 
         public AlbumRepositoryTests()
         {
-            Subject = new AlbumRepository(MockData.CreateDbConnectionFactory().Object);
+            // todo: don't new up a Querier.  probably can just verify a mock instead.
+            Subject = new AlbumRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
         }
 
         [Fact]

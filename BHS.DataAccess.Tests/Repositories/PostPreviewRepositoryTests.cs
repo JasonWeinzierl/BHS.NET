@@ -1,4 +1,5 @@
 ﻿using BHS.Contracts.Blog;
+using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
 using System;
 using System.Data;
@@ -16,7 +17,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
         public PostPreviewRepositoryTests()
         {
-            Subject = new PostPreviewRepository(MockData.CreateDbConnectionFactory().Object);
+            Subject = new PostPreviewRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
         }
 
         [Fact]

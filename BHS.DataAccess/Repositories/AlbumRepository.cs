@@ -10,11 +10,11 @@ namespace BHS.DataAccess.Repositories
     public class AlbumRepository : SprocRepositoryBase
         , IAlbumRepository
     {
-        public AlbumRepository(IDbConnectionFactory factory) : base(factory) { }
+        public AlbumRepository(IQuerier querier) : base(querier) { }
 
         public async Task<Album> GetById(int id)
         {
-            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Album_GetById", cmd =>
+            return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Album_GetById", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@id", id, DbType.Int32));
             }, GetAlbum).SingleOrDefaultAsync();
@@ -22,7 +22,7 @@ namespace BHS.DataAccess.Repositories
 
         public IAsyncEnumerable<Album> GetAll(bool doIncludeHidden = false)
         {
-            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Album_GetAll", cmd =>
+            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Album_GetAll", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@doIncludeHidden", doIncludeHidden, DbType.Boolean));
             }, GetAlbum);

@@ -9,11 +9,11 @@ namespace BHS.DataAccess.Repositories
     public class PostRepository : SprocRepositoryBase
         , IPostRepository
     {
-        public PostRepository(IDbConnectionFactory factory) : base(factory) { }
+        public PostRepository(IQuerier querier) : base(querier) { }
 
         public async Task<Post> GetBySlug(string slug)
         {
-            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", cmd =>
+            return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@slug", slug));
             }, GetPost).SingleOrDefaultAsync();

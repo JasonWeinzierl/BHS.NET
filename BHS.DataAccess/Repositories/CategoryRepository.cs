@@ -10,11 +10,11 @@ namespace BHS.DataAccess.Repositories
     public class CategoryRepository : SprocRepositoryBase
         , ICategoryRepository
     {
-        public CategoryRepository(IDbConnectionFactory factory) : base(factory) { }
+        public CategoryRepository(IQuerier querier) : base(querier) { }
 
         public async Task<Category> GetBySlug(string slug)
         {
-            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", cmd =>
+            return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@slug", slug, DbType.Int32));
             }, GetCategory).SingleOrDefaultAsync();
@@ -22,7 +22,7 @@ namespace BHS.DataAccess.Repositories
 
         public IAsyncEnumerable<Category> GetByPostSlug(string postSlug)
         {
-            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", cmd =>
+            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@postSlug", postSlug, DbType.Int32));
             }, GetCategory);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Core
 {
@@ -10,11 +9,11 @@ namespace BHS.DataAccess.Core
     /// </summary>
     public abstract class SprocRepositoryBase
     {
-        protected IDbConnectionFactory Factory { get; }
+        protected IQuerier Q { get; }
 
-        public SprocRepositoryBase(IDbConnectionFactory factory)
+        public SprocRepositoryBase(IQuerier querier)
         {
-            Factory = factory;
+            Q = querier;
         }
 
         #region CreateParameter
@@ -43,173 +42,6 @@ namespace BHS.DataAccess.Core
                 parameter.Direction = direction.Value;
 
             return parameter;
-        }
-        #endregion
-
-        #region ExecuteScalar
-        /// <summary>
-        /// Execute command text and return a scalar.  By default, commandText is treated as a stored procedure name.
-        /// </summary>
-        /// <typeparam name="T"> Type of the returned value. </typeparam>
-        /// <param name="connectionStringName"> The database connection string name. </param>
-        /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
-        /// <param name="configureCommand"> Action to configure the <seealso cref="IDbCommand"/>. This should be used to add parameters to the command. </param>
-        /// <returns> The first column of the first row in the resultset. </returns>
-        protected async Task<T> ExecuteScalarAsync<T>(string connectionStringName, string commandText, Action<IDbCommand> configureCommand)
-        {
-            using var connection = Factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
-
-            using var command = connection.CreateCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = commandText;
-            configureCommand?.Invoke(command);
-
-            return (T)await command.ExecuteScalarAsync();
-        }
-        #endregion
-
-        #region ExecuteReader
-        /// <summary>
-        /// Action to read data from <seealso cref="IDataReader"/> into instantiated model.
-        /// </summary>
-        /// <typeparam name="T"> Type of concrete model to fill. </typeparam>
-        /// <param name="dr"> Data reader to read from. </param>
-        /// <param name="model"> Model to fill. </param>
-        protected delegate void FillDelegate<T>(IDataReader dr, ref T model) where T : new();
-
-        /// <summary>
-        /// Execute command text and read result.  By default, commandText is treated as a stored procedure name.
-        /// </summary>
-        /// <typeparam name="TOutput"> Type of model to fill with returned resultset. </typeparam>
-        /// <param name="connectionStringName"> The database connection string name. </param>
-        /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
-        /// <param name="configureCommand"> Action to configure the <seealso cref="IDbCommand"/>. This should be used to add parameters to the command. </param>
-        /// <param name="fillOutput"> Delegate called while the <seealso cref="IDataReader"/> returns true. </param>
-        /// <returns> The output model filled from the resultset. </returns>
-        protected async Task<TOutput> ExecuteReaderAsync<TOutput>(string connectionStringName, string commandText, Action<IDbCommand> configureCommand, FillDelegate<TOutput> fillOutput) where TOutput : new()
-        {
-            using var connection = Factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
-
-            using var command = connection.CreateCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = commandText;
-            configureCommand?.Invoke(command);
-
-            using var reader = await command.ExecuteReaderAsync();
-            var outputModel = new TOutput();
-            while (await reader.ReadAsync())
-            {
-                fillOutput(reader, ref outputModel);
-            }
-
-            return outputModel;
-        }
-
-        /// <summary>
-        /// Function to get model from <seealso cref="IDataRecord"/>.
-        /// </summary>
-        /// <typeparam name="TModel"> Type of model to get from record. </typeparam>
-        /// <param name="dr"> Data record to access column values from. </param>
-        /// <returns> Instance of model resulting from record. </returns>
-        protected delegate TModel RecordDelegate<TModel>(IDataRecord dr);
-
-        /// <summary>
-        /// Execute command text and yield a model for each record.  By default, commandText is treated as a store procedure name.
-        /// </summary>
-        /// <typeparam name="TModel"> Type of model to get from each record. </typeparam>
-        /// <param name="connectionStringName"> The database connection string name. </param>
-        /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
-        /// <param name="configureCommand"> Action to configure the <seealso cref="IDbCommand"/>. This should be used to add parameters to the command. </param>
-        /// <param name="getModel"> Delegate to get model from each record. </param>
-        /// <returns> Models filled from the resultset. </returns>
-        protected async IAsyncEnumerable<TModel> ExecuteReaderAsync<TModel>(string connectionStringName, string commandText, Action<IDbCommand> configureCommand, RecordDelegate<TModel> getModel)
-        {
-            using var connection = Factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
-
-            using var command = connection.CreateCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = commandText;
-            configureCommand?.Invoke(command);
-
-            using var reader = await command.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
-            {
-                yield return getModel(reader);
-            }
-        }
-        #endregion
-
-        #region ExecuteNonQuery
-        /// <summary>
-        /// Execute command text and return the number of rows affected.  By default, commandText is treated as a stored procedure name.
-        /// </summary>
-        /// <param name="connectionStringName"> The database connection string name. </param>
-        /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
-        /// <param name="configureCommand"> Action to configure the <seealso cref="IDbCommand"/>. This should be used to add parameters to the command. </param>
-        /// <param name="transaction"> The transaction to be performed on the data source. </param>
-        /// <returns> The number of rows affected. </returns>
-        protected async Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, Action<IDbCommand> configureCommand, IDbTransaction transaction = null)
-        {
-            using var connection = Factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
-            return await ExecuteNonQueryAsync(connection, commandText, configureCommand, transaction);
-        }
-
-        /// <summary>
-        /// Executes command text on an open connection.  Does not automatically close connection.
-        /// </summary>
-        /// <remarks>
-        /// Make sure to close the connection.
-        /// </remarks>
-        /// <param name="connection"> The open connection. </param>
-        /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
-        /// <param name="configureCommand"> Action to configure the <seealso cref="IDbCommand"/>. This should be used to add parameters to the command. </param>
-        /// <param name="transaction"> The transaction to be performed on the data source. </param>
-        /// <returns> The number of rows affected. </returns>
-        internal static Task<int> ExecuteNonQueryAsync(IDbConnection connection, string commandText, Action<IDbCommand> configureCommand, IDbTransaction transaction)
-        {
-            using var command = connection.CreateCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = commandText;
-            configureCommand?.Invoke(command);
-            if (transaction != null)
-                command.Transaction = transaction;
-
-            return command.ExecuteNonQueryAsync();
-        }
-
-        /// <summary>
-        /// Action to read value(s) from output parameter(s) of a <seealso cref="IDbCommand"/>.
-        /// </summary>
-        /// <typeparam name="T"> Type of model to fill. </typeparam>
-        /// <param name="command"> Command to read parameter values from. </param>
-        /// <returns> Filled model. </returns>
-        protected delegate T ParameterDelegate<T>(IDbCommand command);
-
-        /// <summary>
-        /// Execute command text and read output parameter(s).  By default, commandText is treated as a stored procedure name.
-        /// </summary>
-        /// <typeparam name="TOutput"></typeparam>
-        /// <param name="connectionStringName"> The database connection string name. </param>
-        /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
-        /// <param name="configureCommand"> Action to configure the <seealso cref="IDbCommand"/>. This should be used to add parameters to the command. </param>
-        /// <param name="readParameters"> Delegate called on <seealso cref="IDbCommand"/> after execution. </param>
-        /// <returns> The output model filled from the output parameter(s). </returns>
-        protected async Task<TOutput> ExecuteNonQueryAsync<TOutput>(string connectionStringName, string commandText, Action<IDbCommand> configureCommand, ParameterDelegate<TOutput> readParameters)
-        {
-            using var connection = Factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
-
-            using var command = connection.CreateCommand();
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = commandText;
-            configureCommand?.Invoke(command);
-
-            _ = await command.ExecuteNonQueryAsync();
-            return readParameters(command);
         }
         #endregion
 

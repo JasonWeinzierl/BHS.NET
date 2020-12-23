@@ -10,11 +10,11 @@ namespace BHS.DataAccess.Repositories
     public class PhotoRepository : SprocRepositoryBase
         , IPhotoRepository
     {
-        public PhotoRepository(IDbConnectionFactory factory) : base(factory) { }
+        public PhotoRepository(IQuerier querier) : base(querier) { }
 
         public async Task<Photo> GetById(int id)
         {
-            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Photo_GetById", cmd =>
+            return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Photo_GetById", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@id", id, DbType.Int32));
             }, GetPhoto).SingleOrDefaultAsync();
@@ -22,7 +22,7 @@ namespace BHS.DataAccess.Repositories
 
         public IAsyncEnumerable<Photo> GetByAlbumId(int albumId)
         {
-            return ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Photo_GetByAlbumId", cmd =>
+            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Photo_GetByAlbumId", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@albumId", albumId, DbType.Int32));
             }, GetPhoto);

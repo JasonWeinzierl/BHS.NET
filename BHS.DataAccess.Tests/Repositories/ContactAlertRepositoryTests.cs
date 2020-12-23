@@ -1,10 +1,8 @@
 ﻿using BHS.Contracts;
+using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,7 +16,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
         public ContactAlertRepositoryTests()
         {
-            Subject = new ContactAlertRepository(MockData.CreateDbConnectionFactory().Object);
+            Subject = new ContactAlertRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
         }
 
         [Fact]

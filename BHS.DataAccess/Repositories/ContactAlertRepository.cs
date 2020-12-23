@@ -9,11 +9,11 @@ namespace BHS.DataAccess.Repositories
     public class ContactAlertRepository : SprocRepositoryBase
         , IContactAlertRepository
     {
-        public ContactAlertRepository(IDbConnectionFactory factory) : base(factory) { }
+        public ContactAlertRepository(IQuerier querier) : base(querier) { }
 
         public async Task<ContactAlert> Insert(ContactAlertRequest contactRequest)
         {
-            return await ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.ContactAlert_Insert", cmd =>
+            return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.ContactAlert_Insert", cmd =>
             {
                 cmd.Parameters.Add(CreateParameter(cmd, "@name", contactRequest.Name));
                 cmd.Parameters.Add(CreateParameter(cmd, "@emailAddress", contactRequest.EmailAddress));

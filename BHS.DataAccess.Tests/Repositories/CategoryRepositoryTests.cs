@@ -1,4 +1,5 @@
 ﻿using BHS.Contracts.Blog;
+using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
 using System.Data;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
         public CategoryRepositoryTests()
         {
-            Subject = new CategoryRepository(MockData.CreateDbConnectionFactory().Object);
+            Subject = new CategoryRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
         }
 
         [Fact]
