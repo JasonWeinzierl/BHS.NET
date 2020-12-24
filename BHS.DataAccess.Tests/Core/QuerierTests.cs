@@ -1,4 +1,5 @@
 ﻿using BHS.DataAccess.Tests;
+using Moq;
 using System;
 using System.Data;
 using System.Linq;
@@ -19,6 +20,41 @@ namespace BHS.DataAccess.Core.Tests
             Subject = new Querier(MockData.CreateDbConnectionFactory().Object);
         }
 
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2.0D)]
+        [InlineData(100000000000L)]
+        [InlineData('a')]
+        [InlineData(true)]
+        public async Task ExecuteScalarAsync_ReturnsPrimitive<T>(T inputValue)
+        {
+            MockData.ScalarCell = inputValue;
+
+            var result = await Subject.ExecuteScalarAsync<T>("connstr", "Insert", null);
+
+            Assert.Equal(inputValue, result);
+        }
+
+        [Fact]
+        public async Task ExecuteReaderAsync_PreparesCommand()
+        {
+            var table = new DataTable();
+            table.Columns.Add("Col1");
+            table.Rows.Add(1);
+            table.Rows.Add(2);
+            table.Rows.Add(3);
+            MockData.ReaderResultset = table;
+            var mockFcn = new Mock<Action<IDbCommand>>();
+            mockFcn.Setup(f => f.Invoke(It.IsAny<IDbCommand>()));
+
+            _ = await Subject.ExecuteReaderAsync("connstr", "Get", mockFcn.Object, (IDataReader dr, ref object model) => { });
+
+            Assert.Equal("connstr", MockData.ConnectionStringName);
+            Assert.Equal("Get", MockData.CommandText);
+            Assert.Equal(CommandType.StoredProcedure, MockData.CommandType);
+            mockFcn.Verify(f => f.Invoke(It.IsAny<IDbCommand>()), Times.Once, "Expected configureCommand to be invoked");
+        }
+
         [Fact]
         public async Task ExecuteReaderAsync_ReadsAllData()
         {
@@ -33,17 +69,6 @@ namespace BHS.DataAccess.Core.Tests
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
             //todo
-        }
-
-        [Fact]
-        public async Task ExecuteScalarAsync_ReturnsResult()
-        {
-            int i = 1;
-            MockData.ScalarCell = i;
-
-            var result = await Subject.ExecuteScalarAsync<int>("connstr", "Insert", null);
-
-            Assert.Equal(i, result);
         }
 
         [Fact]
