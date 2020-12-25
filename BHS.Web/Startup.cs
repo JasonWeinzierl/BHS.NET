@@ -48,13 +48,11 @@ namespace BHS.Web
                 options.ApiKey = Configuration["SENDGRID_API_KEY"];
             });
 
-            // TODO: This seems messy. providerInvariantName is also defined in SqlConnectionFactory
-            // but SqlConnectionFactory is implementation-agnostic except for that name.
             DbProviderFactories.RegisterFactory("System.Data.SqlClient", SqlClientFactory.Instance);
 
             #region BHS Dependencies
 
-            services.AddSingleton<IDbConnectionFactory, SqlConnectionFactory>();
+            services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
             services.AddSingleton<IQuerier, Querier>();
 
             services.AddSingleton<IPostRepository, PostRepository>();
