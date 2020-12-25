@@ -5,47 +5,12 @@ using System.Data;
 namespace BHS.DataAccess.Core
 {
     /// <summary>
-    /// Base class for a repository using stored procedures.
+    /// Extensions that convert a one-dimensional collection
+    /// into a DataTable so they can be passed to a stored procedure
+    /// as a user-defined table type.
     /// </summary>
-    public abstract class SprocRepositoryBase
+    public static class EnumerableToDataTableExtensions
     {
-        protected IQuerier Q { get; }
-
-        public SprocRepositoryBase(IQuerier querier)
-        {
-            Q = querier;
-        }
-
-        #region CreateParameter
-        /// <summary>
-        /// Create <seealso cref="IDbDataParameter"/> for a <seealso cref="IDbCommand"/>.
-        /// </summary>
-        /// <remarks>
-        /// Make sure to add the parameter to the command.
-        /// </remarks>
-        /// <param name="command"> Command to create new parameter from. </param>
-        /// <param name="parameterName"> The name of the parameter. </param>
-        /// <param name="value"> The object that is the value of the parameter. </param>
-        /// <param name="dbType"> One of the <seealso cref="DbType"/> values.  The default is String. </param>
-        /// <param name="direction"> One of the <seealso cref="ParameterDirection"/> values. The default is Input. </param>
-        /// <returns> The created parameter. </returns>
-        protected static IDbDataParameter CreateParameter(IDbCommand command, string parameterName, object value, DbType? dbType = null, ParameterDirection? direction = null)
-        {
-            var parameter = command.CreateParameter();
-            parameter.ParameterName = parameterName;
-            parameter.Value = value ?? DBNull.Value;
-
-            if (dbType.HasValue)
-                parameter.DbType = dbType.Value;
-
-            if (direction.HasValue)
-                parameter.Direction = direction.Value;
-
-            return parameter;
-        }
-        #endregion
-
-        #region Parameter Converters
         /// <summary>
         /// Create a <seealso cref="DataTable"/> parameter of string values
         /// to use with the StringList user-defined table type.
@@ -53,7 +18,7 @@ namespace BHS.DataAccess.Core
         /// <param name="strings"> Enumerable of strings. </param>
         /// <param name="columnName"> Name of column in the StringList user-defined table type. </param>
         /// <returns> A filled single-column <seealso cref="DataTable"/>. </returns>
-        protected static DataTable ToDataTable(IEnumerable<string> strings, string columnName = "String")
+        public static DataTable ToDataTable(this IEnumerable<string> strings, string columnName = "String")
         {
             var table = new DataTable();
             table.Columns.Add(columnName, typeof(string));
@@ -69,7 +34,7 @@ namespace BHS.DataAccess.Core
         /// <param name="numbers"> Enumerable of ints. </param>
         /// <param name="columnName"> Name of column in the IntList user-defined table type. </param>
         /// <returns> A filled single-column <seealso cref="DataTable"/>. </returns>
-        protected static DataTable ToDataTable(IEnumerable<int> numbers, string columnName = "Number")
+        public static DataTable ToDataTable(this IEnumerable<int> numbers, string columnName = "Number")
         {
             var table = new DataTable();
             table.Columns.Add(columnName, typeof(int));
@@ -85,7 +50,7 @@ namespace BHS.DataAccess.Core
         /// <param name="numbers"> Enumerable of nullable ints. </param>
         /// <param name="columnName"> Name of column in the NullableIntList user-defined table type. </param>
         /// <returns> A filled single-column <seealso cref="DataTable"/>. </returns>
-        protected static DataTable ToDataTable(IEnumerable<int?> numbers, string columnName = "Number")
+        public static DataTable ToDataTable(this IEnumerable<int?> numbers, string columnName = "Number")
         {
             var table = new DataTable();
             var column = table.Columns.Add(columnName, typeof(int));
@@ -102,7 +67,7 @@ namespace BHS.DataAccess.Core
         /// <param name="longs"> Enumerable of longs. </param>
         /// <param name="columnName"> Name of column in the LongList user-defined table type. </param>
         /// <returns> A filled single-column <seealso cref="DataTable"/>. </returns>
-        protected static DataTable ToDataTable(IEnumerable<long> longs, string columnName = "Long")
+        public static DataTable ToDataTable(this IEnumerable<long> longs, string columnName = "Long")
         {
             var table = new DataTable();
             table.Columns.Add(columnName, typeof(long));
@@ -110,6 +75,5 @@ namespace BHS.DataAccess.Core
                 table.Rows.Add(l);
             return table;
         }
-        #endregion
     }
 }

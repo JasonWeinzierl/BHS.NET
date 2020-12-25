@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
 {
-    public class CategoryRepository : SprocRepositoryBase
-        , ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
-        public CategoryRepository(IQuerier querier) : base(querier) { }
+        protected IQuerier Q { get; }
+
+        public CategoryRepository(IQuerier querier)
+        {
+            Q = querier;
+        }
 
         public async Task<Category> GetBySlug(string slug)
         {
             return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@slug", slug, DbType.Int32));
+                cmd.Parameters.Add(cmd.CreateParameter("@slug", slug, DbType.Int32));
             }, GetCategory).SingleOrDefaultAsync();
         }
 
@@ -24,7 +28,7 @@ namespace BHS.DataAccess.Repositories
         {
             return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@postSlug", postSlug, DbType.Int32));
+                cmd.Parameters.Add(cmd.CreateParameter("@postSlug", postSlug, DbType.Int32));
             }, GetCategory);
         }
 

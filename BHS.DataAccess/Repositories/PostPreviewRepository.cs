@@ -6,18 +6,22 @@ using System.Data;
 
 namespace BHS.DataAccess.Repositories
 {
-    public class PostPreviewRepository : SprocRepositoryBase
-        , IPostPreviewRepository
+    public class PostPreviewRepository : IPostPreviewRepository
     {
-        public PostPreviewRepository(IQuerier querier) : base(querier) { }
+        protected IQuerier Q { get; }
+
+        public PostPreviewRepository(IQuerier querier)
+        {
+            Q = querier;
+        }
 
         public IAsyncEnumerable<PostPreview> Search(string text, DateTimeOffset? from, DateTimeOffset? to)
         {
             return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_Search", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@searchText", text));
-                cmd.Parameters.Add(CreateParameter(cmd, "@fromDate", from, DbType.DateTimeOffset));
-                cmd.Parameters.Add(CreateParameter(cmd, "@toDate", to, DbType.DateTimeOffset));
+                cmd.Parameters.Add(cmd.CreateParameter("@searchText", text));
+                cmd.Parameters.Add(cmd.CreateParameter("@fromDate", from, DbType.DateTimeOffset));
+                cmd.Parameters.Add(cmd.CreateParameter("@toDate", to, DbType.DateTimeOffset));
             }, GetPostPreview);
         }
 
@@ -25,7 +29,7 @@ namespace BHS.DataAccess.Repositories
         {
             return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@categorySlug", categorySlug));
+                cmd.Parameters.Add(cmd.CreateParameter("@categorySlug", categorySlug));
             }, GetPostPreview);
         }
 
@@ -33,7 +37,7 @@ namespace BHS.DataAccess.Repositories
         {
             return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@authorId", authorId));
+                cmd.Parameters.Add(cmd.CreateParameter("@authorId", authorId));
             }, GetPostPreview);
         }
 

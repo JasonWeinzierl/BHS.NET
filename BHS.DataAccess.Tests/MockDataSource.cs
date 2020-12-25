@@ -131,7 +131,7 @@ namespace BHS.DataAccess.Tests
         /// <summary>
         /// Creates mock db command which returns mock datareaders and mock parameter collections.
         /// </summary>
-        private Mock<IDbCommand> CreateCommand()
+        public Mock<IDbCommand> CreateCommand()
         {
             Parameters = new List<IDbDataParameter>();
 

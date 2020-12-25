@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
 {
-    public class ContactAlertRepository : SprocRepositoryBase
-        , IContactAlertRepository
+    public class ContactAlertRepository :  IContactAlertRepository
     {
-        public ContactAlertRepository(IQuerier querier) : base(querier) { }
+        protected IQuerier Q { get; }
+
+        public ContactAlertRepository(IQuerier querier)
+        {
+            Q = querier;
+        }
 
         public async Task<ContactAlert> Insert(ContactAlertRequest contactRequest)
         {
             return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.ContactAlert_Insert", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@name", contactRequest.Name));
-                cmd.Parameters.Add(CreateParameter(cmd, "@emailAddress", contactRequest.EmailAddress));
-                cmd.Parameters.Add(CreateParameter(cmd, "@message", contactRequest.Message));
-                cmd.Parameters.Add(CreateParameter(cmd, "@dateRequested", contactRequest.DateRequested, DbType.DateTimeOffset));
+                cmd.Parameters.Add(cmd.CreateParameter("@name", contactRequest.Name));
+                cmd.Parameters.Add(cmd.CreateParameter("@emailAddress", contactRequest.EmailAddress));
+                cmd.Parameters.Add(cmd.CreateParameter("@message", contactRequest.Message));
+                cmd.Parameters.Add(cmd.CreateParameter("@dateRequested", contactRequest.DateRequested, DbType.DateTimeOffset));
             }, GetContactAlert).SingleOrDefaultAsync();
         }
 

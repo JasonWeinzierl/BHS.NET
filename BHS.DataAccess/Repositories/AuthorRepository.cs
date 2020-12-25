@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
 {
-    public class AuthorRepository : SprocRepositoryBase
-        , IAuthorRepository
+    public class AuthorRepository : IAuthorRepository
     {
-        public AuthorRepository(IQuerier querier) : base(querier) { }
+        protected IQuerier Q { get; }
+
+        public AuthorRepository(IQuerier querier)
+        {
+            Q = querier;
+        }
 
         public IAsyncEnumerable<Author> GetAll(bool doIncludeHidden = false)
         {
             return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.Author_GetAll", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@doIncludeHidden", doIncludeHidden, DbType.Boolean));
+                cmd.Parameters.Add(cmd.CreateParameter("@doIncludeHidden", doIncludeHidden, DbType.Boolean));
             }, GetAuthor);
         }
 
@@ -24,7 +28,7 @@ namespace BHS.DataAccess.Repositories
         {
             return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@userName", userName));
+                cmd.Parameters.Add(cmd.CreateParameter("@userName", userName));
             }, GetAuthor).SingleOrDefaultAsync();
         }
 

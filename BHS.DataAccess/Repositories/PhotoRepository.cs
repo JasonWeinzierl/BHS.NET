@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
 {
-    public class PhotoRepository : SprocRepositoryBase
-        , IPhotoRepository
+    public class PhotoRepository : IPhotoRepository
     {
-        public PhotoRepository(IQuerier querier) : base(querier) { }
+        protected IQuerier Q { get; }
+
+        public PhotoRepository(IQuerier querier)
+        {
+            Q = querier;
+        }
 
         public async Task<Photo> GetById(int id)
         {
             return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Photo_GetById", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@id", id, DbType.Int32));
+                cmd.Parameters.Add(cmd.CreateParameter("@id", id, DbType.Int32));
             }, GetPhoto).SingleOrDefaultAsync();
         }
 
@@ -24,7 +28,7 @@ namespace BHS.DataAccess.Repositories
         {
             return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "photos.Photo_GetByAlbumId", cmd =>
             {
-                cmd.Parameters.Add(CreateParameter(cmd, "@albumId", albumId, DbType.Int32));
+                cmd.Parameters.Add(cmd.CreateParameter("@albumId", albumId, DbType.Int32));
             }, GetPhoto);
         }
 
