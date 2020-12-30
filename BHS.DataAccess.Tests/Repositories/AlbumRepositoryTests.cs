@@ -16,7 +16,6 @@ namespace BHS.DataAccess.Repositories.Tests
 
         public AlbumRepositoryTests()
         {
-            // todo: don't new up a Querier.  probably can just verify a mock instead.
             Subject = new AlbumRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
         }
 
