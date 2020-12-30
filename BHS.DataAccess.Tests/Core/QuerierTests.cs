@@ -9,7 +9,6 @@ using Xunit;
 
 namespace BHS.DataAccess.Core.Tests
 {
-    // todo: coverage
     public class QuerierTests
     {
         private readonly Querier Subject;
@@ -131,32 +130,22 @@ namespace BHS.DataAccess.Core.Tests
             MockData.NonQueryRowsAffected = 1;
             var mockFcn = new Mock<Action<IDbCommand>>();
 
-            _ = await Subject.ExecuteNonQueryAsync("connstr", "Get", mockFcn.Object);
+            _ = await Subject.ExecuteNonQueryAsync("connstr", "Save", mockFcn.Object);
 
             Assert.Equal("connstr", MockData.ConnectionStringName);
-            Assert.Equal("Get", MockData.CommandText);
+            Assert.Equal("Save", MockData.CommandText);
             Assert.Equal(CommandType.StoredProcedure, MockData.CommandType);
             mockFcn.Verify(f => f.Invoke(It.IsAny<IDbCommand>()), Times.Once, "Expected configureCommand to be invoked");
         }
 
         [Fact]
-        public async Task ExecuteNonQueryAsync_RunsQuery()
+        public async Task ExecuteNonQueryAsync_ReturnsAffected()
         {
-            MockData.NonQueryRowsAffected = 1;
+            MockData.NonQueryRowsAffected = 2;
 
-            int affected = await Subject.ExecuteNonQueryAsync("connstr", "Save", cmd =>
-            {
-                cmd.Parameters.Add(new MockDbDataParameter { ParameterName = "@para", Value = "value" });
-            });
+            int affected = await Subject.ExecuteNonQueryAsync("connstr", "Save", null);
 
-            Assert.Equal("connstr", MockData.ConnectionStringName);
-            Assert.Equal("Save", MockData.CommandText);
-
-            Assert.Equal(CommandType.StoredProcedure, MockData.CommandType);
-            Assert.Equal("@para", MockData.Parameters[0].ParameterName);
-            Assert.Equal("value", MockData.Parameters[0].Value);
-            Assert.Equal(1, affected);
-            // todo: verify NonQuery was called
+            Assert.Equal(2, affected);
         }
 
         [Fact]
