@@ -1,8 +1,5 @@
 ﻿using BHS.Contracts.Blog;
-using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,52 +9,40 @@ namespace BHS.DataAccess.Repositories.Tests
     {
         private readonly CategoryRepository Subject;
 
-        private readonly MockDataSource MockData = new MockDataSource();
+        private readonly MockQuerier MockQuerier = new MockQuerier();
 
         public CategoryRepositoryTests()
         {
-            Subject = new CategoryRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
+            Subject = new CategoryRepository(MockQuerier);
         }
 
         [Fact]
-        public async Task GetBySlug_FillsResult()
+        public async Task GetBySlug_Executes()
         {
-            var category = new Category("thing", "Thing!");
-            MockData.SetReaderResultset(new Category[] { category });
-
-            var result = await Subject.GetBySlug("x");
-
-            Assert.NotNull(result);
-            Assert.Equal(category.Slug, result.Slug);
-            Assert.Equal(category.Name, result.Name);
-        }
-
-        [Fact]
-        public async Task GetBySlug_Command()
-        {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.SingleResult = new Category("thing", "Thing!");
 
             _ = await Subject.GetBySlug("y");
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("blog.Category_GetBySlug", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("blog.Category_GetBySlug", MockQuerier.CommandText);
 
-            Assert.Equal("@slug", MockData.Parameters[0].ParameterName);
-            Assert.Equal("y", MockData.Parameters[0].Value);
+            Assert.Equal("y", MockQuerier.Parameters.slug);
         }
 
         [Fact]
-        public async Task GetByPostSlug_Command()
+        public async Task GetByPostSlug_Executes()
         {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.ManyResults = new Category[]
+            {
+                new Category("thing", "Thing!")
+            };
 
-            _ = await Subject.GetByPostSlug("z").ToListAsync();
+            _ = await Subject.GetByPostSlug("z");
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("blog.Category_GetByPostSlug", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("blog.Category_GetByPostSlug", MockQuerier.CommandText);
 
-            Assert.Equal("@postSlug", MockData.Parameters[0].ParameterName);
-            Assert.Equal("z", MockData.Parameters[0].Value);
+            Assert.Equal("z", MockQuerier.Parameters.postSlug);
         }
     }
 }

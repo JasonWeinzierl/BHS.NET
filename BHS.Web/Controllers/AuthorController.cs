@@ -27,9 +27,9 @@ namespace BHS.Web.Controllers
         /// Get all visible authors
         /// </summary>
         [HttpGet("")]
-        public ActionResult<IAsyncEnumerable<Author>> GetVisibleAuthors()
+        public async Task<ActionResult<IEnumerable<Author>>> GetVisibleAuthors()
         {
-            return Ok(_authorService.GetAuthors());
+            return Ok(await _authorService.GetAuthors());
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace BHS.Web.Controllers
         /// Get the posts of an author
         /// </summary>
         [HttpGet("{username}/posts")]
-        public ActionResult<IAsyncEnumerable<PostPreview>> GetAuthorPosts(string username)
+        public async Task<ActionResult<IEnumerable<PostPreview>>> GetAuthorPosts(string username)
         {
-            var posts = _blogService.GetPostsByAuthor(username);
+            var posts = await _blogService.GetPostsByAuthor(username);
             if (posts == default) return NotFound();
             return Ok(posts);
         }

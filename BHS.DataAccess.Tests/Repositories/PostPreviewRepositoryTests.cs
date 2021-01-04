@@ -1,9 +1,6 @@
 ﻿using BHS.Contracts.Blog;
-using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
 using System;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,75 +10,63 @@ namespace BHS.DataAccess.Repositories.Tests
     {
         private readonly PostPreviewRepository Subject;
 
-        private readonly MockDataSource MockData = new MockDataSource();
+        private readonly MockQuerier MockQuerier = new MockQuerier();
 
         public PostPreviewRepositoryTests()
         {
-            Subject = new PostPreviewRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
+            Subject = new PostPreviewRepository(MockQuerier);
         }
 
         [Fact]
-        public async Task Search_FillsResult()
+        public async Task Search_Executes()
         {
-            var postPreview = new PostPreview("b", "c", "d", 1, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)));
-            MockData.SetReaderResultset(new PostPreview[] { postPreview });
-
-            var result = await Subject.Search("a", default, default).FirstOrDefaultAsync();
-
-            Assert.NotNull(result);
-            Assert.Equal(postPreview.Slug, result.Slug);
-            Assert.Equal(postPreview.Title, result.Title);
-            Assert.Equal(postPreview.ContentPreview, result.ContentPreview);
-            Assert.Equal(postPreview.AuthorId, result.AuthorId);
-            Assert.Equal(postPreview.DatePublished, result.DatePublished);
-        }
-
-        [Fact]
-        public async Task Search_Command()
-        {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.ManyResults = new PostPreview[]
+            {
+                new PostPreview("b", "c", "d", 1, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)))
+            };
             var start = new DateTimeOffset(2020, 12, 14, 20, 43, 0, TimeSpan.FromHours(-6));
             var end = new DateTimeOffset(2020, 12, 14, 20, 44, 0, TimeSpan.FromHours(-6));
 
-            _ = await Subject.Search("a", start, end).ToListAsync();
+            _ = await Subject.Search("a", start, end);
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("blog.PostPreview_Search", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("blog.PostPreview_Search", MockQuerier.CommandText);
 
-            Assert.Equal("@searchText", MockData.Parameters[0].ParameterName);
-            Assert.Equal("a", MockData.Parameters[0].Value);
-            Assert.Equal("@fromDate", MockData.Parameters[1].ParameterName);
-            Assert.Equal(start, MockData.Parameters[1].Value);
-            Assert.Equal("@toDate", MockData.Parameters[2].ParameterName);
-            Assert.Equal(end, MockData.Parameters[2].Value);
+            Assert.Equal("a", MockQuerier.Parameters.searchText);
+            Assert.Equal(start, MockQuerier.Parameters.fromDate);
+            Assert.Equal(end, MockQuerier.Parameters.toDate);
         }
 
         [Fact]
-        public async Task GetByCategorySlug_Command()
+        public async Task GetByCategorySlug_Executes()
         {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.ManyResults = new PostPreview[]
+            {
+                new PostPreview("b", "c", "d", 1, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)))
+            };
 
-            _ = await Subject.GetByCategorySlug("a").ToListAsync();
+            _ = await Subject.GetByCategorySlug("a");
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("blog.PostPreview_GetByCategorySlug", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("blog.PostPreview_GetByCategorySlug", MockQuerier.CommandText);
 
-            Assert.Equal("@categorySlug", MockData.Parameters[0].ParameterName);
-            Assert.Equal("a", MockData.Parameters[0].Value);
+            Assert.Equal("a", MockQuerier.Parameters.categorySlug);
         }
 
         [Fact]
-        public async Task GetByAuthorId_Command()
+        public async Task GetByAuthorId_Executes()
         {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.ManyResults = new PostPreview[]
+            {
+                new PostPreview("b", "c", "d", 1, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)))
+            };
 
-            _ = await Subject.GetByAuthorId(1).ToListAsync();
+            _ = await Subject.GetByAuthorId(1);
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("blog.PostPreview_GetByAuthorId", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("blog.PostPreview_GetByAuthorId", MockQuerier.CommandText);
 
-            Assert.Equal("@authorId", MockData.Parameters[0].ParameterName);
-            Assert.Equal(1, MockData.Parameters[0].Value);
+            Assert.Equal(1, MockQuerier.Parameters.authorId);
         }
     }
 }

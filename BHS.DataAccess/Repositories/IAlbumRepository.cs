@@ -7,6 +7,6 @@ namespace BHS.DataAccess.Repositories
     public interface IAlbumRepository
     {
         Task<Album> GetById(int id);
-        IAsyncEnumerable<Album> GetAll(bool doIncludeHidden = false);
+        Task<IEnumerable<Album>> GetAll(bool doIncludeHidden = false);
     }
 }

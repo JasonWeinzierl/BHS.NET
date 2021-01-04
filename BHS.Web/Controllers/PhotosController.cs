@@ -32,9 +32,9 @@ namespace BHS.Web.Controllers
         /// Get all albums
         /// </summary>
         [HttpGet("albums")]
-        public ActionResult<IAsyncEnumerable<Album>> GetAlbums()
+        public async Task<ActionResult<IEnumerable<Album>>> GetAlbums()
         {
-            return Ok(_photosService.GetAlbums());
+            return Ok(await _photosService.GetAlbums());
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace BHS.Web.Controllers
         /// Get the photos of an album
         /// </summary>
         [HttpGet("albums/{id}/photos")]
-        public ActionResult<IAsyncEnumerable<Photo>> GetAlbumPhotos(int id)
+        public async Task<ActionResult<IEnumerable<Photo>>> GetAlbumPhotos(int id)
         {
-            return Ok(_photosService.GetPhotosByAlbum(id));
+            return Ok(await _photosService.GetPhotosByAlbum(id));
         }
     }
 }

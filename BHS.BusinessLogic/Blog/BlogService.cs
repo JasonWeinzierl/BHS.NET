@@ -34,7 +34,7 @@ namespace BHS.BusinessLogic.Blog
             return _categoryRepository.GetBySlug(slug);
         }
 
-        public IAsyncEnumerable<PostPreview> GetPostsByCategory(string slug)
+        public Task<IEnumerable<PostPreview>> GetPostsByCategory(string slug)
         {
             return _postPreviewRepository.GetByCategorySlug(slug);
         }
@@ -44,22 +44,21 @@ namespace BHS.BusinessLogic.Blog
             return _postRepository.GetBySlug(slug);
         }
 
-        public IAsyncEnumerable<Category> GetCategoriesByPost(string slug)
+        public Task<IEnumerable<Category>> GetCategoriesByPost(string slug)
         {
             return _categoryRepository.GetByPostSlug(slug);
         }
 
-        public async IAsyncEnumerable<PostPreview> GetPostsByAuthor(string username)
+        public async Task<IEnumerable<PostPreview>> GetPostsByAuthor(string username)
         {
             var author = await _authorRepository.GetByUserName(username);
             if (author == default)
-                yield break;
+                return default;
 
-            await foreach (var postPreview in _postPreviewRepository.GetByAuthorId(author.Id))
-                yield return postPreview;
+            return await _postPreviewRepository.GetByAuthorId(author.Id);
         }
 
-        public IAsyncEnumerable<PostPreview> SearchPosts(string text, DateTime? from, DateTime? to)
+        public Task<IEnumerable<PostPreview>> SearchPosts(string text, DateTime? from, DateTime? to)
         {
             return _postPreviewRepository.Search(text, from, to);
         }

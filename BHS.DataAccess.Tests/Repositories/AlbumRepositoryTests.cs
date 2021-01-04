@@ -1,8 +1,5 @@
 ﻿using BHS.Contracts.Photos;
-using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,58 +9,40 @@ namespace BHS.DataAccess.Repositories.Tests
     {
         private readonly AlbumRepository Subject;
 
-        private readonly MockDataSource MockData = new MockDataSource();
+        private readonly MockQuerier MockQuerier = new MockQuerier();
 
         public AlbumRepositoryTests()
         {
-            Subject = new AlbumRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
+            Subject = new AlbumRepository(MockQuerier);
         }
 
         [Fact]
-        public async Task GetById_FillsResult()
+        public async Task GetById_Executes()
         {
-            var album = new Album(1, default, default, default, default, default, default, default);
-            MockData.SetReaderResultset(new Album[] { album });
-
-            var result = await Subject.GetById(0);
-
-            Assert.NotNull(result);
-            Assert.Equal(album.Id, result.Id);
-            Assert.Equal(album.Name, result.Name);
-            Assert.Equal(album.Description, result.Description);
-            Assert.Equal(album.BannerPhotoId, result.BannerPhotoId);
-            Assert.Equal(album.BlogPostId, result.BlogPostId);
-            Assert.Equal(album.IsVisible, result.IsVisible);
-            Assert.Equal(album.DateUpdated, result.DateUpdated);
-            Assert.Equal(album.AuthorId, result.AuthorId);
-        }
-
-        [Fact]
-        public async Task GetById_Command()
-        {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.SingleResult = new Album(1, default, default, default, default, default, default, default);
 
             _ = await Subject.GetById(2);
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("photos.Album_GetById", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("photos.Album_GetById", MockQuerier.CommandText);
 
-            Assert.Equal("@id", MockData.Parameters[0].ParameterName);
-            Assert.Equal(2, MockData.Parameters[0].Value);
+            Assert.Equal(2, MockQuerier.Parameters.id);
         }
 
         [Fact]
-        public async Task GetAll_Command()
+        public async Task GetAll_Executes()
         {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.ManyResults = new Album[]
+            {
+                new Album(1, default, default, default, default, default, default, default)
+            };
 
-            _ = await Subject.GetAll().ToListAsync();
+            _ = await Subject.GetAll();
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("photos.Album_GetAll", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("photos.Album_GetAll", MockQuerier.CommandText);
 
-            Assert.Equal("@doIncludeHidden", MockData.Parameters[0].ParameterName);
-            Assert.Equal(false, MockData.Parameters[0].Value);
+            Assert.Equal(false, MockQuerier.Parameters.doIncludeHidden);
         }
     }
 }

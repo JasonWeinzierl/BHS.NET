@@ -3,14 +3,14 @@ using Xunit;
 
 namespace BHS.DataAccess.Core.Tests
 {
-    public class EnumerableToDataTableExtensionsTests
+    public class EnumerableToTVPExtensionsTests
     {
         [Fact]
         public void ToDataTable_ConvertsListOfInts()
         {
             var ints = new int[] { 1, 0, -1 };
 
-            var result = ints.ToDataTable();
+            var result = EnumerableToTVPExtensions.ToDataTable(ints, "Number");
 
             Assert.Equal(3, result.Rows.Count);
             Assert.Equal(1, result.Rows[0]["Number"]);
@@ -23,7 +23,7 @@ namespace BHS.DataAccess.Core.Tests
         {
             var ints = new int?[] { -1, 0, null };
 
-            var result = ints.ToDataTable();
+            var result = EnumerableToTVPExtensions.ToDataTable(ints, "Number");
 
             Assert.Equal(3, result.Rows.Count);
             Assert.Equal(-1, result.Rows[0]["Number"]);
@@ -36,7 +36,7 @@ namespace BHS.DataAccess.Core.Tests
         {
             var strings = new string[] { "A", string.Empty, null };
 
-            var result = strings.ToDataTable();
+            var result = EnumerableToTVPExtensions.ToDataTable(strings, "String");
 
             Assert.Equal(3, result.Rows.Count);
             Assert.Equal("A", result.Rows[0]["String"]);
@@ -49,7 +49,7 @@ namespace BHS.DataAccess.Core.Tests
         {
             var longs = new long[] { int.MaxValue + 1L, 0L, long.MinValue };
 
-            var result = longs.ToDataTable();
+            var result = EnumerableToTVPExtensions.ToDataTable(longs, "Long");
 
             Assert.Equal(3, result.Rows.Count);
             Assert.Equal(int.MaxValue + 1L, result.Rows[0]["Long"]);

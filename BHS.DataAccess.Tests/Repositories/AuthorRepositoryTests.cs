@@ -1,8 +1,5 @@
 ﻿using BHS.Contracts;
-using BHS.DataAccess.Core;
 using BHS.DataAccess.Tests;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,54 +9,40 @@ namespace BHS.DataAccess.Repositories.Tests
     {
         private readonly AuthorRepository Subject;
 
-        private readonly MockDataSource MockData = new MockDataSource();
+        private readonly MockQuerier MockQuerier = new MockQuerier();
 
         public AuthorRepositoryTests()
         {
-            Subject = new AuthorRepository(new Querier(MockData.CreateDbConnectionFactory().Object));
+            Subject = new AuthorRepository(MockQuerier);
         }
 
         [Fact]
-        public async Task GetByUserName_FillsResult()
+        public async Task GetByUserName_Executes()
         {
-            var author = new Author(3, "s", "t", true);
-            MockData.SetReaderResultset(new Author[] { author });
-
-            var result = await Subject.GetByUserName("a");
-
-            Assert.NotNull(result);
-            Assert.Equal(author.Id, result.Id);
-            Assert.Equal(author.DisplayName, result.DisplayName);
-            Assert.Equal(author.Name, result.Name);
-            Assert.Equal(author.IsVisible, result.IsVisible);
-        }
-
-        [Fact]
-        public async Task GetByUserName_Command()
-        {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.SingleResult = new Author(3, "s", "t", true);
 
             _ = await Subject.GetByUserName("b");
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("dbo.Author_GetByUserName", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("dbo.Author_GetByUserName", MockQuerier.CommandText);
 
-            Assert.Equal("@userName", MockData.Parameters[0].ParameterName);
-            Assert.Equal("b", MockData.Parameters[0].Value);
+            Assert.Equal("b", MockQuerier.Parameters.userName);
         }
 
         [Fact]
-        public async Task GetAll_Command()
+        public async Task GetAll_Executes()
         {
-            MockData.ReaderResultset = new DataTable();
+            MockQuerier.ManyResults = new Author[]
+            {
+                new Author(3, "s", "t", true)
+            };
 
-            _ = await Subject.GetAll().ToListAsync();
+            _ = await Subject.GetAll();
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockData.ConnectionStringName);
-            Assert.Equal("dbo.Author_GetAll", MockData.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
+            Assert.Equal("dbo.Author_GetAll", MockQuerier.CommandText);
 
-            Assert.Equal("@doIncludeHidden", MockData.Parameters[0].ParameterName);
-            Assert.Equal(false, MockData.Parameters[0].Value);
+            Assert.Equal(false, MockQuerier.Parameters.doIncludeHidden);
         }
     }
 }

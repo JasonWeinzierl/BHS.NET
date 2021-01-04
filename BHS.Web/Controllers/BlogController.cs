@@ -23,9 +23,9 @@ namespace BHS.Web.Controllers
         /// Get all posts, with optional search criteria
         /// </summary>
         [HttpGet("posts")]
-        public ActionResult<IAsyncEnumerable<PostPreview>> SearchPosts(string q, DateTime? from, DateTime? to)
+        public async Task<ActionResult<IEnumerable<PostPreview>>> SearchPosts(string q, DateTime? from, DateTime? to)
         {
-            return Ok(_blogService.SearchPosts(q, from, to));
+            return Ok(await _blogService.SearchPosts(q, from, to));
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace BHS.Web.Controllers
         /// Get the categories of a post
         /// </summary>
         [HttpGet("posts/{slug}/categories")]
-        public ActionResult<IAsyncEnumerable<Category>> GetPostCategories(string slug)
+        public async Task<ActionResult<IEnumerable<Category>>> GetPostCategories(string slug)
         {
-            return Ok(_blogService.GetCategoriesByPost(slug));
+            return Ok(await _blogService.GetCategoriesByPost(slug));
         }
 
         ///// <summary>
@@ -104,9 +104,9 @@ namespace BHS.Web.Controllers
         /// Get the posts of a category
         /// </summary>
         [HttpGet("categories/{slug}/posts")]
-        public ActionResult<IAsyncEnumerable<PostPreview>> GetCategoryPosts(string slug)
+        public async Task<ActionResult<IEnumerable<PostPreview>>> GetCategoryPosts(string slug)
         {
-            return Ok(_blogService.GetPostsByCategory(slug));
+            return Ok(await _blogService.GetPostsByCategory(slug));
         }
 
         ///// <summary>

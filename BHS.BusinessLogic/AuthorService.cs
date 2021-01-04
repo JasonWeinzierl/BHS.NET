@@ -26,7 +26,7 @@ namespace BHS.BusinessLogic
             return _authorRepository.GetByUserName(username);
         }
 
-        public IAsyncEnumerable<Author> GetAuthors(bool doIncludeHidden = false)
+        public Task<IEnumerable<Author>> GetAuthors(bool doIncludeHidden = false)
         {
             return _authorRepository.GetAll(doIncludeHidden);
         }

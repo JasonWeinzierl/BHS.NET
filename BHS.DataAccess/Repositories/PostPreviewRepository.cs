@@ -2,7 +2,7 @@
 using BHS.DataAccess.Core;
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
 {
@@ -15,41 +15,24 @@ namespace BHS.DataAccess.Repositories
             Q = querier;
         }
 
-        public IAsyncEnumerable<PostPreview> Search(string text, DateTimeOffset? from, DateTimeOffset? to)
+        public Task<IEnumerable<PostPreview>> Search(string text, DateTimeOffset? from, DateTimeOffset? to)
         {
-            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_Search", cmd =>
+            return Q.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_Search", new
             {
-                cmd.Parameters.Add(cmd.CreateParameter("@searchText", text));
-                cmd.Parameters.Add(cmd.CreateParameter("@fromDate", from, DbType.DateTimeOffset));
-                cmd.Parameters.Add(cmd.CreateParameter("@toDate", to, DbType.DateTimeOffset));
-            }, GetPostPreview);
+                searchText = text,
+                fromDate = from,
+                toDate = to
+            });
         }
 
-        public IAsyncEnumerable<PostPreview> GetByCategorySlug(string categorySlug)
+        public Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug)
         {
-            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", cmd =>
-            {
-                cmd.Parameters.Add(cmd.CreateParameter("@categorySlug", categorySlug));
-            }, GetPostPreview);
+            return Q.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", new { categorySlug });
         }
 
-        public IAsyncEnumerable<PostPreview> GetByAuthorId(int authorId)
+        public Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId)
         {
-            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", cmd =>
-            {
-                cmd.Parameters.Add(cmd.CreateParameter("@authorId", authorId));
-            }, GetPostPreview);
-        }
-
-        private static PostPreview GetPostPreview(IDataRecord dr)
-        {
-            return new PostPreview(
-                dr.CastString("Slug"),
-                dr.CastString("Title"),
-                dr.CastString("ContentPreview"),
-                dr.CastInt("AuthorId"),
-                dr.CastDateTimeOffset("DatePublished")
-                );
+            return Q.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", new { authorId });
         }
     }
 }

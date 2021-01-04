@@ -16,28 +16,14 @@ namespace BHS.DataAccess.Repositories
             Q = querier;
         }
 
-        public async Task<Category> GetBySlug(string slug)
+        public Task<Category> GetBySlug(string slug)
         {
-            return await Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", cmd =>
-            {
-                cmd.Parameters.Add(cmd.CreateParameter("@slug", slug, DbType.Int32));
-            }, GetCategory).SingleOrDefaultAsync();
+            return Q.QuerySingleOrDefaultAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", new { slug });
         }
 
-        public IAsyncEnumerable<Category> GetByPostSlug(string postSlug)
+        public Task<IEnumerable<Category>> GetByPostSlug(string postSlug)
         {
-            return Q.ExecuteReaderAsync(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", cmd =>
-            {
-                cmd.Parameters.Add(cmd.CreateParameter("@postSlug", postSlug, DbType.Int32));
-            }, GetCategory);
-        }
-
-        private static Category GetCategory(IDataRecord dr)
-        {
-            return new Category(
-                dr.CastString("Slug"),
-                dr.CastString("Name")
-                );
+            return Q.QueryAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", new { postSlug });
         }
     }
 }

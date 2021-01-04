@@ -2,7 +2,9 @@ using BHS.BusinessLogic;
 using BHS.BusinessLogic.Blog;
 using BHS.BusinessLogic.Photos;
 using BHS.DataAccess.Core;
+using BHS.DataAccess.Core.TypeHandlers;
 using BHS.DataAccess.Repositories;
+using Dapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -49,6 +51,7 @@ namespace BHS.Web
             });
 
             DbProviderFactories.RegisterFactory("System.Data.SqlClient", SqlClientFactory.Instance);
+            SqlMapper.AddTypeHandler(new DapperUriTypeHandler());
 
             #region BHS Dependencies
 
