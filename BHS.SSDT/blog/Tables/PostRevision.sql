@@ -4,7 +4,7 @@
     [DateCreated] DATETIMEOFFSET NOT NULL,
     [PostSlug] VARCHAR(127) NOT NULL,
     [Title] NVARCHAR (255) NOT NULL,
-    [ContentMarkdown] NVARCHAR (MAX) NULL,
+    [ContentMarkdown] NVARCHAR (MAX) NOT NULL,
     [FilePath] VARCHAR (255) NULL,
     [PhotosAlbumId] INT NULL,
     [AuthorId] INT NULL,
