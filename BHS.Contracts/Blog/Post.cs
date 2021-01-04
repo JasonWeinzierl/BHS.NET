@@ -8,7 +8,7 @@ namespace BHS.Contracts.Blog
         string ContentMarkdown,
         Uri FilePath,
         int? PhotosAlbumId,
-        int AuthorId,
+        int? AuthorId,
         DateTimeOffset DatePublished,
         DateTimeOffset DateLastModified);
 }
