@@ -8,7 +8,7 @@ AS
 BEGIN
 	SELECT	[Slug]
 			, [Title]
-			, [ContentMarkdown]
+			, [ContentMarkdown] AS ContentPreview
 			, [AuthorId]
 			, [DatePublished]
 	FROM	[blog].[Post_View]
