@@ -8,8 +8,7 @@ namespace BHS.DataAccess.Core.TypeHandlers
     {
         public override Uri Parse(object value)
         {
-            string str = value == DBNull.Value ? default : value.ToString();
-            Uri.TryCreate(str, UriKind.RelativeOrAbsolute, out Uri uri);
+            Uri.TryCreate(value.ToString(), UriKind.RelativeOrAbsolute, out Uri uri);
             return uri;
         }
 
