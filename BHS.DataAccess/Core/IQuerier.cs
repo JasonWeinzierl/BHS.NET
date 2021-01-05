@@ -16,7 +16,7 @@ namespace BHS.DataAccess.Core
         /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
         /// <param name="parameters"> Object of parameter values. </param>
         /// <returns> The first column of the first row in the resultset. </returns>
-        Task<T> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object parameters);
+        Task<T> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object parameters = null);
 
         /// <summary>
         /// Execute command text and return a single model; throws on multiple.  By default, commandText is treated as a stored procedure name.
@@ -36,7 +36,7 @@ namespace BHS.DataAccess.Core
         /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
         /// <param name="parameters"> Object of parameter values. </param>
         /// <returns> Models filled from the resultset. </returns>
-        Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object parameters);
+        Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object parameters = null);
 
         /// <summary>
         /// Execute command text and return the number of rows affected.  By default, commandText is treated as a stored procedure name.
@@ -45,6 +45,6 @@ namespace BHS.DataAccess.Core
         /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
         /// <param name="parameters"> Object of parameter values. </param>
         /// <returns> The number of rows affected. </returns>
-        Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object parameters);
+        Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object parameters = null);
     }
 }

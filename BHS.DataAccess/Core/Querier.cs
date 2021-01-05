@@ -14,7 +14,7 @@ namespace BHS.DataAccess.Core
             _factory = factory;
         }
 
-        public async Task<T> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object parameters)
+        public async Task<T> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object parameters = null)
         {
             using var connection = _factory.CreateConnection(connectionStringName);
             await connection.OpenAsync();
@@ -35,7 +35,7 @@ namespace BHS.DataAccess.Core
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object parameters)
+        public async Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object parameters = null)
         {
             using var connection = _factory.CreateConnection(connectionStringName);
             await connection.OpenAsync();
@@ -46,7 +46,7 @@ namespace BHS.DataAccess.Core
         }
 
 
-        public async Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object parameters)
+        public async Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object parameters = null)
         {
             using var connection = _factory.CreateConnection(connectionStringName);
             await connection.OpenAsync();

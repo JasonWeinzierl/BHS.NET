@@ -62,7 +62,7 @@ namespace BHS.DataAccess.Tests
         public string CommandText { get; private set; }
 
 
-        public Task<T> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object parameters)
+        public Task<T> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object parameters = null)
         {
             if (ScalarCell is not T ret)
                 throw new InvalidOperationException(nameof(ScalarCell) + " must have value.");
@@ -86,7 +86,7 @@ namespace BHS.DataAccess.Tests
             return Task.FromResult(ret);
         }
 
-        public Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object parameters)
+        public Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object parameters = null)
         {
             if (ManyResults is not IEnumerable<T> ret)
                 throw new InvalidOperationException(nameof(ManyResults) + " must have value.");
@@ -98,7 +98,7 @@ namespace BHS.DataAccess.Tests
             return Task.FromResult(ret);
         }
 
-        public Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object parameters)
+        public Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object parameters = null)
         {
             if (!NonQueryRowsAffected.HasValue)
                 throw new InvalidOperationException(nameof(NonQueryRowsAffected) + " must have value.");
