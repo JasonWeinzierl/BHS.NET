@@ -72,6 +72,7 @@
     <Folder Include="blog\Stored Procedures\" />
     <Folder Include="dbo\Stored Procedures" />
     <Folder Include="blog\Views" />
+    <Folder Include="photos\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\blog.sql" />
@@ -103,6 +104,10 @@
     <Build Include="blog\Tables\PostDeletion.sql" />
     <Build Include="blog\Views\PostCategory_View.sql" />
     <Build Include="blog\Views\Post_View.sql" />
+    <Build Include="photos\Stored Procedures\Album_GetAll.sql" />
+    <Build Include="photos\Stored Procedures\Album_GetById.sql" />
+    <Build Include="photos\Stored Procedures\Photo_GetByAlbumId.sql" />
+    <Build Include="photos\Stored Procedures\Photo_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BHS.SSDT.refactorlog" />
