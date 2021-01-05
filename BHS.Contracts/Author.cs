@@ -3,6 +3,5 @@
     public record Author(
         int Id,
         string DisplayName,
-        string Name,
-        bool IsVisible);
+        string Name);
 }

@@ -1,9 +1,7 @@
 ﻿using BHS.Contracts;
-using BHS.DataAccess;
 using BHS.DataAccess.Repositories;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BHS.BusinessLogic
@@ -26,9 +24,9 @@ namespace BHS.BusinessLogic
             return _authorRepository.GetByUserName(username);
         }
 
-        public Task<IEnumerable<Author>> GetAuthors(bool doIncludeHidden = false)
+        public Task<IEnumerable<Author>> GetAuthors()
         {
-            return _authorRepository.GetAll(doIncludeHidden);
+            return _authorRepository.GetAll();
         }
     }
 }

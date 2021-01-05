@@ -14,9 +14,9 @@ namespace BHS.DataAccess.Repositories
             Q = querier;
         }
 
-        public Task<IEnumerable<Author>> GetAll(bool doIncludeHidden = false)
+        public Task<IEnumerable<Author>> GetAll()
         {
-            return Q.QueryAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetAll", new { doIncludeHidden });
+            return Q.QueryAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetAll");
         }
 
         public Task<Author> GetByUserName(string userName)

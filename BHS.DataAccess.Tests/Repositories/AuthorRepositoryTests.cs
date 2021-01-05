@@ -19,7 +19,7 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetByUserName_Executes()
         {
-            MockQuerier.SingleResult = new Author(3, "s", "t", true);
+            MockQuerier.SingleResult = new Author(3, "s", "t");
 
             _ = await Subject.GetByUserName("b");
 
@@ -34,15 +34,13 @@ namespace BHS.DataAccess.Repositories.Tests
         {
             MockQuerier.ManyResults = new Author[]
             {
-                new Author(3, "s", "t", true)
+                new Author(3, "s", "t")
             };
 
             _ = await Subject.GetAll();
 
             Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
             Assert.Equal("dbo.Author_GetAll", MockQuerier.CommandText);
-
-            Assert.Equal(false, MockQuerier.Parameters.doIncludeHidden);
         }
     }
 }

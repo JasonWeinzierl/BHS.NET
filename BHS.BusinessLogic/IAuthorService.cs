@@ -7,6 +7,6 @@ namespace BHS.BusinessLogic
     public interface IAuthorService
     {
         Task<Author> GetAuthor(string userName);
-        Task<IEnumerable<Author>> GetAuthors(bool doIncludeHidden = false);
+        Task<IEnumerable<Author>> GetAuthors();
     }
 }

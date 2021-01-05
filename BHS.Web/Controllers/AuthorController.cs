@@ -24,16 +24,16 @@ namespace BHS.Web.Controllers
         }
 
         /// <summary>
-        /// Get all visible authors
+        /// Get all authors.
         /// </summary>
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<Author>>> GetVisibleAuthors()
+        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
             return Ok(await _authorService.GetAuthors());
         }
 
         /// <summary>
-        /// Get an author
+        /// Get an author.
         /// </summary>
         [HttpGet("{username}")]
         public async Task<ActionResult<Author>> GetAuthor(string username)
@@ -44,7 +44,7 @@ namespace BHS.Web.Controllers
         }
 
         /// <summary>
-        /// Get the posts of an author
+        /// Get the posts of an author.
         /// </summary>
         [HttpGet("{username}/posts")]
         public async Task<ActionResult<IEnumerable<PostPreview>>> GetAuthorPosts(string username)

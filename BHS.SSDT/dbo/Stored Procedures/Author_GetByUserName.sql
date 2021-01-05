@@ -5,7 +5,6 @@ BEGIN
 	SELECT	[Id]
 			, [DisplayName]
 			, [Name]
-			, [IsVisible]
 	FROM	[dbo].[Author]
 	WHERE	[DisplayName] = @userName;
 END
