@@ -19,7 +19,7 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetById_Executes()
         {
-            MockQuerier.SingleResult = new Album(1, default, default, default, default, default, default, default);
+            MockQuerier.SingleResult = new Album(1, default, default, default, default, default);
 
             _ = await Subject.GetById(2);
 
@@ -34,15 +34,13 @@ namespace BHS.DataAccess.Repositories.Tests
         {
             MockQuerier.ManyResults = new Album[]
             {
-                new Album(1, default, default, default, default, default, default, default)
+                new Album(1, default, default, default, default, default)
             };
 
             _ = await Subject.GetAll();
 
             Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
             Assert.Equal("photos.Album_GetAll", MockQuerier.CommandText);
-
-            Assert.Equal(false, MockQuerier.Parameters.doIncludeHidden);
         }
     }
 }

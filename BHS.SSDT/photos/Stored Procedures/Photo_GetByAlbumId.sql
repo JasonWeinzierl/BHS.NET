@@ -5,10 +5,9 @@ BEGIN
 	SELECT	[Id]
 			, [Name]
 			, [ImagePath]
-			, [IsVisible]
 			, [DatePosted]
 			, [AuthorId]
 	FROM	[photos].[Photo] p JOIN
-			[photos].Exhibit e ON e.PhotoId = p.Id
-	WHERE	e.AlbumId = @albumId;
+			[photos].[Exhibit] e ON e.[PhotoId] = p.[Id]
+	WHERE	e.[AlbumId] = @albumId;
 END

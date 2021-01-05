@@ -19,9 +19,9 @@ namespace BHS.DataAccess.Repositories
             return Q.QuerySingleOrDefaultAsync<Album>(Constants.bhsConnectionStringName, "photos.Album_GetById", new { id });
         }
 
-        public Task<IEnumerable<Album>> GetAll(bool doIncludeHidden = false)
+        public Task<IEnumerable<Album>> GetAll()
         {
-            return Q.QueryAsync<Album>(Constants.bhsConnectionStringName, "photos.Album_GetAll", new { doIncludeHidden });
+            return Q.QueryAsync<Album>(Constants.bhsConnectionStringName, "photos.Album_GetAll");
         }
     }
 }

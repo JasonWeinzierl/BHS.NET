@@ -5,7 +5,6 @@ BEGIN
 	SELECT	[Id]
 			, [Name]
 			, [ImagePath]
-			, [IsVisible]
 			, [DatePosted]
 			, [AuthorId]
 	FROM	[photos].[Photo]

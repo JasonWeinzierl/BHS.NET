@@ -6,7 +6,6 @@ namespace BHS.Contracts.Photos
         int Id,
         string Name,
         Uri ImageUri,
-        bool IsVisible,
         DateTimeOffset DatePosted,
         int? AuthorId);
 }

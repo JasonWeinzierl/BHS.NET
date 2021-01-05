@@ -7,8 +7,6 @@ namespace BHS.Contracts.Photos
         string Name,
         string Description,
         int? BannerPhotoId,
-        int? BlogPostId,
-        bool IsVisible,
-        DateTimeOffset DateUpdated,
+        string BlogPostSlug,
         int? AuthorId);
 }

@@ -20,7 +20,7 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetById_Executes()
         {
-            MockQuerier.SingleResult = new Photo(9, "p", new Uri("scheme:path"), true, new DateTimeOffset(2020, 12, 16, 0, 5, 0, TimeSpan.FromHours(-6)), 8);
+            MockQuerier.SingleResult = new Photo(9, "p", new Uri("scheme:path"), new DateTimeOffset(2020, 12, 16, 0, 5, 0, TimeSpan.FromHours(-6)), 8);
 
             _ = await Subject.GetById(2);
 
@@ -35,7 +35,7 @@ namespace BHS.DataAccess.Repositories.Tests
         {
             MockQuerier.ManyResults = new Photo[]
             {
-                new Photo(9, "p", new Uri("scheme:path"), true, new DateTimeOffset(2020, 12, 16, 0, 5, 0, TimeSpan.FromHours(-6)), 8)
+                new Photo(9, "p", new Uri("scheme:path"), new DateTimeOffset(2020, 12, 16, 0, 5, 0, TimeSpan.FromHours(-6)), 8)
             };
 
             _ = await Subject.GetByAlbumId(3);

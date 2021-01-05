@@ -22,9 +22,9 @@ namespace BHS.BusinessLogic.Photos
             _logger = logger;
         }
 
-        public Task<IEnumerable<Album>> GetAlbums(bool doIncludeHidden = false)
+        public Task<IEnumerable<Album>> GetAlbums()
         {
-            return _albumRepository.GetAll(doIncludeHidden);
+            return _albumRepository.GetAll();
         }
 
         public Task<Album> GetAlbum(int id)

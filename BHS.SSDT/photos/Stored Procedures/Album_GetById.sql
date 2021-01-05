@@ -6,9 +6,7 @@ BEGIN
 			, [Name]
 			, [Description]
 			, [BannerPhotoId]
-			, [BlogPostId]
-			, [IsVisible]
-			, [DateUpdated]
+			, [BlogPostSlug]
 			, [AuthorId]
 	FROM	[photos].[Album]
 	WHERE	[Id] = @id;
