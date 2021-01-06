@@ -1,20 +1,19 @@
 ﻿using Dapper;
 using System;
-using System.Data;
 
 namespace BHS.DataAccess.Core.TypeHandlers
 {
-    public class DapperUriTypeHandler : SqlMapper.TypeHandler<Uri>
+    public class DapperUriTypeHandler : SqlMapper.StringTypeHandler<Uri>
     {
-        public override Uri Parse(object value)
+        protected override string Format(Uri xml)
         {
-            Uri.TryCreate(value.ToString(), UriKind.RelativeOrAbsolute, out Uri uri);
-            return uri;
+            return xml.ToString();
         }
 
-        public override void SetValue(IDbDataParameter parameter, Uri value)
+        protected override Uri Parse(string xml)
         {
-            parameter.Value = value.ToString();
+            Uri.TryCreate(xml, UriKind.RelativeOrAbsolute, out Uri uri);
+            return uri;
         }
     }
 }
