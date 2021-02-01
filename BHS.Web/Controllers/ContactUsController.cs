@@ -1,5 +1,5 @@
-﻿using BHS.BusinessLogic;
-using BHS.Contracts;
+﻿using BHS.Contracts;
+using BHS.Model.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

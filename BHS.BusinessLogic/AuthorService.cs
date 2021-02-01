@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts;
-using BHS.DataAccess.Repositories;
+using BHS.Model.DataAccess;
+using BHS.Model.Services;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;

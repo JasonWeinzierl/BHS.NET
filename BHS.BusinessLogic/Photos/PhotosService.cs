@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts.Photos;
-using BHS.DataAccess.Repositories;
+using BHS.Model.DataAccess;
+using BHS.Model.Services.Photos;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;

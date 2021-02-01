@@ -1,5 +1,5 @@
-﻿using BHS.BusinessLogic.Photos;
-using BHS.Contracts.Photos;
+﻿using BHS.Contracts.Photos;
+using BHS.Model.Services.Photos;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

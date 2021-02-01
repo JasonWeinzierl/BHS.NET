@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BHS.DataAccess.Repositories
+namespace BHS.Model.DataAccess
 {
     public interface IPostPreviewRepository
     {

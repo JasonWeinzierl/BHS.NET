@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BHS.BusinessLogic.Photos
+namespace BHS.Model.Services.Photos
 {
     public interface IPhotosService
     {

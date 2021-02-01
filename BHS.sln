@@ -24,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.DataAccess.Tests", "BHS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.BusinessLogic.Tests", "BHS.BusinessLogic.Tests\BHS.BusinessLogic.Tests.csproj", "{47861862-8C68-4EB1-8785-DBC3B644A9EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHS.Web.Tests", "BHS.Web.Tests\BHS.Web.Tests.csproj", "{E13F0BCB-8675-4903-940B-E755B9BE403D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Web.Tests", "BHS.Web.Tests\BHS.Web.Tests.csproj", "{E13F0BCB-8675-4903-940B-E755B9BE403D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHS.Model", "BHS.Model\BHS.Model.csproj", "{559E90BA-08F5-4F0B-9569-81930AC872BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,10 @@ Global
 		{E13F0BCB-8675-4903-940B-E755B9BE403D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E13F0BCB-8675-4903-940B-E755B9BE403D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E13F0BCB-8675-4903-940B-E755B9BE403D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{559E90BA-08F5-4F0B-9569-81930AC872BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{559E90BA-08F5-4F0B-9569-81930AC872BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{559E90BA-08F5-4F0B-9569-81930AC872BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{559E90BA-08F5-4F0B-9569-81930AC872BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

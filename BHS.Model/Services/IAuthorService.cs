@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BHS.BusinessLogic
+namespace BHS.Model.Services
 {
     public interface IAuthorService
     {

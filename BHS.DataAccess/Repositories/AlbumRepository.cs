@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.DataAccess.Core;
+using BHS.Model.DataAccess;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

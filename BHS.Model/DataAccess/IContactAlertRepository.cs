@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts;
 using System.Threading.Tasks;
 
-namespace BHS.DataAccess.Repositories
+namespace BHS.Model.DataAccess
 {
     public interface IContactAlertRepository
     {

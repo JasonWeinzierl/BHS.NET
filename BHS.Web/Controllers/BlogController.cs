@@ -1,5 +1,5 @@
-﻿using BHS.BusinessLogic.Blog;
-using BHS.Contracts.Blog;
+﻿using BHS.Contracts.Blog;
+using BHS.Model.Services.Blog;
 //using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;

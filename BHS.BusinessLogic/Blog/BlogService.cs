@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts.Blog;
-using BHS.DataAccess.Repositories;
+using BHS.Model.DataAccess;
+using BHS.Model.Services.Blog;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

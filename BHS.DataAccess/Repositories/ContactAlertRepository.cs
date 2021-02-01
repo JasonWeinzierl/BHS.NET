@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts;
 using BHS.DataAccess.Core;
+using BHS.Model.DataAccess;
 using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories

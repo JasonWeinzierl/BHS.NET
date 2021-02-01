@@ -1,5 +1,5 @@
 using BHS.Contracts;
-using BHS.DataAccess.Repositories;
+using BHS.Model.DataAccess;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SendGrid;
