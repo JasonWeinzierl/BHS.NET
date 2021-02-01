@@ -55,7 +55,7 @@ namespace BHS.Web
             });
 
             DbProviderFactories.RegisterFactory("System.Data.SqlClient", SqlClientFactory.Instance);
-            SqlMapper.AddTypeHandler(new DapperUriTypeHandler());
+            SqlMapper.AddTypeHandler(DapperUriTypeHandler.Default);
 
             #region BHS Dependencies
 
