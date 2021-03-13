@@ -16,7 +16,7 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public Task<IEnumerable<PostPreview>> Search(string text, DateTimeOffset? from, DateTimeOffset? to)
+        public Task<IEnumerable<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to)
         {
             return E.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_Search", new
             {

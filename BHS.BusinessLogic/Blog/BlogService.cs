@@ -61,7 +61,7 @@ namespace BHS.BusinessLogic.Blog
             return await _postPreviewRepository.GetByAuthorId(author.Id);
         }
 
-        public Task<IEnumerable<PostPreview>> SearchPosts(string text, DateTime? from, DateTime? to)
+        public Task<IEnumerable<PostPreview>> SearchPosts(string? text, DateTime? from, DateTime? to)
         {
             return _postPreviewRepository.Search(text, from, to);
         }

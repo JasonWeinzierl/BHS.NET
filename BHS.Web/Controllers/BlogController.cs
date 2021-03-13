@@ -23,7 +23,7 @@ namespace BHS.Web.Controllers
         /// Get all posts, with optional search criteria
         /// </summary>
         [HttpGet("posts")]
-        public async Task<ActionResult<IEnumerable<PostPreview>>> SearchPosts(string q, DateTime? from, DateTime? to)
+        public async Task<ActionResult<IEnumerable<PostPreview>>> SearchPosts(string? q, DateTime? from, DateTime? to)
         {
             return Ok(await _blogService.SearchPosts(q, from, to));
         }
