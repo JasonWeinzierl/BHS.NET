@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4406DB72
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9C866732-9887-46FC-B1C5-69FC5EC6519F}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
@@ -26,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.BusinessLogic.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Web.Tests", "BHS.Web.Tests\BHS.Web.Tests.csproj", "{E13F0BCB-8675-4903-940B-E755B9BE403D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHS.Model", "BHS.Model\BHS.Model.csproj", "{559E90BA-08F5-4F0B-9569-81930AC872BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Model", "BHS.Model\BHS.Model.csproj", "{559E90BA-08F5-4F0B-9569-81930AC872BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
