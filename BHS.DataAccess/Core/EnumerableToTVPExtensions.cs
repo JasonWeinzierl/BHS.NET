@@ -20,17 +20,18 @@ namespace BHS.DataAccess.Core
         /// <param name="typeName"> Name of user-defined table type. </param>
         /// <param name="columnName"> Name of column in the user-defined table type. </param>
         /// <returns> A filled single-column table-valued parameter. </returns>
-        public static SqlMapper.ICustomQueryParameter ToTableValuedParameter(this IEnumerable<string> strings, string typeName = "StringList", string columnName = "String")
+        public static SqlMapper.ICustomQueryParameter ToTableValuedParameter(this IEnumerable<string?> strings, string typeName = "StringList", string columnName = "String")
         {
             return ToDataTable(strings, columnName).AsTableValuedParameter(typeName);
         }
 
-        internal static DataTable ToDataTable(IEnumerable<string> strings, string columnName)
+        internal static DataTable ToDataTable(IEnumerable<string?> strings, string columnName)
         {
             var table = new DataTable();
-            table.Columns.Add(columnName, typeof(string));
+            var column = table.Columns.Add(columnName, typeof(string));
+            column.AllowDBNull = true;
             foreach (var s in strings)
-                table.Rows.Add(s);
+                table.Rows.Add(s ?? Convert.DBNull);
             return table;
         }
 
@@ -50,7 +51,8 @@ namespace BHS.DataAccess.Core
         internal static DataTable ToDataTable(IEnumerable<int> numbers, string columnName)
         {
             var table = new DataTable();
-            table.Columns.Add(columnName, typeof(int));
+            var column = table.Columns.Add(columnName, typeof(int));
+            column.AllowDBNull = false;
             foreach (var n in numbers)
                 table.Rows.Add(n);
             return table;
@@ -75,7 +77,7 @@ namespace BHS.DataAccess.Core
             var column = table.Columns.Add(columnName, typeof(int));
             column.AllowDBNull = true;
             foreach (var n in numbers)
-                table.Rows.Add(n ?? (object)DBNull.Value);
+                table.Rows.Add(n ?? Convert.DBNull);
             return table;
         }
 
@@ -95,7 +97,8 @@ namespace BHS.DataAccess.Core
         internal static DataTable ToDataTable(IEnumerable<long> longs, string columnName)
         {
             var table = new DataTable();
-            table.Columns.Add(columnName, typeof(long));
+            var column = table.Columns.Add(columnName, typeof(long));
+            column.AllowDBNull = false;
             foreach (var l in longs)
                 table.Rows.Add(l);
             return table;

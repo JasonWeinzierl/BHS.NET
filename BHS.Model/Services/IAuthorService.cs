@@ -6,7 +6,7 @@ namespace BHS.Model.Services
 {
     public interface IAuthorService
     {
-        Task<Author> GetAuthor(string userName);
+        Task<Author?> GetAuthor(string userName);
         Task<IEnumerable<Author>> GetAuthors();
     }
 }

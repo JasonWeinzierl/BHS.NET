@@ -15,7 +15,7 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public Task<Photo> GetById(int id)
+        public Task<Photo?> GetById(int id)
         {
             return E.QuerySingleOrDefaultAsync<Photo>(Constants.bhsConnectionStringName, "photos.Photo_GetById", new { id });
         }

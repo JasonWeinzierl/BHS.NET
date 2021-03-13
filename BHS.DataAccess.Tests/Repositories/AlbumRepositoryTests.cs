@@ -26,7 +26,7 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("photos.Album_GetById", _mockExecuter.CommandText);
 
-            Assert.Equal(2, _mockExecuter.Parameters.id);
+            Assert.Equal(2, _mockExecuter.Parameters?.id);
         }
 
         [Fact]

@@ -34,7 +34,7 @@ namespace BHS.DataAccess.Core.Tests
         [Fact]
         public void ToDataTable_ConvertsListOfStrings()
         {
-            var strings = new string[] { "A", string.Empty, null };
+            var strings = new string?[] { "A", string.Empty, null };
 
             var result = EnumerableToTVPExtensions.ToDataTable(strings, "String");
 

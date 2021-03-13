@@ -11,7 +11,7 @@ namespace BHS.DataAccess.Core.Tests
     {
         private readonly DbConnectionFactory _subject;
 
-        private string ConnectionStringName;
+        private string? ConnectionStringName;
 
         public DbConnectionFactoryTests()
         {
@@ -52,7 +52,7 @@ namespace BHS.DataAccess.Core.Tests
         }
 
         [Fact]
-        public void CreateConnection_ThrowsOnMissingConnectionString()
+        public void CreateConnection_OnMissingConnectionString_Throws()
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
@@ -61,7 +61,7 @@ namespace BHS.DataAccess.Core.Tests
         }
 
         [Fact]
-        public void CreateConnection_ThrowsOnMissingProviderName()
+        public void CreateConnection_OnMissingProviderName_Throws()
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
@@ -70,7 +70,7 @@ namespace BHS.DataAccess.Core.Tests
         }
 
         [Fact]
-        public void CreateConnection_ThrowsOnProviderFactoryNotRegistered()
+        public void CreateConnection_OnProviderFactoryNotRegistered_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
             {

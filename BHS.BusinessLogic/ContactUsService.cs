@@ -35,8 +35,8 @@ namespace BHS.BusinessLogic
             var newAlert = await _contactAlertRepository.Insert(request);
 
             var submitTime = newAlert.DateRequested ?? newAlert.DateCreated;
-            // todo: this breaks on linux :(
-            submitTime = TimeZoneInfo.ConvertTime(submitTime, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
+            // Set to CST.
+            submitTime = submitTime.ToOffset(TimeSpan.FromHours(-6));
 
             var msg = new SendGridMessage
             {

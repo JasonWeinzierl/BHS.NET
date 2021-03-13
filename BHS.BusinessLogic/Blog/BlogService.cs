@@ -1,9 +1,11 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.Model.DataAccess;
+using BHS.Model.Exceptions;
 using BHS.Model.Services.Blog;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BHS.BusinessLogic.Blog
@@ -30,7 +32,7 @@ namespace BHS.BusinessLogic.Blog
             _logger = logger;
         }
 
-        public Task<Category> GetCategory(string slug)
+        public Task<Category?> GetCategory(string slug)
         {
             return _categoryRepository.GetBySlug(slug);
         }
@@ -40,7 +42,7 @@ namespace BHS.BusinessLogic.Blog
             return _postPreviewRepository.GetByCategorySlug(slug);
         }
 
-        public Task<Post> GetPost(string slug)
+        public Task<Post?> GetPost(string slug)
         {
             return _postRepository.GetBySlug(slug);
         }
@@ -53,8 +55,8 @@ namespace BHS.BusinessLogic.Blog
         public async Task<IEnumerable<PostPreview>> GetPostsByAuthor(string username)
         {
             var author = await _authorRepository.GetByUserName(username);
-            if (author == default)
-                return default;
+            if (author is null)
+                throw new NotFoundException($"Author '{username}' does not exist.");
 
             return await _postPreviewRepository.GetByAuthorId(author.Id);
         }

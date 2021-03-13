@@ -39,7 +39,7 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<Author>> GetAuthor(string username)
         {
             var author = await _authorService.GetAuthor(username);
-            if (author == default) return NotFound();
+            if (author is null) return NotFound();
             return Ok(author);
         }
 
@@ -48,10 +48,6 @@ namespace BHS.Web.Controllers
         /// </summary>
         [HttpGet("{username}/posts")]
         public async Task<ActionResult<IEnumerable<PostPreview>>> GetAuthorPosts(string username)
-        {
-            var posts = await _blogService.GetPostsByAuthor(username);
-            if (posts == default) return NotFound();
-            return Ok(posts);
-        }
+            => Ok(await _blogService.GetPostsByAuthor(username));
     }
 }

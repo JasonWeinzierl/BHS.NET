@@ -4,9 +4,9 @@ namespace BHS.Contracts
 {
     public record ContactAlert(
         int Id,
-        string Name,
+        string? Name,
         string EmailAddress,
-        string Message,
+        string? Message,
         DateTimeOffset? DateRequested,
         DateTimeOffset DateCreated);
 }

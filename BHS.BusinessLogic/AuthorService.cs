@@ -20,7 +20,7 @@ namespace BHS.BusinessLogic
             _logger = logger;
         }
 
-        public Task<Author> GetAuthor(string username)
+        public Task<Author?> GetAuthor(string username)
         {
             return _authorRepository.GetByUserName(username);
         }

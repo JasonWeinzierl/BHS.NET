@@ -14,13 +14,13 @@ namespace BHS.DataAccess.Core
     public class DbConnectionFactory : IDbConnectionFactory
     {
         private readonly IConfiguration _configuration;
-        private readonly ILogger _logger;
+        private readonly ILogger? _logger;
 
         private const string providerConnectionStringNameFormat = "{0}_ProviderName";
 
         public DbConnectionFactory(
             IConfiguration configuration,
-            ILogger<DbConnectionFactory> logger)
+            ILogger<DbConnectionFactory>? logger)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _logger = logger;
@@ -67,11 +67,12 @@ namespace BHS.DataAccess.Core
         {
             try
             {
-                return DbProviderFactories.GetFactory(providerInvariantName).CreateConnection();
+                return DbProviderFactories.GetFactory(providerInvariantName).CreateConnection()
+                    ?? throw new InvalidOperationException("Provider factory returned null connection.");
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, "Provider factory '{0}' is not registered.", providerInvariantName);
+                _logger?.LogError(ex, "Failed to create connection to database.  Is the provider factory '{0}' registered?  {1}", providerInvariantName, ex.Message);
                 throw;
             }
         }

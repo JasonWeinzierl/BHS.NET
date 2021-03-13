@@ -22,14 +22,14 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetBySlug_Executes()
         {
-            _mockExecuter.SingleResult = new Post(default, default, default, default, default, default, default, default);
+            _mockExecuter.SingleResult = new Post(string.Empty, string.Empty, string.Empty, default, default, default, default, default);
 
             _ = await _subject.GetBySlug("a");
 
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.Post_GetBySlug", _mockExecuter.CommandText);
 
-            Assert.Equal("a", _mockExecuter.Parameters.slug);
+            Assert.Equal("a", _mockExecuter.Parameters?.slug);
         }
     }
 }

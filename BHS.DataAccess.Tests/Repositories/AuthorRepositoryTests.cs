@@ -26,7 +26,7 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("dbo.Author_GetByUserName", _mockExecuter.CommandText);
 
-            Assert.Equal("b", _mockExecuter.Parameters.userName);
+            Assert.Equal("b", _mockExecuter.Parameters?.userName);
         }
 
         [Fact]

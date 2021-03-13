@@ -29,9 +29,9 @@ namespace BHS.BusinessLogic.Tests
         [Fact]
         public async Task AddRequest_OnBodyEmpty_InsertsAndSendsMessage()
         {
-            var request = new ContactAlertRequest(default, default, default, default, null);
+            var request = new ContactAlertRequest(default, string.Empty, default, default, null);
             _mockRepo.Setup(r => r.Insert(It.IsAny<ContactAlertRequest>()))
-                .Returns(() => Task.FromResult(new ContactAlert(default, default, default, default, default, default)));
+                .Returns(() => Task.FromResult(new ContactAlert(default, default, string.Empty, default, default, default)));
             _sgClient.Setup(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
                 .Returns(() => Task.FromResult(new Response(System.Net.HttpStatusCode.OK, default, default)));
 
@@ -44,7 +44,7 @@ namespace BHS.BusinessLogic.Tests
         [Fact]
         public async Task AddRequest_OnBodyHasValue_DoesNothing()
         {
-            var request = new ContactAlertRequest(default, default, default, default, "something");
+            var request = new ContactAlertRequest(default, string.Empty, default, default, "something");
 
             await _subject.AddRequest(request);
 

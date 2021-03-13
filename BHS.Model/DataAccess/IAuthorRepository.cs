@@ -6,7 +6,7 @@ namespace BHS.Model.DataAccess
 {
     public interface IAuthorRepository
     {
-        Task<Author> GetByUserName(string userName);
+        Task<Author?> GetByUserName(string userName);
         Task<IEnumerable<Author>> GetAll();
     }
 }

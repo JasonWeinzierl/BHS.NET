@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
@@ -36,6 +37,8 @@
   <ItemGroup>
     <ProjectReference Include="..\BHS.BusinessLogic\BHS.BusinessLogic.csproj" />
     <ProjectReference Include="..\BHS.Contracts\BHS.Contracts.csproj" />
+    <ProjectReference Include="..\BHS.DataAccess\BHS.DataAccess.csproj" />
+    <ProjectReference Include="..\BHS.Model\BHS.Model.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

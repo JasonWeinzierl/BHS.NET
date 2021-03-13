@@ -19,21 +19,21 @@ namespace BHS.DataAccess.Tests
         /// <value>
         /// Single model to be returned.
         /// </value>
-        public object SingleResult { get; set; }
+        public object? SingleResult { get; set; }
         /// <summary>
         /// Gets or sets a value for Query queries.
         /// </summary>
         /// <value>
         /// Multiple models to be returned.
         /// </value>
-        public IEnumerable<object> ManyResults { get; set; }
+        public IEnumerable<object>? ManyResults { get; set; }
         /// <summary>
         /// Gets or sets a value for Scalar queries.
         /// </summary>
         /// <value>
         /// Object to be first cell's value.
         /// </value>
-        public object ScalarCell { get; set; }
+        public object? ScalarCell { get; set; }
         /// <summary>
         /// Gets or sets a value for NonQuery queries.
         /// </summary>
@@ -46,7 +46,7 @@ namespace BHS.DataAccess.Tests
         /// <summary>
         /// Gets name of connection string requested when creating latest connection.
         /// </summary>
-        public string ConnectionStringName { get; private set; }
+        public string? ConnectionStringName { get; private set; }
         /// <summary>
         /// Gets parameters bound to command.
         /// </summary>
@@ -55,14 +55,14 @@ namespace BHS.DataAccess.Tests
         /// in order for anonymous objects' members to be visible for assertions.
         /// Add an AssemblyAttribute to the csproj so it will be generated in the AssemblyInfo.cs.
         /// </remarks>
-        public dynamic Parameters { get; private set; }
+        public dynamic? Parameters { get; private set; }
         /// <summary>
         /// Gets command text passed to connection.
         /// </summary>
-        public string CommandText { get; private set; }
+        public string? CommandText { get; private set; }
 
 
-        public Task<T> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object parameters = null)
+        public Task<T?> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object? parameters = null)
         {
             if (ScalarCell is not T ret)
                 throw new InvalidOperationException(nameof(ScalarCell) + " must have value.");
@@ -71,10 +71,10 @@ namespace BHS.DataAccess.Tests
             CommandText = commandText;
             Parameters = parameters;
 
-            return Task.FromResult(ret);
+            return Task.FromResult((T?)ret);
         }
 
-        public Task<T> QuerySingleOrDefaultAsync<T>(string connectionStringName, string commandText, object parameters)
+        public Task<T?> QuerySingleOrDefaultAsync<T>(string connectionStringName, string commandText, object? parameters = null)
         {
             if (SingleResult is not T ret)
                 throw new InvalidOperationException(nameof(SingleResult) + " must have value.");
@@ -83,10 +83,10 @@ namespace BHS.DataAccess.Tests
             CommandText = commandText;
             Parameters = parameters;
 
-            return Task.FromResult(ret);
+            return Task.FromResult((T?)ret);
         }
 
-        public Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object parameters = null)
+        public Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object? parameters = null)
         {
             if (ManyResults is not IEnumerable<T> ret)
                 throw new InvalidOperationException(nameof(ManyResults) + " must have value.");
@@ -98,7 +98,7 @@ namespace BHS.DataAccess.Tests
             return Task.FromResult(ret);
         }
 
-        public Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object parameters = null)
+        public Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object? parameters = null)
         {
             if (!NonQueryRowsAffected.HasValue)
                 throw new InvalidOperationException(nameof(NonQueryRowsAffected) + " must have value.");

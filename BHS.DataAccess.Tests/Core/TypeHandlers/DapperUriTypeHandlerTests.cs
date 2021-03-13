@@ -1,21 +1,17 @@
 ﻿using Moq;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.DataAccess.Core.TypeHandlers.Tests
 {
     public class DapperUriTypeHandlerTests
     {
-        private readonly DapperUriTypeHandler Subject;
+        private readonly DapperUriTypeHandler _subject;
 
         public DapperUriTypeHandlerTests()
         {
-            Subject = new DapperUriTypeHandler();
+            _subject = new DapperUriTypeHandler();
         }
 
         [Fact]
@@ -23,12 +19,12 @@ namespace BHS.DataAccess.Core.TypeHandlers.Tests
         {
             var uri = new Uri("scheme:path");
 
-            object result = null;
+            object? result = null;
             var mockParameter = new Mock<IDbDataParameter>();
             mockParameter.SetupSet(p => p.Value = It.IsAny<string>())
-                .Callback<object>(s => result = s);
+                .Callback<object?>(s => result = s);
 
-            Subject.SetValue(mockParameter.Object, uri);
+            _subject.SetValue(mockParameter.Object, uri);
 
             Assert.Equal("scheme:path", result);
         }
@@ -38,7 +34,7 @@ namespace BHS.DataAccess.Core.TypeHandlers.Tests
         {
             string cell = "scheme:path";
 
-            var result = Subject.Parse(cell);
+            var result = _subject.Parse(cell);
 
             Assert.Equal(new Uri("scheme:path", UriKind.RelativeOrAbsolute), result);
         }

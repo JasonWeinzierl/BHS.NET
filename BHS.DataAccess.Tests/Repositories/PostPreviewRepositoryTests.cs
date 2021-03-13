@@ -32,9 +32,9 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.PostPreview_Search", _mockExecuter.CommandText);
 
-            Assert.Equal("a", _mockExecuter.Parameters.searchText);
-            Assert.Equal(start, _mockExecuter.Parameters.fromDate);
-            Assert.Equal(end, _mockExecuter.Parameters.toDate);
+            Assert.Equal("a", _mockExecuter.Parameters?.searchText);
+            Assert.Equal(start, _mockExecuter.Parameters?.fromDate);
+            Assert.Equal(end, _mockExecuter.Parameters?.toDate);
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.PostPreview_GetByCategorySlug", _mockExecuter.CommandText);
 
-            Assert.Equal("a", _mockExecuter.Parameters.categorySlug);
+            Assert.Equal("a", _mockExecuter.Parameters?.categorySlug);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.PostPreview_GetByAuthorId", _mockExecuter.CommandText);
 
-            Assert.Equal(1, _mockExecuter.Parameters.authorId);
+            Assert.Equal(1, _mockExecuter.Parameters?.authorId);
         }
     }
 }

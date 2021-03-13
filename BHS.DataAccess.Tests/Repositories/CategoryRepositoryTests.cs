@@ -26,7 +26,7 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.Category_GetBySlug", _mockExecuter.CommandText);
 
-            Assert.Equal("y", _mockExecuter.Parameters.slug);
+            Assert.Equal("y", _mockExecuter.Parameters?.slug);
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.Category_GetByPostSlug", _mockExecuter.CommandText);
 
-            Assert.Equal("z", _mockExecuter.Parameters.postSlug);
+            Assert.Equal("z", _mockExecuter.Parameters?.postSlug);
         }
     }
 }

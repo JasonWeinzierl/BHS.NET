@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BHS.Contracts\BHS.Contracts.csproj" />
     <ProjectReference Include="..\BHS.Model\BHS.Model.csproj" />
   </ItemGroup>
 

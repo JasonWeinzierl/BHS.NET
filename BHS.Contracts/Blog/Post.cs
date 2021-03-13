@@ -6,7 +6,7 @@ namespace BHS.Contracts.Blog
         string Slug,
         string Title,
         string ContentMarkdown,
-        Uri FilePath,
+        Uri? FilePath,
         int? PhotosAlbumId,
         int? AuthorId,
         DateTimeOffset DatePublished,

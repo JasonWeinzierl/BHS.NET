@@ -20,7 +20,7 @@ namespace BHS.DataAccess.Repositories
             return E.QueryAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetAll");
         }
 
-        public Task<Author> GetByUserName(string userName)
+        public Task<Author?> GetByUserName(string userName)
         {
             return E.QuerySingleOrDefaultAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", new { userName });
         }

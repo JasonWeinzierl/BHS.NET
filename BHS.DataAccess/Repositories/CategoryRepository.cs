@@ -15,7 +15,7 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public Task<Category> GetBySlug(string slug)
+        public Task<Category?> GetBySlug(string slug)
         {
             return E.QuerySingleOrDefaultAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", new { slug });
         }

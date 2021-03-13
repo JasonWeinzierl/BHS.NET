@@ -28,7 +28,7 @@ namespace BHS.BusinessLogic.Photos
             return _albumRepository.GetAll();
         }
 
-        public Task<Album> GetAlbum(int id)
+        public Task<Album?> GetAlbum(int id)
         {
             return _albumRepository.GetById(id);
         }
@@ -38,7 +38,7 @@ namespace BHS.BusinessLogic.Photos
             return _photoRepository.GetByAlbumId(id);
         }
 
-        public Task<Photo> GetPhoto(int id)
+        public Task<Photo?> GetPhoto(int id)
         {
             return _photoRepository.GetById(id);
         }

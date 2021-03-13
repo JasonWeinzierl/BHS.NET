@@ -27,7 +27,7 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("photos.Photo_GetById", _mockExecuter.CommandText);
 
-            Assert.Equal(2, _mockExecuter.Parameters.id);
+            Assert.Equal(2, _mockExecuter.Parameters?.id);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("photos.Photo_GetByAlbumId", _mockExecuter.CommandText);
 
-            Assert.Equal(3, _mockExecuter.Parameters.albumId);
+            Assert.Equal(3, _mockExecuter.Parameters?.albumId);
         }
     }
 }
