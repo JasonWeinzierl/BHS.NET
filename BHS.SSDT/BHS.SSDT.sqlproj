@@ -95,7 +95,6 @@
     <Build Include="blog\Stored Procedures\PostPreview_GetByCategorySlug.sql" />
     <Build Include="blog\Stored Procedures\PostPreview_GetByAuthorId.sql" />
     <Build Include="blog\Stored Procedures\Category_GetBySlug.sql" />
-    <Build Include="blog\Stored Procedures\Category_GetByPostSlug.sql" />
     <Build Include="dbo\Stored Procedures\ContactAlert_Insert.sql" />
     <Build Include="dbo\Stored Procedures\Author_GetByUserName.sql" />
     <Build Include="dbo\Stored Procedures\Author_GetAll.sql" />
@@ -108,6 +107,8 @@
     <Build Include="photos\Stored Procedures\Album_GetById.sql" />
     <Build Include="photos\Stored Procedures\Photo_GetByAlbumId.sql" />
     <Build Include="photos\Stored Procedures\Photo_GetById.sql" />
+    <Build Include="blog\Stored Procedures\Category_GetAll.sql" />
+    <Build Include="blog\Views\Category_View.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BHS.SSDT.refactorlog" />

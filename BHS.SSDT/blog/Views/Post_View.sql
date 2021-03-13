@@ -38,7 +38,8 @@ AS
 			, [AuthorId]
 			, dates.[DatePublished]
 			, dates.[DateLastModified]
-	FROM	PostLatestRevision latestRev LEFT JOIN
+	FROM	[blog].[Post] p JOIN
+			PostLatestRevision latestRev ON latestRev.[PostSlug] = p.[Slug] LEFT JOIN
 			PostDeletion del ON del.[PostSlug] = latestRev.[PostSlug] LEFT JOIN
 			PostDates dates ON dates.[PostSlug] = latestRev.[PostSlug]
 	WHERE	del.[LatestDateDeleted] IS NULL

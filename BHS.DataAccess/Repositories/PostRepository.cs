@@ -1,6 +1,8 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.DataAccess.Core;
+using BHS.DataAccess.Models;
 using BHS.Model.DataAccess;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
@@ -14,9 +16,10 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public Task<Post?> GetBySlug(string slug)
+        public async Task<Post?> GetBySlug(string slug)
         {
-            return E.QuerySingleOrDefaultAsync<Post>(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", new { slug });
+            var (posts, categories) = await E.QueryMultipleAsync<PostDTO, CategoryDTO>(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", new { slug });
+            return posts.SingleOrDefault()?.ToDomainModel(categories);
         }
     }
 }

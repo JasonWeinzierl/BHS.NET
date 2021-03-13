@@ -61,13 +61,11 @@ namespace BHS.BusinessLogic.Blog.Tests
         }
 
         [Fact]
-        public async Task GetCategoriesByPost_CallsGetBySlug()
+        public async Task GetCategories_CallsGetAll()
         {
-            string slug = "d";
+            _ = await _subject.GetCategories();
 
-            _ = await _subject.GetCategoriesByPost(slug);
-
-            _mockCatRepo.Verify(r => r.GetByPostSlug(It.Is<string>(s => s == slug)));
+            _mockCatRepo.Verify(r => r.GetAll());
         }
 
         [Fact]

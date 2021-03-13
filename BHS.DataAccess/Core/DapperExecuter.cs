@@ -19,7 +19,8 @@ namespace BHS.DataAccess.Core
             using var connection = _factory.CreateConnection(connectionStringName);
             await connection.OpenAsync();
 
-            return await connection.ExecuteScalarAsync<T>(commandText,
+            return await connection.ExecuteScalarAsync<T>(
+                commandText,
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }
@@ -29,7 +30,8 @@ namespace BHS.DataAccess.Core
             using var connection = _factory.CreateConnection(connectionStringName);
             await connection.OpenAsync();
 
-            return await connection.QuerySingleOrDefaultAsync<T>(commandText,
+            return await connection.QuerySingleOrDefaultAsync<T>(
+                commandText,
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }
@@ -39,9 +41,22 @@ namespace BHS.DataAccess.Core
             using var connection = _factory.CreateConnection(connectionStringName);
             await connection.OpenAsync();
 
-            return await connection.QueryAsync<T>(commandText,
+            return await connection.QueryAsync<T>(
+                commandText,
                 parameters,
                 commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2)> QueryMultipleAsync<T1, T2>(string connectionStringName, string commandText, object? parameters = null)
+        {
+            using var connection = _factory.CreateConnection(connectionStringName);
+            await connection.OpenAsync();
+
+            using var multiResult = await connection.QueryMultipleAsync(
+                commandText,
+                parameters,
+                commandType: CommandType.StoredProcedure);
+            return (await multiResult.ReadAsync<T1>(), await multiResult.ReadAsync<T2>());
         }
 
         public async Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object? parameters = null)
@@ -49,7 +64,8 @@ namespace BHS.DataAccess.Core
             using var connection = _factory.CreateConnection(connectionStringName);
             await connection.OpenAsync();
 
-            return await connection.ExecuteAsync(commandText,
+            return await connection.ExecuteAsync(
+                commandText,
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }

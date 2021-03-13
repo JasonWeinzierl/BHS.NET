@@ -9,7 +9,7 @@ namespace BHS.Model.Services.Blog
     {
         Task<Post?> GetPost(string slug);
         Task<IEnumerable<PostPreview>> SearchPosts(string? text, DateTime? from, DateTime? to);
-        Task<IEnumerable<Category>> GetCategoriesByPost(string slug);
+        Task<IEnumerable<Category>> GetCategories();
         Task<Category?> GetCategory(string slug);
         Task<IEnumerable<PostPreview>> GetPostsByCategory(string slug);
         Task<IEnumerable<PostPreview>> GetPostsByAuthor(string username);

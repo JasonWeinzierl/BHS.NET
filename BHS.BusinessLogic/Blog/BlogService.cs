@@ -47,9 +47,9 @@ namespace BHS.BusinessLogic.Blog
             return _postRepository.GetBySlug(slug);
         }
 
-        public Task<IEnumerable<Category>> GetCategoriesByPost(string slug)
+        public Task<IEnumerable<Category>> GetCategories()
         {
-            return _categoryRepository.GetByPostSlug(slug);
+            return _categoryRepository.GetAll();
         }
 
         public async Task<IEnumerable<PostPreview>> GetPostsByAuthor(string username)

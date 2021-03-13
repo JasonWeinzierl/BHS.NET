@@ -28,6 +28,13 @@ namespace BHS.DataAccess.Tests
         /// </value>
         public IEnumerable<object>? ManyResults { get; set; }
         /// <summary>
+        /// Gets or sets a value for QueryMultiple queries.
+        /// </summary>
+        /// <value>
+        /// Result sets of multiple models to be returned.
+        /// </value>
+        public (IEnumerable<object> t1, IEnumerable<object> t2)? ManyMultipleResults { get; set; }
+        /// <summary>
         /// Gets or sets a value for Scalar queries.
         /// </summary>
         /// <value>
@@ -96,6 +103,20 @@ namespace BHS.DataAccess.Tests
             Parameters = parameters;
 
             return Task.FromResult(ret);
+        }
+
+        public Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2)> QueryMultipleAsync<T1, T2>(string connectionStringName, string commandText, object? parameters = null)
+        {
+            if (!ManyMultipleResults.HasValue)
+                throw new InvalidOperationException(nameof(ManyMultipleResults) + " must have value.");
+            if (ManyMultipleResults.Value.t1 is not IEnumerable<T1> ret1 || ManyMultipleResults.Value.t2 is not IEnumerable<T2> ret2)
+                throw new InvalidOperationException(nameof(ManyMultipleResults) + " t1 and t2 must each have value.");
+
+            ConnectionStringName = connectionStringName;
+            CommandText = commandText;
+            Parameters = parameters;
+
+            return Task.FromResult((ret1, ret2));
         }
 
         public Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object? parameters = null)

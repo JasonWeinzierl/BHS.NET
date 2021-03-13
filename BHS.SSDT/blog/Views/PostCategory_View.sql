@@ -9,8 +9,8 @@ AS
 				[CategorySlug]
 				, [PostSlug]
 	)
-	SELECT	pce.[CategorySlug]
-			, pce.[PostSlug]
+	SELECT	pce.[PostSlug]
+			, pce.[CategorySlug]
 	FROM	[blog].[PostCategoryEvent] pce JOIN
 			LatestCategoryEvent lce ON lce.[CategorySlug] = pce.[CategorySlug]
 				AND lce.[PostSlug] = pce.[PostSlug]

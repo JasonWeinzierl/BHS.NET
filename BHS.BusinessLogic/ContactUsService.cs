@@ -27,7 +27,7 @@ namespace BHS.BusinessLogic
 
         public async Task AddRequest(ContactAlertRequest request)
         {
-            return;
+            //return;
             // Body is a honeypot.
             if (!string.IsNullOrEmpty(request.Body))
                 return;
@@ -35,8 +35,9 @@ namespace BHS.BusinessLogic
             var newAlert = await _contactAlertRepository.Insert(request);
 
             var submitTime = newAlert.DateRequested ?? newAlert.DateCreated;
-            // Set to CST.
-            submitTime = submitTime.ToOffset(TimeSpan.FromHours(-6));
+            // Set to CST, but avoid an ArgumentOutOfRangeException.
+            if (submitTime != default)
+                submitTime = submitTime.ToOffset(TimeSpan.FromHours(-6));
 
             var msg = new SendGridMessage
             {

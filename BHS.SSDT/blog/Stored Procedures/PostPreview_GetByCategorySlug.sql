@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [blog].[PostPreview_GetByCategorySlug]
 (
-	@categorySlug INT
+	@categorySlug VARCHAR(127)
 )
 AS
 BEGIN

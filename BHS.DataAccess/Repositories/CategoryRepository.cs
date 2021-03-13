@@ -15,14 +15,14 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
+        public Task<IEnumerable<Category>> GetAll()
+        {
+            return E.QueryAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetAll");
+        }
+
         public Task<Category?> GetBySlug(string slug)
         {
             return E.QuerySingleOrDefaultAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", new { slug });
-        }
-
-        public Task<IEnumerable<Category>> GetByPostSlug(string postSlug)
-        {
-            return E.QueryAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetByPostSlug", new { postSlug });
         }
     }
 }

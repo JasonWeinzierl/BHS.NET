@@ -60,7 +60,7 @@ namespace BHS.Web
             #region BHS Dependencies
 
             services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
-            services.AddSingleton<IQuerier, Querier>();
+            services.AddSingleton<IDbExecuter, DapperExecuter>();
 
             services.AddSingleton<IPostRepository, PostRepository>();
             services.AddSingleton<IPostPreviewRepository, PostPreviewRepository>();

@@ -30,19 +30,17 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
-        public async Task GetByPostSlug_Executes()
+        public async Task GetAll_Executes()
         {
             _mockExecuter.ManyResults = new Category[]
             {
                 new Category("thing", "Thing!")
             };
 
-            _ = await _subject.GetByPostSlug("z");
+            _ = await _subject.GetAll();
 
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
-            Assert.Equal("blog.Category_GetByPostSlug", _mockExecuter.CommandText);
-
-            Assert.Equal("z", _mockExecuter.Parameters?.postSlug);
+            Assert.Equal("blog.Category_GetAll", _mockExecuter.CommandText);
         }
     }
 }

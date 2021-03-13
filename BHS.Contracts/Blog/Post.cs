@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BHS.Contracts.Blog
 {
@@ -10,5 +11,6 @@ namespace BHS.Contracts.Blog
         int? PhotosAlbumId,
         int? AuthorId,
         DateTimeOffset DatePublished,
-        DateTimeOffset DateLastModified);
+        DateTimeOffset DateLastModified,
+        ICollection<Category> Categories);
 }

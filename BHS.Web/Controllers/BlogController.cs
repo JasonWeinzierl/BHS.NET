@@ -39,15 +39,6 @@ namespace BHS.Web.Controllers
             return Ok(post);
         }
 
-        /// <summary>
-        /// Get the categories of a post
-        /// </summary>
-        [HttpGet("posts/{slug}/categories")]
-        public async Task<ActionResult<IEnumerable<Category>>> GetPostCategories(string slug)
-        {
-            return Ok(await _blogService.GetCategoriesByPost(slug));
-        }
-
         ///// <summary>
         ///// Set the categories of a post
         ///// </summary>
@@ -88,6 +79,15 @@ namespace BHS.Web.Controllers
         //    return NoContent();
         //}
 
+
+        /// <summary>
+        /// Get all categories.
+        /// </summary>
+        [HttpGet("categories")]
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        {
+            return Ok(await _blogService.GetCategories());
+        }
 
         /// <summary>
         /// Get a category
