@@ -7,16 +7,16 @@ namespace BHS.DataAccess.Repositories
 {
     public class ContactAlertRepository :  IContactAlertRepository
     {
-        protected IQuerier Q { get; }
+        protected IDbExecuter E { get; }
 
-        public ContactAlertRepository(IQuerier querier)
+        public ContactAlertRepository(IDbExecuter executer)
         {
-            Q = querier;
+            E = executer;
         }
 
         public Task<ContactAlert> Insert(ContactAlertRequest contactRequest)
         {
-            return Q.QuerySingleOrDefaultAsync<ContactAlert>(Constants.bhsConnectionStringName, "dbo.ContactAlert_Insert", new
+            return E.QuerySingleOrDefaultAsync<ContactAlert>(Constants.bhsConnectionStringName, "dbo.ContactAlert_Insert", new
             {
                 name = contactRequest.Name,
                 emailAddress = contactRequest.EmailAddress,

@@ -9,16 +9,16 @@ namespace BHS.DataAccess.Repositories
 {
     public class PostPreviewRepository : IPostPreviewRepository
     {
-        protected IQuerier Q { get; }
+        protected IDbExecuter E { get; }
 
-        public PostPreviewRepository(IQuerier querier)
+        public PostPreviewRepository(IDbExecuter executer)
         {
-            Q = querier;
+            E = executer;
         }
 
         public Task<IEnumerable<PostPreview>> Search(string text, DateTimeOffset? from, DateTimeOffset? to)
         {
-            return Q.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_Search", new
+            return E.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_Search", new
             {
                 searchText = text,
                 fromDate = from,
@@ -28,12 +28,12 @@ namespace BHS.DataAccess.Repositories
 
         public Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug)
         {
-            return Q.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", new { categorySlug });
+            return E.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", new { categorySlug });
         }
 
         public Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId)
         {
-            return Q.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", new { authorId });
+            return E.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", new { authorId });
         }
     }
 }

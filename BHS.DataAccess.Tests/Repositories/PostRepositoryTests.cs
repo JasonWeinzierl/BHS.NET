@@ -8,28 +8,28 @@ namespace BHS.DataAccess.Repositories.Tests
 {
     public class PostRepositoryTests
     {
-        private readonly PostRepository Subject;
+        private readonly PostRepository _subject;
 
-        private readonly MockQuerier MockQuerier = new MockQuerier();
+        private readonly MockExecuter _mockExecuter = new();
         //private readonly ITestOutputHelper _output;
 
         public PostRepositoryTests(/*ITestOutputHelper output*/)
         {
-            Subject = new PostRepository(MockQuerier);
+            _subject = new PostRepository(_mockExecuter);
             //_output = output;
         }
 
         [Fact]
         public async Task GetBySlug_Executes()
         {
-            MockQuerier.SingleResult = new Post(default, default, default, default, default, default, default, default);
+            _mockExecuter.SingleResult = new Post(default, default, default, default, default, default, default, default);
 
-            _ = await Subject.GetBySlug("a");
+            _ = await _subject.GetBySlug("a");
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("blog.Post_GetBySlug", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("blog.Post_GetBySlug", _mockExecuter.CommandText);
 
-            Assert.Equal("a", MockQuerier.Parameters.slug);
+            Assert.Equal("a", _mockExecuter.Parameters.slug);
         }
     }
 }

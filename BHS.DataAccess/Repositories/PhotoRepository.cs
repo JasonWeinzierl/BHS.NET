@@ -8,21 +8,21 @@ namespace BHS.DataAccess.Repositories
 {
     public class PhotoRepository : IPhotoRepository
     {
-        protected IQuerier Q { get; }
+        protected IDbExecuter E { get; }
 
-        public PhotoRepository(IQuerier querier)
+        public PhotoRepository(IDbExecuter executer)
         {
-            Q = querier;
+            E = executer;
         }
 
         public Task<Photo> GetById(int id)
         {
-            return Q.QuerySingleOrDefaultAsync<Photo>(Constants.bhsConnectionStringName, "photos.Photo_GetById", new { id });
+            return E.QuerySingleOrDefaultAsync<Photo>(Constants.bhsConnectionStringName, "photos.Photo_GetById", new { id });
         }
 
         public Task<IEnumerable<Photo>> GetByAlbumId(int albumId)
         {
-            return Q.QueryAsync<Photo>(Constants.bhsConnectionStringName, "photos.Photo_GetByAlbumId", new { albumId });
+            return E.QueryAsync<Photo>(Constants.bhsConnectionStringName, "photos.Photo_GetByAlbumId", new { albumId });
         }
     }
 }

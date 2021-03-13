@@ -8,42 +8,42 @@ namespace BHS.DataAccess.Repositories.Tests
 {
     public class PhotoRepositoryTests
     {
-        private readonly PhotoRepository Subject;
+        private readonly PhotoRepository _subject;
 
-        private readonly MockQuerier MockQuerier = new MockQuerier();
+        private readonly MockExecuter _mockExecuter = new();
 
         public PhotoRepositoryTests()
         {
-            Subject = new PhotoRepository(MockQuerier);
+            _subject = new PhotoRepository(_mockExecuter);
         }
 
         [Fact]
         public async Task GetById_Executes()
         {
-            MockQuerier.SingleResult = new Photo(9, "p", new Uri("scheme:path"), new DateTimeOffset(2020, 12, 16, 0, 5, 0, TimeSpan.FromHours(-6)), 8);
+            _mockExecuter.SingleResult = new Photo(9, "p", new Uri("scheme:path"), new DateTimeOffset(2020, 12, 16, 0, 5, 0, TimeSpan.FromHours(-6)), 8);
 
-            _ = await Subject.GetById(2);
+            _ = await _subject.GetById(2);
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("photos.Photo_GetById", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("photos.Photo_GetById", _mockExecuter.CommandText);
 
-            Assert.Equal(2, MockQuerier.Parameters.id);
+            Assert.Equal(2, _mockExecuter.Parameters.id);
         }
 
         [Fact]
         public async Task GetByAlbumId_Executes()
         {
-            MockQuerier.ManyResults = new Photo[]
+            _mockExecuter.ManyResults = new Photo[]
             {
                 new Photo(9, "p", new Uri("scheme:path"), new DateTimeOffset(2020, 12, 16, 0, 5, 0, TimeSpan.FromHours(-6)), 8)
             };
 
-            _ = await Subject.GetByAlbumId(3);
+            _ = await _subject.GetByAlbumId(3);
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("photos.Photo_GetByAlbumId", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("photos.Photo_GetByAlbumId", _mockExecuter.CommandText);
 
-            Assert.Equal(3, MockQuerier.Parameters.albumId);
+            Assert.Equal(3, _mockExecuter.Parameters.albumId);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace BHS.DataAccess.Core
     /// <summary>
     /// Executes commands against a data source.
     /// </summary>
-    public interface IQuerier
+    public interface IDbExecuter
     {
         /// <summary>
         /// Execute command text and return a scalar.  By default, commandText is treated as a stored procedure name.

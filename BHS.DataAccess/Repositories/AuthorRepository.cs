@@ -8,21 +8,21 @@ namespace BHS.DataAccess.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {
-        protected IQuerier Q { get; }
+        protected IDbExecuter E { get; }
 
-        public AuthorRepository(IQuerier querier)
+        public AuthorRepository(IDbExecuter executer)
         {
-            Q = querier;
+            E = executer;
         }
 
         public Task<IEnumerable<Author>> GetAll()
         {
-            return Q.QueryAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetAll");
+            return E.QueryAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetAll");
         }
 
         public Task<Author> GetByUserName(string userName)
         {
-            return Q.QuerySingleOrDefaultAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", new { userName });
+            return E.QuerySingleOrDefaultAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", new { userName });
         }
     }
 }

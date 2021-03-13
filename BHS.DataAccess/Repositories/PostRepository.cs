@@ -7,16 +7,16 @@ namespace BHS.DataAccess.Repositories
 {
     public class PostRepository : IPostRepository
     {
-        protected IQuerier Q { get; }
+        protected IDbExecuter E { get; }
 
-        public PostRepository(IQuerier querier)
+        public PostRepository(IDbExecuter executer)
         {
-            Q = querier;
+            E = executer;
         }
 
         public Task<Post> GetBySlug(string slug)
         {
-            return Q.QuerySingleOrDefaultAsync<Post>(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", new { slug });
+            return E.QuerySingleOrDefaultAsync<Post>(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", new { slug });
         }
     }
 }

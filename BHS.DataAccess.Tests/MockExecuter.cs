@@ -11,7 +11,7 @@ namespace BHS.DataAccess.Tests
     /// Public read-only properties should be used to assert repositories.
     /// </remarks>
     [ExcludeFromCodeCoverage]
-    public class MockQuerier : IQuerier
+    public class MockExecuter : IDbExecuter
     {
         /// <summary>
         /// Gets or sets a value for QuerySingleOrDefault queries.

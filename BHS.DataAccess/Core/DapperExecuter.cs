@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Core
 {
-    public class Querier : IQuerier
+    public class DapperExecuter : IDbExecuter
     {
         private readonly IDbConnectionFactory _factory;
 
-        public Querier(IDbConnectionFactory factory)
+        public DapperExecuter(IDbConnectionFactory factory)
         {
             _factory = factory;
         }

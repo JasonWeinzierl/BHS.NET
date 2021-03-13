@@ -7,40 +7,40 @@ namespace BHS.DataAccess.Repositories.Tests
 {
     public class AuthorRepositoryTests
     {
-        private readonly AuthorRepository Subject;
+        private readonly AuthorRepository _subject;
 
-        private readonly MockQuerier MockQuerier = new MockQuerier();
+        private readonly MockExecuter _mockExecuter = new();
 
         public AuthorRepositoryTests()
         {
-            Subject = new AuthorRepository(MockQuerier);
+            _subject = new AuthorRepository(_mockExecuter);
         }
 
         [Fact]
         public async Task GetByUserName_Executes()
         {
-            MockQuerier.SingleResult = new Author(3, "s", "t");
+            _mockExecuter.SingleResult = new Author(3, "s", "t");
 
-            _ = await Subject.GetByUserName("b");
+            _ = await _subject.GetByUserName("b");
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("dbo.Author_GetByUserName", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("dbo.Author_GetByUserName", _mockExecuter.CommandText);
 
-            Assert.Equal("b", MockQuerier.Parameters.userName);
+            Assert.Equal("b", _mockExecuter.Parameters.userName);
         }
 
         [Fact]
         public async Task GetAll_Executes()
         {
-            MockQuerier.ManyResults = new Author[]
+            _mockExecuter.ManyResults = new Author[]
             {
                 new Author(3, "s", "t")
             };
 
-            _ = await Subject.GetAll();
+            _ = await _subject.GetAll();
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("dbo.Author_GetAll", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("dbo.Author_GetAll", _mockExecuter.CommandText);
         }
     }
 }

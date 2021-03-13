@@ -7,42 +7,42 @@ namespace BHS.DataAccess.Repositories.Tests
 {
     public class CategoryRepositoryTests
     {
-        private readonly CategoryRepository Subject;
+        private readonly CategoryRepository _subject;
 
-        private readonly MockQuerier MockQuerier = new MockQuerier();
+        private readonly MockExecuter _mockExecuter = new();
 
         public CategoryRepositoryTests()
         {
-            Subject = new CategoryRepository(MockQuerier);
+            _subject = new CategoryRepository(_mockExecuter);
         }
 
         [Fact]
         public async Task GetBySlug_Executes()
         {
-            MockQuerier.SingleResult = new Category("thing", "Thing!");
+            _mockExecuter.SingleResult = new Category("thing", "Thing!");
 
-            _ = await Subject.GetBySlug("y");
+            _ = await _subject.GetBySlug("y");
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("blog.Category_GetBySlug", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("blog.Category_GetBySlug", _mockExecuter.CommandText);
 
-            Assert.Equal("y", MockQuerier.Parameters.slug);
+            Assert.Equal("y", _mockExecuter.Parameters.slug);
         }
 
         [Fact]
         public async Task GetByPostSlug_Executes()
         {
-            MockQuerier.ManyResults = new Category[]
+            _mockExecuter.ManyResults = new Category[]
             {
                 new Category("thing", "Thing!")
             };
 
-            _ = await Subject.GetByPostSlug("z");
+            _ = await _subject.GetByPostSlug("z");
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("blog.Category_GetByPostSlug", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("blog.Category_GetByPostSlug", _mockExecuter.CommandText);
 
-            Assert.Equal("z", MockQuerier.Parameters.postSlug);
+            Assert.Equal("z", _mockExecuter.Parameters.postSlug);
         }
     }
 }

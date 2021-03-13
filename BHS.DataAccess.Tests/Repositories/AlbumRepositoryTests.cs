@@ -7,40 +7,40 @@ namespace BHS.DataAccess.Repositories.Tests
 {
     public class AlbumRepositoryTests
     {
-        private readonly AlbumRepository Subject;
+        private readonly AlbumRepository _subject;
 
-        private readonly MockQuerier MockQuerier = new MockQuerier();
+        private readonly MockExecuter _mockExecuter = new();
 
         public AlbumRepositoryTests()
         {
-            Subject = new AlbumRepository(MockQuerier);
+            _subject = new AlbumRepository(_mockExecuter);
         }
 
         [Fact]
         public async Task GetById_Executes()
         {
-            MockQuerier.SingleResult = new Album(1, default, default, default, default, default);
+            _mockExecuter.SingleResult = new Album(1, default, default, default, default, default);
 
-            _ = await Subject.GetById(2);
+            _ = await _subject.GetById(2);
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("photos.Album_GetById", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("photos.Album_GetById", _mockExecuter.CommandText);
 
-            Assert.Equal(2, MockQuerier.Parameters.id);
+            Assert.Equal(2, _mockExecuter.Parameters.id);
         }
 
         [Fact]
         public async Task GetAll_Executes()
         {
-            MockQuerier.ManyResults = new Album[]
+            _mockExecuter.ManyResults = new Album[]
             {
                 new Album(1, default, default, default, default, default)
             };
 
-            _ = await Subject.GetAll();
+            _ = await _subject.GetAll();
 
-            Assert.Equal(Constants.bhsConnectionStringName, MockQuerier.ConnectionStringName);
-            Assert.Equal("photos.Album_GetAll", MockQuerier.CommandText);
+            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal("photos.Album_GetAll", _mockExecuter.CommandText);
         }
     }
 }
