@@ -9,7 +9,7 @@ namespace BHS.DataAccess.Core.Tests
 {
     public class DbConnectionFactoryTests
     {
-        private readonly DbConnectionFactory Subject;
+        private readonly DbConnectionFactory _subject;
 
         private string ConnectionStringName;
 
@@ -29,7 +29,7 @@ namespace BHS.DataAccess.Core.Tests
                 .AddInMemoryCollection(inMemoryData)
                 .Build();
 
-            Subject = new DbConnectionFactory(inMemoryConfig, null);
+            _subject = new DbConnectionFactory(inMemoryConfig, null);
 
             var mockConnection = new Mock<DbConnection>();
             mockConnection.SetupSet(c => c.ConnectionString = It.IsAny<string>())
@@ -45,7 +45,7 @@ namespace BHS.DataAccess.Core.Tests
         [Fact]
         public void CreateConnection_Happy()
         {
-            var result = Subject.CreateConnection("db");
+            var result = _subject.CreateConnection("db");
 
             Assert.NotNull(result);
             Assert.Equal("mock connection string", ConnectionStringName);
@@ -56,7 +56,7 @@ namespace BHS.DataAccess.Core.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
-                _ = Subject.CreateConnection("missingdb");
+                _ = _subject.CreateConnection("missingdb");
             });
         }
 
@@ -65,7 +65,7 @@ namespace BHS.DataAccess.Core.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
-                _ = Subject.CreateConnection("missingprovider");
+                _ = _subject.CreateConnection("missingprovider");
             });
         }
 
@@ -74,7 +74,7 @@ namespace BHS.DataAccess.Core.Tests
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                _ = Subject.CreateConnection("badProviderName");
+                _ = _subject.CreateConnection("badProviderName");
             });
         }
     }

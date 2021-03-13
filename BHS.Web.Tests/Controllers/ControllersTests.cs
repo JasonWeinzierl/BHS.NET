@@ -8,7 +8,7 @@ namespace BHS.Web.Controllers.Tests
     [Trait("Category", "CompositionRootTest")]
     public class ControllersTests
     {
-        private readonly Startup Subject;
+        private readonly Startup _subject;
 
         private readonly IServiceCollection _services;
 
@@ -24,8 +24,8 @@ namespace BHS.Web.Controllers.Tests
 
             _services = new ServiceCollection();
 
-            Subject = new Startup(inMemoryConfig);
-            Subject.ConfigureServices(_services);
+            _subject = new Startup(inMemoryConfig);
+            _subject.ConfigureServices(_services);
 
             _services.AddSingleton<IConfiguration>(inMemoryConfig);
         }
