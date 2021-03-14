@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SendGrid.Extensions.DependencyInjection;
+using Serilog;
 using System;
 using System.Data.Common;
 using System.IO;
@@ -89,6 +90,8 @@ namespace BHS.Web
                 app.UseExceptionHandler("/api/error");
                 app.UseHsts();
             }
+
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

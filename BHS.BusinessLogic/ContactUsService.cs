@@ -59,7 +59,10 @@ Message:<br>
 
             var response = await _sendGridClient.SendEmailAsync(msg);
 
-            _logger.LogInformation("CreatedContactAlert {0}: {1}", newAlert.Id, response.StatusCode);
+            if (response.IsSuccessStatusCode)
+                _logger.LogInformation("CreatedContactAlert {Id}: {StatusCode}", newAlert.Id, response.StatusCode);
+            else
+                _logger.LogError("FailedContactAlert {Id}: {StatusCode}", newAlert.Id, response.StatusCode, await response.Body.ReadAsStringAsync());
         }
     }
 }
