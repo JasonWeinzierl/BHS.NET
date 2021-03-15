@@ -10,8 +10,11 @@ import { filter, map } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   title = 'app';
 
-  public constructor(private router: Router, private titleService: Title,
-    private activatedRoute: ActivatedRoute) { }
+  public constructor(
+    private router: Router,
+    private titleService: Title,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle + " | Belton Historical Society");

@@ -1,0 +1,35 @@
+<div class="card">
+    <h1 class="card-header">Contact Us</h1>
+    <div class="card-body">
+        <div *ngIf="error" class="alert alert-danger alert-dismissable fade show" role="alert">
+            There was an error submitting your message: {{error.message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <form *ngIf="!isSubmitted" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)">
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                <input type="text" class="form-control" id="inputName" placeholder="Name" name="name" formControlName="name" required>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" formControlName="emailAddress" required>
+            </div>
+            <div class="form-group">
+                <label for="inputMessage">Message</label>
+                <textarea id="inputMessage" class="form-control" rows="3" placeholder="Message" name="message" formControlName="message"></textarea>
+            </div>
+            <div class="d-none">
+                <label for="body">Please leave this secion blank</label>
+                <input type="text" id="body" name="body" formControlName="body" value="" aria-hidden="true">
+            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+            <p class="form-text">We will try to respond as soon as possible.</p>
+        </form>
+        
+        <div *ngIf="isSubmitted">
+            <p class="card-title">Thank you for your message.</p>
+            <a [routerLink]="['/']" class="btn btn-secondary">&laquo;Back Home</a>
+        </div>
+    </div>
+</div>
