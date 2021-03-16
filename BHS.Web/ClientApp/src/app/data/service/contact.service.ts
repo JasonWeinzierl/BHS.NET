@@ -7,19 +7,11 @@ import { ContactAlertRequest } from '@data/schema/contact-alert-request';
   providedIn: 'root'
 })
 export class ContactService {
-  url = '/api/contact-us';
+  private baseUrl = '/api/contact-us';
 
   constructor(private http: HttpClient) { }
 
   sendMessage(request: ContactAlertRequest) {
-    return this.http.post(
-      this.url,
-      JSON.stringify(request),
-      {
-        headers: new HttpHeaders()
-          .set('content-type', 'application/json'),
-        responseType: 'text'
-      }
-    );
+    return this.http.post<ContactAlertRequest>(this.baseUrl, request);
   }
 }
