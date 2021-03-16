@@ -11,7 +11,7 @@ import { ContactService } from '@app/data/service/contact.service';
 })
 export class ContactFormComponent implements OnInit {
   contactForm: FormGroup;
-  isSubmitted: boolean = false;
+  isSubmitted = false;
   error: any = false;
 
   constructor(

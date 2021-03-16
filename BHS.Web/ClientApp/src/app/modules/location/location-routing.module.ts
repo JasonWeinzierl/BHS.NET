@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import { LocationComponent } from "./page/location.component";
+import { LocationComponent } from './page/location.component';
 
 const routes: Routes = [
     {

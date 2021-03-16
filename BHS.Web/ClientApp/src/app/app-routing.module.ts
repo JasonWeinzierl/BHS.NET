@@ -1,9 +1,9 @@
 // angular
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 // components
-import { ContentLayoutComponent } from "./layout/content-layout/content-layout.component";
+import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
 
 const routes: Routes = [
   {
@@ -43,7 +43,7 @@ const routes: Routes = [
     ]
   },
   { path: '**', redirectTo: '/home/not-found' },
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

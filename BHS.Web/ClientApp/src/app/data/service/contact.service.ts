@@ -7,7 +7,7 @@ import { ContactAlertRequest } from '@data/schema/contact-alert-request';
   providedIn: 'root'
 })
 export class ContactService {
-  url: string = '/api/contact-us';
+  url = '/api/contact-us';
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +16,8 @@ export class ContactService {
       this.url,
       JSON.stringify(request),
       {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        headers: new HttpHeaders()
+          .set('content-type', 'application/json'),
         responseType: 'text'
       }
     );

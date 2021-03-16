@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   public setTitle(newTitle: string) {
-    this.titleService.setTitle(newTitle + " | Belton Historical Society");
+    this.titleService.setTitle(newTitle + ' | Belton Historical Society');
   }
 
   ngOnInit() {
