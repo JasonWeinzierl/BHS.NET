@@ -1,0 +1,19 @@
+<div *ngIf="error" class="card bg-warning">
+  <div class="card-body">
+    <h1 class="card-title">An error occurred</h1>
+    {{error}}
+  </div>
+</div>
+
+<div *ngIf="post" class="card">
+  <div class="card-header">
+    <h1 class="card-title">{{post.title}}</h1>
+    <p class="card-subtitle">Posted by {{post.authorId}} on {{post.datePublished | date:'EEEE, d MMMM y \'at\' h:mm:ss a'}}</p>
+  </div>
+  <div class="card-body">
+    {{post.contentMarkdown}}
+  </div>
+  <div class="card-footer" *ngFor="let cat of post.categories">
+    <p>Category: {{cat.name}}</p>
+  </div>
+</div>

@@ -27,15 +27,8 @@
         </form>
       </div>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">title with link</h2>
-        <p class="card-subtitle">details with author, date</p>
-      </div>
-      <div class="card-body">
-        <p>hook</p>
-        <p><button class="btn btn-secondary">Read Full Post &raquo;</button></p>
-      </div>
+    <div *ngFor="let post of posts">
+      <app-post-card [post]="post"></app-post-card>
     </div>
   </div>
   <div class="col-lg-3">
