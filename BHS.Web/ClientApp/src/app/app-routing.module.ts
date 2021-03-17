@@ -1,6 +1,9 @@
 // angular
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { paths } from './app-paths';
+import { NotFoundComponent } from './core/component/not-found/not-found.component';
+import { PathResolveService } from './core/service/path-resolve.service';
 
 // components
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
@@ -8,7 +11,7 @@ import { ContentLayoutComponent } from './layout/content-layout/content-layout.c
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: paths.home,
     pathMatch: 'full'
   },
   {
@@ -16,33 +19,46 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: [
       {
-        path: 'home',
+        path: paths.home,
         loadChildren: () =>
           import('@modules/home/home.module').then(m => m.HomeModule)
       },
       {
-        path: 'apps/blog',
+        path: paths.blog,
         loadChildren: () =>
           import('@modules/blog/blog.module').then(m => m.BlogModule)
       },
       {
-        path: 'apps/location',
+        path: paths.location,
         loadChildren: () =>
           import('@modules/location/location.module').then(m => m.LocationModule)
       },
       {
-        path: 'contact',
+        path: paths.contact,
         loadChildren: () =>
           import('@modules/contact/contact.module').then(m => m.ContactModule)
       },
       {
-        path: 'about',
+        path: paths.about,
         loadChildren: () =>
           import('@modules/about/about.module').then(m => m.AboutModule)
-      },
+      }
     ]
   },
-  { path: '**', redirectTo: '/home/not-found' },
+  {
+    path: '**',
+    component: ContentLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: NotFoundComponent,
+        resolve: {
+          path: PathResolveService
+        },
+        data: { title: '404 Not Found' }
+      }
+    ]
+  },
 ];
 
 @NgModule({
