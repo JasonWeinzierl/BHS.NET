@@ -22,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     // angular
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     HttpClientModule,
 
     // core & shared
