@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute, NavigationStart, NavigationCancel, NavigationError } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
@@ -8,6 +8,8 @@ import { filter, map } from 'rxjs/operators';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
+  isDoneLoading = true;
+
   public constructor(
     private router: Router,
     private titleService: Title,
@@ -20,9 +22,26 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const appTitle = this.titleService.getTitle();
-    this.router
-      .events.pipe(
-        filter(event => event instanceof NavigationEnd),
+
+    this.router.events
+      .pipe(
+        filter(
+          event =>
+            event instanceof NavigationStart ||
+            event instanceof NavigationEnd ||
+            event instanceof NavigationCancel ||
+            event instanceof NavigationError,
+        )
+      )
+      .subscribe(event => {
+        this.isDoneLoading = !(event instanceof NavigationStart);
+      });
+
+    this.router.events
+      .pipe(
+        filter(
+          event => event instanceof NavigationEnd
+        ),
         map(() => {
           let child = this.activatedRoute.firstChild;
           while (child.firstChild) {
@@ -33,7 +52,8 @@ export class AppComponent implements OnInit {
           }
           return appTitle;
         })
-      ).subscribe((newTitle: string) => {
+      )
+      .subscribe((newTitle: string) => {
         this.setTitle(newTitle);
       });
   }
