@@ -8,8 +8,6 @@ import { filter, map } from 'rxjs/operators';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-  title = 'app';
-
   public constructor(
     private router: Router,
     private titleService: Title,

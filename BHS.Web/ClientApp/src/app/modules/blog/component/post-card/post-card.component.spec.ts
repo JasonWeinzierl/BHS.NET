@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PostPreview } from '@app/data/schema/post-preview';
 
 import { PostCardComponent } from './post-card.component';
 
@@ -16,6 +17,7 @@ describe('PostCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PostCardComponent);
     component = fixture.componentInstance;
+    component.post = {} as PostPreview;
     fixture.detectChanges();
   });
 

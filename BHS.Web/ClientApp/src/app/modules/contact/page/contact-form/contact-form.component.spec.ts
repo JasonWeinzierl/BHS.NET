@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ContactService } from '@app/data/service/contact.service';
 
 import { ContactFormComponent } from './contact-form.component';
 
@@ -9,7 +11,16 @@ describe('ContactFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContactFormComponent ]
+      imports: [
+        HttpClientTestingModule
+      ],
+      declarations: [
+        ContactFormComponent
+      ],
+      providers: [
+        FormBuilder,
+        ContactService
+      ]
     })
     .compileComponents();
   }));
