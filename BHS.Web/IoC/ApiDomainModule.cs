@@ -1,12 +1,16 @@
 ﻿using BHS.BusinessLogic;
 using BHS.BusinessLogic.Blog;
+using BHS.BusinessLogic.Leadership;
 using BHS.BusinessLogic.Photos;
 using BHS.DataAccess.Core;
 using BHS.DataAccess.Core.TypeHandlers;
+using BHS.DataAccess.Providers;
 using BHS.DataAccess.Repositories;
 using BHS.Model.DataAccess;
+using BHS.Model.Providers;
 using BHS.Model.Services;
 using BHS.Model.Services.Blog;
+using BHS.Model.Services.Leadership;
 using BHS.Model.Services.Photos;
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -42,11 +46,15 @@ namespace BHS.Web.IoC
             services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();
             services.AddSingleton<IPhotoRepository, PhotoRepository>();
             services.AddSingleton<IAlbumRepository, AlbumRepository>();
+            services.AddSingleton<ILeadershipRepository, LeadershipRepository>();
+
+            services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
 
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IPhotosService, PhotosService>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IContactUsService, ContactUsService>();
+            services.AddScoped<ILeadershipService, LeadershipService>();
 
             return services;
         }

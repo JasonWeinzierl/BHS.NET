@@ -71,6 +71,17 @@ namespace BHS.Web.Controllers.Tests
         }
 
         [Fact]
+        public void LeadershipController_Resolves()
+        {
+            _services.AddTransient<LeadershipController>();
+            var serviceProvider = _services.BuildServiceProvider();
+
+            var controller = serviceProvider.GetService<LeadershipController>();
+
+            Assert.NotNull(controller);
+        }
+
+        [Fact]
         public void PhotosController_Resolves()
         {
             _services.AddTransient<PhotosController>();
