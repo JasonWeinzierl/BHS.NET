@@ -1,0 +1,6 @@
+﻿CREATE TABLE [leadership].[Officer]
+(
+	[Id] INT IDENTITY(1,1) CONSTRAINT Officer_PK PRIMARY KEY,
+
+	[Name] NVARCHAR(MAX) NOT NULL,
+);

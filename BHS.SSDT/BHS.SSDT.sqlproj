@@ -73,6 +73,10 @@
     <Folder Include="dbo\Stored Procedures" />
     <Folder Include="blog\Views" />
     <Folder Include="photos\Stored Procedures" />
+    <Folder Include="leadership" />
+    <Folder Include="leadership\Tables" />
+    <Folder Include="leadership\Views" />
+    <Folder Include="leadership\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\blog.sql" />
@@ -109,6 +113,15 @@
     <Build Include="photos\Stored Procedures\Photo_GetById.sql" />
     <Build Include="blog\Stored Procedures\Category_GetAll.sql" />
     <Build Include="blog\Views\Category_View.sql" />
+    <Build Include="Security\leadership.sql" />
+    <Build Include="leadership\Tables\Position.sql" />
+    <Build Include="leadership\Tables\Officer.sql" />
+    <Build Include="leadership\Tables\OfficerPositionStart.sql" />
+    <Build Include="leadership\Views\OfficerPosition_View.sql" />
+    <Build Include="leadership\Stored Procedures\Officer_GetAll.sql" />
+    <Build Include="leadership\Tables\Director.sql" />
+    <Build Include="leadership\Views\Director_View.sql" />
+    <Build Include="leadership\Stored Procedures\Director_GetCurrent.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BHS.SSDT.refactorlog" />
