@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '@app/data/schema/category';
 
 import { PostPreview } from '@data/schema/post-preview';
 import { BlogService } from '@data/service/blog.service';
@@ -10,6 +11,7 @@ import { BlogService } from '@data/service/blog.service';
 })
 export class IndexComponent implements OnInit {
   posts: PostPreview[];
+  categories: Category[];
 
   constructor(
     private blogService: BlogService
@@ -18,6 +20,9 @@ export class IndexComponent implements OnInit {
   ngOnInit() {
     this.blogService.searchPosts().subscribe(response => {
       this.posts = response;
+    });
+    this.blogService.getCategories().subscribe(response => {
+      this.categories = response;
     });
   }
 

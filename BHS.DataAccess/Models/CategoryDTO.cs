@@ -4,9 +4,10 @@ namespace BHS.DataAccess.Models
 {
     public record CategoryDTO(
         string Slug,
-        string Name)
+        string Name,
+        int PostsCount)
     {
         public Category ToDomainModel()
-            => new(Slug, Name);
+            => new(Slug, Name, PostsCount);
     }
 }

@@ -2,5 +2,6 @@
 {
     public record Category(
         string Slug,
-        string Name);
+        string Name,
+        int PostsCount);
 }

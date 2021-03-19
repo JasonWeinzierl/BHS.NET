@@ -17,7 +17,13 @@
   <div class="card-body">
     {{post.contentMarkdown}}
   </div>
-  <div class="card-footer" *ngFor="let cat of post.categories">
-    <p>Category: {{cat.name}}</p>
+  <div class="card-footer">
+    <p>
+      Categories:
+      <span *ngFor="let cat of post.categories">
+        {{cat.name}}
+        <span class="badge rounded-pill bg-primary">{{cat.postsCount}}</span>
+      </span>
+    </p>
   </div>
 </div>
