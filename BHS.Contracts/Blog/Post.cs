@@ -9,7 +9,7 @@ namespace BHS.Contracts.Blog
         string ContentMarkdown,
         Uri? FilePath,
         int? PhotosAlbumId,
-        int? AuthorId,
+        Author? Author,
         DateTimeOffset DatePublished,
         DateTimeOffset DateLastModified,
         ICollection<Category> Categories);

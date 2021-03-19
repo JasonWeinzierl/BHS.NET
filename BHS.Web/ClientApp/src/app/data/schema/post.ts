@@ -1,3 +1,4 @@
+import { Author } from './author';
 import { Category } from './category';
 
 export interface Post {
@@ -6,7 +7,7 @@ export interface Post {
   contentMarkdown: string;
   filePath: string;
   photosAlbumId?: number;
-  authorId?: number;
+  author?: Author;
   datePublished: Date;
   dateLastModified: Date;
   categories: Category[];

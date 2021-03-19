@@ -1,8 +1,10 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.DataAccess.Core;
+using BHS.DataAccess.Models;
 using BHS.Model.DataAccess;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
@@ -16,24 +18,27 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public Task<IEnumerable<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to)
+        public async Task<IEnumerable<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to)
         {
-            return E.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_Search", new
+            var results = await E.QueryAsync<PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.PostPreview_Search", new
             {
                 searchText = text,
                 fromDate = from,
                 toDate = to
             });
+            return results.Select(r => r.ToDomainModel());
         }
 
-        public Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug)
+        public async Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug)
         {
-            return E.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", new { categorySlug });
+            var results = await E.QueryAsync<PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", new { categorySlug });
+            return results.Select(r => r.ToDomainModel());
         }
 
-        public Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId)
+        public async Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId)
         {
-            return E.QueryAsync<PostPreview>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", new { authorId });
+            var results = await E.QueryAsync<PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", new { authorId });
+            return results.Select(r => r.ToDomainModel());
         }
     }
 }

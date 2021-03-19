@@ -2,7 +2,9 @@
   <div class="card-header">
     <h2 class="card-title">{{post.title}}</h2>
     <p class="card-subtitle">
-      Posted by {{post.authorId}} on {{post.datePublished | date:'EEEE, d MMMM y \'at\' h:mm:ss a'}}
+      Posted
+      <span *ngIf="post.author">by {{post.author.displayName}}</span>
+      on {{post.datePublished | date:'EEEE, d MMMM y \'at\' h:mm:ss a'}}
     </p>
   </div>
   <div class="card-body">

@@ -11,6 +11,6 @@ namespace BHS.Contracts.Blog
         string Slug,
         string Title,
         string ContentPreview,
-        int? AuthorId,
+        Author? Author,
         DateTimeOffset DatePublished);
 }
