@@ -10,9 +10,12 @@ BEGIN
 			, [FilePath]
 			, [PhotosAlbumId]
 			, [AuthorId]
+			, a.[DisplayName] AS AuthorDisplayName
+			, a.[Name] AS AuthorName
 			, [DatePublished]
 			, [DateLastModified]
-	FROM	[blog].[Post_View]
+	FROM	[blog].[Post_View] v LEFT JOIN
+			[dbo].[Author_View] a ON a.[Id] = v.[AuthorId]
 	WHERE	[Slug] = @slug;
 	
 	SELECT	[CategorySlug] AS Slug

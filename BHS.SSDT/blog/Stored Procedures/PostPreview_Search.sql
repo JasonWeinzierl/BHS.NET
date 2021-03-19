@@ -10,8 +10,11 @@ BEGIN
 			, [Title]
 			, [ContentMarkdown] AS ContentPreview
 			, [AuthorId]
+			, a.[DisplayName] AS AuthorDisplayName
+			, a.[Name] AS AuthorName
 			, [DatePublished]
-	FROM	[blog].[Post_View]
+	FROM	[blog].[Post_View] v LEFT JOIN
+			[dbo].[Author_View] a ON a.[Id] = v.[AuthorId]
 	WHERE	[ContentMarkdown] LIKE CONCAT('%', @searchText, '%')
 			AND (@fromDate IS NULL OR @fromDate <= [DatePublished])
 			AND (@toDate IS NULL OR @toDate > [DatePublished]);

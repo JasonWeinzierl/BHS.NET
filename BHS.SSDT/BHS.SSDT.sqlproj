@@ -77,6 +77,7 @@
     <Folder Include="leadership\Tables" />
     <Folder Include="leadership\Views" />
     <Folder Include="leadership\Stored Procedures" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\blog.sql" />
@@ -122,6 +123,7 @@
     <Build Include="leadership\Tables\Director.sql" />
     <Build Include="leadership\Views\Director_View.sql" />
     <Build Include="leadership\Stored Procedures\Director_GetCurrent.sql" />
+    <Build Include="dbo\Views\Author_View.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BHS.SSDT.refactorlog" />

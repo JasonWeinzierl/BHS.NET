@@ -5,6 +5,6 @@ BEGIN
 	SELECT	[Id]
 			, [DisplayName]
 			, [Name]
-	FROM	[dbo].[Author]
+	FROM	[dbo].[Author_View]
 	WHERE	[DisplayName] = @userName;
 END
