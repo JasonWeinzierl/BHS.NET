@@ -32,17 +32,17 @@
   letter-spacing: 0.1875rem;
 }
 
-  /* padding was rmvd in .navbar */
-  .navbar-nav .nav-link {
-    padding: 0.5rem 1rem !important;
-  }
+/* padding was rmvd in .navbar */
+.navbar-nav .nav-link {
+  padding: 0.5rem 1rem !important;
+}
 
 /* active navbar button */
 .active.nav-link,
 a:active.nav-link,
 .nav-tabs .nav-link.active,
 .navbar-light .navbar-nav .nav-link.active {
-  background-color: var(--primary);
+  background-color: var(--bs-primary);
   color: #fff;
   text-decoration: none;
 }
@@ -58,11 +58,11 @@ a:not([href]).dropdown-toggle:hover {
     display: inherit;
     padding-top: 2rem;
     text-align: center;
-    text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0,0,0,0.5);
+    text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.5);
     font-family: "Josefin Slab", "Helvetica Neue", Helvetica, Arial, serif;
     font-size: 5rem;
     font-weight: 600;
-    color: var(--light);
+    color: var(--bs-light);
   }
 
   .address-bar {
@@ -70,16 +70,16 @@ a:not([href]).dropdown-toggle:hover {
     margin: 0;
     padding-bottom: 0.5rem;
     text-align: center;
-    text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0,0,0,0.5);
+    text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.5);
     font-size: 1.25rem;
     font-weight: 400;
     letter-spacing: 0.1875rem;
-    color: var(--light);
+    color: var(--bs-light);
   }
 
-    .address-bar a {
-      color: var(--light);
-    }
+  .address-bar a {
+    color: var(--bs-light);
+  }
 
   .navbar {
     padding: 0;
@@ -91,7 +91,7 @@ a:not([href]).dropdown-toggle:hover {
   }
 
   .bg-light {
-    background: rgba(255,255,255,0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
   }
 
   .navbar-collapse {
@@ -108,7 +108,7 @@ a:not([href]).dropdown-toggle:hover {
   ul .dropdown-menu {
     /* make dropdown match navbar */
     margin: 0;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.9);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .175);

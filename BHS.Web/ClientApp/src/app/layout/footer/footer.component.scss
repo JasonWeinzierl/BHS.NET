@@ -1,19 +1,26 @@
 footer {
-    bottom: 0;
-    background: #fff;
-    background: rgba(255,255,255,0.9);
-    /* body uses margin-bottom 4.25rem */
-    min-height: 3rem;
-    position: absolute;
-    width: 100%;
-    /* center vertically */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-    footer ul {
-      /* remove default */
-      margin: 0;
-    }
-  
+  bottom: 0;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
+  /* body uses margin-bottom 4.25rem */
+  min-height: 3rem;
+  position: absolute;
+  width: 100%;
+  /* center vertically */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+footer ul {
+  /* remove default */
+  margin: 0;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
