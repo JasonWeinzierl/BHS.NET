@@ -50,6 +50,18 @@ namespace BHS.DataAccess.Core
         Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2)> QueryMultipleAsync<T1, T2>(string connectionStringName, string commandText, object? parameters = null);
 
         /// <summary>
+        /// Execute command text and return three result sets with a model for each record.  By default, commandText is treated as a store procedure name.
+        /// </summary>
+        /// <typeparam name="T1"> First result set's type of model to get from each record. </typeparam>
+        /// <typeparam name="T2"> Second result set's type of model to get from each record. </typeparam>
+        /// <typeparam name="T3"> Third result set's type of model to get from each record. </typeparam>
+        /// <param name="connectionStringName"> The database connection string name. </param>
+        /// <param name="commandText"> The text command to execute. By default, this is treated as the stored procedure name. </param>
+        /// <param name="parameters"> Object of parameter values. </param>
+        /// <returns> Three collections of models filled from the three result sets. </returns>
+        Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2, IEnumerable<T3> resultset3)> QueryMultipleAsync<T1, T2, T3>(string connectionStringName, string commandText, object? parameters = null);
+
+        /// <summary>
         /// Execute command text and return the number of rows affected.  By default, commandText is treated as a stored procedure name.
         /// </summary>
         /// <param name="connectionStringName"> The database connection string name. </param>

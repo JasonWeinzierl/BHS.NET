@@ -26,7 +26,7 @@ namespace BHS.DataAccess.Repositories.Tests
         {
             var post = new PostDTO(string.Empty, string.Empty, string.Empty, default, default, default, default, default);
             var category = new CategoryDTO(string.Empty, string.Empty);
-            _mockExecuter.ManyMultipleResults = (new[] { post }, new[] { category });
+            _mockExecuter.TwoManyRequests = (new[] { post }, new[] { category });
 
             _ = await _subject.GetBySlug("a");
 
@@ -42,7 +42,7 @@ namespace BHS.DataAccess.Repositories.Tests
             var post = new PostDTO(string.Empty, string.Empty, string.Empty, default, default, default, default, default);
             var category1 = new CategoryDTO(string.Empty, string.Empty);
             var category2 = new CategoryDTO(string.Empty, string.Empty);
-            _mockExecuter.ManyMultipleResults = (new[] { post }, new[] { category1, category2 });
+            _mockExecuter.TwoManyRequests = (new[] { post }, new[] { category1, category2 });
 
             var result = await _subject.GetBySlug("a");
 

@@ -59,6 +59,18 @@ namespace BHS.DataAccess.Core
             return (await multiResult.ReadAsync<T1>(), await multiResult.ReadAsync<T2>());
         }
 
+        public async Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2, IEnumerable<T3> resultset3)> QueryMultipleAsync<T1, T2, T3>(string connectionStringName, string commandText, object? parameters = null)
+        {
+            using var connection = _factory.CreateConnection(connectionStringName);
+            await connection.OpenAsync();
+
+            using var multiResult = await connection.QueryMultipleAsync(
+                commandText,
+                parameters,
+                commandType: CommandType.StoredProcedure);
+            return (await multiResult.ReadAsync<T1>(), await multiResult.ReadAsync<T2>(), await multiResult.ReadAsync<T3>());
+        }
+
         public async Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object? parameters = null)
         {
             using var connection = _factory.CreateConnection(connectionStringName);
