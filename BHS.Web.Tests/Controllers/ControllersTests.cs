@@ -1,3 +1,4 @@
+using BHS.Web.IoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -8,8 +9,6 @@ namespace BHS.Web.Controllers.Tests
     [Trait("Category", "CompositionRootTest")]
     public class ControllersTests
     {
-        private readonly Startup _subject;
-
         private readonly IServiceCollection _services;
 
         public ControllersTests()
@@ -23,11 +22,8 @@ namespace BHS.Web.Controllers.Tests
                 .Build();
 
             _services = new ServiceCollection();
-
-            _subject = new Startup(inMemoryConfig);
-            _subject.ConfigureServices(_services);
-
             _services.AddSingleton<IConfiguration>(inMemoryConfig);
+            _services.LoadApiDomain(inMemoryConfig);
         }
 
         [Fact]
