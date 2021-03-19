@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@shared/shared.module';
@@ -21,6 +22,8 @@ import { WhoWeAreComponent } from './page/who-we-are/who-we-are.component';
     WhoWeAreComponent
   ],
   imports: [
+    CommonModule,
+
     AboutRoutingModule,
     SharedModule
   ]

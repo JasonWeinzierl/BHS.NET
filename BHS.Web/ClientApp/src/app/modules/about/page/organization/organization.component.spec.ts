@@ -1,4 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { LeadershipService } from '@app/data/service/leadership.service';
 
 import { OrganizationComponent } from './organization.component';
 
@@ -8,7 +10,15 @@ describe('OrganizationComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganizationComponent ]
+      imports: [
+        HttpClientTestingModule
+      ],
+      declarations: [
+        OrganizationComponent
+      ],
+      providers: [
+        LeadershipService
+      ]
     })
     .compileComponents();
   }));
