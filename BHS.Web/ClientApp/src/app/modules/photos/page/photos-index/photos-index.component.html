@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title">Photo Gallery</h1>
+    <p>Photos from the history of Belton</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4" *ngFor="let album of albums">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">
+          <a class="stretched-link" [routerLink]="['/apps/photos/album', album.slug]">{{album.slug}}</a>
+        </h2>
+        <p class="card-subtitle text-muted">{{album.name}}</p>
+        <p>{{album.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-danger" *ngIf="error">
+  {{error}}
+</div>

@@ -29,6 +29,11 @@ const routes: Routes = [
           import('@modules/blog/blog.module').then(m => m.BlogModule)
       },
       {
+        path: paths.photos,
+        loadChildren: () =>
+          import('@modules/photos/photos.module').then(m => m.PhotosModule)
+      },
+      {
         path: paths.location,
         loadChildren: () =>
           import('@modules/location/location.module').then(m => m.LocationModule)
