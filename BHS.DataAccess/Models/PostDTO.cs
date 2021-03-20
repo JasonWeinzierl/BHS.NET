@@ -11,10 +11,13 @@ namespace BHS.DataAccess.Models
         string Title,
         string ContentMarkdown,
         Uri? FilePath,
-        int? PhotosAlbumId,
+
+        string? PhotosAlbumSlug,
+
         int? AuthorId,
         string? AuthorDisplayName,
         string? AuthorName,
+
         DateTimeOffset DatePublished,
         DateTimeOffset DateLastModified)
     {
@@ -23,7 +26,7 @@ namespace BHS.DataAccess.Models
             Author? author = null;
             if (AuthorId.HasValue && AuthorDisplayName is not null)
                 author = new Author(AuthorId.Value, AuthorDisplayName, AuthorName);
-            return new(Slug, Title, ContentMarkdown, FilePath, PhotosAlbumId, author, DatePublished, DateLastModified, categories.Select(c => c.ToDomainModel()).ToList());
+            return new(Slug, Title, ContentMarkdown, FilePath, PhotosAlbumSlug, author, DatePublished, DateLastModified, categories.Select(c => c.ToDomainModel()).ToList());
         }
     }
 }

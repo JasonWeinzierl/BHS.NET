@@ -8,7 +8,7 @@ namespace BHS.Contracts.Blog
         string Title,
         string ContentMarkdown,
         Uri? FilePath,
-        int? PhotosAlbumId,
+        string? PhotosAlbumSlug,
         Author? Author,
         DateTimeOffset DatePublished,
         DateTimeOffset DateLastModified,
