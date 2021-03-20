@@ -41,16 +41,6 @@ namespace BHS.BusinessLogic.Blog.Tests
         }
 
         [Fact]
-        public async Task GetPostsByCategory_CallsGetByPostSlug()
-        {
-            string slug = "b";
-
-            _ = await _subject.GetPostsByCategory(slug);
-
-            _mockPreviewRepo.Verify(r => r.GetByCategorySlug(It.Is<string>(s => s == slug)));
-        }
-
-        [Fact]
         public async Task GetPost_CallsGetBySlug()
         {
             string slug = "c";

@@ -1,7 +1,5 @@
-﻿using BHS.Contracts.Blog;
-using BHS.DataAccess.Models;
+﻿using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 //using Xunit.Abstractions;
@@ -24,9 +22,9 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetBySlug_Executes()
         {
-            var post = new PostDTO(string.Empty, string.Empty, string.Empty, default, default, default, default, default);
-            var category = new CategoryDTO(string.Empty, string.Empty);
-            _mockExecuter.TwoManyRequests = (new[] { post }, new[] { category });
+            var post = new PostDTO(string.Empty, string.Empty, string.Empty, default, default, default, default, default, default, default);
+            var category = new CategoryDTO(string.Empty, string.Empty, 0);
+            _mockExecuter.TwoManyResults = (new[] { post }, new[] { category });
 
             _ = await _subject.GetBySlug("a");
 
@@ -39,10 +37,10 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetBySlug_JoinsMultipleResults()
         {
-            var post = new PostDTO(string.Empty, string.Empty, string.Empty, default, default, default, default, default);
-            var category1 = new CategoryDTO(string.Empty, string.Empty);
-            var category2 = new CategoryDTO(string.Empty, string.Empty);
-            _mockExecuter.TwoManyRequests = (new[] { post }, new[] { category1, category2 });
+            var post = new PostDTO(string.Empty, string.Empty, string.Empty, default, default, default, default, default, default, default);
+            var category1 = new CategoryDTO(string.Empty, string.Empty, 0);
+            var category2 = new CategoryDTO(string.Empty, string.Empty, 0);
+            _mockExecuter.TwoManyResults = (new[] { post }, new[] { category1, category2 });
 
             var result = await _subject.GetBySlug("a");
 

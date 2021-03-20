@@ -32,21 +32,9 @@ namespace BHS.BusinessLogic.Blog
             _logger = logger;
         }
 
-        public async Task<CategoryPosts?> GetCategory(string slug)
+        public Task<CategoryPosts?> GetCategory(string slug)
         {
-            var category = await _categoryRepository.GetBySlug(slug);
-            if (category is null)
-                return null;
-
-            var posts = await GetPostsByCategory(slug);
-            category.Deconstruct(out string _, out string name, out int postsCount);
-
-            return new CategoryPosts(slug, name, postsCount, posts);
-        }
-
-        public Task<IEnumerable<PostPreview>> GetPostsByCategory(string slug)
-        {
-            return _postPreviewRepository.GetByCategorySlug(slug);
+            return _categoryRepository.GetBySlug(slug);
         }
 
         public Task<Post?> GetPost(string slug)

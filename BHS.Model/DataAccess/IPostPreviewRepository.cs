@@ -8,7 +8,6 @@ namespace BHS.Model.DataAccess
     public interface IPostPreviewRepository
     {
         Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId);
-        Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug);
         Task<IEnumerable<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to);
     }
 }

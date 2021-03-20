@@ -11,7 +11,6 @@ namespace BHS.Model.Services.Blog
         Task<IEnumerable<PostPreview>> SearchPosts(string? text, DateTime? from, DateTime? to);
         Task<IEnumerable<Category>> GetCategories();
         Task<CategoryPosts?> GetCategory(string slug);
-        Task<IEnumerable<PostPreview>> GetPostsByCategory(string slug);
         Task<IEnumerable<PostPreview>> GetPostsByAuthor(string username);
     }
 }

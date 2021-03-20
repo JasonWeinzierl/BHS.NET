@@ -1,4 +1,4 @@
-﻿using BHS.Contracts.Blog;
+﻿using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
 using System;
 using System.Threading.Tasks;
@@ -20,9 +20,9 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task Search_Executes()
         {
-            _mockExecuter.ManyResults = new PostPreview[]
+            _mockExecuter.ManyResults = new PostPreviewDTO[]
             {
-                new PostPreview("b", "c", "d", 1, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)))
+                new PostPreviewDTO("b", "c", "d", 1, string.Empty, default, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)))
             };
             var start = new DateTimeOffset(2020, 12, 14, 20, 43, 0, TimeSpan.FromHours(-6));
             var end = new DateTimeOffset(2020, 12, 14, 20, 44, 0, TimeSpan.FromHours(-6));
@@ -38,27 +38,11 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
-        public async Task GetByCategorySlug_Executes()
-        {
-            _mockExecuter.ManyResults = new PostPreview[]
-            {
-                new PostPreview("b", "c", "d", 1, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)))
-            };
-
-            _ = await _subject.GetByCategorySlug("a");
-
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
-            Assert.Equal("blog.PostPreview_GetByCategorySlug", _mockExecuter.CommandText);
-
-            Assert.Equal("a", _mockExecuter.Parameters?.categorySlug);
-        }
-
-        [Fact]
         public async Task GetByAuthorId_Executes()
         {
-            _mockExecuter.ManyResults = new PostPreview[]
+            _mockExecuter.ManyResults = new PostPreviewDTO[]
             {
-                new PostPreview("b", "c", "d", 1, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)))
+                new PostPreviewDTO("b", "c", "d", 1, string.Empty, default, new DateTimeOffset(2020, 12, 15, 22, 39, 0, TimeSpan.FromHours(-6)))
             };
 
             _ = await _subject.GetByAuthorId(1);

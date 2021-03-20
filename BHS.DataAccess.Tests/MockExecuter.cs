@@ -33,14 +33,14 @@ namespace BHS.DataAccess.Tests
         /// <value>
         /// Result sets of multiple models to be returned.
         /// </value>
-        public (IEnumerable<object> t1, IEnumerable<object> t2)? TwoManyRequests { get; set; }
+        public (IEnumerable<object> t1, IEnumerable<object> t2)? TwoManyResults { get; set; }
         /// <summary>
         /// Gets or sets a value for QueryMultiple{T1,T2,T3} queries.
         /// </summary>
         /// <value>
         /// Result sets of multiple models to be returned.
         /// </value>
-        public (IEnumerable<object> t1, IEnumerable<object> t2, IEnumerable<object> t3)? ThreeManyRequests { get; set; }
+        public (IEnumerable<object> t1, IEnumerable<object> t2, IEnumerable<object> t3)? ThreeManyResults { get; set; }
         /// <summary>
         /// Gets or sets a value for Scalar queries.
         /// </summary>
@@ -114,10 +114,10 @@ namespace BHS.DataAccess.Tests
 
         public Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2)> QueryMultipleAsync<T1, T2>(string connectionStringName, string commandText, object? parameters = null)
         {
-            if (!TwoManyRequests.HasValue)
-                throw new InvalidOperationException(nameof(TwoManyRequests) + " must have value.");
-            if (TwoManyRequests.Value.t1 is not IEnumerable<T1> ret1 || TwoManyRequests.Value.t2 is not IEnumerable<T2> ret2)
-                throw new InvalidOperationException(nameof(TwoManyRequests) + " t1 and t2 must each have value.");
+            if (!TwoManyResults.HasValue)
+                throw new InvalidOperationException(nameof(TwoManyResults) + " must have value.");
+            if (TwoManyResults.Value.t1 is not IEnumerable<T1> ret1 || TwoManyResults.Value.t2 is not IEnumerable<T2> ret2)
+                throw new InvalidOperationException(nameof(TwoManyResults) + " t1 and t2 must each have value.");
 
             ConnectionStringName = connectionStringName;
             CommandText = commandText;
@@ -128,12 +128,12 @@ namespace BHS.DataAccess.Tests
 
         public Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2, IEnumerable<T3> resultset3)> QueryMultipleAsync<T1, T2, T3>(string connectionStringName, string commandText, object? parameters = null)
         {
-            if (!ThreeManyRequests.HasValue)
-                throw new InvalidOperationException(nameof(ThreeManyRequests) + " must have value.");
-            if (ThreeManyRequests.Value.t1 is not IEnumerable<T1> ret1
-                || ThreeManyRequests.Value.t2 is not IEnumerable<T2> ret2
-                || ThreeManyRequests.Value.t3 is not IEnumerable<T3> ret3)
-                throw new InvalidOperationException(nameof(ThreeManyRequests) + " t1, t2, and t3 must each have value.");
+            if (!ThreeManyResults.HasValue)
+                throw new InvalidOperationException(nameof(ThreeManyResults) + " must have value.");
+            if (ThreeManyResults.Value.t1 is not IEnumerable<T1> ret1
+                || ThreeManyResults.Value.t2 is not IEnumerable<T2> ret2
+                || ThreeManyResults.Value.t3 is not IEnumerable<T3> ret3)
+                throw new InvalidOperationException(nameof(ThreeManyResults) + " t1, t2, and t3 must each have value.");
 
             ConnectionStringName = connectionStringName;
             CommandText = commandText;

@@ -1,5 +1,6 @@
-﻿using BHS.Contracts.Blog;
+﻿using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -19,7 +20,9 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetBySlug_Executes()
         {
-            _mockExecuter.SingleResult = new Category("thing", "Thing!");
+            var category = new CategoryDTO("thing", "Thing!", 0);
+            var post = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
+            _mockExecuter.TwoManyResults = (new[] { category }, new[] { post });
 
             _ = await _subject.GetBySlug("y");
 
@@ -30,11 +33,25 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
+        public async Task GetBySlug_JoinsMultipleResults()
+        {
+            var category = new CategoryDTO("thing", "Thing!", 0);
+            var post1 = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
+            var post2 = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
+            _mockExecuter.TwoManyResults = (new[] { category }, new[] { post1, post2 });
+
+            var result = await _subject.GetBySlug("y");
+
+            Assert.NotNull(result);
+            Assert.Equal(2, result?.Posts.Count());
+        }
+
+        [Fact]
         public async Task GetAll_Executes()
         {
-            _mockExecuter.ManyResults = new Category[]
+            _mockExecuter.ManyResults = new CategoryDTO[]
             {
-                new Category("thing", "Thing!")
+                new CategoryDTO("thing", "Thing!", 0)
             };
 
             _ = await _subject.GetAll();

@@ -29,12 +29,6 @@ namespace BHS.DataAccess.Repositories
             return results.Select(r => r.ToDomainModel());
         }
 
-        public async Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug)
-        {
-            var results = await E.QueryAsync<PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByCategorySlug", new { categorySlug });
-            return results.Select(r => r.ToDomainModel());
-        }
-
         public async Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId)
         {
             var results = await E.QueryAsync<PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", new { authorId });
