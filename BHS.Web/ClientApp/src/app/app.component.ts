@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute, NavigationStart, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   isDoneLoading = true;
+  asyncLoadCount = 0;
 
   public constructor(
     private router: Router,
@@ -27,14 +29,18 @@ export class AppComponent implements OnInit {
       .pipe(
         filter(
           event =>
-            event instanceof NavigationStart ||
-            event instanceof NavigationEnd ||
-            event instanceof NavigationCancel ||
-            event instanceof NavigationError,
+            event instanceof RouteConfigLoadStart ||
+            event instanceof RouteConfigLoadEnd,
         )
       )
       .subscribe(event => {
-        this.isDoneLoading = !(event instanceof NavigationStart);
+        if (event instanceof RouteConfigLoadStart) {
+          this.asyncLoadCount++;
+        } else if (event instanceof RouteConfigLoadEnd) {
+          this.asyncLoadCount--;
+        }
+
+        this.isDoneLoading = this.asyncLoadCount <= 0;
       });
 
     this.router.events
