@@ -3,11 +3,8 @@
 AS
 BEGIN
 	SELECT	[Slug]
-			, MAX([Name]) AS [Name]
-			, COUNT(*) AS PostsCount
-	FROM	[blog].[Category_View] c JOIN
-			[blog].[PostCategory_View] pc ON pc.[CategorySlug] = c.[Slug]
-	WHERE	[Slug] = @slug
-	GROUP BY
-			[Slug];
+			, [Name]
+			, PostsCount
+	FROM	[blog].[Category_View]
+	WHERE	[Slug] = @slug;
 END
