@@ -4,23 +4,23 @@
     <div class="row">
       <div class="col-sm" *ngIf="officers">
         <h2>Officers</h2>
-        <dl *ngFor="let officer of officers">
-          <dt>{{officer.title}}</dt>
-          <dd>{{officer.name}}</dd>
+        <dl>
+          <ng-template ngFor let-officer [ngForOf]="officers">
+            <dt>{{officer.title}}</dt>
+            <dd>{{officer.name}}</dd>
+          </ng-template>
         </dl>
       </div>
       <div class="col-sm" *ngIf="directors">
         <h2>Directors</h2>
-        <ul class="list-unstyled" *ngFor="let director of directors">
-          <li>{{director.name}} ({{director.year}})</li>
+        <ul class="list-unstyled">
+          <li *ngFor="let director of directors">
+            {{director.name}} ({{director.year}})
+          </li>
         </ul>
       </div>
-      <div class="col-sm" *ngIf="errors">
-        <div *ngFor="let e of errors">
-          <div class="alert alert-danger" role="alert">
-            {{e}}
-          </div>
-        </div>
+      <div *ngFor="let e of errors" class="alert alert-danger" role="alert">
+        {{e}}
       </div>
     </div>
   </div>

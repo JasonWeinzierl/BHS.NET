@@ -2,11 +2,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BlogService } from '@app/data/service/blog.service';
 
-import { IndexComponent } from './index.component';
+import { BlogIndexComponent } from './blog-index.component';
 
-describe('IndexComponent', () => {
-  let component: IndexComponent;
-  let fixture: ComponentFixture<IndexComponent>;
+describe('BlogIndexComponent', () => {
+  let component: BlogIndexComponent;
+  let fixture: ComponentFixture<BlogIndexComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -14,7 +14,7 @@ describe('IndexComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        IndexComponent
+        BlogIndexComponent
       ],
       providers: [
         BlogService
@@ -24,7 +24,7 @@ describe('IndexComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IndexComponent);
+    fixture = TestBed.createComponent(BlogIndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

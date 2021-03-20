@@ -34,6 +34,16 @@ const routes: Routes = [
           import('@modules/location/location.module').then(m => m.LocationModule)
       },
       {
+        path: paths.members,
+        loadChildren: () =>
+          import('@modules/members/members.module').then(m => m.MembersModule)
+      },
+      {
+        path: paths.profile,
+        loadChildren: () =>
+          import('@modules/profile/profile.module').then(m => m.ProfileModule)
+      },
+      {
         path: paths.contact,
         loadChildren: () =>
           import('@modules/contact/contact.module').then(m => m.ContactModule)

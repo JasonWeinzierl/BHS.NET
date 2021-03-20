@@ -1,7 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { Category } from '../schema/category';
+import { CategoryPosts } from '../schema/category-posts';
 import { Post } from '../schema/post';
 import { PostPreview } from '../schema/post-preview';
 
@@ -14,18 +16,18 @@ export class BlogService {
   constructor(private http: HttpClient) { }
 
   searchPosts(q?: string, from?: Date, to?: Date): Observable<PostPreview[]> {
-    const options = { params: new HttpParams() };
+    let params = new HttpParams();
     if (q) {
-      options.params.set('q', q);
+      params = params.set('q', q);
     }
     if (from) {
-      options.params.set('from', from.toISOString());
+      params = params.set('from', from.toISOString());
     }
     if (to) {
-      options.params.set('to', to.toISOString());
+      params = params.set('to', to.toISOString());
     }
 
-    return this.http.get<PostPreview[]>(this.baseUrl + '/posts', options);
+    return this.http.get<PostPreview[]>(this.baseUrl + '/posts', { params });
   }
 
   getPost(slug: string): Observable<Post> {
@@ -34,5 +36,9 @@ export class BlogService {
 
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.baseUrl + '/categories');
+  }
+
+  getCategory(slug: string): Observable<CategoryPosts> {
+    return this.http.get<CategoryPosts>(this.baseUrl + '/categories/' + slug);
   }
 }

@@ -1,17 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { Post } from '@data/schema/post';
-import { BlogService } from '@data/service/blog.service';
+import { CategoryPosts } from '@app/data/schema/category-posts';
+import { BlogService } from '@app/data/service/blog.service';
 
 @Component({
-  selector: 'app-entry',
-  templateUrl: './entry.component.html',
-  styleUrls: ['./entry.component.scss']
+  selector: 'app-category-posts',
+  templateUrl: './category-posts.component.html',
+  styleUrls: ['./category-posts.component.scss']
 })
-export class EntryComponent implements OnInit {
-  post: Post;
+export class CategoryPostsComponent implements OnInit {
+  category: CategoryPosts;
   error: string;
 
   constructor(
@@ -22,9 +21,10 @@ export class EntryComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const slug = params.get('slug');
-      this.blogService.getPost(slug)
-        .subscribe(response => this.post = { ... response },
+      this.blogService.getCategory(slug)
+        .subscribe(response => this.category = { ... response },
           (error: HttpErrorResponse) => this.error = error.message);
     });
   }
+
 }

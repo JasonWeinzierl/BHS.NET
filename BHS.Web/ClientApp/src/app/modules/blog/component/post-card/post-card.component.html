@@ -1,16 +1,23 @@
 <div class="card">
   <div class="card-header">
-    <h2 class="card-title">{{post.title}}</h2>
+    <h2 class="card-title">
+      <a [routerLink]="['/apps/blog/entry', post.slug]">
+        {{post.title}}
+      </a>
+    </h2>
     <p class="card-subtitle">
       Posted
-      <span *ngIf="post.author">by {{post.author.displayName}}</span>
+      <span *ngIf="post.author">
+        by
+        <a [routerLink]="['/apps/profile', post.author.displayName]">{{post.author.displayName}}</a>
+      </span>
       on {{post.datePublished | date:'EEEE, d MMMM y \'at\' h:mm:ss a'}}
     </p>
   </div>
   <div class="card-body">
     <p>{{post.contentPreview}}</p>
     <p>
-      <a class="btn btn-secondary" role="button" [routerLink]="['entry', post.slug]">
+      <a class="btn btn-secondary" role="button" [routerLink]="['/apps/blog/entry', post.slug]">
         Read Full Post &raquo;
       </a>
     </p>

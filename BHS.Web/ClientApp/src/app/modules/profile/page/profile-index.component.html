@@ -1,0 +1,14 @@
+<div class="card" *ngIf="author">
+  <div class="card-body">
+    <h1 class="card-title">
+      {{author.displayName}}
+    </h1>
+    <h2>Blog posts by user</h2>
+  </div>
+</div>
+
+<app-post-card *ngFor="let post of posts" [post]="post"></app-post-card>
+
+<div class="alert alert-danger" *ngFor="let error of errors">
+  {{error}}
+</div>

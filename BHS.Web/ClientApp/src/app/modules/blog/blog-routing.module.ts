@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CategoryPostsComponent } from './page/category-posts/category-posts.component';
 import { EntryComponent } from './page/entry/entry.component';
-import { IndexComponent } from './page/index/index.component';
+import { BlogIndexComponent } from './page/blog-index/blog-index.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: IndexComponent,
+    component: BlogIndexComponent,
     pathMatch: 'full',
     data: { title: 'News' }
   },
@@ -14,6 +15,10 @@ const routes: Routes = [
     path: 'entry/:slug',
     component: EntryComponent,
     data: { title: 'Post' }
+  },
+  {
+    path: 'category/:slug',
+    component: CategoryPostsComponent
   }
 ];
 

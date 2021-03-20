@@ -14,30 +14,30 @@
       <div class="card-body">
         <form class="row row-cols-sm-auto g-3">
           <div class="col-12">
-            <input type="text" class="form-control" placeholder="Search Posts" aria-label="Search Posts" name="search">
+            <input type="text" class="form-control" placeholder="Search Posts" aria-label="Search Posts" name="search"
+              [(ngModel)]="searchText">
           </div>
           <div class="col-12">
-            <button type="button" class="btn btn-secondary" aria-label="Search">
+            <button type="submit" class="btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
               Search
             </button>
           </div>
         </form>
       </div>
     </div>
-    <div *ngFor="let post of posts">
-      <app-post-card [post]="post"></app-post-card>
-    </div>
+    <app-post-card *ngFor="let post of posts; trackBy: trackPostPreview" [post]="post"></app-post-card>
   </div>
   <div class="col-lg-3">
     <div class="card">
       <div class="card-body">
         <h2 class="card-title">Categories</h2>
       </div>
-      <div class="list-group list-group-flush" *ngFor="let category of categories">
-        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+      <div class="list-group list-group-flush">
+        <a *ngFor="let category of categories" [routerLink]="['/apps/blog/category', category.slug]"
+          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
           {{category.name}}
           <span class="badge bg-primary rounded-pill">{{category.postsCount}}</span>
-        </div>
+        </a>
       </div>
     </div>
   </div>

@@ -10,7 +10,10 @@
     <h1 class="card-title">{{post.title}}</h1>
     <p class="card-subtitle text-muted">
       Posted
-      <span *ngIf="post.author">by {{post.author.displayName}}</span>
+      <span *ngIf="post.author">
+        by
+        <a [routerLink]="['/apps/profile', post.author.displayName]">{{post.author.displayName}}</a>
+      </span>
       on {{post.datePublished | date:'EEEE, d MMMM y \'at\' h:mm:ss a'}}
     </p>
   </div>
@@ -20,10 +23,10 @@
   <div class="card-footer">
     <p>
       Categories:
-      <span *ngFor="let cat of post.categories">
+      <a [routerLink]="['/apps/blog/category', cat.slug]" *ngFor="let cat of post.categories" class="btn btn-outline-secondary btn-sm me-sm-2">
         {{cat.name}}
         <span class="badge rounded-pill bg-primary">{{cat.postsCount}}</span>
-      </span>
+      </a>
     </p>
   </div>
 </div>

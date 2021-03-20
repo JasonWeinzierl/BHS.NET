@@ -1,0 +1,13 @@
+<div class="card" *ngIf="category">
+  <div class="card-body">
+    <h1 class="card-title">{{category.name}}</h1>
+  </div>
+</div>
+
+<div *ngIf="category">
+  <app-post-card [post]="post" *ngFor="let post of category.posts"></app-post-card>
+</div>
+
+<div class="alert alert-danger" *ngIf="error">
+  {{error}}
+</div>
