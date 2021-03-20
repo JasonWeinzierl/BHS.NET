@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <img class="card-img-top" alt="image could not load">
+  <img *ngIf="photo" src="{{photo.imagePath}}" class="card-img-top" alt="image could not load">
 
   <div class="card-body">
     <h1 class="card-title">

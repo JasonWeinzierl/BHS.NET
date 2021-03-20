@@ -15,7 +15,7 @@
 <div class="row" *ngIf="photos">
   <div class="col-md-6 col-lg-3" *ngFor="let photo of photos">
     <div class="card">
-      <img src="{{photo.imageUri}}" class="card-img-top" alt="image could not load">
+      <img src="{{photo.imagePath}}" class="card-img-top" alt="image could not load">
       <div class="card-body">
         <h2 class="card-title">{{photo.name}}</h2>
         <p class="card-subtitle text-muted">{{photo.datePosted}}</p>
