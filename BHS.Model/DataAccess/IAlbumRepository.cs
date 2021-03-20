@@ -6,7 +6,7 @@ namespace BHS.Model.DataAccess
 {
     public interface IAlbumRepository
     {
-        Task<Album?> GetById(int id);
+        Task<AlbumPhotos?> GetBySlug(string slug);
         Task<IEnumerable<Album>> GetAll();
     }
 }

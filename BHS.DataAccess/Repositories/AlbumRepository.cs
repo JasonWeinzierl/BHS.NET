@@ -17,10 +17,10 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public async Task<Album?> GetById(int id)
+        public async Task<AlbumPhotos?> GetBySlug(string slug)
         {
-            var result = await E.QuerySingleOrDefaultAsync<AlbumDTO>(Constants.bhsConnectionStringName, "photos.Album_GetById", new { id });
-            return result?.ToDomainModel();
+            var (albums, photos) = await E.QueryMultipleAsync<AlbumDTO, Photo>(Constants.bhsConnectionStringName, "photos.AlbumPhotos_GetBySlug", new { slug });
+            return albums.SingleOrDefault()?.ToDomainModel(photos);
         }
 
         public async Task<IEnumerable<Album>> GetAll()

@@ -8,7 +8,7 @@ BEGIN
 			, [Title]
 			, [ContentMarkdown]
 			, [FilePath]
-			, [PhotosAlbumId]
+			, [PhotosAlbumSlug]
 			, [AuthorId]
 			, a.[DisplayName] AS AuthorDisplayName
 			, a.[Name] AS AuthorName

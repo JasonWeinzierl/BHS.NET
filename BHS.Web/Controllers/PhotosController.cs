@@ -18,7 +18,7 @@ namespace BHS.Web.Controllers
         }
 
         /// <summary>
-        /// Get a photo
+        /// Get a photo.
         /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Photo>> GetPhoto(int id)
@@ -29,7 +29,7 @@ namespace BHS.Web.Controllers
         }
 
         /// <summary>
-        /// Get all albums
+        /// Get all albums.
         /// </summary>
         [HttpGet("albums")]
         public async Task<ActionResult<IEnumerable<Album>>> GetAlbums()
@@ -38,23 +38,14 @@ namespace BHS.Web.Controllers
         }
 
         /// <summary>
-        /// Get an album
+        /// Get an album and its photos.
         /// </summary>
         [HttpGet("albums/{slug}")]
-        public async Task<ActionResult<Album>> GetAlbum(string slug)
+        public async Task<ActionResult<AlbumPhotos>> GetAlbum(string slug)
         {
             var album = await _photosService.GetAlbum(slug);
             if (album is null) return NotFound();
             return Ok(album);
-        }
-
-        /// <summary>
-        /// Get the photos of an album
-        /// </summary>
-        [HttpGet("albums/{slug}/photos")]
-        public async Task<ActionResult<IEnumerable<Photo>>> GetAlbumPhotos(string slug)
-        {
-            return Ok(await _photosService.GetPhotosByAlbum(slug));
         }
     }
 }

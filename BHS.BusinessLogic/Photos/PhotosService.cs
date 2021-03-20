@@ -29,21 +29,9 @@ namespace BHS.BusinessLogic.Photos
             return _albumRepository.GetAll();
         }
 
-        public Task<Album?> GetAlbum(string slug)
+        public Task<AlbumPhotos?> GetAlbum(string slug)
         {
-            // TODO: convert the underlying table to use slug. This is a temp fix.
-            if (int.TryParse(slug, out int id))
-                return _albumRepository.GetById(id);
-            else
-                return Task.FromResult<Album?>(null);
-        }
-
-        public Task<IEnumerable<Photo>> GetPhotosByAlbum(string slug)
-        {
-            if (int.TryParse(slug, out int id))
-                return _photoRepository.GetByAlbumId(id);
-            else
-                return Task.FromResult(Enumerable.Empty<Photo>());
+            return _albumRepository.GetBySlug(slug);
         }
 
         public Task<Photo?> GetPhoto(int id)

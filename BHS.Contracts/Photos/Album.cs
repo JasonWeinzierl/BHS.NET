@@ -2,9 +2,9 @@
 {
     public record Album(
         string Slug,
-        string? Name,
+        string Name,
         string? Description,
-        int? BannerPhotoId,
+        Photo? BannerPhoto,
         string? BlogPostSlug,
-        int? AuthorId);
+        Author? Author);
 }

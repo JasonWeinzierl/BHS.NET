@@ -1,6 +1,7 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,17 +19,57 @@ namespace BHS.DataAccess.Repositories.Tests
         }
 
         [Fact]
-        public async Task GetById_Executes()
+        public async Task GetBySlug_Executes()
         {
-            int id = 2;
-            _mockExecuter.SingleResult = new AlbumDTO(id, default, default, default, default, default);
+            string slug = "alb-2022";
+            var album = new AlbumDTO(
+                slug,
+                "some album",
+                "some album desc",
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default);
+            _mockExecuter.TwoManyResults = (new[] { album }, Enumerable.Empty<Photo>());
 
-            _ = await _subject.GetById(id);
+            _ = await _subject.GetBySlug(slug);
 
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
-            Assert.Equal("photos.Album_GetById", _mockExecuter.CommandText);
+            Assert.Equal("photos.AlbumPhotos_GetBySlug", _mockExecuter.CommandText);
 
-            Assert.Equal(id, _mockExecuter.Parameters?.id);
+            Assert.Equal(slug, _mockExecuter.Parameters?.slug);
+        }
+
+        [Fact]
+        public async Task GetBySlug_JoinsMultipleResults()
+        {
+            string slug = "alb-2022";
+            var album = new AlbumDTO(
+                slug,
+                "some album",
+                "some album desc",
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default);
+            var photo1 = new Photo(1, default, default, default, default);
+            var photo2 = new Photo(2, default, default, default, default);
+            _mockExecuter.TwoManyResults = (new[] { album }, new[] { photo1, photo2 });
+
+            var result = await _subject.GetBySlug(slug);
+
+            Assert.NotNull(result);
+            Assert.Equal(2, result?.Photos.Count());
         }
 
         [Fact]
@@ -36,7 +77,19 @@ namespace BHS.DataAccess.Repositories.Tests
         {
             _mockExecuter.ManyResults = new AlbumDTO[]
             {
-                new AlbumDTO(1, default, default, default, default, default)
+                new AlbumDTO(
+                    "alb",
+                    "some album",
+                    "some album desc",
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default)
             };
 
             _ = await _subject.GetAll();
