@@ -1,7 +1,9 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.DataAccess.Core;
+using BHS.DataAccess.Models;
 using BHS.Model.DataAccess;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
@@ -15,14 +17,17 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<Category>> GetAll()
         {
-            return E.QueryAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetAll");
+            var results = await E.QueryAsync<CategoryDTO>(Constants.bhsConnectionStringName, "blog.Category_GetAll");
+            return results.Select(r => r.ToDomainModel());
         }
 
-        public Task<Category?> GetBySlug(string slug)
+        public async Task<CategoryPosts?> GetBySlug(string slug)
         {
-            return E.QuerySingleOrDefaultAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", new { slug });
+            var (categories, posts) = await E.QueryMultipleAsync<CategoryDTO, PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", new { slug });
+
+            return categories.SingleOrDefault()?.ToDomainModel(posts.Select(p => p.ToDomainModel()));
         }
     }
 }

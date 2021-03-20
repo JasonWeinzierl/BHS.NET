@@ -97,7 +97,6 @@
     <Build Include="dbo\User Defined Types\LongList.sql" />
     <Build Include="blog\Stored Procedures\Post_GetBySlug.sql" />
     <Build Include="blog\Stored Procedures\PostPreview_Search.sql" />
-    <Build Include="blog\Stored Procedures\PostPreview_GetByCategorySlug.sql" />
     <Build Include="blog\Stored Procedures\PostPreview_GetByAuthorId.sql" />
     <Build Include="blog\Stored Procedures\Category_GetBySlug.sql" />
     <Build Include="dbo\Stored Procedures\ContactAlert_Insert.sql" />
