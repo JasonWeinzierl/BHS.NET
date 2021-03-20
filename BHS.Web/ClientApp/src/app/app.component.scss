@@ -1,24 +1,25 @@
 @keyframes router-load-indicator-animation {
   from {
     opacity: 0.0;
-    top: 0rem;
+    top: -1rem;
   }
   to {
     opacity: 1.0;
-    top: 1rem;
+    top: 0rem;
   }
 }
 
 .router-load-indicator {
   background-color: var(--bs-primary);
-  border-radius: 0.2rem;
   box-shadow: 0rem 0.4rem 1rem var(--bs-dark);
   color: var(--bs-light);
-  font-size: 1.25rem;
+  font-size: 1rem;
   left: 50%;
-  padding: 0.5rem 1rem;
+  padding: 0.1rem 1rem;
   position: fixed;
+  text-align: center;
   transform: translateX(-50%);
+  width: 110%;
   z-index: 2;
   /* delay animation for fast network connection */
   animation-delay: 100ms;
