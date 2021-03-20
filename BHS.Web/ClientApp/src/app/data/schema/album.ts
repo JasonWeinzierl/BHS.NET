@@ -1,8 +1,11 @@
+import { Author } from './author';
+import { Photo } from './photo';
+
 export interface Album {
   slug: string;
   name?: string;
   description?: string;
-  bannerPhotoId?: number;
+  bannerPhoto?: Photo;
   blogPostSlug?: string;
-  authorId?: number;
+  author?: Author;
 }

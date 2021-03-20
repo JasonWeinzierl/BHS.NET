@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Album } from '../schema/album';
-import { Photo } from '../schema/photo';
+import { AlbumPhotos } from '@data/schema/album-photos';
+import { Album } from '@data/schema/album';
+import { Photo } from '@data/schema/photo';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +18,11 @@ export class PhotosService {
     return this.http.get<Album[]>(this.baseUrl + '/albums');
   }
 
-  // todo: change to exhibit or albumphotos model to include array of photos
-
-  getAlbum(slug: string): Observable<Album> {
-    return this.http.get<Album>(this.baseUrl + '/albums/' + slug);
+  getAlbum(slug: string): Observable<AlbumPhotos> {
+    return this.http.get<AlbumPhotos>(this.baseUrl + '/albums/' + slug);
   }
 
-  getPhotos(albumSlug: string): Observable<Photo[]> {
-    return this.http.get<Photo[]>(this.baseUrl + '/albums/' + albumSlug + '/photos');
-  }
-
-  getPhoto(albumSlug: string, photoId: number): Observable<Photo> {
-    return this.http.get<Photo>(this.baseUrl + '/albums/' + albumSlug + '/photos/' + photoId);
+  getPhoto(photoId: number): Observable<Photo> {
+    return this.http.get<Photo>(this.baseUrl + '/' + photoId);
   }
 }

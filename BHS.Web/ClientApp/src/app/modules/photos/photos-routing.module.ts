@@ -15,13 +15,11 @@ const routes: Routes = [
   {
     path: 'album/:slug',
     component: AlbumComponent,
-    children: [
-      {
-        path: 'photo/:id',
-        component: AlbumPageComponent
-      }
-    ]
   },
+  {
+    path: 'album/:slug/photo/:id',
+    component: AlbumPageComponent
+  }
 ];
 
 @NgModule({

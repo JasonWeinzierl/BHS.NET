@@ -7,18 +7,22 @@
     <h1 class="card-title">
       {{album.name}}
     </h1>
-    <p class="card-subtitle text-muted">{{album.slug}}</p>
+    <p class="card-subtitle text-muted" *ngIf="album.author">Posted by {{album.author.displayName}}</p>
     <p>{{album.description}}</p>
   </div>
 </div>
 
-<div class="row" *ngIf="photos">
-  <div class="col-md-6 col-lg-3" *ngFor="let photo of photos">
+<div class="row" *ngIf="album?.photos">
+  <div class="col-md-6 col-lg-3" *ngFor="let photo of album.photos">
     <div class="card">
       <img src="{{photo.imagePath}}" class="card-img-top" alt="image could not load">
       <div class="card-body">
-        <h2 class="card-title">{{photo.name}}</h2>
-        <p class="card-subtitle text-muted">{{photo.datePosted}}</p>
+        <h2 class="card-title">
+          <a [routerLink]="['/apps/photos/album', album.slug, 'photo', photo.id]" class="stretched-link">
+            {{photo.name ? photo.name : photo.id}}
+          </a>
+        </h2>
+        <p class="card-subtitle text-muted" *ngIf="photo.datePosted">{{photo.datePosted}}</p>
       </div>
     </div>
   </div>

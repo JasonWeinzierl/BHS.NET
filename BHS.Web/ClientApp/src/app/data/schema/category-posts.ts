@@ -1,8 +1,6 @@
+import { Category } from './category';
 import { PostPreview } from './post-preview';
 
-export interface CategoryPosts {
-  slug: string;
-  name: string;
-  postsCount: number;
+export interface CategoryPosts extends Category {
   posts: PostPreview[];
 }

@@ -1,9 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Album } from '@app/data/schema/album';
-import { Photo } from '@app/data/schema/photo';
 import { PhotosService } from '@app/data/service/photos.service';
+import { AlbumPhotos } from '@data/schema/album-photos';
 
 @Component({
   selector: 'app-album',
@@ -11,8 +10,7 @@ import { PhotosService } from '@app/data/service/photos.service';
   styleUrls: ['./album.component.scss']
 })
 export class AlbumComponent implements OnInit {
-  album: Album;
-  photos: Photo[] = [];
+  album: AlbumPhotos;
   errors: string[] = [];
 
   constructor(
@@ -25,9 +23,6 @@ export class AlbumComponent implements OnInit {
       const slug = params.get('slug');
       this.photosService.getAlbum(slug)
         .subscribe(response => this.album = response,
-          (error: HttpErrorResponse) => this.errors.push(error.message));
-      this.photosService.getPhotos(slug)
-        .subscribe(response => this.photos = response,
           (error: HttpErrorResponse) => this.errors.push(error.message));
     });
   }

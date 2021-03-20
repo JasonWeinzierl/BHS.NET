@@ -1,37 +1,37 @@
-<div class="card">
+<div class="card" *ngIf="album">
   <div class="card-header">
     <div class="text-center row">
       <div class="col-2">
-        <a class="btn btn-secondary">prev photo</a>
+        <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', previousPhotoId]">prev photo</a>
       </div>
       <div class="col-8">
-        album link
+        <a [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
       </div>
       <div class="col-2">
-        <a class="btn btn-secondary">next photo</a>
+        <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', nextPhotoId]">next photo</a>
       </div>
     </div>
   </div>
 
-  <img *ngIf="photo" src="{{photo.imagePath}}" class="card-img-top" alt="image could not load">
+  <img src="{{currentPhoto.imagePath}}" class="card-img-top" alt="image failed to load">
 
   <div class="card-body">
     <h1 class="card-title">
-      photo name
+      {{currentPhoto.name}}
     </h1>
-    <p class="card-subtitle">photo details</p>
+    <p class="card-subtitle">{{currentPhoto.datePosted}}</p>
   </div>
 
   <div class="card-footer">
     <div class="text-center row">
       <div class="col-2">
-        <a class="btn btn-secondary">prev photo</a>
+        <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', previousPhotoId]">prev photo</a>
       </div>
       <div class="col-8">
-        album link
+        <a [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
       </div>
       <div class="col-2">
-        <a class="btn btn-secondary">next photo</a>
+        <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', nextPhotoId]">next photo</a>
       </div>
     </div>
   </div>
