@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Director } from '../schema/director';
 import { Officer } from '../schema/officer';
 
@@ -11,11 +12,11 @@ export class LeadershipService {
 
   constructor(private http: HttpClient) { }
 
-  getOfficers() {
+  getOfficers(): Observable<Officer[]> {
     return this.http.get<Officer[]>(this.baseUrl + '/officers');
   }
 
-  getDirectors() {
+  getDirectors(): Observable<Director[]> {
     return this.http.get<Director[]>(this.baseUrl + '/directors');
   }
 }

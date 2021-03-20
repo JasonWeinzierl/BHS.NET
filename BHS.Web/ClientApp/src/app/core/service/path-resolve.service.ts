@@ -31,7 +31,7 @@ export class PathResolveService implements Resolve<string | null> {
     return path.length < 5 ? 3 : 5;
   }
 
-  private sortByDistance(typoPath: string, dictionary: string[]) {
+  private sortByDistance(typoPath: string, dictionary: string[]): void {
     const pathsDistance = {} as { [name: string]: number };
 
     dictionary.sort((a, b) => {

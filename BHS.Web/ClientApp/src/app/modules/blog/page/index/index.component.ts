@@ -17,7 +17,7 @@ export class IndexComponent implements OnInit {
     private blogService: BlogService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.blogService.searchPosts().subscribe(response => {
       this.posts = response;
     });

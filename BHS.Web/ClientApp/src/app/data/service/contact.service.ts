@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { ContactAlertRequest } from '@data/schema/contact-alert-request';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
-  sendMessage(request: ContactAlertRequest) {
-    return this.http.post<ContactAlertRequest>(this.baseUrl, request);
+  /**
+   * @returns No Content
+   */
+  sendMessage(request: ContactAlertRequest): Observable<any> {
+    return this.http.post(this.baseUrl, request);
   }
 }

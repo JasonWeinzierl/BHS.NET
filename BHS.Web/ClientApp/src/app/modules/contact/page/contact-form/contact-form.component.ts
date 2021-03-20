@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ContactAlertRequest } from '@app/data/schema/contact-alert-request';
@@ -9,10 +10,10 @@ import { ContactService } from '@app/data/service/contact.service';
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss']
 })
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent {
   contactForm: FormGroup;
   isSubmitted = false;
-  error: any = false;
+  error: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,16 +27,13 @@ export class ContactFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
-  onSubmit(request: ContactAlertRequest) {
+  onSubmit(request: ContactAlertRequest): void {
     this.contactForm.reset();
     request.dateRequested = new Date();
     this.contactService.sendMessage(request).subscribe(() => {
       this.isSubmitted = true;
-    }, error => {
-      this.error = error;
+    }, (error: HttpErrorResponse) => {
+      this.error = error.message;
     });
   }
 }
