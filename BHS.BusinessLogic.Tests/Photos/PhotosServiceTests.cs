@@ -36,7 +36,7 @@ namespace BHS.BusinessLogic.Photos.Tests
         {
             int id = 5;
 
-            _ = await Subject.GetAlbum(id);
+            _ = await Subject.GetAlbum(id.ToString());
 
             _albumRepo.Verify(r => r.GetById(It.Is<int>(i => i == id)));
         }
@@ -46,7 +46,7 @@ namespace BHS.BusinessLogic.Photos.Tests
         {
             int id = 6;
 
-            _ = await Subject.GetPhotosByAlbum(id);
+            _ = await Subject.GetPhotosByAlbum(id.ToString());
 
             _photoRepo.Verify(r => r.GetByAlbumId(It.Is<int>(i => i == id)));
         }

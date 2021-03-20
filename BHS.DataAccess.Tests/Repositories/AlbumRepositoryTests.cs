@@ -1,4 +1,5 @@
 ﻿using BHS.Contracts.Photos;
+using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
 using System.Threading.Tasks;
 using Xunit;
@@ -19,22 +20,23 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetById_Executes()
         {
-            _mockExecuter.SingleResult = new Album(1, default, default, default, default, default);
+            int id = 2;
+            _mockExecuter.SingleResult = new AlbumDTO(id, default, default, default, default, default);
 
-            _ = await _subject.GetById(2);
+            _ = await _subject.GetById(id);
 
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("photos.Album_GetById", _mockExecuter.CommandText);
 
-            Assert.Equal(2, _mockExecuter.Parameters?.id);
+            Assert.Equal(id, _mockExecuter.Parameters?.id);
         }
 
         [Fact]
         public async Task GetAll_Executes()
         {
-            _mockExecuter.ManyResults = new Album[]
+            _mockExecuter.ManyResults = new AlbumDTO[]
             {
-                new Album(1, default, default, default, default, default)
+                new AlbumDTO(1, default, default, default, default, default)
             };
 
             _ = await _subject.GetAll();

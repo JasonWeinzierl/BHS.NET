@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace BHS.Contracts.Photos
+﻿namespace BHS.Contracts.Photos
 {
     public record Album(
-        int Id,
+        string Slug,
         string? Name,
         string? Description,
         int? BannerPhotoId,

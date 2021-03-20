@@ -3,6 +3,7 @@ using BHS.Model.DataAccess;
 using BHS.Model.Services.Photos;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BHS.BusinessLogic.Photos
@@ -28,14 +29,21 @@ namespace BHS.BusinessLogic.Photos
             return _albumRepository.GetAll();
         }
 
-        public Task<Album?> GetAlbum(int id)
+        public Task<Album?> GetAlbum(string slug)
         {
-            return _albumRepository.GetById(id);
+            // TODO: convert the underlying table to use slug. This is a temp fix.
+            if (int.TryParse(slug, out int id))
+                return _albumRepository.GetById(id);
+            else
+                return Task.FromResult<Album?>(null);
         }
 
-        public Task<IEnumerable<Photo>> GetPhotosByAlbum(int id)
+        public Task<IEnumerable<Photo>> GetPhotosByAlbum(string slug)
         {
-            return _photoRepository.GetByAlbumId(id);
+            if (int.TryParse(slug, out int id))
+                return _photoRepository.GetByAlbumId(id);
+            else
+                return Task.FromResult(Enumerable.Empty<Photo>());
         }
 
         public Task<Photo?> GetPhoto(int id)
