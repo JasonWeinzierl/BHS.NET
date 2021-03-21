@@ -6,11 +6,11 @@ import { Post } from '@data/schema/post';
 import { BlogService } from '@data/service/blog.service';
 
 @Component({
-  selector: 'app-entry',
-  templateUrl: './entry.component.html',
-  styleUrls: ['./entry.component.scss']
+  selector: 'app-blog-entry',
+  templateUrl: './blog-entry.component.html',
+  styleUrls: ['./blog-entry.component.scss']
 })
-export class EntryComponent implements OnInit {
+export class BlogEntryComponent implements OnInit {
   post: Post;
   error: string;
 

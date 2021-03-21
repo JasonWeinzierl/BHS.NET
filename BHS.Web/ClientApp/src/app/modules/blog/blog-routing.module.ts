@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CategoryPostsComponent } from './page/category-posts/category-posts.component';
-import { EntryComponent } from './page/entry/entry.component';
+import { BlogEntryComponent } from './page/blog-entry/blog-entry.component';
 import { BlogIndexComponent } from './page/blog-index/blog-index.component';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'entry/:slug',
-    component: EntryComponent,
+    component: BlogEntryComponent,
     data: { title: 'Post' }
   },
   {

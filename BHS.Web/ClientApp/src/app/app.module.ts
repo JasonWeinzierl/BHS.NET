@@ -1,5 +1,8 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+import { MarkdownModule } from 'ngx-markdown';
 
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
@@ -11,7 +14,6 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
     // angular
     BrowserModule,
     HttpClientModule,
+
+    // 3rd party
+    MarkdownModule.forRoot(),
 
     // core & shared
     CoreModule,

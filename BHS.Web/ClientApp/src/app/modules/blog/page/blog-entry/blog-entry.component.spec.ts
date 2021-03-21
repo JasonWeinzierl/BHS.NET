@@ -4,11 +4,11 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { BlogService } from '@app/data/service/blog.service';
 import { of } from 'rxjs';
 
-import { EntryComponent } from './entry.component';
+import { BlogEntryComponent } from './blog-entry.component';
 
-describe('EntryComponent', () => {
-  let component: EntryComponent;
-  let fixture: ComponentFixture<EntryComponent>;
+describe('BlogEntryComponent', () => {
+  let component: BlogEntryComponent;
+  let fixture: ComponentFixture<BlogEntryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,7 +16,7 @@ describe('EntryComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        EntryComponent
+        BlogEntryComponent
       ],
       providers: [
         BlogService,
@@ -34,7 +34,7 @@ describe('EntryComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EntryComponent);
+    fixture = TestBed.createComponent(BlogEntryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

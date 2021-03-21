@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MarkdownModule } from 'ngx-markdown';
+
 import { BlogRoutingModule } from './blog-routing.module';
 import { BlogIndexComponent } from './page/blog-index/blog-index.component';
 import { PostCardComponent } from './component/post-card/post-card.component';
-import { EntryComponent } from './page/entry/entry.component';
+import { BlogEntryComponent } from './page/blog-entry/blog-entry.component';
 import { FormsModule } from '@angular/forms';
 import { CategoryPostsComponent } from './page/category-posts/category-posts.component';
 
@@ -12,12 +14,14 @@ import { CategoryPostsComponent } from './page/category-posts/category-posts.com
   declarations: [
     BlogIndexComponent,
     PostCardComponent,
-    EntryComponent,
+    BlogEntryComponent,
     CategoryPostsComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+
+    MarkdownModule.forChild(),
 
     BlogRoutingModule
   ],
