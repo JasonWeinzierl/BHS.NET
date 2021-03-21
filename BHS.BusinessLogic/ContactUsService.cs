@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts;
 using BHS.Model.DataAccess;
+using BHS.Model.Exceptions;
 using BHS.Model.Services;
 using Microsoft.Extensions.Logging;
 using SendGrid;
@@ -27,10 +28,12 @@ namespace BHS.BusinessLogic
 
         public async Task AddRequest(ContactAlertRequest request)
         {
-            //return;
             // Body is a honeypot.
             if (!string.IsNullOrEmpty(request.Body))
                 return;
+
+            if (string.IsNullOrWhiteSpace(request.EmailAddress))
+                throw new BadRequestException("Email address is required.");
 
             var newAlert = await _contactAlertRepository.Insert(request);
 
@@ -44,6 +47,7 @@ namespace BHS.BusinessLogic
                 From = new EmailAddress("contact@beltonhistoricalsociety.org", "Belton Historical Society"),
                 Subject = "Website Comment: " + newAlert.Name
             };
+            msg.AddContent(MimeType.Text, newAlert.Message);
             msg.AddContent(MimeType.Html, @$"
 <p>The following form has been submitted from your website <a>https://www.beltonhistoricalsociety.org/</a> :</p>
 

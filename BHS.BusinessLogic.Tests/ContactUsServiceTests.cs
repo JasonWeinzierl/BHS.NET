@@ -1,5 +1,6 @@
 using BHS.Contracts;
 using BHS.Model.DataAccess;
+using BHS.Model.Exceptions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SendGrid;
@@ -29,7 +30,7 @@ namespace BHS.BusinessLogic.Tests
         [Fact]
         public async Task AddRequest_OnBodyEmpty_InsertsAndSendsMessage()
         {
-            var request = new ContactAlertRequest(default, string.Empty, default, default, null);
+            var request = new ContactAlertRequest(default, "x", default, default, null);
             _mockRepo.Setup(r => r.Insert(It.IsAny<ContactAlertRequest>()))
                 .Returns(() => Task.FromResult(new ContactAlert(default, default, string.Empty, default, default, default)));
             _sgClient.Setup(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
@@ -50,6 +51,20 @@ namespace BHS.BusinessLogic.Tests
 
             _mockRepo.Verify(r => r.Insert(It.IsAny<ContactAlertRequest>()), Times.Never, "Expected insert to never be called if body (honeypot) has value.");
             _sgClient.Verify(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()), Times.Never, "Expected message to never be sent if body (honeypot) has value.");
+        }
+
+        [Fact]
+        public async Task AddRequest_OnEmailEmpty_Throws()
+        {
+            var request = new ContactAlertRequest(default, string.Empty, default, default, null);
+
+            await Assert.ThrowsAsync<BadRequestException>(async () =>
+            {
+                await _subject.AddRequest(request);
+            });
+
+            _mockRepo.Verify(r => r.Insert(It.IsAny<ContactAlertRequest>()), Times.Never, "Expected insert to never be called if email is empty.");
+            _sgClient.Verify(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()), Times.Never, "Expected message to never be sent if email is empty.");
         }
     }
 }

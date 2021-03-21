@@ -32,6 +32,7 @@ namespace BHS.Web.Controllers
         private static int GetStatusCode(Exception? exception) =>
             exception switch
             {
+                BadRequestException => 400,
                 NotFoundException => 404,
                 _ => 500,
             };

@@ -3,33 +3,41 @@
 
     <h1 class="card-title">Contact Us</h1>
 
-    <div *ngIf="error" class="alert alert-danger alert-dismissable fade show" role="alert">
+    <div *ngFor="let error of errors; let i = index" role="alert"
+      class="alert alert-danger alert-dismissable fade show">
       There was an error submitting your message: {{error}}.
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+        (click)="this.errors.splice(i, 1)"></button>
     </div>
 
-    <form *ngIf="!isSubmitted" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)">
+    <form *ngIf="!isSubmitted" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)" ngNativeValidate>
+
       <div class="mb-3">
         <label for="inputName" class="form-label">Name</label>
-        <input type="text" class="form-control" id="inputName" placeholder="Name" name="name" formControlName="name"
-          required>
+        <input type="text" class="form-control" id="inputName" placeholder="Name" name="name" formControlName="name">
       </div>
+
       <div class="mb-3">
         <label for="inputEmail" class="form-label">Email</label>
         <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email"
           formControlName="emailAddress" required>
       </div>
+
       <div class="mb-3">
         <label for="inputMessage" class="form-label">Message</label>
         <textarea id="inputMessage" class="form-control" rows="3" placeholder="Message" name="message"
           formControlName="message"></textarea>
       </div>
+
       <div class="d-none">
         <label for="body" class="form-label">Please leave this secion blank</label>
         <input type="text" id="body" name="body" formControlName="body" value="" aria-hidden="true">
       </div>
-      <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+
+      <button type="submit" class="btn btn-primary" name="submit" [disabled]="!contactForm.valid">Submit</button>
+
       <p class="form-text">We will try to respond as soon as possible.</p>
+
     </form>
 
     <div *ngIf="isSubmitted">

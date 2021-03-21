@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ContactAlertRequest } from '@app/data/schema/contact-alert-request';
 import { ContactService } from '@app/data/service/contact.service';
@@ -13,27 +13,25 @@ import { ContactService } from '@app/data/service/contact.service';
 export class ContactFormComponent {
   contactForm: FormGroup;
   isSubmitted = false;
-  error: string;
+  errors: string[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private contactService: ContactService
   ) {
     this.contactForm = this.formBuilder.group({
-      name: '',
-      emailAddress: '',
-      message: '',
-      body: ''
+      name: [''],
+      emailAddress: ['', [Validators.required, Validators.email]],
+      message: [''],
+      body: [''],
     });
   }
 
   onSubmit(request: ContactAlertRequest): void {
     this.contactForm.reset();
     request.dateRequested = new Date();
-    this.contactService.sendMessage(request).subscribe(() => {
-      this.isSubmitted = true;
-    }, (error: HttpErrorResponse) => {
-      this.error = error.message;
-    });
+    this.contactService.sendMessage(request)
+      .subscribe(() => this.isSubmitted = true,
+        (error: HttpErrorResponse) => this.errors.push(error.message));
   }
 }
