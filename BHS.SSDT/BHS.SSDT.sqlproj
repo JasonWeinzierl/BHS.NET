@@ -79,6 +79,7 @@
     <Folder Include="leadership\Stored Procedures" />
     <Folder Include="dbo\Views" />
     <Folder Include="photos\Views" />
+    <Folder Include="blog\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\User Defined Types\StringList.sql" />
@@ -126,6 +127,7 @@
     <Build Include="leadership\Tables\Director.sql" />
     <Build Include="leadership\Views\Director_View.sql" />
     <Build Include="leadership\Stored Procedures\Director_GetCurrent.sql" />
+    <Build Include="blog\Functions\GetPostContentPreview.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BHS.SSDT.refactorlog" />

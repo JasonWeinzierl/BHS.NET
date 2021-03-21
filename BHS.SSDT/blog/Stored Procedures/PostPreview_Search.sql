@@ -8,7 +8,7 @@ AS
 BEGIN
 	SELECT	[Slug]
 			, [Title]
-			, [ContentMarkdown] AS ContentPreview
+			, [blog].[GetPostContentPreview]([ContentMarkdown]) AS ContentPreview
 			, [AuthorId]
 			, a.[DisplayName] AS AuthorDisplayName
 			, a.[Name] AS AuthorName
