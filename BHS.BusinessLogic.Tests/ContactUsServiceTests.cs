@@ -1,7 +1,9 @@
 using BHS.Contracts;
 using BHS.Model.DataAccess;
 using BHS.Model.Exceptions;
+using BHS.Model.Providers;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -15,16 +17,19 @@ namespace BHS.BusinessLogic.Tests
     {
         private readonly ContactUsService _subject;
 
+        private readonly IOptions<ContactUsOptions> _options;
         private readonly Mock<IContactAlertRepository> _mockRepo;
         private readonly Mock<ISendGridClient> _sgClient;
         private readonly Mock<ILogger<ContactUsService>> _logger;
 
         public ContactUsServiceTests()
         {
+            _options = Options.Create(new ContactUsOptions());
             _mockRepo = new Mock<IContactAlertRepository>();
             _sgClient = new Mock<ISendGridClient>();
             _logger = new Mock<ILogger<ContactUsService>>();
-            _subject = new ContactUsService(_mockRepo.Object, _sgClient.Object, _logger.Object);
+
+            _subject = new ContactUsService(_options, _mockRepo.Object, _sgClient.Object, _logger.Object);
         }
 
         [Fact]
@@ -32,9 +37,9 @@ namespace BHS.BusinessLogic.Tests
         {
             var request = new ContactAlertRequest(default, "x", default, default, null);
             _mockRepo.Setup(r => r.Insert(It.IsAny<ContactAlertRequest>()))
-                .Returns(() => Task.FromResult(new ContactAlert(default, default, string.Empty, default, default, default)));
+                .ReturnsAsync(() => new ContactAlert(default, default, string.Empty, default, default, default));
             _sgClient.Setup(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
-                .Returns(() => Task.FromResult(new Response(System.Net.HttpStatusCode.OK, default, default)));
+                .ReturnsAsync(() => new Response(System.Net.HttpStatusCode.OK, default, default));
 
             await _subject.AddRequest(request);
 

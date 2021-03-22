@@ -1,8 +1,10 @@
 ﻿using BHS.Contracts;
 using BHS.Model.DataAccess;
 using BHS.Model.Exceptions;
+using BHS.Model.Providers;
 using BHS.Model.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -12,15 +14,18 @@ namespace BHS.BusinessLogic
 {
     public class ContactUsService : IContactUsService
     {
+        private readonly ContactUsOptions _options;
         private readonly IContactAlertRepository _contactAlertRepository;
         private readonly ISendGridClient _sendGridClient;
         private readonly ILogger _logger;
 
         public ContactUsService(
+            IOptions<ContactUsOptions> options,
             IContactAlertRepository contactAlertRepository,
             ISendGridClient sendGridClient,
             ILogger<ContactUsService> logger)
         {
+            _options = options.Value;
             _contactAlertRepository = contactAlertRepository;
             _sendGridClient = sendGridClient;
             _logger = logger;
@@ -36,20 +41,22 @@ namespace BHS.BusinessLogic
                 throw new BadRequestException("Email address is required.");
 
             var newAlert = await _contactAlertRepository.Insert(request);
+            await SendEmail(newAlert);
+        }
 
-            var submitTime = newAlert.DateRequested ?? newAlert.DateCreated;
-            // Set to CST, but avoid an ArgumentOutOfRangeException.
-            if (submitTime != default)
-                submitTime = submitTime.ToOffset(TimeSpan.FromHours(-6));
+        private async Task SendEmail(ContactAlert newAlert)
+        {
+            // TODO: Time zone lookup breaks on linux.  .NET 6 fixes this with #49412.
+            var submitTime = GetSubmitTime(newAlert, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
 
             var msg = new SendGridMessage
             {
-                From = new EmailAddress("contact@beltonhistoricalsociety.org", "Belton Historical Society"),
+                From = new EmailAddress(_options.FromAddress, _options.FromName),
                 Subject = "Website Comment: " + newAlert.Name
             };
             msg.AddContent(MimeType.Text, newAlert.Message);
             msg.AddContent(MimeType.Html, @$"
-<p>The following form has been submitted from your website <a>https://www.beltonhistoricalsociety.org/</a> :</p>
+<p>The following message has been submitted to the Belton Historical Society:</p>
 
 <p>
 Name: {newAlert.Name}<br>
@@ -59,7 +66,8 @@ Message:<br>
 </p>
 
 <p><i>Submitted on {submitTime:dddd, d MMMM yyyy HH:mm:ss zzz} .</i></p>");
-            msg.AddTo("weinzierljason@gmail.com");
+            foreach (var toAddress in _options.ToAddresses)
+                msg.AddTo(toAddress);
 
             var response = await _sendGridClient.SendEmailAsync(msg);
 
@@ -68,5 +76,8 @@ Message:<br>
             else
                 _logger.LogError("FailedContactAlert {Id}: {StatusCode}", newAlert.Id, response.StatusCode, await response.Body.ReadAsStringAsync());
         }
+
+        private static DateTimeOffset GetSubmitTime(ContactAlert newAlert, TimeZoneInfo timeZoneInfo)
+            => TimeZoneInfo.ConvertTime(newAlert.DateRequested ?? newAlert.DateCreated, timeZoneInfo);
     }
 }

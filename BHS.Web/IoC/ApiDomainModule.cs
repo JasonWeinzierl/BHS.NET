@@ -28,6 +28,8 @@ namespace BHS.Web.IoC
         /// </summary>
         public static IServiceCollection LoadApiDomain(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<ContactUsOptions>(configuration.GetSection(nameof(ContactUsOptions)));
+
             services.AddSendGrid(options =>
             {
                 options.ApiKey = configuration["SENDGRID_API_KEY"];

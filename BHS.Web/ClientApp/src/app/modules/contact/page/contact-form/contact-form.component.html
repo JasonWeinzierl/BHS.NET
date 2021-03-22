@@ -4,10 +4,15 @@
     <h1 class="card-title">Contact Us</h1>
 
     <div *ngFor="let error of errors; let i = index" role="alert"
-      class="alert alert-danger alert-dismissable fade show">
-      There was an error submitting your message: {{error}}.
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-        (click)="this.errors.splice(i, 1)"></button>
+      class="alert alert-danger alert-dismissible fade show">
+      There was an error submitting your message. {{error}}
+      <hr>
+      <p class="small text-muted mb-0">Please <a [routerLink]="['/about/this-site']">email the webmaster</a> if this keeps happening.</p>
+      <button type="button" class="btn-close" aria-label="Close" (click)="removeError(i)"></button>
+    </div>
+
+    <div class="progress" *ngIf="isSubmitted && !isAccepted">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
 
     <form *ngIf="!isSubmitted" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)" ngNativeValidate>
@@ -34,13 +39,13 @@
         <input type="text" id="body" name="body" formControlName="body" value="" aria-hidden="true">
       </div>
 
-      <button type="submit" class="btn btn-primary" name="submit" [disabled]="!contactForm.valid">Submit</button>
+      <button type="submit" class="btn btn-primary" name="submit">Submit</button>
 
       <p class="form-text">We will try to respond as soon as possible.</p>
 
     </form>
 
-    <div *ngIf="isSubmitted">
+    <div *ngIf="isAccepted">
       <p class="card-subtitle">Thank you for your message.</p>
       <a [routerLink]="['/']" class="card-link">&laquo; Back Home</a>
     </div>

@@ -13,6 +13,7 @@ import { ContactService } from '@app/data/service/contact.service';
 export class ContactFormComponent {
   contactForm: FormGroup;
   isSubmitted = false;
+  isAccepted = false;
   errors: string[] = [];
 
   constructor(
@@ -28,10 +29,24 @@ export class ContactFormComponent {
   }
 
   onSubmit(request: ContactAlertRequest): void {
-    this.contactForm.reset();
+    this.isSubmitted = true;
     request.dateRequested = new Date();
     this.contactService.sendMessage(request)
-      .subscribe(() => this.isSubmitted = true,
-        (error: HttpErrorResponse) => this.errors.push(error.message));
+      .subscribe(() => {
+        this.isAccepted = true;
+        this.contactForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        if (error.error?.title) {
+          this.errors.push(error.error.title);
+        } else {
+          this.errors.push(error.message);
+        }
+        this.isSubmitted = false;
+      });
+  }
+
+  removeError(index: number): void {
+    this.errors.splice(index, 1);
   }
 }
