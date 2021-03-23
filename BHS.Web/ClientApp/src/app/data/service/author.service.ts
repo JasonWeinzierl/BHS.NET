@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Author } from '../schema/author';
-import { PostPreview } from '../schema/post-preview';
+
+import { Author } from '@data/schema/author';
+import { PostPreview } from '@data/schema/post-preview';
 
 @Injectable({
   providedIn: 'root'

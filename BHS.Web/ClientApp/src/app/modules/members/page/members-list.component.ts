@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Author } from '@app/data/schema/author';
-import { AuthorService } from '@app/data/service/author.service';
+
+import { Author } from '@data/schema/author';
+import { AuthorService } from '@data/service/author.service';
 
 @Component({
   selector: 'app-members-list',

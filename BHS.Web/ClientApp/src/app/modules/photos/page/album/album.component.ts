@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PhotosService } from '@app/data/service/photos.service';
+
 import { AlbumPhotos } from '@data/schema/album-photos';
+import { PhotosService } from '@data/service/photos.service';
 
 @Component({
   selector: 'app-album',

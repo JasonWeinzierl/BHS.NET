@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 import { PostPreview } from '@data/schema/post-preview';
 
 @Component({

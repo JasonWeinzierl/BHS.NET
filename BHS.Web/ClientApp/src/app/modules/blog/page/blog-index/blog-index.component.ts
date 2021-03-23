@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '@app/data/schema/category';
+import { finalize } from 'rxjs/operators';
 
+import { IsLoadingService } from '@service-work/is-loading';
+
+import { Category } from '@data/schema/category';
 import { PostPreview } from '@data/schema/post-preview';
 import { BlogService } from '@data/service/blog.service';
-import { IsLoadingService } from '@service-work/is-loading';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-index',

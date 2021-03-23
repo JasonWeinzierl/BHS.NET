@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CategoryPosts } from '@app/data/schema/category-posts';
-import { BlogService } from '@app/data/service/blog.service';
+
+import { CategoryPosts } from '@data/schema/category-posts';
+import { BlogService } from '@data/service/blog.service';
 
 @Component({
   selector: 'app-category-posts',

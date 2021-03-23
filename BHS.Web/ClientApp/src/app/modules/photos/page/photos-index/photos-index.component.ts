@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Album } from '@app/data/schema/album';
-import { PhotosService } from '@app/data/service/photos.service';
+
+import { Album } from '@data/schema/album';
+import { PhotosService } from '@data/service/photos.service';
 
 @Component({
   selector: 'app-photos-index',

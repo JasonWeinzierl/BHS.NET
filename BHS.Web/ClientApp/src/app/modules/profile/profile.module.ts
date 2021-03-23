@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileIndexComponent } from './page/profile-index.component';
 import { ProfileRoutingModule } from './profile-routing.module';
-import { BlogModule } from '../blog/blog.module';
+import { BlogModule } from '@modules/blog/blog.module';
 
 @NgModule({
   declarations: [ProfileIndexComponent],
