@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Category } from '@app/data/schema/category';
 
 import { PostPreview } from '@data/schema/post-preview';
 import { BlogService } from '@data/service/blog.service';
+import { IsLoadingService } from '@service-work/is-loading';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-index',
@@ -16,22 +18,28 @@ export class BlogIndexComponent implements OnInit {
   searchText: string;
 
   constructor(
-    private blogService: BlogService
+    private blogService: BlogService,
+    private isLoadingService: IsLoadingService,
   ) { }
 
   ngOnInit(): void {
-    this.blogService.searchPosts().subscribe(response => {
-      this.posts = response;
-    });
-    this.blogService.getCategories().subscribe(response => {
-      this.categories = response;
-    });
+    this.isLoadingService.add();
+    this.isLoadingService.add();
+
+    this.blogService.searchPosts()
+      .pipe(finalize(() => this.isLoadingService.remove()))
+      .subscribe(response => this.posts = response);
+
+    this.blogService.getCategories()
+      .pipe(finalize(() => this.isLoadingService.remove()))
+      .subscribe(response => this.categories = response);
   }
 
   onSearch(searchText: string): void {
-    this.blogService.searchPosts(searchText).subscribe(response => {
-      this.posts = response;
-    });
+    this.isLoadingService.add();
+    this.blogService.searchPosts(searchText)
+      .pipe(finalize(() => this.isLoadingService.remove()))
+      .subscribe(response => this.posts = response);
   }
 
   trackPostPreview(_index: number, item: PostPreview): string {

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MarkdownModule } from 'ngx-markdown';
+import { IsLoadingModule } from '@service-work/is-loading';
 
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
@@ -29,6 +30,7 @@ import { ContentLayoutComponent } from './layout/content-layout/content-layout.c
 
     // 3rd party
     MarkdownModule.forRoot(),
+    IsLoadingModule,
 
     // core & shared
     CoreModule,

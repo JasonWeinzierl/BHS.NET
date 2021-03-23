@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
+import { IsLoadingService } from '@service-work/is-loading';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
@@ -9,13 +10,13 @@ import { filter, map } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  isDoneLoading = true;
   asyncLoadCount = 0;
 
   public constructor(
     private router: Router,
     private titleService: Title,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private isLoadingService: IsLoadingService,
   ) { }
 
   public setTitle(newTitle: string) {
@@ -35,12 +36,10 @@ export class AppComponent implements OnInit {
       )
       .subscribe(event => {
         if (event instanceof RouteConfigLoadStart) {
-          this.asyncLoadCount++;
-        } else if (event instanceof RouteConfigLoadEnd) {
-          this.asyncLoadCount--;
+          this.isLoadingService.add();
+        } else {
+          this.isLoadingService.remove();
         }
-
-        this.isDoneLoading = this.asyncLoadCount <= 0;
       });
 
     this.router.events
