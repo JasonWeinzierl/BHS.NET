@@ -5,13 +5,12 @@ namespace BHS.DataAccess.Models
 {
     public record CategoryDTO(
         string Slug,
-        string Name,
-        int PostsCount)
+        string Name)
     {
         public Category ToDomainModel()
-            => new(Slug, Name, PostsCount);
+            => new(Slug, Name);
 
         public CategoryPosts ToDomainModel(IEnumerable<PostPreview> posts)
-            => new(Slug, Name, PostsCount, posts);
+            => new(Slug, Name, posts);
     }
 }

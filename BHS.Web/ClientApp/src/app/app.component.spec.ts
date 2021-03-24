@@ -1,6 +1,19 @@
+import { Pipe, PipeTransform } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from '@app/app.component';
+import { Observable, of } from 'rxjs';
+
+import { Key } from '@service-work/is-loading/is-loading/is-loading.service';
+
+@Pipe({ name: 'swIsLoading' })
+class MockIsLoadingPipe implements PipeTransform {
+  isLoading = false;
+
+  transform(key: Key): Observable<boolean> {
+    return of(this.isLoading);
+  }
+}
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -9,7 +22,8 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        MockIsLoadingPipe,
       ]
     })
     .compileComponents();

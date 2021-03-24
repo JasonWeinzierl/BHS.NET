@@ -23,7 +23,7 @@ namespace BHS.DataAccess.Repositories.Tests
         public async Task GetBySlug_Executes()
         {
             var post = new PostDTO(string.Empty, string.Empty, string.Empty, default, default, default, default, default, default, default);
-            var category = new CategoryDTO(string.Empty, string.Empty, 0);
+            var category = new CategoryDTO(string.Empty, string.Empty);
             _mockExecuter.TwoManyResults = (new[] { post }, new[] { category });
 
             _ = await _subject.GetBySlug("a");
@@ -38,8 +38,8 @@ namespace BHS.DataAccess.Repositories.Tests
         public async Task GetBySlug_JoinsMultipleResults()
         {
             var post = new PostDTO(string.Empty, string.Empty, string.Empty, default, default, default, default, default, default, default);
-            var category1 = new CategoryDTO(string.Empty, string.Empty, 0);
-            var category2 = new CategoryDTO(string.Empty, string.Empty, 0);
+            var category1 = new CategoryDTO(string.Empty, string.Empty);
+            var category2 = new CategoryDTO(string.Empty, string.Empty);
             _mockExecuter.TwoManyResults = (new[] { post }, new[] { category1, category2 });
 
             var result = await _subject.GetBySlug("a");

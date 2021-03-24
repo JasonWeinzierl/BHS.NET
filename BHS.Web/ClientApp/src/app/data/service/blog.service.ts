@@ -6,6 +6,7 @@ import { Category } from '@data/schema/category';
 import { CategoryPosts } from '@data/schema/category-posts';
 import { Post } from '@data/schema/post';
 import { PostPreview } from '@data/schema/post-preview';
+import { CategorySummary } from '@data/schema/category-summary';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +35,8 @@ export class BlogService {
     return this.http.get<Post>(this.baseUrl + '/posts/' + slug);
   }
 
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.baseUrl + '/categories');
+  getCategories(): Observable<CategorySummary[]> {
+    return this.http.get<CategorySummary[]>(this.baseUrl + '/categories');
   }
 
   getCategory(slug: string): Observable<CategoryPosts> {

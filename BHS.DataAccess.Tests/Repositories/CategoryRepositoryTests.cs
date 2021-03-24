@@ -20,7 +20,7 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetBySlug_Executes()
         {
-            var category = new CategoryDTO("thing", "Thing!", 0);
+            var category = new CategoryDTO("thing", "Thing!");
             var post = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
             _mockExecuter.TwoManyResults = (new[] { category }, new[] { post });
 
@@ -35,7 +35,7 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetBySlug_JoinsMultipleResults()
         {
-            var category = new CategoryDTO("thing", "Thing!", 0);
+            var category = new CategoryDTO("thing", "Thing!");
             var post1 = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
             var post2 = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
             _mockExecuter.TwoManyResults = (new[] { category }, new[] { post1, post2 });
@@ -49,15 +49,15 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetAll_Executes()
         {
-            _mockExecuter.ManyResults = new CategoryDTO[]
+            _mockExecuter.ManyResults = new CategorySummaryDTO[]
             {
-                new CategoryDTO("thing", "Thing!", 0)
+                new CategorySummaryDTO("thing", "Thing!", 0)
             };
 
             _ = await _subject.GetAll();
 
             Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
-            Assert.Equal("blog.Category_GetAll", _mockExecuter.CommandText);
+            Assert.Equal("blog.CategorySummary_GetAll", _mockExecuter.CommandText);
         }
     }
 }

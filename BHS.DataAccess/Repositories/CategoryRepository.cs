@@ -17,9 +17,9 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<CategorySummary>> GetAll()
         {
-            var results = await E.QueryAsync<CategoryDTO>(Constants.bhsConnectionStringName, "blog.Category_GetAll");
+            var results = await E.QueryAsync<CategorySummaryDTO>(Constants.bhsConnectionStringName, "blog.CategorySummary_GetAll");
             return results.Select(r => r.ToDomainModel());
         }
 

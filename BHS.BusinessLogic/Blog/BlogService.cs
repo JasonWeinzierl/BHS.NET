@@ -5,7 +5,6 @@ using BHS.Model.Services.Blog;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BHS.BusinessLogic.Blog
@@ -42,7 +41,7 @@ namespace BHS.BusinessLogic.Blog
             return _postRepository.GetBySlug(slug);
         }
 
-        public Task<IEnumerable<Category>> GetCategories()
+        public Task<IEnumerable<CategorySummary>> GetCategories()
         {
             return _categoryRepository.GetAll();
         }

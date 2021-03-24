@@ -6,7 +6,7 @@ namespace BHS.Model.DataAccess
 {
     public interface ICategoryRepository
     {
-        Task<IEnumerable<Category>> GetAll();
+        Task<IEnumerable<CategorySummary>> GetAll();
         Task<CategoryPosts?> GetBySlug(string slug);
     }
 }

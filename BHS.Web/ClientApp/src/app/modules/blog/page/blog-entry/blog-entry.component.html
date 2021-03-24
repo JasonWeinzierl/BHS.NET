@@ -25,7 +25,6 @@
       Categories:
       <a [routerLink]="['/apps/blog/category', cat.slug]" *ngFor="let cat of post.categories" class="btn btn-outline-secondary btn-sm me-sm-2">
         {{cat.name}}
-        <span class="badge rounded-pill bg-primary">{{cat.postsCount}}</span>
       </a>
     </p>
   </div>

@@ -4,7 +4,6 @@ AS
 BEGIN
 	SELECT	[Slug]
 			, [Name]
-			, PostsCount
 	FROM	[blog].[Category_View]
 	WHERE	[Slug] = @slug;
 

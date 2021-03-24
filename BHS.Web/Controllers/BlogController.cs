@@ -85,7 +85,7 @@ namespace BHS.Web.Controllers
         /// Get all categories.
         /// </summary>
         [HttpGet("categories")]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<CategorySummary>>> GetCategories()
         {
             return Ok(await _blogService.GetCategories());
         }

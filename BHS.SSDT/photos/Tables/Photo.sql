@@ -4,5 +4,5 @@
     [ImagePath] VARCHAR (MAX) NULL,
     [DatePosted] DATETIMEOFFSET NULL,
     [AuthorId] INT NULL,
-    CONSTRAINT FK_Photo_Author_AuthorId FOREIGN KEY (AuthorId) REFERENCES [dbo].[Author] ([Id]) ON DELETE SET NULL
+    CONSTRAINT FK_Photo_Author FOREIGN KEY (AuthorId) REFERENCES [dbo].[Author] ([Id]) ON DELETE SET NULL
 );

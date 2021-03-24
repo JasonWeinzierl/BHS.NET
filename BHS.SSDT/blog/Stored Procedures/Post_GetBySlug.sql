@@ -20,7 +20,6 @@ BEGIN
 	
 	SELECT	[CategorySlug] AS Slug
 			, [Name]
-			, PostsCount
 	FROM	[blog].[PostCategory_View] pc JOIN
 			[blog].[Category_View] c ON c.[Slug] = pc.[CategorySlug]
 	WHERE	[PostSlug] = @slug;

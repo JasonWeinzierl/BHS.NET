@@ -98,7 +98,7 @@
     <Build Include="blog\Stored Procedures\PostPreview_Search.sql" />
     <Build Include="blog\Stored Procedures\PostPreview_GetByAuthorId.sql" />
     <Build Include="blog\Stored Procedures\Category_GetBySlug.sql" />
-    <Build Include="blog\Stored Procedures\Category_GetAll.sql" />
+    <Build Include="blog\Stored Procedures\CategorySummary_GetAll.sql" />
     <Build Include="blog\Tables\Category.sql" />
     <Build Include="blog\Tables\Post.sql" />
     <Build Include="blog\Tables\PostCategoryEvent.sql" />

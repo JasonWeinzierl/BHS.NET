@@ -3,9 +3,9 @@ import { finalize } from 'rxjs/operators';
 
 import { IsLoadingService } from '@service-work/is-loading';
 
-import { Category } from '@data/schema/category';
 import { PostPreview } from '@data/schema/post-preview';
 import { BlogService } from '@data/service/blog.service';
+import { CategorySummary } from '@data/schema/category-summary';
 
 @Component({
   selector: 'app-blog-index',
@@ -14,7 +14,7 @@ import { BlogService } from '@data/service/blog.service';
 })
 export class BlogIndexComponent implements OnInit {
   posts: PostPreview[];
-  categories: Category[];
+  categories: CategorySummary[];
 
   searchText: string;
 
