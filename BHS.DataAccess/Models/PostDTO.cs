@@ -21,12 +21,12 @@ namespace BHS.DataAccess.Models
         DateTimeOffset DatePublished,
         DateTimeOffset DateLastModified)
     {
-        public Post ToDomainModel(IEnumerable<CategoryDTO> categories)
+        public Post ToDomainModel(IEnumerable<Category> categories)
         {
             Author? author = null;
             if (AuthorId.HasValue && AuthorDisplayName is not null)
                 author = new Author(AuthorId.Value, AuthorDisplayName, AuthorName);
-            return new(Slug, Title, ContentMarkdown, FilePath, PhotosAlbumSlug, author, DatePublished, DateLastModified, categories.Select(c => c.ToDomainModel()).ToList());
+            return new(Slug, Title, ContentMarkdown, FilePath, PhotosAlbumSlug, author, DatePublished, DateLastModified, categories.ToList());
         }
     }
 }

@@ -1,4 +1,5 @@
 import { Author } from './author';
+import { Category } from './category';
 
 export interface PostPreview {
   slug: string;
@@ -6,4 +7,5 @@ export interface PostPreview {
   contentPreview: string;
   author?: Author;
   datePublished: Date;
+  categories: Category[];
 }

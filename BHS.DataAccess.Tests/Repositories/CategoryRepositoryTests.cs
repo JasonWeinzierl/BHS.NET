@@ -1,6 +1,6 @@
-﻿using BHS.DataAccess.Models;
+﻿using BHS.Contracts.Blog;
+using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -20,9 +20,7 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetBySlug_Executes()
         {
-            var category = new CategoryDTO("thing", "Thing!");
-            var post = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
-            _mockExecuter.TwoManyResults = (new[] { category }, new[] { post });
+            _mockExecuter.SingleResult = new Category("thing", "Thing!");
 
             _ = await _subject.GetBySlug("y");
 
@@ -30,20 +28,6 @@ namespace BHS.DataAccess.Repositories.Tests
             Assert.Equal("blog.Category_GetBySlug", _mockExecuter.CommandText);
 
             Assert.Equal("y", _mockExecuter.Parameters?.slug);
-        }
-
-        [Fact]
-        public async Task GetBySlug_JoinsMultipleResults()
-        {
-            var category = new CategoryDTO("thing", "Thing!");
-            var post1 = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
-            var post2 = new PostPreviewDTO(string.Empty, string.Empty, string.Empty, default, default, default, default);
-            _mockExecuter.TwoManyResults = (new[] { category }, new[] { post1, post2 });
-
-            var result = await _subject.GetBySlug("y");
-
-            Assert.NotNull(result);
-            Assert.Equal(2, result?.Posts.Count());
         }
 
         [Fact]

@@ -19,7 +19,7 @@ namespace BHS.DataAccess.Repositories
         public async Task<Post?> GetBySlug(string slug)
         {
             var (posts, categories) = await E.QueryMultipleAsync<PostDTO, CategoryDTO>(Constants.bhsConnectionStringName, "blog.Post_GetBySlug", new { slug });
-            return posts.SingleOrDefault()?.ToDomainModel(categories);
+            return posts.SingleOrDefault()?.ToDomainModel(categories.Select(c => c.ToDomainModel()));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BHS.Contracts.Blog
 {
@@ -7,5 +8,6 @@ namespace BHS.Contracts.Blog
         string Title,
         string ContentPreview,
         Author? Author,
-        DateTimeOffset DatePublished);
+        DateTimeOffset DatePublished,
+        ICollection<Category> Categories);
 }

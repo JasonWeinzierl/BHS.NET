@@ -23,11 +23,9 @@ namespace BHS.DataAccess.Repositories
             return results.Select(r => r.ToDomainModel());
         }
 
-        public async Task<CategoryPosts?> GetBySlug(string slug)
+        public Task<Category?> GetBySlug(string slug)
         {
-            var (categories, posts) = await E.QueryMultipleAsync<CategoryDTO, PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", new { slug });
-
-            return categories.SingleOrDefault()?.ToDomainModel(posts.Select(p => p.ToDomainModel()));
+            return E.QuerySingleOrDefaultAsync<Category>(Constants.bhsConnectionStringName, "blog.Category_GetBySlug", new { slug });
         }
     }
 }

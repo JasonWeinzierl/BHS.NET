@@ -20,19 +20,31 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<IEnumerable<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to)
         {
-            var results = await E.QueryAsync<PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.PostPreview_Search", new
+            var results = await E.QueryAsync<PostPreviewCategoryDTO>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_Search", new
             {
                 searchText = text,
                 fromDate = from,
                 toDate = to
             });
-            return results.Select(r => r.ToDomainModel());
+            return results.GroupBy(row => row.Slug).Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping));
+        }
+
+        public async Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug)
+        {
+            var results = await E.QueryAsync<PostPreviewCategoryDTO>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_GetByCategorySlug", new
+            {
+                categorySlug
+            });
+            return results.GroupBy(row => row.Slug).Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping));
         }
 
         public async Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId)
         {
-            var results = await E.QueryAsync<PostPreviewDTO>(Constants.bhsConnectionStringName, "blog.PostPreview_GetByAuthorId", new { authorId });
-            return results.Select(r => r.ToDomainModel());
+            var results = await E.QueryAsync<PostPreviewCategoryDTO>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_GetByAuthorId", new
+            {
+                authorId
+            });
+            return results.GroupBy(row => row.Slug).Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping));
         }
     }
 }

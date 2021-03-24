@@ -1,4 +1,5 @@
 ﻿using BHS.Contracts;
+using BHS.Contracts.Blog;
 using BHS.Model.DataAccess;
 using BHS.Model.Exceptions;
 using Microsoft.Extensions.Logging;
@@ -31,13 +32,29 @@ namespace BHS.BusinessLogic.Blog.Tests
         }
 
         [Fact]
-        public async Task GetCategory_CallsGetBySlug()
+        public async Task GetCategory_IfExists_GetsPosts()
         {
+            _mockCatRepo.Setup(r => r.GetBySlug(It.IsAny<string>()))
+                .ReturnsAsync(new Category("x", "y"));
             string slug = "a";
 
             _ = await _subject.GetCategory(slug);
 
-            _mockCatRepo.Verify(r => r.GetBySlug(It.Is<string>(s => s == slug)));
+            _mockCatRepo.Verify(r => r.GetBySlug(slug));
+            _mockPreviewRepo.Verify(r => r.GetByCategorySlug(slug));
+        }
+
+        [Fact]
+        public async Task GetCategory_IfNotExists_ReturnsNull()
+        {
+            _mockCatRepo.Setup(r => r.GetBySlug(It.IsAny<string>()))
+                .ReturnsAsync((Category?)null);
+            string slug = "b";
+
+            _ = await _subject.GetCategory(slug);
+
+            _mockCatRepo.Verify(r => r.GetBySlug(slug));
+            _mockPreviewRepo.Verify(r => r.GetByCategorySlug(slug), Times.Never);
         }
 
         [Fact]
