@@ -15,10 +15,12 @@
 
     <NoWarn>1701;1702;1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ApplicationInsightsResourceId>/subscriptions/ca20b25d-292a-40e6-8597-269e528fb98d/resourceGroups/ResourceGroup1/providers/microsoft.insights/components/beltonhistorical</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.2" />
     <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.0.0" />

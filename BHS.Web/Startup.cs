@@ -38,6 +38,7 @@ namespace BHS.Web
             });
 
             services.LoadApiDomain(Configuration);
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
