@@ -7,6 +7,7 @@ import { IsLoadingModule } from '@service-work/is-loading';
 
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
+import { bootstrapMarkedOptionsProvider } from '@core/provider/bootstrap-marked-options.provider';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +30,9 @@ import { ContentLayoutComponent } from './layout/content-layout/content-layout.c
     HttpClientModule,
 
     // 3rd party
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot({
+      markedOptions: [bootstrapMarkedOptionsProvider]
+    }),
     IsLoadingModule,
 
     // core & shared
