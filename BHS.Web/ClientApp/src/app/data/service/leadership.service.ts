@@ -11,7 +11,9 @@ import { Officer } from '@data/schema/officer';
 export class LeadershipService {
   private baseUrl = '/api/leadership';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   getOfficers(): Observable<Officer[]> {
     return this.http.get<Officer[]>(this.baseUrl + '/officers');

@@ -41,3 +41,39 @@ p, dl, ol, ul {
 .card-footer > :last-child {
     margin-bottom: 0;
 }
+
+/* add spinner for swIsLoading directive */
+/* TODO: use bootstrap spinner instead? */
+button {
+  .sw-is-loading-spinner {
+    display: inline-block;
+    width: 1.4rem;
+    height: 1.4rem;
+    vertical-align: text-bottom;
+    animation: sw-spin-keyframes 1.25s infinite linear;
+    border: .25rem solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+
+    transition: margin 0.4s ease-out, opacity 0.2s ease-out;
+    margin-left: -1.6rem;
+    opacity: 0;
+  }
+
+  &.sw-is-loading {
+    .sw-is-loading-spinner {
+      transition: margin 0.2s ease-in, opacity 0.4s ease-in;
+      margin-left: 0.5rem;
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes sw-spin-keyframes {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

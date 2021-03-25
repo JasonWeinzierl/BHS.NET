@@ -13,6 +13,7 @@ import { BlogService } from '@data/service/blog.service';
 export class BlogEntryComponent implements OnInit {
   post: Post;
   error: string;
+  isLoading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,9 +23,12 @@ export class BlogEntryComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const slug = params.get('slug');
+
+      this.isLoading = true;
       this.blogService.getPost(slug)
         .subscribe(response => this.post = { ... response },
-          (error: HttpErrorResponse) => this.error = error.message);
+          (error: HttpErrorResponse) => this.error = error.message,
+          () => this.isLoading = false);
     });
   }
 }

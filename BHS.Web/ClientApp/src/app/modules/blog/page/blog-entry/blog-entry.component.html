@@ -5,6 +5,12 @@
   </div>
 </div>
 
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+  <div class="spinner-grow text-light" role="status">
+    <span class="visually-hidden">Loading post...</span>
+  </div>
+</div>
+
 <div *ngIf="post" class="card">
   <div class="card-header">
     <h1 class="card-title">{{post.title}}</h1>
@@ -23,7 +29,8 @@
   <div class="card-footer">
     <p>
       Categories:
-      <a [routerLink]="['/apps/blog/category', cat.slug]" *ngFor="let cat of post.categories" class="btn btn-outline-secondary btn-sm me-sm-2">
+      <a [routerLink]="['/apps/blog/category', cat.slug]" *ngFor="let cat of post.categories"
+        class="btn btn-outline-secondary btn-sm me-sm-2">
         {{cat.name}}
       </a>
     </p>

@@ -2,7 +2,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Category } from '@data/schema/category';
 import { CategoryPosts } from '@data/schema/category-posts';
 import { Post } from '@data/schema/post';
 import { PostPreview } from '@data/schema/post-preview';
@@ -14,7 +13,9 @@ import { CategorySummary } from '@data/schema/category-summary';
 export class BlogService {
   private baseUrl = '/api/blog';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   searchPosts(q?: string, from?: Date, to?: Date): Observable<PostPreview[]> {
     let params = new HttpParams();

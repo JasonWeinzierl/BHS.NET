@@ -13,6 +13,7 @@ import { BlogService } from '@data/service/blog.service';
 export class CategoryPostsComponent implements OnInit {
   category: CategoryPosts;
   error: string;
+  isLoading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,9 +23,12 @@ export class CategoryPostsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const slug = params.get('slug');
+
+      this.isLoading = true;
       this.blogService.getCategory(slug)
         .subscribe(response => this.category = { ... response },
-          (error: HttpErrorResponse) => this.error = error.message);
+          (error: HttpErrorResponse) => this.error = error.message,
+          () => this.isLoading = false);
     });
   }
 

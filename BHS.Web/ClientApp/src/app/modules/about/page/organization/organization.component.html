@@ -2,23 +2,32 @@
   <div class="card-body">
     <h1 class="card-title">Leadership</h1>
     <div class="row">
-      <div class="col-sm" *ngIf="officers">
+
+      <div class="col-sm">
         <h2>Officers</h2>
-        <dl>
+        <dl *ngIf="officers">
           <ng-template ngFor let-officer [ngForOf]="officers">
             <dt>{{officer.title}}</dt>
             <dd>{{officer.name}}</dd>
           </ng-template>
         </dl>
+        <div *ngIf="!officers && !errors.length" class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading officers...</span>
+        </div>
       </div>
-      <div class="col-sm" *ngIf="directors">
+
+      <div class="col-sm">
         <h2>Directors</h2>
-        <ul class="list-unstyled">
+        <ul *ngIf="directors" class="list-unstyled">
           <li *ngFor="let director of directors">
             {{director.name}} ({{director.year}})
           </li>
         </ul>
+        <div *ngIf="!directors && !errors.length" class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading directors...</span>
+        </div>
       </div>
+
       <div *ngFor="let e of errors" class="alert alert-danger" role="alert">
         {{e}}
       </div>

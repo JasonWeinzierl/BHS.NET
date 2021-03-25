@@ -11,7 +11,9 @@ import { PostPreview } from '@data/schema/post-preview';
 export class AuthorService {
   private baseUrl = '/api/author';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   getAuthors(): Observable<Author[]> {
     return this.http.get<Author[]>(this.baseUrl);

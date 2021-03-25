@@ -12,7 +12,9 @@ import { Photo } from '@data/schema/photo';
 export class PhotosService {
   private baseUrl = '/api/photos';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   getAlbums(): Observable<Album[]> {
     return this.http.get<Album[]>(this.baseUrl + '/albums');

@@ -9,6 +9,7 @@ import { BlogIndexComponent } from './page/blog-index/blog-index.component';
 import { PostCardComponent } from './component/post-card/post-card.component';
 import { BlogEntryComponent } from './page/blog-entry/blog-entry.component';
 import { CategoryPostsComponent } from './page/category-posts/category-posts.component';
+import { IsLoadingDirectiveModule } from '@service-work/is-loading';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CategoryPostsComponent } from './page/category-posts/category-posts.com
     FormsModule,
 
     MarkdownModule.forChild(),
+    IsLoadingDirectiveModule,
 
     BlogRoutingModule
   ],

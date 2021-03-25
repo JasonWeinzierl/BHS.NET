@@ -10,7 +10,9 @@ import { ContactAlertRequest } from '@data/schema/contact-alert-request';
 export class ContactService {
   private baseUrl = '/api/contact-us';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   /**
    * @returns No Content

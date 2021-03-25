@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { BlogService } from '@app/data/service/blog.service';
 import { of } from 'rxjs';
 
+import { BlogService } from '@app/data/service/blog.service';
 import { BlogEntryComponent } from './blog-entry.component';
 
 describe('BlogEntryComponent', () => {
@@ -16,7 +16,7 @@ describe('BlogEntryComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        BlogEntryComponent
+        BlogEntryComponent,
       ],
       providers: [
         BlogService,
