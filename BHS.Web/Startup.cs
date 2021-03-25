@@ -1,7 +1,6 @@
 using BHS.Web.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -79,20 +78,14 @@ namespace BHS.Web
                 endpoints.MapControllers();
             });
 
-            app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api"), configuration =>
+            app.UseSpa(spa =>
             {
-                configuration.UseSpa(spa =>
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
                 {
-                    // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                    // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                    spa.Options.SourcePath = "ClientApp";
-
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseAngularCliServer(npmScript: "start");
-                    }
-                });
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/");
+                }
             });
         }
 
@@ -103,7 +96,7 @@ namespace BHS.Web
                 Version = "v1",
                 Title = "BHS API",
                 Description = "API for the Belton Historical Society",
-                TermsOfService = new Uri("/termsofservice", UriKind.Relative),
+                TermsOfService = new Uri("/about/terms-of-service", UriKind.Relative),
                 Contact = new OpenApiContact
                 {
                     Name = "Jason W",
