@@ -26,19 +26,25 @@ export class BlogIndexComponent implements OnInit {
   ngOnInit(): void {
     this.isLoadingService.add();
     this.blogService.searchPosts()
-      .pipe(finalize(() => this.isLoadingService.remove()))
+      .pipe(
+        finalize(() => this.isLoadingService.remove()),
+      )
       .subscribe(response => this.posts = response);
 
     this.isLoadingService.add();
     this.blogService.getCategories()
-      .pipe(finalize(() => this.isLoadingService.remove()))
+      .pipe(
+        finalize(() => this.isLoadingService.remove()),
+      )
       .subscribe(response => this.categories = response);
   }
 
   onSearch(searchText: string): void {
     this.isLoadingService.add({key: 'searching-posts'});
     this.blogService.searchPosts(searchText)
-      .pipe(finalize(() => this.isLoadingService.remove({key: 'searching-posts'})))
+      .pipe(
+        finalize(() => this.isLoadingService.remove({key: 'searching-posts'})),
+      )
       .subscribe(response => this.posts = response);
   }
 

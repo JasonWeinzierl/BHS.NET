@@ -26,7 +26,9 @@ namespace BHS.DataAccess.Repositories
                 fromDate = from,
                 toDate = to
             });
-            return results.GroupBy(row => row.Slug).Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping));
+            return results.GroupBy(row => row.Slug)
+                .Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping))
+                .OrderByDescending(p => p.DatePublished);
         }
 
         public async Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug)
@@ -35,7 +37,9 @@ namespace BHS.DataAccess.Repositories
             {
                 categorySlug
             });
-            return results.GroupBy(row => row.Slug).Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping));
+            return results.GroupBy(row => row.Slug)
+                .Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping))
+                .OrderByDescending(p => p.DatePublished);
         }
 
         public async Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId)
@@ -44,7 +48,9 @@ namespace BHS.DataAccess.Repositories
             {
                 authorId
             });
-            return results.GroupBy(row => row.Slug).Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping));
+            return results.GroupBy(row => row.Slug)
+                .Select(postGrouping => PostPreviewCategoryDTO.ToDomainModel(postGrouping))
+                .OrderByDescending(p => p.DatePublished);
         }
     }
 }

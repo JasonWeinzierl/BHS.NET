@@ -1,8 +1,16 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { BlogService } from '@app/data/service/blog.service';
 
+import { BlogService } from '@app/data/service/blog.service';
 import { BlogIndexComponent } from './blog-index.component';
+
+@Pipe({name: 'sortBy'})
+class MockSortByPipe implements PipeTransform {
+  transform(value: any): any {
+    return value;
+  }
+}
 
 describe('BlogIndexComponent', () => {
   let component: BlogIndexComponent;
@@ -14,10 +22,11 @@ describe('BlogIndexComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        BlogIndexComponent
+        BlogIndexComponent,
+        MockSortByPipe,
       ],
       providers: [
-        BlogService
+        BlogService,
       ]
     })
     .compileComponents();

@@ -25,7 +25,7 @@
         </form>
       </div>
     </div>
-    <app-post-card *ngFor="let post of posts; trackBy: trackPostPreview" [post]="post"></app-post-card>
+    <app-post-card *ngFor="let post of posts | sortBy: 'desc' : 'datePublished'; trackBy: trackPostPreview" [post]="post"></app-post-card>
   </div>
   <div class="col-lg-3">
     <div class="card">
