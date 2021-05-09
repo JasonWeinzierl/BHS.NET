@@ -7,10 +7,10 @@
   </div>
 
   <div class="container">
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          The museum is closed due to COVID-19.  Attendance is by appointment: call the museum and leave a message!
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      The museum is closed due to COVID-19. Attendance is by appointment: call the museum and leave a message!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
   </div>
 
   <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -36,12 +36,18 @@
             aria-expanded="false">
             Content
           </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" [routerLink]="['/apps/photos']" [routerLinkActive]="['active']">Photos</a>
-            <a class="dropdown-item" [routerLink]="['/apps/location']" [routerLinkActive]="['active']">The Museum</a>
-            <div role="separator" class="dropdown-divider"></div>
-            <a class="dropdown-item" [routerLink]="['/apps/members']" [routerLinkActive]="['active']">Members</a>
-          </div>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/apps/photos']" [routerLinkActive]="['active']">Photos</a></li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/apps/location']" [routerLinkActive]="['active']">The Museum</a>
+            </li>
+            <li>
+              <hr role="separator" class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/apps/members']" [routerLinkActive]="['active']">Members</a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/contact']" [routerLinkActive]="['active']">Contact Us</a>
@@ -51,22 +57,38 @@
             aria-expanded="false">
             About
           </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" [routerLink]="['/about/who-we-are']" [routerLinkActive]="['active']">Who We Are</a>
-            <a class="dropdown-item" [routerLink]="['/about/by-laws-and-leadership']"
-              [routerLinkActive]="['active']">By-laws and Leadership</a>
-            <a class="dropdown-item" [routerLink]="['/about/donate']" [routerLinkActive]="['active']">Donate</a>
-            <div role="separator" class="dropdown-divider"></div>
-            <a class="dropdown-item" [routerLink]="['/about/this-site']" [routerLinkActive]="['active']">
-              About this Site
-            </a>
-            <a class="dropdown-item" [routerLink]="['/about/terms-of-service']" [routerLinkActive]="['active']">
-              Terms of Service
-            </a>
-            <a class="dropdown-item" [routerLink]="['/about/privacy-policy']" [routerLinkActive]="['active']">
-              Privacy Policy
-            </a>
-          </div>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/who-we-are']" [routerLinkActive]="['active']">
+                Who We Are
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/by-laws-and-leadership']"
+                [routerLinkActive]="['active']">By-laws and Leadership</a>
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/donate']" [routerLinkActive]="['active']">Donate</a>
+            </li>
+            <li>
+              <hr role="separator" class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/this-site']" [routerLinkActive]="['active']">
+                About this Site
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/terms-of-service']" [routerLinkActive]="['active']">
+                Terms of Service
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/privacy-policy']" [routerLinkActive]="['active']">
+                Privacy Policy
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
