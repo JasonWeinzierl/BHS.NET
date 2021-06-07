@@ -1,6 +1,7 @@
 using BHS.Web.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,11 +38,16 @@ namespace BHS.Web
             });
 
             services.LoadApiDomain(Configuration);
-            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Requests forwarded by reverse proxy.
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseExceptionHandler("/api/error-local-development");

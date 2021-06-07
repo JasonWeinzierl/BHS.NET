@@ -47,7 +47,8 @@ namespace BHS.BusinessLogic
         private async Task SendEmail(ContactAlert newAlert)
         {
             // TODO: Time zone lookup breaks on linux.  .NET 6 fixes this with #49412.
-            var submitTime = GetSubmitTime(newAlert, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
+            //var submitTime = GetSubmitTime(newAlert, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
+            var submitTime = GetSubmitTime(newAlert, TimeZoneInfo.Local);
 
             var msg = new SendGridMessage
             {
