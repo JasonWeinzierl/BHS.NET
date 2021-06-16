@@ -3,7 +3,7 @@ using System;
 
 namespace BHS.DataAccess.Models
 {
-    public record DirectorDTO(string Name, int Year)
+    public record DirectorDto(string Name, int Year)
     {
         public Director ToDomainModel()
             => new(Name, Year.ToString());

@@ -25,13 +25,13 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<IList<Officer>> GetCurrentOfficers()
         {
-            var results = await E.QueryAsync<OfficerDTO>(Constants.bhsConnectionStringName, "leadership.Officer_GetAll");
+            var results = await E.QueryAsync<OfficerDto>(Constants.bhsConnectionStringName, "leadership.Officer_GetAll");
             return results.OrderBy(r => r.SortOrder).Select(r => r.ToDomainModel()).ToList();
         }
 
         public async Task<IList<Director>> GetCurrentDirectors()
         {
-            var results = await E.QueryAsync<DirectorDTO>(Constants.bhsConnectionStringName, "leadership.Director_GetCurrent", new
+            var results = await E.QueryAsync<DirectorDto>(Constants.bhsConnectionStringName, "leadership.Director_GetCurrent", new
             {
                 startingYear = _dateTimeOffsetProvider.CurrentYear()
             });

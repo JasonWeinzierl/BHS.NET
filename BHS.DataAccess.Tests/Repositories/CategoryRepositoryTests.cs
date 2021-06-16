@@ -33,9 +33,9 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetAll_Executes()
         {
-            _mockExecuter.ManyResults = new CategorySummaryDTO[]
+            _mockExecuter.ManyResults = new CategorySummaryDto[]
             {
-                new CategorySummaryDTO("thing", "Thing!", 0)
+                new CategorySummaryDto("thing", "Thing!", 0)
             };
 
             _ = await _subject.GetAll();

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BHS.DataAccess.Models
 {
-    public record PostPreviewCategoryDTO(
+    public record PostPreviewCategoryDto(
         string Slug,
         string Title,
         string ContentPreview,
@@ -23,7 +23,7 @@ namespace BHS.DataAccess.Models
         public Category ToCategory()
             => new(CategorySlug, CategoryName);
 
-        public static PostPreview ToDomainModel(IEnumerable<PostPreviewCategoryDTO> rows)
+        public static PostPreview ToDomainModel(IEnumerable<PostPreviewCategoryDto> rows)
         {
             var post = rows.First();
 
@@ -36,7 +36,7 @@ namespace BHS.DataAccess.Models
                 post.ContentPreview,
                 author,
                 post.DatePublished,
-                rows.Select(p => p.ToCategory()).ToList());
+                rows.Select(p => p.ToCategory()).Where(c => c.Slug is not null).ToList());
         }
     }
 }

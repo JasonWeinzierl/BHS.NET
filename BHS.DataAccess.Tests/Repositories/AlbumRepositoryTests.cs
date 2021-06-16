@@ -22,7 +22,7 @@ namespace BHS.DataAccess.Repositories.Tests
         public async Task GetBySlug_Executes()
         {
             string slug = "alb-2022";
-            var album = new AlbumDTO(
+            var album = new AlbumDto(
                 slug,
                 "some album",
                 "some album desc",
@@ -49,7 +49,7 @@ namespace BHS.DataAccess.Repositories.Tests
         public async Task GetBySlug_JoinsMultipleResults()
         {
             string slug = "alb-2022";
-            var album = new AlbumDTO(
+            var album = new AlbumDto(
                 slug,
                 "some album",
                 "some album desc",
@@ -75,9 +75,9 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetAll_Executes()
         {
-            _mockExecuter.ManyResults = new AlbumDTO[]
+            _mockExecuter.ManyResults = new AlbumDto[]
             {
-                new AlbumDTO(
+                new AlbumDto(
                     "alb",
                     "some album",
                     "some album desc",

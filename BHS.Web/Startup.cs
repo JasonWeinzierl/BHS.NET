@@ -78,7 +78,6 @@ namespace BHS.Web
             });
 
             app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

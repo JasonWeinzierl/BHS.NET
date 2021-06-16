@@ -2,7 +2,7 @@
 
 namespace BHS.DataAccess.Models
 {
-    public record CategorySummaryDTO(
+    public record CategorySummaryDto(
         string Slug,
         string Name,
         int PostsCount)

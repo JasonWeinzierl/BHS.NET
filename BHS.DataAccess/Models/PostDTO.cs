@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BHS.DataAccess.Models
 {
-    public record PostDTO(
+    public record PostDto(
         string Slug,
         string Title,
         string ContentMarkdown,

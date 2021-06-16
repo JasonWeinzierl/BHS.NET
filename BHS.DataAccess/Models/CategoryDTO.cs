@@ -2,7 +2,7 @@
 
 namespace BHS.DataAccess.Models
 {
-    public record CategoryDTO(
+    public record CategoryDto(
         string Slug,
         string Name)
     {

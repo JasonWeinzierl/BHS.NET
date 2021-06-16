@@ -19,13 +19,13 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<AlbumPhotos?> GetBySlug(string slug)
         {
-            var (albums, photos) = await E.QueryMultipleAsync<AlbumDTO, Photo>(Constants.bhsConnectionStringName, "photos.AlbumPhotos_GetBySlug", new { slug });
+            var (albums, photos) = await E.QueryMultipleAsync<AlbumDto, Photo>(Constants.bhsConnectionStringName, "photos.AlbumPhotos_GetBySlug", new { slug });
             return albums.SingleOrDefault()?.ToDomainModel(photos);
         }
 
         public async Task<IEnumerable<Album>> GetAll()
         {
-            var results = await E.QueryAsync<AlbumDTO>(Constants.bhsConnectionStringName, "photos.Album_GetAll");
+            var results = await E.QueryAsync<AlbumDto>(Constants.bhsConnectionStringName, "photos.Album_GetAll");
             return results.Select(r => r.ToDomainModel());
         }
     }

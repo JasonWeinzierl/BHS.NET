@@ -21,9 +21,9 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task Search_Executes()
         {
-            _mockExecuter.ManyResults = new PostPreviewCategoryDTO[]
+            _mockExecuter.ManyResults = new PostPreviewCategoryDto[]
             {
-                new PostPreviewCategoryDTO(
+                new PostPreviewCategoryDto(
                     "b",
                     "c",
                     "d",
@@ -53,8 +53,8 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task Search_GroupsCategoryRows()
         {
-            var row1 = new PostPreviewCategoryDTO("x", string.Empty, string.Empty, default, default, default, "cat1", "Thing!", default);
-            var row2 = new PostPreviewCategoryDTO("x", string.Empty, string.Empty, default, default, default, "cat2", "Thing!", default);
+            var row1 = new PostPreviewCategoryDto("x", string.Empty, string.Empty, default, default, default, "cat1", "Thing!", default);
+            var row2 = new PostPreviewCategoryDto("x", string.Empty, string.Empty, default, default, default, "cat2", "Thing!", default);
             _mockExecuter.ManyResults = new[] { row1, row2 };
 
             var results = await _subject.Search("a", default, default);
@@ -68,9 +68,9 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetByCategorySlug_Executes()
         {
-            _mockExecuter.ManyResults = new PostPreviewCategoryDTO[]
+            _mockExecuter.ManyResults = new PostPreviewCategoryDto[]
             {
-                new PostPreviewCategoryDTO(
+                new PostPreviewCategoryDto(
                     "b",
                     "c",
                     "d",
@@ -96,8 +96,8 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetByCategorySlug_GroupsCategoryRows()
         {
-            var row1 = new PostPreviewCategoryDTO("x", string.Empty, string.Empty, default, default, default, "cat1", "Thing!", default);
-            var row2 = new PostPreviewCategoryDTO("x", string.Empty, string.Empty, default, default, default, "cat2", "Thing!", default);
+            var row1 = new PostPreviewCategoryDto("x", string.Empty, string.Empty, default, default, default, "cat1", "Thing!", default);
+            var row2 = new PostPreviewCategoryDto("x", string.Empty, string.Empty, default, default, default, "cat2", "Thing!", default);
             _mockExecuter.ManyResults = new[] { row1, row2 };
 
             var results = await _subject.GetByCategorySlug("y");
@@ -111,9 +111,9 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetByAuthorId_Executes()
         {
-            _mockExecuter.ManyResults = new PostPreviewCategoryDTO[]
+            _mockExecuter.ManyResults = new PostPreviewCategoryDto[]
             {
-                new PostPreviewCategoryDTO(
+                new PostPreviewCategoryDto(
                     "b",
                     "c",
                     "d",
@@ -139,8 +139,8 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetByAuthorId_GroupsCategoryRows()
         {
-            var row1 = new PostPreviewCategoryDTO("x", string.Empty, string.Empty, default, default, default, "cat1", "Thing!", default);
-            var row2 = new PostPreviewCategoryDTO("x", string.Empty, string.Empty, default, default, default, "cat2", "Thing!", default);
+            var row1 = new PostPreviewCategoryDto("x", string.Empty, string.Empty, default, default, default, "cat1", "Thing!", default);
+            var row2 = new PostPreviewCategoryDto("x", string.Empty, string.Empty, default, default, default, "cat2", "Thing!", default);
             _mockExecuter.ManyResults = new[] { row1, row2 };
 
             var results = await _subject.GetByAuthorId(1);

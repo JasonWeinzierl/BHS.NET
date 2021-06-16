@@ -33,7 +33,7 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetCurrentOfficers_Executes()
         {
-            _mockExecuter.ManyResults = new[] { new OfficerDTO("x", "y", 1) };
+            _mockExecuter.ManyResults = new[] { new OfficerDto("x", "y", 1) };
 
             _ = await _subject.GetCurrentOfficers();
 
@@ -44,7 +44,7 @@ namespace BHS.DataAccess.Repositories.Tests
         [Fact]
         public async Task GetCurrentDirectors_Executes()
         {
-            _mockExecuter.ManyResults = new[] { new DirectorDTO("a", default) };
+            _mockExecuter.ManyResults = new[] { new DirectorDto("a", default) };
 
             _ = await _subject.GetCurrentDirectors();
 

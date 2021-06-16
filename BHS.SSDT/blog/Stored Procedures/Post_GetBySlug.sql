@@ -1,7 +1,5 @@
 ﻿CREATE PROCEDURE [blog].[Post_GetBySlug]
-(
 	@slug VARCHAR(127)
-)
 AS
 BEGIN
 	SELECT	[Slug]
@@ -9,9 +7,11 @@ BEGIN
 			, [ContentMarkdown]
 			, [FilePath]
 			, [PhotosAlbumSlug]
+
 			, [AuthorId]
 			, a.[DisplayName] AS AuthorDisplayName
 			, a.[Name] AS AuthorName
+
 			, [DatePublished]
 			, [DateLastModified]
 	FROM	[blog].[Post_View] v LEFT JOIN
@@ -23,4 +23,4 @@ BEGIN
 	FROM	[blog].[PostCategory_View] pc JOIN
 			[blog].[Category_View] c ON c.[Slug] = pc.[CategorySlug]
 	WHERE	[PostSlug] = @slug;
-END
+END;

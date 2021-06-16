@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BHS.DataAccess.Models
 {
-    public record AlbumDTO(
+    public record AlbumDto(
         string Slug,
         string Name,
         string? Description,

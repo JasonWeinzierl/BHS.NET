@@ -5,7 +5,7 @@ BEGIN
 		SELECT	[Slug]
 				, COUNT(*) AS PostsCount
 		FROM	[blog].[Category] c JOIN
-				[blog].[PostCategory_View] pc ON pc.[CategorySlug] = c.[Slug]
+				[blog].[PostCategory_View] pc ON pc.[CategorySlug] = c.[Slug] -- TODO: this doesn't check publication
 		GROUP BY
 				[Slug]
 	)
