@@ -23,4 +23,6 @@ jobs:
           node-version: '16'
       - run: npm install
       - run: npm run lint
-      - run: npm test
+      - run: npm run build -- --prod
+      - run: npm test -- --configuration=ci
+      - run: npm run e2e -- --configuration=ci
