@@ -1,11 +1,9 @@
-// angular
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
 import { paths } from './app-paths';
 import { NotFoundComponent } from './core/component/not-found/not-found.component';
 import { PathResolveService } from './core/service/path-resolve.service';
-
-// components
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
 
 const routes: Routes = [
@@ -68,7 +66,7 @@ const routes: Routes = [
         path: '',
         component: NotFoundComponent,
         resolve: {
-          path: PathResolveService
+          closestPath: PathResolveService
         },
         data: { title: '404 Not Found' }
       }

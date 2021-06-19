@@ -3,7 +3,7 @@
     <h1 class="card-title">404 Not Found</h1>
     <p>&lsaquo; <a [routerLink]="['/']">Home</a></p>
     <p>The page you requested was not found.</p>
-    <p *ngIf="path">Were you looking for the <a [routerLink]="path">"{{path}}" page</a>?</p>
+    <p *ngIf="closestPath">Were you looking for the <a [routerLink]="closestPath">"{{closestPath}}" page</a>?</p>
     <p>If this keeps happening, please <a [routerLink]="['/contact']">contact us</a>.</p>
   </div>
 </div>

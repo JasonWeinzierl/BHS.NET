@@ -11,8 +11,8 @@ import { BlogService } from '@data/service/blog.service';
   styleUrls: ['./category-posts.component.scss']
 })
 export class CategoryPostsComponent implements OnInit {
-  category: CategoryPosts;
-  error: string;
+  category?: CategoryPosts;
+  error?: string;
   isLoading = false;
 
   constructor(
@@ -23,6 +23,11 @@ export class CategoryPostsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const slug = params.get('slug');
+
+      if (!slug) {
+        this.error = 'Failed to get category slug from URL.';
+        return;
+      }
 
       this.isLoading = true;
       this.blogService.getCategory(slug)

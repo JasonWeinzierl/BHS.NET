@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<div class="row" *ngIf="album?.photos">
+<div class="row" *ngIf="album">
   <div class="col-md-6 col-lg-3" *ngFor="let photo of album.photos">
     <div class="card">
       <img src="{{photo.imagePath}}" class="card-img-top" alt="image could not load">

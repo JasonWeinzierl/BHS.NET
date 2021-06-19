@@ -11,8 +11,8 @@ import { BlogService } from '@data/service/blog.service';
   styleUrls: ['./blog-entry.component.scss']
 })
 export class BlogEntryComponent implements OnInit {
-  post: Post;
-  error: string;
+  post?: Post;
+  error?: string;
   isLoading = false;
 
   constructor(
@@ -23,6 +23,11 @@ export class BlogEntryComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const slug = params.get('slug');
+
+      if (!slug) {
+        this.error = 'Failed to get entry slug from URL.';
+        return;
+      }
 
       this.isLoading = true;
       this.blogService.getPost(slug)

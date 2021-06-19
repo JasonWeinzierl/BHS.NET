@@ -1,5 +1,5 @@
-import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MarkdownModule } from 'ngx-markdown';

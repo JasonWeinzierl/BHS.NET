@@ -13,9 +13,9 @@
     </div>
   </div>
 
-  <img src="{{currentPhoto.imagePath}}" class="card-img-top" alt="image failed to load">
+  <img *ngIf="currentPhoto" src="{{currentPhoto.imagePath}}" class="card-img-top" alt="image failed to load">
 
-  <div class="card-body">
+  <div *ngIf="currentPhoto" class="card-body">
     <h1 class="card-title">
       {{currentPhoto.name}}
     </h1>
@@ -35,4 +35,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="alert alert-danger" *ngIf="error">
+  {{error}}
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { AlbumPhotos } from '@data/schema/album-photos';
 import { Photo } from '@data/schema/photo';
@@ -11,11 +12,13 @@ import { PhotosService } from '@data/service/photos.service';
   styleUrls: ['./album-page.component.scss']
 })
 export class AlbumPageComponent implements OnInit {
-  album: AlbumPhotos;
-  currentPhoto: Photo;
+  album?: AlbumPhotos;
+  currentPhoto?: Photo;
 
-  previousPhotoId: number;
-  nextPhotoId: number;
+  previousPhotoId: number = 0;
+  nextPhotoId: number = 0;
+
+  error?: string;
 
   constructor(
     private router: Router,
@@ -26,7 +29,18 @@ export class AlbumPageComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const albumSlug = params.get('slug');
-      const photoId = +params.get('id');
+      if (!albumSlug) {
+        this.error = 'Failed to get album slug from URL.';
+        return;
+      }
+
+      const photoIdStr = params.get('id');
+      if (!photoIdStr) {
+        this.error = 'Failed to get photo id from URL.';
+        return;
+      }
+      const photoId = +photoIdStr;
+
       this.photosService.getAlbum(albumSlug)
         .subscribe(response => {
           this.album = response;
@@ -43,7 +57,7 @@ export class AlbumPageComponent implements OnInit {
             this.previousPhotoId = this.album.photos[previousIndex].id;
             this.nextPhotoId = this.album.photos[nextIndex].id;
           }
-        });
+        }, (error: HttpErrorResponse) => this.error = error.message);
     });
   }
 }

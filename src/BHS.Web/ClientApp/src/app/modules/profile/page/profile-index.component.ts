@@ -13,8 +13,8 @@ import { AuthorService } from '@data/service/author.service';
   styleUrls: ['./profile-index.component.scss']
 })
 export class ProfileIndexComponent implements OnInit {
-  author: Author;
-  posts: PostPreview[];
+  author?: Author;
+  posts: PostPreview[] = [];
   errors: string[] = [];
 
   constructor(
@@ -25,6 +25,11 @@ export class ProfileIndexComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const username = params.get('username');
+      if (!username) {
+        this.errors.push('Failed to get username from URL.');
+        return;
+      }
+
       this.authorService.getAuthor(username)
         .subscribe(authorResponse => {
           this.author = authorResponse;

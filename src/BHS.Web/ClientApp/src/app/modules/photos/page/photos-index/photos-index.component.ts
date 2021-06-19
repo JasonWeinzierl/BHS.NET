@@ -11,7 +11,7 @@ import { PhotosService } from '@data/service/photos.service';
 })
 export class PhotosIndexComponent implements OnInit {
   albums: Album[] = [];
-  error: string;
+  error?: string;
 
   constructor(private photosService: PhotosService) { }
 

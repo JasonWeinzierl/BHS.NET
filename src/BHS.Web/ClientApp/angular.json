@@ -20,13 +20,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
-            "progress": false,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/assets"
             ],
@@ -39,20 +38,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -64,20 +49,38 @@
                   "maximumWarning": "2kb",
                   "maximumError": "4kb"
                 }
-              ]
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "namedChunks": true
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "BHS.Web.ClientApp:build"
-          },
           "configurations": {
             "production": {
               "browserTarget": "BHS.Web.ClientApp:build:production"
+            },
+            "development": {
+              "browserTarget": "BHS.Web.ClientApp:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -92,13 +95,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/assets"
+            ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "assets": [
-              "src/assets"
-            ]
+            "scripts": []
           },
           "configurations": {
             "ci": {
@@ -151,5 +155,8 @@
       }
     }
   },
-  "defaultProject": "BHS.Web.ClientApp"
+  "defaultProject": "BHS.Web.ClientApp",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

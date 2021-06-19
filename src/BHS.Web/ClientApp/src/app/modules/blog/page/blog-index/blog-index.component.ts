@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
 import { IsLoadingService } from '@service-work/is-loading';
@@ -13,10 +13,10 @@ import { CategorySummary } from '@data/schema/category-summary';
   styleUrls: ['./blog-index.component.scss']
 })
 export class BlogIndexComponent implements OnInit {
-  posts: PostPreview[];
-  categories: CategorySummary[];
+  posts: PostPreview[] = [];
+  categories: CategorySummary[] = [];
 
-  searchText: string;
+  searchText: string = '';
 
   constructor(
     private blogService: BlogService,
@@ -48,7 +48,7 @@ export class BlogIndexComponent implements OnInit {
       .subscribe(response => this.posts = response);
   }
 
-  trackPostPreview(_index: number, item: PostPreview): string {
+  trackPostPreview: TrackByFunction<PostPreview> = (_, item) => {
     return item.slug;
   }
 }

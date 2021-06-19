@@ -8,14 +8,14 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./not-found.component.scss']
 })
 export class NotFoundComponent implements OnInit {
-  path: string;
+  closestPath?: string;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.data.pipe(take(1))
-      .subscribe((data: { path: string }) => {
-        this.path = data.path;
+      .subscribe(data => {
+        this.closestPath = data.closestPath;
       });
   }
 }

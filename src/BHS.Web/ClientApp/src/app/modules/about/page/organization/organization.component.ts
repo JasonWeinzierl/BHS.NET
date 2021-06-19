@@ -11,8 +11,8 @@ import { LeadershipService } from '@data/service/leadership.service';
   styleUrls: ['./organization.component.scss']
 })
 export class OrganizationComponent implements OnInit {
-  officers: Officer[];
-  directors: Director[];
+  officers?: Officer[];
+  directors?: Director[];
 
   errors: string[] = [];
 

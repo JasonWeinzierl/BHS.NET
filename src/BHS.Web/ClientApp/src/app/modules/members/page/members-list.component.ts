@@ -10,8 +10,8 @@ import { AuthorService } from '@data/service/author.service';
   styleUrls: ['./members-list.component.scss']
 })
 export class MembersListComponent implements OnInit {
-  authors: Author[];
-  error: string;
+  authors: Author[] = [];
+  error?: string;
 
   constructor(
     private authorService: AuthorService

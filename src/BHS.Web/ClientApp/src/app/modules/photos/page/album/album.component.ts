@@ -11,7 +11,7 @@ import { PhotosService } from '@data/service/photos.service';
   styleUrls: ['./album.component.scss']
 })
 export class AlbumComponent implements OnInit {
-  album: AlbumPhotos;
+  album?: AlbumPhotos;
   errors: string[] = [];
 
   constructor(
@@ -22,6 +22,11 @@ export class AlbumComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const slug = params.get('slug');
+      if (!slug) {
+        this.errors.push('Failed to get album slug from URL.');
+        return;
+      }
+
       this.photosService.getAlbum(slug)
         .subscribe(response => this.album = response,
           (error: HttpErrorResponse) => this.errors.push(error.message));
