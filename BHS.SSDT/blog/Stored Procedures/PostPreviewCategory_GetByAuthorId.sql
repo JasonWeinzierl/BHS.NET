@@ -6,7 +6,7 @@ AS
 BEGIN
 	SELECT	p.[Slug]
 			, [Title]
-			, [blog].[GetPostContentPreview]([ContentMarkdown]) AS ContentPreview
+			, [blog].[GetPostContentPreview]([ContentMarkdown], NULL) AS ContentPreview
 
 			, [AuthorId]
 			, a.[DisplayName] AS AuthorDisplayName

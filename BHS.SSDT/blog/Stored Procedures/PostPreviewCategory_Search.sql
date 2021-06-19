@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [blog].[PostPreviewCategory_Search]
 (
-	@searchText VARCHAR(255),
+	@searchText NVARCHAR(4000),
 	@fromDate DateTimeOffset = NULL,
 	@toDate DateTimeOffset = NULL
 )
@@ -8,7 +8,7 @@ AS
 BEGIN
 	SELECT	p.[Slug]
 			, [Title]
-			, [blog].[GetPostContentPreview]([ContentMarkdown]) AS ContentPreview
+			, [blog].[GetPostContentPreview]([ContentMarkdown], @searchText) AS ContentPreview
 
 			, [AuthorId]
 			, a.[DisplayName] AS AuthorDisplayName
