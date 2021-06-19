@@ -5,5 +5,5 @@
 	[DateDeleted] DATETIMEOFFSET NOT NULL,
 
 	CONSTRAINT PK_PostDeletion PRIMARY KEY ([PostSlug], [DateDeleted]),
-	CONSTRAINT FK_PostDeletion_Post FOREIGN KEY ([PostSlug]) REFERENCES [blog].[Post] ([Slug]) ON DELETE CASCADE
+	CONSTRAINT FK_PostDeletion_Post FOREIGN KEY ([PostSlug]) REFERENCES [blog].[Post] ([Slug]) ON DELETE CASCADE ON UPDATE CASCADE,
 );

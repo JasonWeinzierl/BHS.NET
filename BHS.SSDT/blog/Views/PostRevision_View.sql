@@ -16,6 +16,5 @@ AS
 			, rev.[PhotosAlbumSlug]
 			, rev.[AuthorId]
 			, dates.DateLastPublished
-	FROM	[blog].[Post] p JOIN
-			[blog].[PostRevision] rev ON rev.[PostSlug] = p.[Slug] LEFT JOIN
+	FROM	[blog].[PostRevision] rev LEFT JOIN
 			PostRevisionPublicationDates dates ON dates.RevisionId = rev.[Id];

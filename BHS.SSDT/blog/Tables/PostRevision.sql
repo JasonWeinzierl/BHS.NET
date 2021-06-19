@@ -10,7 +10,7 @@
     [PhotosAlbumSlug] VARCHAR(127) NULL,
     [AuthorId] INT NULL,
 
-    CONSTRAINT FK_PostRevision_Post FOREIGN KEY([PostSlug]) REFERENCES [blog].[Post] ([Slug]) ON DELETE CASCADE,
+    CONSTRAINT FK_PostRevision_Post FOREIGN KEY([PostSlug]) REFERENCES [blog].[Post] ([Slug]) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_PostRevision_Author FOREIGN KEY (AuthorId) REFERENCES [dbo].[Author] ([Id]) ON DELETE SET NULL,
-    CONSTRAINT FK_PostRevision_Album FOREIGN KEY ([PhotosAlbumSlug]) REFERENCES [photos].[Album] ([Slug]) ON DELETE SET NULL
+    CONSTRAINT FK_PostRevision_Album FOREIGN KEY ([PhotosAlbumSlug]) REFERENCES [photos].[Album] ([Slug]) ON DELETE SET NULL,
 );

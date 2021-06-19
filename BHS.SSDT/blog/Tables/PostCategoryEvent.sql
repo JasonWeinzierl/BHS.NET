@@ -7,5 +7,5 @@
 
     CONSTRAINT PK_PostCategoryEvent PRIMARY KEY ([CategorySlug], [PostSlug], [EventDate]),
     CONSTRAINT FK_PostCategoryEvent_Category FOREIGN KEY ([CategorySlug]) REFERENCES [blog].[Category] ([Slug]) ON DELETE CASCADE,
-    CONSTRAINT FK_PostCategoryEvent_Post FOREIGN KEY ([PostSlug]) REFERENCES [blog].[Post] ([Slug]) ON DELETE CASCADE
+    CONSTRAINT FK_PostCategoryEvent_Post FOREIGN KEY ([PostSlug]) REFERENCES [blog].[Post] ([Slug]) ON DELETE CASCADE ON UPDATE CASCADE,
 );
