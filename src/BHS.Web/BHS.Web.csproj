@@ -5,16 +5,13 @@
     <IsPackable>false</IsPackable>
     <Nullable>enable</Nullable>
     
-    <NoWarn>1701;1702;1591</NoWarn>
+    <NoWarn>$(NoWarn);1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
-
-    <UserSecretsId>2121b288-03e4-4442-b97c-4ec4992968ae</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/ca20b25d-292a-40e6-8597-269e528fb98d/resourceGroups/ResourceGroup1/providers/microsoft.insights/components/beltonhistorical</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
