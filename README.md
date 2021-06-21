@@ -6,17 +6,16 @@ The Belton Historical Society website, built on ASP.NET Core, Angular, and SQL S
 
 ## Getting Started
 You will need the following:
-- .NET 5 SDK
+- .NET 6 SDK
 - npm 7
 - `npm install @angular/cli -g`
-- SQL Server 2019
-- Visual Studio with SQL Server Data Tools
+- SQL Server 2019 and SQL Server Data Tools
 
 ## Build and Debug
 ### SQL Server
 1. Set up a localhost database named "bhs".
 2. Ensure your login has Integrated Security access.
-3. Publish the SSDT project in Visual Studio to the database.
+3. Publish the SSDT project to the database.
 
 ### Frontend
 1. Navigate to BHS.Web\ClientApp
