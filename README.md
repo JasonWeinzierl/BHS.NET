@@ -26,7 +26,7 @@ You will need the following:
 This starts the angular development server on `localhost:4200`.  The API will proxy to this port.
 
 ### Backend
-Use the IIS Express launch profile in Visual Studio or:
+Use the launch profile in Visual Studio or:
 
 1. `dotnet restore`
 2. `dotnet build`
