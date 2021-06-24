@@ -9,15 +9,14 @@
   </div>
 </div>
 <div class="row">
+
   <div class="col-lg-9">
     <div class="card">
       <div class="card-body">
-        <form class="row row-cols-sm-auto g-3">
-          <div class="col-12">
+        <form>
+          <div class="input-group">
             <input type="text" class="form-control" placeholder="Search Posts" aria-label="Search Posts" name="search"
               [(ngModel)]="searchText">
-          </div>
-          <div class="col-12">
             <button type="submit" class="btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)" swIsLoading="searching-posts">
               Search
             </button>
@@ -27,6 +26,7 @@
     </div>
     <app-post-card *ngFor="let post of posts | sortBy: 'desc' : 'datePublished'; trackBy: trackPostPreview" [post]="post"></app-post-card>
   </div>
+
   <div class="col-lg-3">
     <div class="card">
       <div class="card-body">
@@ -41,4 +41,5 @@
       </div>
     </div>
   </div>
+
 </div>
