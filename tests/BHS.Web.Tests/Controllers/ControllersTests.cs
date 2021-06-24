@@ -15,7 +15,7 @@ namespace BHS.Web.Controllers.Tests
         {
             var inMemoryData = new Dictionary<string, string>
             {
-                { "SENDGRID_API_KEY", "fake api key" }
+                { "SendGridClientOptions:ApiKey", "fake api key" }
             };
             var inMemoryConfig = new ConfigurationBuilder()
                 .AddInMemoryCollection(inMemoryData)

@@ -27,7 +27,8 @@ namespace BHS.Web.Controllers
         }
 
         [Route("/api/error")]
-        public IActionResult Error() => Problem(statusCode: GetStatusCode(HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error));
+        public IActionResult Error()
+            => Problem(statusCode: GetStatusCode(HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error));
 
         private static int GetStatusCode(Exception? exception) =>
             exception switch

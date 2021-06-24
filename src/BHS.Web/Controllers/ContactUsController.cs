@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts;
 using BHS.Model.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -20,6 +21,7 @@ namespace BHS.Web.Controllers
         /// Add a request for being contacted.
         /// </summary>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public async Task<ActionResult> Post(ContactAlertRequest contactRequest)
         {
             await _contactUsService.AddRequest(contactRequest);

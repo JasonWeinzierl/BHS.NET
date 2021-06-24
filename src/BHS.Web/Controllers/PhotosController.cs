@@ -24,7 +24,8 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<Photo>> GetPhoto(int id)
         {
             var photo = await _photosService.GetPhoto(id);
-            if (photo is null) return NotFound();
+            if (photo is null)
+                return NotFound();
             return Ok(photo);
         }
 
@@ -33,9 +34,7 @@ namespace BHS.Web.Controllers
         /// </summary>
         [HttpGet("albums")]
         public async Task<ActionResult<IEnumerable<Album>>> GetAlbums()
-        {
-            return Ok(await _photosService.GetAlbums());
-        }
+            => Ok(await _photosService.GetAlbums());
 
         /// <summary>
         /// Get an album and its photos.
@@ -44,7 +43,8 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<AlbumPhotos>> GetAlbum(string slug)
         {
             var album = await _photosService.GetAlbum(slug);
-            if (album is null) return NotFound();
+            if (album is null)
+                return NotFound();
             return Ok(album);
         }
     }

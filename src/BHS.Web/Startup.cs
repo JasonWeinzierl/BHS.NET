@@ -95,8 +95,7 @@ namespace BHS.Web
         }
 
         private static OpenApiInfo GetApiInfo()
-        {
-            return new OpenApiInfo
+            => new()
             {
                 Version = "v1",
                 Title = "BHS API",
@@ -105,11 +104,10 @@ namespace BHS.Web
                 Contact = new OpenApiContact
                 {
                     Name = "Jason W",
-                    Email = string.Empty,
+                    Email = "admin@beltonhistoricalsociety.org",
                     Url = new Uri("http://jasonweinzierl.com")
                 }
             };
-        }
 
         private static string GetXmlCommentsPath()
         {

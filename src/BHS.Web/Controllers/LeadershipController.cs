@@ -19,14 +19,10 @@ namespace BHS.Web.Controllers
 
         [HttpGet("officers")]
         public async Task<ActionResult<IList<Officer>>> GetOfficers()
-        {
-            return Ok(await _leadershipService.GetOfficers());
-        }
+            => Ok(await _leadershipService.GetOfficers());
 
         [HttpGet("directors")]
         public async Task<ActionResult<IList<Director>>> GetDirectors()
-        {
-            return Ok(await _leadershipService.GetDirectors());
-        }
+            => Ok(await _leadershipService.GetDirectors());
     }
 }

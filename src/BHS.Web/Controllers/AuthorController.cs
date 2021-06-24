@@ -28,9 +28,7 @@ namespace BHS.Web.Controllers
         /// </summary>
         [HttpGet("")]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
-        {
-            return Ok(await _authorService.GetAuthors());
-        }
+            => Ok(await _authorService.GetAuthors());
 
         /// <summary>
         /// Get an author.
@@ -39,7 +37,8 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<Author>> GetAuthor(string username)
         {
             var author = await _authorService.GetAuthor(username);
-            if (author is null) return NotFound();
+            if (author is null)
+                return NotFound();
             return Ok(author);
         }
 

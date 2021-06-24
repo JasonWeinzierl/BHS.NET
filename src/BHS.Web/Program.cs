@@ -10,11 +10,7 @@ namespace BHS.Web
     {
         public static int Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateBootstrapLogger();
+            Log.Logger = CreateBootstrapLogger();
 
             try
             {
@@ -33,10 +29,19 @@ namespace BHS.Web
             }
         }
 
+        private static Serilog.Extensions.Hosting.ReloadableLogger CreateBootstrapLogger() =>
+            new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateBootstrapLogger();
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog((context, services, configuration) => configuration
-                    .ReadFrom.Configuration(context.Configuration))
+                .UseSerilog((context, services, configuration) =>
+                {
+                    configuration.ReadFrom.Configuration(context.Configuration);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

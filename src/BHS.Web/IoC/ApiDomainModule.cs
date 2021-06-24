@@ -24,16 +24,14 @@ namespace BHS.Web.IoC
     public static class ApiDomainModule
     {
         /// <summary>
-        /// Load dependencies for the BHS API.
+        /// Loads services in the BHS API domain.
         /// </summary>
+        /// <returns> A reference to this instance after the operation has completed. </returns>
         public static IServiceCollection LoadApiDomain(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ContactUsOptions>(configuration.GetSection(nameof(ContactUsOptions)));
 
-            services.AddSendGrid(options =>
-            {
-                options.ApiKey = configuration["SENDGRID_API_KEY"];
-            });
+            services.AddSendGrid(options => configuration.GetSection("SendGridClientOptions").Bind(options));
 
             DbProviderFactories.RegisterFactory("System.Data.SqlClient", SqlClientFactory.Instance);
             SqlMapper.AddTypeHandler(DapperUriTypeHandler.Default);
