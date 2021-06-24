@@ -17,10 +17,10 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public async Task<IEnumerable<CategorySummary>> GetAll()
+        public async Task<IReadOnlyCollection<CategorySummary>> GetAll()
         {
             var results = await E.QueryAsync<CategorySummaryDto>(Constants.bhsConnectionStringName, "blog.CategorySummary_GetAll");
-            return results.Select(r => r.ToDomainModel());
+            return results.Select(r => r.ToDomainModel()).ToList();
         }
 
         public Task<Category?> GetBySlug(string slug)

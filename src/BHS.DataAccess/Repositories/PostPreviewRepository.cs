@@ -18,7 +18,7 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public async Task<IEnumerable<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to)
+        public async Task<IReadOnlyCollection<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to)
         {
             var results = await E.QueryAsync<PostPreviewCategoryDto>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_Search", new
             {
@@ -28,10 +28,11 @@ namespace BHS.DataAccess.Repositories
             });
             return results.GroupBy(row => row.Slug)
                 .Select(postGrouping => PostPreviewCategoryDto.ToDomainModel(postGrouping))
-                .OrderByDescending(p => p.DatePublished);
+                .OrderByDescending(p => p.DatePublished)
+                .ToList();
         }
 
-        public async Task<IEnumerable<PostPreview>> GetByCategorySlug(string categorySlug)
+        public async Task<IReadOnlyCollection<PostPreview>> GetByCategorySlug(string categorySlug)
         {
             var results = await E.QueryAsync<PostPreviewCategoryDto>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_GetByCategorySlug", new
             {
@@ -39,10 +40,11 @@ namespace BHS.DataAccess.Repositories
             });
             return results.GroupBy(row => row.Slug)
                 .Select(postGrouping => PostPreviewCategoryDto.ToDomainModel(postGrouping))
-                .OrderByDescending(p => p.DatePublished);
+                .OrderByDescending(p => p.DatePublished)
+                .ToList();
         }
 
-        public async Task<IEnumerable<PostPreview>> GetByAuthorId(int authorId)
+        public async Task<IReadOnlyCollection<PostPreview>> GetByAuthorId(int authorId)
         {
             var results = await E.QueryAsync<PostPreviewCategoryDto>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_GetByAuthorId", new
             {
@@ -50,7 +52,8 @@ namespace BHS.DataAccess.Repositories
             });
             return results.GroupBy(row => row.Slug)
                 .Select(postGrouping => PostPreviewCategoryDto.ToDomainModel(postGrouping))
-                .OrderByDescending(p => p.DatePublished);
+                .OrderByDescending(p => p.DatePublished)
+                .ToList();
         }
     }
 }

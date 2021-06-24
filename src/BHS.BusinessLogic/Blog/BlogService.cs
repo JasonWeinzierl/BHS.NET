@@ -47,12 +47,12 @@ namespace BHS.BusinessLogic.Blog
             return _postRepository.GetBySlug(slug);
         }
 
-        public Task<IEnumerable<CategorySummary>> GetCategories()
+        public Task<IReadOnlyCollection<CategorySummary>> GetCategories()
         {
             return _categoryRepository.GetAll();
         }
 
-        public async Task<IEnumerable<PostPreview>> GetPostsByAuthor(string username)
+        public async Task<IReadOnlyCollection<PostPreview>> GetPostsByAuthor(string username)
         {
             var author = await _authorRepository.GetByUserName(username);
             if (author is null)
@@ -61,7 +61,7 @@ namespace BHS.BusinessLogic.Blog
             return await _postPreviewRepository.GetByAuthorId(author.Id);
         }
 
-        public Task<IEnumerable<PostPreview>> SearchPosts(string? text, DateTime? from, DateTime? to)
+        public Task<IReadOnlyCollection<PostPreview>> SearchPosts(string? text, DateTime? from, DateTime? to)
         {
             return _postPreviewRepository.Search(text, from, to);
         }

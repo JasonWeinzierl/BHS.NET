@@ -23,13 +23,13 @@ namespace BHS.DataAccess.Repositories
             _dateTimeOffsetProvider = dateTimeOffsetProvider;
         }
 
-        public async Task<IList<Officer>> GetCurrentOfficers()
+        public async Task<IReadOnlyCollection<Officer>> GetCurrentOfficers()
         {
             var results = await E.QueryAsync<OfficerDto>(Constants.bhsConnectionStringName, "leadership.Officer_GetAll");
             return results.OrderBy(r => r.SortOrder).Select(r => r.ToDomainModel()).ToList();
         }
 
-        public async Task<IList<Director>> GetCurrentDirectors()
+        public async Task<IReadOnlyCollection<Director>> GetCurrentDirectors()
         {
             var results = await E.QueryAsync<DirectorDto>(Constants.bhsConnectionStringName, "leadership.Director_GetCurrent", new
             {

@@ -82,6 +82,8 @@ namespace BHS.BusinessLogic.Blog.Tests
             int id = 1;
             _mockAuthorRepo.Setup(r => r.GetByUserName(It.IsAny<string>()))
                 .ReturnsAsync(new Author(id, "some user", "User"));
+            _mockPreviewRepo.Setup(r => r.GetByAuthorId(id))
+                .ReturnsAsync(Array.Empty<PostPreview>());
 
             _ = await _subject.GetPostsByAuthor(uname);
 
@@ -96,6 +98,8 @@ namespace BHS.BusinessLogic.Blog.Tests
             int id = 3;
             _mockAuthorRepo.Setup(r => r.GetByUserName(It.IsAny<string>()))
                 .ReturnsAsync(new Author(id, "a", default));
+            _mockPreviewRepo.Setup(r => r.GetByAuthorId(id))
+                .ReturnsAsync(Array.Empty<PostPreview>());
 
             var result = await _subject.GetPostsByAuthor(uname);
 

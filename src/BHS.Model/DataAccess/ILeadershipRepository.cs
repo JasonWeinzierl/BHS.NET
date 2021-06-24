@@ -6,7 +6,7 @@ namespace BHS.Model.DataAccess
 {
     public interface ILeadershipRepository
     {
-        Task<IList<Officer>> GetCurrentOfficers();
-        Task<IList<Director>> GetCurrentDirectors();
+        Task<IReadOnlyCollection<Officer>> GetCurrentOfficers();
+        Task<IReadOnlyCollection<Director>> GetCurrentDirectors();
     }
 }

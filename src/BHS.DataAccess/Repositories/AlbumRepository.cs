@@ -23,10 +23,10 @@ namespace BHS.DataAccess.Repositories
             return albums.SingleOrDefault()?.ToDomainModel(photos);
         }
 
-        public async Task<IEnumerable<Album>> GetAll()
+        public async Task<IReadOnlyCollection<Album>> GetAll()
         {
             var results = await E.QueryAsync<AlbumDto>(Constants.bhsConnectionStringName, "photos.Album_GetAll");
-            return results.Select(r => r.ToDomainModel());
+            return results.Select(r => r.ToDomainModel()).ToList();
         }
     }
 }

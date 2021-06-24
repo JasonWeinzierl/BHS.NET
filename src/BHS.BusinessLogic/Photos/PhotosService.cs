@@ -24,7 +24,7 @@ namespace BHS.BusinessLogic.Photos
             _logger = logger;
         }
 
-        public Task<IEnumerable<Album>> GetAlbums()
+        public Task<IReadOnlyCollection<Album>> GetAlbums()
         {
             return _albumRepository.GetAll();
         }

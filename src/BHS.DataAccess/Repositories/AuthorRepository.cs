@@ -2,6 +2,7 @@
 using BHS.DataAccess.Core;
 using BHS.Model.DataAccess;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
@@ -15,9 +16,10 @@ namespace BHS.DataAccess.Repositories
             E = executer;
         }
 
-        public Task<IEnumerable<Author>> GetAll()
+        public async Task<IReadOnlyCollection<Author>> GetAll()
         {
-            return E.QueryAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetAll");
+            var authors = await E.QueryAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetAll");
+            return authors.ToList();
         }
 
         public Task<Author?> GetByUserName(string userName)

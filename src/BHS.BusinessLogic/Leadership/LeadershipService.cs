@@ -15,12 +15,12 @@ namespace BHS.BusinessLogic.Leadership
             _leadershipRepository = leadershipRepository;
         }
 
-        public Task<IList<Officer>> GetOfficers()
+        public Task<IReadOnlyCollection<Officer>> GetOfficers()
         {
             return _leadershipRepository.GetCurrentOfficers();
         }
 
-        public Task<IList<Director>> GetDirectors()
+        public Task<IReadOnlyCollection<Director>> GetDirectors()
         {
             return _leadershipRepository.GetCurrentDirectors();
         }

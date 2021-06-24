@@ -6,7 +6,7 @@ namespace BHS.Model.Services.Leadership
 {
     public interface ILeadershipService
     {
-        Task<IList<Officer>> GetOfficers();
-        Task<IList<Director>> GetDirectors();
+        Task<IReadOnlyCollection<Officer>> GetOfficers();
+        Task<IReadOnlyCollection<Director>> GetDirectors();
     }
 }
