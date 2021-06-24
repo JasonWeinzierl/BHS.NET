@@ -1,6 +1,8 @@
-﻿using BHS.Model.DataAccess;
+﻿using BHS.Contracts;
+using BHS.Model.DataAccess;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,7 +17,7 @@ namespace BHS.BusinessLogic.Tests
 
         public AuthorServiceTests()
         {
-            _mockRepo = new Mock<IAuthorRepository>();
+            _mockRepo = new Mock<IAuthorRepository>(MockBehavior.Strict);
             _logger = new Mock<ILogger<AuthorService>>();
             Subject = new AuthorService(_mockRepo.Object, _logger.Object);
         }
@@ -24,18 +26,23 @@ namespace BHS.BusinessLogic.Tests
         public async Task GetAuthor_CallsGetByUserName()
         {
             string username = "bob";
+            _mockRepo.Setup(r => r.GetByUserName(username))
+                .ReturnsAsync((Author?)null);
 
-            _ = await Subject.GetAuthor(username);
+            var result = await Subject.GetAuthor(username);
 
-            _mockRepo.Verify(r => r.GetByUserName(It.Is<string>(u => u == username)));
+            Assert.Null(result);
         }
 
         [Fact]
         public async Task GetAuthors_CallsGetAll()
         {
-            _ = await Subject.GetAuthors();
+            _mockRepo.Setup(r => r.GetAll())
+                .ReturnsAsync(Array.Empty<Author>());
 
-            _mockRepo.Verify(r => r.GetAll());
+            var result = await Subject.GetAuthors();
+
+            Assert.Empty(result);
         }
     }
 }

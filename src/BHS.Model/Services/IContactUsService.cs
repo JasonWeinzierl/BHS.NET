@@ -5,6 +5,6 @@ namespace BHS.Model.Services
 {
     public interface IContactUsService
     {
-        Task AddRequest(ContactAlertRequest request);
+        Task<ContactAlert?> AddRequest(ContactAlertRequest request);
     }
 }

@@ -21,7 +21,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
         public LeadershipRepositoryTests()
         {
-            _mockDtProvider = new Mock<IDateTimeOffsetProvider>();
+            _mockDtProvider = new Mock<IDateTimeOffsetProvider>(MockBehavior.Strict);
             _mockDtProvider.Setup(p => p.Now())
                 .Returns(_someDate);
             _mockDtProvider.Setup(p => p.CurrentYear())

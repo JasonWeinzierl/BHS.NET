@@ -12,11 +12,13 @@ namespace BHS.DataAccess.Core.Tests
         [Fact]
         public async Task OpenAsync_OnDbConnection_CallsOpenAsync()
         {
-            var mockDbConnection = new Mock<DbConnection>();
+            var mockDbConnection = new Mock<DbConnection>(MockBehavior.Strict);
+            mockDbConnection.Setup(c => c.OpenAsync(CancellationToken.None))
+                .Returns(Task.CompletedTask);
 
             await DataAsyncExtensions.OpenAsync(mockDbConnection.Object);
 
-            mockDbConnection.Verify(c => c.OpenAsync(It.Is<CancellationToken>(t => t == CancellationToken.None)), Times.Once, "Expected OpenAsync to be called.");
+            mockDbConnection.Verify(c => c.OpenAsync(CancellationToken.None), Times.Once, "Expected OpenAsync to be called.");
         }
 
         [Fact]

@@ -20,7 +20,7 @@ namespace BHS.DataAccess.Core.TypeHandlers.Tests
             var uri = new Uri("scheme:path");
 
             object? result = null;
-            var mockParameter = new Mock<IDbDataParameter>();
+            var mockParameter = new Mock<IDbDataParameter>(MockBehavior.Strict);
             mockParameter.SetupSet(p => p.Value = It.IsAny<string>())
                 .Callback<object?>(s => result = s);
 

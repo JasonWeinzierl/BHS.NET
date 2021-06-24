@@ -1,5 +1,7 @@
-﻿using BHS.Model.DataAccess;
+﻿using BHS.Contracts.Leadership;
+using BHS.Model.DataAccess;
 using Moq;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,7 +15,7 @@ namespace BHS.BusinessLogic.Leadership.Tests
 
         public LeadershipServiceTests()
         {
-            _mockLeadRepo = new Mock<ILeadershipRepository>();
+            _mockLeadRepo = new Mock<ILeadershipRepository>(MockBehavior.Strict);
 
             _subject = new LeadershipService(_mockLeadRepo.Object);
         }
@@ -21,17 +23,23 @@ namespace BHS.BusinessLogic.Leadership.Tests
         [Fact]
         public async Task GetOfficers_CallsGetCurrentOfficers()
         {
-            _ = await _subject.GetOfficers();
+            _mockLeadRepo.Setup(r => r.GetCurrentOfficers())
+                .ReturnsAsync(Array.Empty<Officer>());
 
-            _mockLeadRepo.Verify(r => r.GetCurrentOfficers(), Times.Once);
+            var result = await _subject.GetOfficers();
+
+            Assert.Empty(result);
         }
 
         [Fact]
         public async Task GetDirectors_CallsGetCurrentDirectors()
         {
-            _ = await _subject.GetDirectors();
+            _mockLeadRepo.Setup(r => r.GetCurrentDirectors())
+                .ReturnsAsync(Array.Empty<Director>());
 
-            _mockLeadRepo.Verify(r => r.GetCurrentDirectors(), Times.Once);
+            var result = await _subject.GetDirectors();
+
+            Assert.Empty(result);
         }
     }
 }

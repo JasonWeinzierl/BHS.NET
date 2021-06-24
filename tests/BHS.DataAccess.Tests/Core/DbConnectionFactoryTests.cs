@@ -31,11 +31,11 @@ namespace BHS.DataAccess.Core.Tests
 
             _subject = new DbConnectionFactory(inMemoryConfig, null);
 
-            var mockConnection = new Mock<DbConnection>();
+            var mockConnection = new Mock<DbConnection>(MockBehavior.Strict);
             mockConnection.SetupSet(c => c.ConnectionString = It.IsAny<string>())
                 .Callback<string>(connStrName => ConnectionStringName = connStrName);
 
-            var mockPrvdrFctry = new Mock<DbProviderFactory>();
+            var mockPrvdrFctry = new Mock<DbProviderFactory>(MockBehavior.Strict);
             mockPrvdrFctry.Setup(f => f.CreateConnection())
                 .Returns(mockConnection.Object);
 

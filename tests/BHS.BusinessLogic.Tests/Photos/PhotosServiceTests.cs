@@ -1,6 +1,8 @@
-﻿using BHS.Model.DataAccess;
+﻿using BHS.Contracts.Photos;
+using BHS.Model.DataAccess;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -16,8 +18,8 @@ namespace BHS.BusinessLogic.Photos.Tests
 
         public PhotosServiceTests()
         {
-            _photoRepo = new Mock<IPhotoRepository>();
-            _albumRepo = new Mock<IAlbumRepository>();
+            _photoRepo = new Mock<IPhotoRepository>(MockBehavior.Strict);
+            _albumRepo = new Mock<IAlbumRepository>(MockBehavior.Strict);
             _logger = new Mock<ILogger<PhotosService>>();
 
             _subject = new PhotosService(_photoRepo.Object, _albumRepo.Object, _logger.Object);
@@ -26,29 +28,36 @@ namespace BHS.BusinessLogic.Photos.Tests
         [Fact]
         public async Task GetAlbums_CallsGetAll()
         {
-            _ = await _subject.GetAlbums();
+            _albumRepo.Setup(r => r.GetAll())
+                .ReturnsAsync(Array.Empty<Album>());
 
-            _albumRepo.Verify(r => r.GetAll());
+            var result = await _subject.GetAlbums();
+
+            Assert.Empty(result);
         }
 
         [Fact]
         public async Task GetAlbum_CallsGetBySlug()
         {
             string slug = "alb-2020";
+            _albumRepo.Setup(r => r.GetBySlug(slug))
+                .ReturnsAsync((AlbumPhotos?)null);
 
-            _ = await _subject.GetAlbum(slug);
+            var result = await _subject.GetAlbum(slug);
 
-            _albumRepo.Verify(r => r.GetBySlug(It.Is<string>(i => i == slug)));
+            Assert.Null(result);
         }
 
         [Fact]
         public async Task GetPhoto_CallsGetById()
         {
             int id = 9;
+            _photoRepo.Setup(r => r.GetById(id))
+                .ReturnsAsync((Photo?)null);
 
-            _ = await _subject.GetPhoto(id);
+            var result = await _subject.GetPhoto(id);
 
-            _photoRepo.Verify(r => r.GetById(It.Is<int>(i => i == id)));
+            Assert.Null(result);
         }
     }
 }

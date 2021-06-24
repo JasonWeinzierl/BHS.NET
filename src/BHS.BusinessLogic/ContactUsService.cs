@@ -31,18 +31,21 @@ namespace BHS.BusinessLogic
             _logger = logger;
         }
 
-        public async Task AddRequest(ContactAlertRequest request)
+        public async Task<ContactAlert?> AddRequest(ContactAlertRequest request)
         {
-            // Body is a honeypot.
-            if (!string.IsNullOrEmpty(request.Body))
-                return;
+            if (FailsHoneypotCheck(request))
+                return null;
 
             if (string.IsNullOrWhiteSpace(request.EmailAddress))
                 throw new BadRequestException("Email address is required.");
 
             var newAlert = await _contactAlertRepository.Insert(request);
             await SendEmail(newAlert);
+
+            return newAlert;
         }
+
+        private static bool FailsHoneypotCheck(ContactAlertRequest request) => !string.IsNullOrEmpty(request.Body);
 
         private async Task SendEmail(ContactAlert newAlert)
         {
