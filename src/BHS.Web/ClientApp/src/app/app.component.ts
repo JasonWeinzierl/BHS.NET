@@ -10,7 +10,6 @@ import { filter, map } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  asyncLoadCount = 0;
 
   public constructor(
     private router: Router,
@@ -19,11 +18,11 @@ export class AppComponent implements OnInit {
     private isLoadingService: IsLoadingService,
   ) { }
 
-  public setTitle(newTitle: string) {
+  public setTitle(newTitle: string): void {
     this.titleService.setTitle(newTitle + ' | Belton Historical Society');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const appTitle = this.titleService.getTitle();
 
     this.router.events
