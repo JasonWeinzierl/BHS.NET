@@ -6,6 +6,6 @@ namespace BHS.Model.Providers
     {
         public string? FromAddress { get; set; }
         public string? FromName { get; set; }
-        public IReadOnlyCollection<string> ToAddresses { get; set; } = new List<string>();
+        public IList<string> ToAddresses { get; set; } = new List<string>();
     }
 }
