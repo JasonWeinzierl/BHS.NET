@@ -34,6 +34,7 @@ namespace BHS.DataAccess.Core.Tests
             var mockConnection = new Mock<DbConnection>(MockBehavior.Strict);
             mockConnection.SetupSet(c => c.ConnectionString = It.IsAny<string>())
                 .Callback<string>(connStrName => ConnectionStringName = connStrName);
+            mockConnection.As<IDisposable>().Setup(d => d.Dispose());
 
             var mockPrvdrFctry = new Mock<DbProviderFactory>(MockBehavior.Strict);
             mockPrvdrFctry.Setup(f => f.CreateConnection())

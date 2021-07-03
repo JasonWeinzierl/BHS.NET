@@ -7,7 +7,7 @@ using System.Data.Common;
 namespace BHS.DataAccess.Core
 {
     /// <remarks>
-    /// In .NET 5, remember to <seealso cref="DbProviderFactories.RegisterFactory"/>
+    /// In .NET Core, remember to <seealso cref="DbProviderFactories.RegisterFactory"/>
     /// the DbProviderFactory instance (e.g. SqlClientFactory.Instance) because
     /// there is no GAC or global configuration where providers would be automatically available.
     /// </remarks>
