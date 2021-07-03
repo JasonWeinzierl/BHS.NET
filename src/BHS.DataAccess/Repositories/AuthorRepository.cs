@@ -1,6 +1,6 @@
 ﻿using BHS.Contracts;
 using BHS.DataAccess.Core;
-using BHS.Model.DataAccess;
+using BHS.Domain.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

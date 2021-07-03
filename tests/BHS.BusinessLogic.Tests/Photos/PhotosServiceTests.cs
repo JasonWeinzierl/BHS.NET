@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts.Photos;
-using BHS.Model.DataAccess;
+using BHS.Domain.DataAccess;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;

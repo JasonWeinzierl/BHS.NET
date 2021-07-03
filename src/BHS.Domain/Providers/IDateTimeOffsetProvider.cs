@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BHS.Model.Providers
+namespace BHS.Domain.Providers
 {
     public interface IDateTimeOffsetProvider
     {

@@ -1,6 +1,6 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.DataAccess.Core;
-using BHS.Model.DataAccess;
+using BHS.Domain.DataAccess;
 using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories

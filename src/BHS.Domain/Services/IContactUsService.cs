@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts;
 using System.Threading.Tasks;
 
-namespace BHS.Model.Services
+namespace BHS.Domain.Services
 {
     public interface IContactUsService
     {

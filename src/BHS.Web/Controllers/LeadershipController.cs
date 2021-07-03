@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts.Leadership;
-using BHS.Model.Services.Leadership;
+using BHS.Domain.Services.Leadership;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

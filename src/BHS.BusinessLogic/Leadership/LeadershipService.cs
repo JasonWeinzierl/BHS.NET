@@ -1,6 +1,6 @@
 ﻿using BHS.Contracts.Leadership;
-using BHS.Model.DataAccess;
-using BHS.Model.Services.Leadership;
+using BHS.Domain.DataAccess;
+using BHS.Domain.Services.Leadership;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

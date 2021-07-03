@@ -1,6 +1,6 @@
 ﻿using BHS.Contracts.Photos;
-using BHS.Model.DataAccess;
-using BHS.Model.Services.Photos;
+using BHS.Domain.DataAccess;
+using BHS.Domain.Services.Photos;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;

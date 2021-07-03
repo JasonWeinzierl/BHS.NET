@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts;
-using BHS.Model.Services;
+using BHS.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

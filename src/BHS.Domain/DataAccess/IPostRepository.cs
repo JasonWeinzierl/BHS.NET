@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts.Blog;
 using System.Threading.Tasks;
 
-namespace BHS.Model.DataAccess
+namespace BHS.Domain.DataAccess
 {
     public interface IPostRepository
     {

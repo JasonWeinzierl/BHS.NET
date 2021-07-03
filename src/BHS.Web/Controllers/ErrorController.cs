@@ -1,4 +1,4 @@
-﻿using BHS.Model.Exceptions;
+﻿using BHS.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

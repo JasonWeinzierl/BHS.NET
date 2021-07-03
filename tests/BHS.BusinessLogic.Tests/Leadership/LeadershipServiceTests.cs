@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts.Leadership;
-using BHS.Model.DataAccess;
+using BHS.Domain.DataAccess;
 using Moq;
 using System;
 using System.Threading.Tasks;

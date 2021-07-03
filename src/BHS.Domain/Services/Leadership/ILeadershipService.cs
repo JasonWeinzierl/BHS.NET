@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BHS.Model.Services.Leadership
+namespace BHS.Domain.Services.Leadership
 {
     public interface ILeadershipService
     {

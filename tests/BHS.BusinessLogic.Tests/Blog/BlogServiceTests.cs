@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Blog;
-using BHS.Model.DataAccess;
-using BHS.Model.Exceptions;
+using BHS.Domain.DataAccess;
+using BHS.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;

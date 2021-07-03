@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BHS.Model.Services.Blog
+namespace BHS.Domain.Services.Blog
 {
     public interface IBlogService
     {

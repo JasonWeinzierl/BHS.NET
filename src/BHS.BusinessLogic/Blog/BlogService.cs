@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts.Blog;
-using BHS.Model.DataAccess;
-using BHS.Model.Exceptions;
-using BHS.Model.Services.Blog;
+using BHS.Domain.DataAccess;
+using BHS.Domain.Exceptions;
+using BHS.Domain.Services.Blog;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

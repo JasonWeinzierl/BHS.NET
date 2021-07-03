@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BHS.Model.Exceptions
+namespace BHS.Domain.Exceptions
 {
     [Serializable]
     public class BadRequestException : Exception

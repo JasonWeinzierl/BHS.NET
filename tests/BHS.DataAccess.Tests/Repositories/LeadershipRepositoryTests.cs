@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts.Leadership;
 using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
-using BHS.Model.Providers;
+using BHS.Domain.Providers;
 using Moq;
 using System;
 using System.Threading.Tasks;

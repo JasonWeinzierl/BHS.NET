@@ -1,8 +1,8 @@
 ﻿using BHS.Contracts.Leadership;
 using BHS.DataAccess.Core;
 using BHS.DataAccess.Models;
-using BHS.Model.DataAccess;
-using BHS.Model.Providers;
+using BHS.Domain.DataAccess;
+using BHS.Domain.Providers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

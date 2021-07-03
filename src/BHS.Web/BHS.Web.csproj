@@ -35,7 +35,7 @@
     <ProjectReference Include="..\BHS.BusinessLogic\BHS.BusinessLogic.csproj" />
     <ProjectReference Include="..\BHS.Contracts\BHS.Contracts.csproj" />
     <ProjectReference Include="..\BHS.DataAccess\BHS.DataAccess.csproj" />
-    <ProjectReference Include="..\BHS.Model\BHS.Model.csproj" />
+    <ProjectReference Include="..\BHS.Domain\BHS.Domain.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
