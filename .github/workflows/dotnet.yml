@@ -2,17 +2,19 @@ name: .NET
 
 on:
   push:
-    branches: [ main ]
+    branches:
+    - main
     paths:
-      - 'src/**'
-      - '!src/BHS.Web/ClientApp/**'
-      - 'tests/**'
+    - 'src/**'
+    - '!src/BHS.Web/ClientApp/**'
+    - 'tests/**'
   pull_request:
-    branches: [ main ]
+    branches:
+    - main
     paths:
-      - 'src/**'
-      - '!src/BHS.Web/ClientApp/**'
-      - 'tests/**'
+    - 'src/**'
+    - '!src/BHS.Web/ClientApp/**'
+    - 'tests/**'
 
 defaults:
   run:
@@ -20,8 +22,12 @@ defaults:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        runs-on: [ macOS-latest, ubuntu-latest, windows-latest ]
 
-    runs-on: ubuntu-latest
+    name: ${{ matrix.runs-on }}
+    runs-on: ${{ matrix.runs-on }}
 
     steps:
     - uses: actions/checkout@v2
