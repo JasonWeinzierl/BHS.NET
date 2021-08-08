@@ -15,7 +15,7 @@ defaults:
     working-directory: ./src/BHS.Web/ClientApp
 
 jobs:
-  build:
+  lint:
 
     runs-on: ubuntu-latest
 
@@ -27,6 +27,30 @@ jobs:
           node-version: '16'
       - run: npm ci
       - run: npm run lint
-      - run: npm run build -- --configuration=production
-      - run: npm test -- --configuration=ci
-      - run: npm run e2e -- --configuration=ci
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm ci
+      - run: npm run build:app:prod
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm ci
+      - run: npm run test:ci
+      - run: npm run e2e:ci
