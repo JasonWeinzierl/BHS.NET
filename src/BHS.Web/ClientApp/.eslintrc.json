@@ -15,9 +15,18 @@
         ],
         "createDefaultProgram": true
       },
+      "plugins": [
+        "rxjs",
+        "jasmine"
+      ],
+      "env": {
+        "jasmine": true
+      },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:rxjs/recommended",
+        "plugin:jasmine/recommended"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -35,7 +44,70 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "default",
+            "format": [ "camelCase" ],
+            "leadingUnderscore": "allow",
+            "trailingUnderscore": "allow"
+          },
+          {
+            "selector": "variable",
+            "format": [ "camelCase", "UPPER_CASE" ],
+            "leadingUnderscore": "allow",
+            "trailingUnderscore": "allow"
+          },
+          {
+            "selector": "typeLike",
+            "format": [ "PascalCase" ]
+          },
+          {
+            "selector": "enumMember",
+            "format": [ "PascalCase" ]
+          }
+        ],
+        "semi": [
+          "error",
+          "always"
+        ],
+        "curly": [
+          "error",
+          "all"
+        ],
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "keyword-spacing": "warn",
+        "sort-imports": [
+          "warn",
+          {
+            "ignoreCase": true
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": true
+          }
+        ],
+        "rxjs/finnish": [
+          "warn",
+          {
+            "methods": false,
+            "strict": true,
+            "types": {
+              "^(EventEmitter|BehaviorSubject|ReplaySubject|AsyncSubject|Subject)$": false
+            }
+          }
+        ],
+        "rxjs/suffix-subjects": "warn",
+        "rxjs/no-exposed-subjects": "error",
+        "rxjs/no-explicit-generics": "warn",
+        "rxjs/no-ignored-subscribe": "warn",
+        "rxjs/no-implicit-any-catch": "error"
       }
     },
     {
