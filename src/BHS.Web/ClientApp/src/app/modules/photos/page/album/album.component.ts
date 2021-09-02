@@ -27,10 +27,17 @@ export class AlbumComponent implements OnInit {
         return;
       }
 
-      this.photosService.getAlbum(slug)
-        .subscribe(response => this.album = response,
-          (error: HttpErrorResponse) => this.errors.push(error.message));
+      this.loadAlbum(slug);
     });
   }
 
+  private loadAlbum(slug: string): void {
+    this.photosService.getAlbum(slug)
+      .subscribe(response => this.album = response,
+        (error: unknown) => {
+          if (error instanceof HttpErrorResponse) {
+            this.errors.push(error.message);
+          }
+        });
+  }
 }

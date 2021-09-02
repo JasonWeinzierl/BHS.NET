@@ -22,10 +22,23 @@ export class OrganizationComponent implements OnInit {
 
   ngOnInit(): void {
     this.leadershipService.getOfficers()
-      .subscribe(response => this.officers = response,
-        (error: HttpErrorResponse) => this.errors.push(error.message));
+      .subscribe(
+        response => this.officers = response,
+        (error: unknown) => {
+          if (error instanceof HttpErrorResponse) {
+            this.errors.push(error.message);
+          }
+        }
+      );
+
     this.leadershipService.getDirectors()
-      .subscribe(response => this.directors = response,
-        (error: HttpErrorResponse) => this.errors.push(error.message));
+      .subscribe(
+        response => this.directors = response,
+        (error: unknown) => {
+          if (error instanceof HttpErrorResponse) {
+            this.errors.push(error.message);
+          }
+        }
+      );
   }
 }

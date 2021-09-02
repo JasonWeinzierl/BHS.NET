@@ -30,14 +30,27 @@ export class ProfileIndexComponent implements OnInit {
         return;
       }
 
-      this.authorService.getAuthor(username)
-        .subscribe(authorResponse => {
-          this.author = authorResponse;
-        }, (authorError: HttpErrorResponse) => this.errors.push(authorError.message));
-      this.authorService.getAuthorPosts(username)
-        .subscribe(postsResponse => this.posts = postsResponse,
-          (postsError: HttpErrorResponse) => this.errors.push(postsError.message));
+      this.loadAuthor(username);
     });
   }
 
+
+  private loadAuthor(username: string): void {
+    this.authorService.getAuthor(username)
+      .subscribe(authorResponse => {
+        this.author = authorResponse;
+      }, (authorError: unknown) => {
+        if (authorError instanceof HttpErrorResponse) {
+          this.errors.push(authorError.message);
+        }
+      });
+
+    this.authorService.getAuthorPosts(username)
+      .subscribe(postsResponse => this.posts = postsResponse,
+        (postsError: unknown) => {
+          if (postsError instanceof HttpErrorResponse) {
+            this.errors.push(postsError.message);
+          }
+        });
+  }
 }

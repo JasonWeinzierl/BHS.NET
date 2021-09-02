@@ -30,11 +30,20 @@ export class CategoryPostsComponent implements OnInit {
       }
 
       this.isLoading = true;
-      this.blogService.getCategory(slug)
-        .subscribe(response => this.category = { ... response },
-          (error: HttpErrorResponse) => this.error = error.message,
-          () => this.isLoading = false);
+      this.loadCategory(slug);
     });
   }
 
+
+  private loadCategory(slug: string): void {
+    this.blogService.getCategory(slug)
+      .subscribe(
+        response => this.category = { ...response },
+        (error: unknown) => {
+          if (error instanceof HttpErrorResponse) {
+            this.error = error.message;
+          }
+        })
+      .add(() => this.isLoading = false);
+  }
 }

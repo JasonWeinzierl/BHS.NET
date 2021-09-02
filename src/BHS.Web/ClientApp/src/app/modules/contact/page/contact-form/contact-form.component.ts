@@ -36,11 +36,13 @@ export class ContactFormComponent {
         this.isAccepted = true;
         this.contactForm.reset();
       },
-      (error: HttpErrorResponse) => {
-        if (error.error?.title) {
-          this.errors.push(error.error.title);
-        } else {
-          this.errors.push(error.message);
+      (error: unknown) => {
+        if (error instanceof HttpErrorResponse) {
+          if (error.error?.title) {
+            this.errors.push(error.error.title);
+          } else {
+            this.errors.push(error.message);
+          }
         }
         this.isSubmitted = false;
       });

@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   isExpanded = false;
 
-  collapse() {
+  collapse(): void {
     this.isExpanded = false;
   }
 
-  toggle() {
+  toggle(): void {
     this.isExpanded = !this.isExpanded;
   }
 

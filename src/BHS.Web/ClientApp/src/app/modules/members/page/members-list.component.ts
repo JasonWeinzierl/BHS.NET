@@ -19,7 +19,11 @@ export class MembersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.authorService.getAuthors().subscribe(response => this.authors = response,
-      (error: HttpErrorResponse) => this.error = error.message);
+      (error: unknown) => {
+        if (error instanceof HttpErrorResponse) {
+          this.error = error.message;
+        }
+      });
   }
 
 }

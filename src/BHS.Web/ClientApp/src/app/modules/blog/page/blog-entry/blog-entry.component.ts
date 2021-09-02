@@ -30,10 +30,19 @@ export class BlogEntryComponent implements OnInit {
       }
 
       this.isLoading = true;
-      this.blogService.getPost(slug)
-        .subscribe(response => this.post = { ... response },
-          (error: HttpErrorResponse) => this.error = error.message,
-          () => this.isLoading = false);
+      this.loadPost(slug);
     });
+  }
+
+  private loadPost(slug: string): void {
+    this.blogService.getPost(slug)
+      .subscribe(
+        response => this.post = { ...response },
+        (error: unknown) => {
+          if (error instanceof HttpErrorResponse) {
+            this.error = error.message;
+          }
+        })
+      .add(() => this.isLoading = false);
   }
 }

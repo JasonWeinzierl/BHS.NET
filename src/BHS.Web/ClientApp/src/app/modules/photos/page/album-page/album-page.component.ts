@@ -41,23 +41,31 @@ export class AlbumPageComponent implements OnInit {
       }
       const photoId = +photoIdStr;
 
-      this.photosService.getAlbum(albumSlug)
-        .subscribe(response => {
-          this.album = response;
-          this.currentPhoto = this.album.photos.find(p => p.id === photoId);
-
-          if (!this.currentPhoto) {
-            this.router.navigate(['not-found'], { replaceUrl: true });
-          } else {
-            const currentIndex = this.album.photos.indexOf(this.currentPhoto);
-
-            const previousIndex = currentIndex - 1 < 0 ? this.album.photos.length - 1 : currentIndex - 1;
-            const nextIndex = currentIndex + 1 >= this.album.photos.length ? 0 : currentIndex + 1;
-
-            this.previousPhotoId = this.album.photos[previousIndex].id;
-            this.nextPhotoId = this.album.photos[nextIndex].id;
-          }
-        }, (error: HttpErrorResponse) => this.error = error.message);
+      this.loadAlbum(albumSlug, photoId);
     });
+  }
+
+  private loadAlbum(albumSlug: string, photoId: number): void {
+    this.photosService.getAlbum(albumSlug)
+      .subscribe(response => {
+        this.album = response;
+        this.currentPhoto = this.album.photos.find(p => p.id === photoId);
+
+        if (!this.currentPhoto) {
+          this.router.navigate(['not-found'], { replaceUrl: true });
+        } else {
+          const currentIndex = this.album.photos.indexOf(this.currentPhoto);
+
+          const previousIndex = currentIndex - 1 < 0 ? this.album.photos.length - 1 : currentIndex - 1;
+          const nextIndex = currentIndex + 1 >= this.album.photos.length ? 0 : currentIndex + 1;
+
+          this.previousPhotoId = this.album.photos[previousIndex].id;
+          this.nextPhotoId = this.album.photos[nextIndex].id;
+        }
+      }, (error: unknown) => {
+        if (error instanceof HttpErrorResponse) {
+          this.error = error.message;
+        }
+      });
   }
 }

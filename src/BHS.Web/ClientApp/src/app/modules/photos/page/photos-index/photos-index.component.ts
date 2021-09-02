@@ -18,7 +18,11 @@ export class PhotosIndexComponent implements OnInit {
   ngOnInit(): void {
     this.photosService.getAlbums()
       .subscribe(response => this.albums = response,
-        (error: HttpErrorResponse) => this.error = error.message);
+        (error: unknown) => {
+          if (error instanceof HttpErrorResponse) {
+            this.error = error.message;
+          }
+        });
   }
 
 }
