@@ -7,7 +7,6 @@ The Belton Historical Society website, built on ASP.NET Core, Angular, and SQL S
 ## Getting Started
 You will need the following:
 - .NET 6 SDK
-- npm 7
 - `npm install @angular/cli -g`
 - SQL Server 2019 and SQL Server Data Tools
 
