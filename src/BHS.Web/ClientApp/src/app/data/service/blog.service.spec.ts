@@ -1,7 +1,6 @@
+import { BlogService } from './blog.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
-import { BlogService } from './blog.service';
 
 describe('BlogService', () => {
   let service: BlogService;

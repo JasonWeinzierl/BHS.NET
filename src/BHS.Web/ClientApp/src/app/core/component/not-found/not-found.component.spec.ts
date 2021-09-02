@@ -1,8 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { of } from 'rxjs';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotFoundComponent } from './not-found.component';
+import { of } from 'rxjs';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
@@ -17,7 +16,7 @@ describe('NotFoundComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            data: of(convertToParamMap({
+            'data': of(convertToParamMap({
               path: '123/456'
             }))
           }

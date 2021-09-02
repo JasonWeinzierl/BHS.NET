@@ -1,11 +1,10 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { PhotosService } from '@data/service/photos.service';
-import { of } from 'rxjs';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlbumPageComponent } from './album-page.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
+import { PhotosService } from '@data/service/photos.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AlbumPageComponent', () => {
   let component: AlbumPageComponent;
@@ -25,7 +24,7 @@ describe('AlbumPageComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of(convertToParamMap({
+            'paramMap': of(convertToParamMap({
               slug: '3',
               id: '4'
             }))

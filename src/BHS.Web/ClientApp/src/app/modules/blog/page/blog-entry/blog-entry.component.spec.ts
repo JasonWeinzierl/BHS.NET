@@ -1,10 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { of } from 'rxjs';
-
-import { BlogService } from '@app/data/service/blog.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BlogEntryComponent } from './blog-entry.component';
+import { BlogService } from '@app/data/service/blog.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 describe('BlogEntryComponent', () => {
   let component: BlogEntryComponent;
@@ -23,7 +22,7 @@ describe('BlogEntryComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of(convertToParamMap({
+            'paramMap': of(convertToParamMap({
               slug: '123'
             }))
           }

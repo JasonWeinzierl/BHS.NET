@@ -1,9 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
 import { Director } from '@data/schema/director';
-import { Officer } from '@data/schema/officer';
+import { HttpErrorResponse } from '@angular/common/http';
 import { LeadershipService } from '@data/service/leadership.service';
+import { Officer } from '@data/schema/officer';
 
 @Component({
   selector: 'app-organization',

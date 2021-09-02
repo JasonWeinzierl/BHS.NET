@@ -1,10 +1,9 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from '@app/app.component';
 import { Observable, of } from 'rxjs';
-
+import { Pipe, PipeTransform } from '@angular/core';
+import { AppComponent } from '@app/app.component';
 import { Key } from '@service-work/is-loading/is-loading/is-loading.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed } from '@angular/core/testing';
 
 @Pipe({ name: 'swIsLoading' })
 class MockIsLoadingPipe implements PipeTransform {
@@ -32,6 +31,7 @@ describe('AppComponent', () => {
   it('should create the app', () => {
       const fixture = TestBed.createComponent(AppComponent);
       const app = fixture.componentInstance;
+
       expect(app).toBeTruthy();
     }
   );

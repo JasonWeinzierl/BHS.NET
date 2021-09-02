@@ -1,9 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { Post } from '@data/schema/post';
 import { BlogService } from '@data/service/blog.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Post } from '@data/schema/post';
 
 @Component({
   selector: 'app-blog-entry',

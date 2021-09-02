@@ -1,9 +1,8 @@
+import { Album } from '@data/schema/album';
+import { AlbumPhotos } from '@data/schema/album-photos';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { AlbumPhotos } from '@data/schema/album-photos';
-import { Album } from '@data/schema/album';
 import { Photo } from '@data/schema/photo';
 
 @Injectable({

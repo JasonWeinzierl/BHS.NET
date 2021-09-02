@@ -1,9 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthorService } from '@app/data/service/author.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-
 import { ProfileIndexComponent } from './profile-index.component';
 
 describe('ProfileIndexComponent', () => {
@@ -23,7 +22,7 @@ describe('ProfileIndexComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of(convertToParamMap({
+            'paramMap': of(convertToParamMap({
               username: 'abc'
             }))
           }

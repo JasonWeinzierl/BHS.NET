@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { paths } from './app-paths';
+import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
+import { NgModule } from '@angular/core';
 import { NotFoundComponent } from './core/component/not-found/not-found.component';
 import { PathResolveService } from './core/service/path-resolve.service';
-import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
+import { paths } from './app-paths';
 
 const routes: Routes = [
   {

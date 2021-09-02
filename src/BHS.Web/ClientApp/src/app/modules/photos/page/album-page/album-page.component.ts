@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-
+import { Component, OnInit } from '@angular/core';
 import { AlbumPhotos } from '@data/schema/album-photos';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Photo } from '@data/schema/photo';
 import { PhotosService } from '@data/service/photos.service';
 

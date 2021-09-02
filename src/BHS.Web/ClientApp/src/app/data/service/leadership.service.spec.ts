@@ -1,7 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-
 import { LeadershipService } from './leadership.service';
+import { TestBed } from '@angular/core/testing';
 
 describe('LeadershipService', () => {
   let service: LeadershipService;

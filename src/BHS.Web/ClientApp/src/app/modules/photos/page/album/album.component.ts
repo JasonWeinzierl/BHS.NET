@@ -1,8 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { AlbumPhotos } from '@data/schema/album-photos';
+import { HttpErrorResponse } from '@angular/common/http';
 import { PhotosService } from '@data/service/photos.service';
 
 @Component({

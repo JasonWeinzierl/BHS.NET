@@ -1,11 +1,9 @@
 import { Component, OnInit, TrackByFunction } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-
-import { IsLoadingService } from '@service-work/is-loading';
-
-import { PostPreview } from '@data/schema/post-preview';
 import { BlogService } from '@data/service/blog.service';
 import { CategorySummary } from '@data/schema/category-summary';
+import { finalize } from 'rxjs/operators';
+import { IsLoadingService } from '@service-work/is-loading';
+import { PostPreview } from '@data/schema/post-preview';
 
 @Component({
   selector: 'app-blog-index',

@@ -1,8 +1,7 @@
+import { Author } from '@data/schema/author';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { Author } from '@data/schema/author';
 import { PostPreview } from '@data/schema/post-preview';
 
 @Injectable({

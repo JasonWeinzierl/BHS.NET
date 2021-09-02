@@ -1,8 +1,8 @@
+import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
-import { IsLoadingService } from '@service-work/is-loading';
 import { filter, map } from 'rxjs/operators';
+import { IsLoadingService } from '@service-work/is-loading';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',

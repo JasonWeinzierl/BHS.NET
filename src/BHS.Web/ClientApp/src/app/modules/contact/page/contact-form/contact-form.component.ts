@@ -1,9 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Component } from '@angular/core';
 import { ContactAlertRequest } from '@data/schema/contact-alert-request';
 import { ContactService } from '@data/service/contact.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact-form',

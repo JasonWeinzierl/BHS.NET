@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { CategoryPosts } from '@data/schema/category-posts';
+import { CategorySummary } from '@data/schema/category-summary';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { CategoryPosts } from '@data/schema/category-posts';
 import { Post } from '@data/schema/post';
 import { PostPreview } from '@data/schema/post-preview';
-import { CategorySummary } from '@data/schema/category-summary';
 
 @Injectable({
   providedIn: 'root'

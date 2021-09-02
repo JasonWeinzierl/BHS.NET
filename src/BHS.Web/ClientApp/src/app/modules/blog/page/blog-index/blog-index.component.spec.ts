@@ -1,9 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { BlogService } from '@app/data/service/blog.service';
+import { Pipe, PipeTransform } from '@angular/core';
 import { BlogIndexComponent } from './blog-index.component';
+import { BlogService } from '@app/data/service/blog.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Pipe({name: 'sortBy'})
 class MockSortByPipe implements PipeTransform {

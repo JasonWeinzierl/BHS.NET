@@ -1,8 +1,7 @@
+import { ContactAlertRequest } from '@data/schema/contact-alert-request';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { ContactAlertRequest } from '@data/schema/contact-alert-request';
 
 @Injectable({
   providedIn: 'root'

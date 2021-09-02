@@ -1,7 +1,6 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LeadershipService } from '@app/data/service/leadership.service';
-
 import { OrganizationComponent } from './organization.component';
 
 describe('OrganizationComponent', () => {

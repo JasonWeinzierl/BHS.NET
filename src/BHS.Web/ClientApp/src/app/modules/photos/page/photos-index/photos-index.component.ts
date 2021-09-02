@@ -1,7 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
 import { Album } from '@data/schema/album';
+import { HttpErrorResponse } from '@angular/common/http';
 import { PhotosService } from '@data/service/photos.service';
 
 @Component({

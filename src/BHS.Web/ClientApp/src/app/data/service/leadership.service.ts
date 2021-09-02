@@ -1,8 +1,7 @@
+import { Director } from '@data/schema/director';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { Director } from '@data/schema/director';
 import { Officer } from '@data/schema/officer';
 
 @Injectable({
