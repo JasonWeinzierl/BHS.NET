@@ -2,11 +2,13 @@ name: Angular
 
 on:
   push:
-    branches: [ main ]
+    branches:
+    - main
     paths:
-      - 'src/BHS.Web/ClientApp/**'
+    - 'src/BHS.Web/ClientApp/**'
   pull_request:
-    branches: [ main ]
+    branches:
+    - main
     paths:
       - 'src/BHS.Web/ClientApp/**'
 
@@ -20,37 +22,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - run: npm ci
-      - run: npm run lint
+    - uses: actions/checkout@v2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: npm ci
+    - run: npm run lint
 
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - run: npm ci
-      - run: npm run build:app:prod
+    - uses: actions/checkout@v2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: npm ci
+    - run: npm run build:app:prod
 
   test:
 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - run: npm ci
-      - run: npm run test:ci
-      - run: npm run e2e:ci
+    - uses: actions/checkout@v2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: npm ci
+    - run: npm run test:ci
+    - run: npm run e2e:ci

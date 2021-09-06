@@ -1,0 +1,23 @@
+name: SQL Server Database Project
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - 'database/**'
+  pull_request:
+    branches:
+    - main
+    paths:
+    - 'database/**'
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - uses: microsoft/setup-msbuild@v1
+    - run: msbuild database/BHS.SSDT/BHS.SSDT.sqlproj
