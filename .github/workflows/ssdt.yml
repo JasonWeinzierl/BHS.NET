@@ -1,4 +1,4 @@
-name: SQL Server Database Project
+name: SSDT
 
 on:
   push:
