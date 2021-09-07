@@ -1,8 +1,6 @@
 ﻿using BHS.Contracts.Leadership;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace BHS.Domain.Services.Leadership
+namespace BHS.Domain.Services
 {
     public interface ILeadershipService
     {

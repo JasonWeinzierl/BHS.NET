@@ -1,6 +1,5 @@
 ﻿using BHS.Contracts;
 using BHS.DataAccess.Tests;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.DataAccess.Repositories.Tests
@@ -23,7 +22,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetByUserName("b");
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("dbo.Author_GetByUserName", _mockExecuter.CommandText);
 
             Assert.Equal("b", _mockExecuter.Parameters?.userName);
@@ -39,7 +38,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetAll();
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("dbo.Author_GetAll", _mockExecuter.CommandText);
         }
     }

@@ -1,11 +1,9 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Blog;
-using BHS.Domain.DataAccess;
+using BHS.Domain.Repositories;
 using BHS.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.BusinessLogic.Blog.Tests

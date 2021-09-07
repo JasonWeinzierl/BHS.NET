@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BHS.Contracts.Blog
+﻿namespace BHS.Contracts.Blog
 {
     public record Post(
         string Slug,

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BHS.Contracts
+﻿namespace BHS.Contracts
 {
     public record ContactAlert(
         int Id,

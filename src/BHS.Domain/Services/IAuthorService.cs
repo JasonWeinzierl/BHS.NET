@@ -1,6 +1,4 @@
 ﻿using BHS.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BHS.Domain.Services
 {

@@ -1,15 +1,12 @@
 using BHS.Contracts;
-using BHS.Domain.DataAccess;
+using BHS.Domain;
+using BHS.Domain.Repositories;
 using BHS.Domain.Exceptions;
-using BHS.Domain.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.BusinessLogic.Tests

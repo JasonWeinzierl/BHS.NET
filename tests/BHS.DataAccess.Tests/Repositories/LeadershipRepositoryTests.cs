@@ -1,10 +1,7 @@
-﻿using BHS.Contracts.Leadership;
-using BHS.DataAccess.Models;
+﻿using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
 using BHS.Domain.Providers;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.DataAccess.Repositories.Tests
@@ -37,7 +34,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetCurrentOfficers();
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("leadership.Officer_GetAll", _mockExecuter.CommandText);
         }
 
@@ -48,7 +45,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetCurrentDirectors();
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("leadership.Director_GetCurrent", _mockExecuter.CommandText);
 
             Assert.Equal(_someYear, _mockExecuter.Parameters?.startingYear);

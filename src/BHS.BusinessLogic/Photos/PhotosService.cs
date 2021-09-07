@@ -1,10 +1,7 @@
 ﻿using BHS.Contracts.Photos;
-using BHS.Domain.DataAccess;
-using BHS.Domain.Services.Photos;
+using BHS.Domain.Repositories;
+using BHS.Domain.Services;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BHS.BusinessLogic.Photos
 {

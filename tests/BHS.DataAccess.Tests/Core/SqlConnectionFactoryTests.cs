@@ -1,35 +1,29 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Moq;
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using Xunit;
 
 namespace BHS.DataAccess.Core.Tests
 {
-    public class DbConnectionFactoryTests
+    public class SqlConnectionFactoryTests
     {
-        private readonly DbConnectionFactory _subject;
+        private readonly SqlConnectionFactory _subject;
 
         private string? ConnectionStringName;
 
-        public DbConnectionFactoryTests()
+        public SqlConnectionFactoryTests()
         {
             const string connectionStringsSectionName = "ConnectionStrings";
             var inMemoryData = new Dictionary<string, string>
             {
                 { $"{connectionStringsSectionName}:db", "mock connection string" },
-                { $"{connectionStringsSectionName}:db_ProviderName", "MockDbProviderFactory" },
-                { $"{connectionStringsSectionName}:missingprovider", "mock connection string" },
-                { $"{connectionStringsSectionName}:badProviderName", "mock connection string" },
-                { $"{connectionStringsSectionName}:badProviderName_ProviderName", "BadDbProviderFactory" }
             };
 
             var inMemoryConfig = new ConfigurationBuilder()
                 .AddInMemoryCollection(inMemoryData)
                 .Build();
 
-            _subject = new DbConnectionFactory(inMemoryConfig, null);
+            _subject = new SqlConnectionFactory(inMemoryConfig, null);
 
             var mockConnection = new Mock<DbConnection>(MockBehavior.Strict);
             mockConnection.SetupSet(c => c.ConnectionString = It.IsAny<string>())
@@ -40,7 +34,7 @@ namespace BHS.DataAccess.Core.Tests
             mockPrvdrFctry.Setup(f => f.CreateConnection())
                 .Returns(mockConnection.Object);
 
-            DbProviderFactories.RegisterFactory("MockDbProviderFactory", mockPrvdrFctry.Object);
+            DbProviderFactories.RegisterFactory(DbConstants.SqlClientProviderName, mockPrvdrFctry.Object);
         }
 
         [Fact]
@@ -58,24 +52,6 @@ namespace BHS.DataAccess.Core.Tests
             Assert.Throws<InvalidOperationException>(() =>
             {
                 _ = _subject.CreateConnection("missingdb");
-            });
-        }
-
-        [Fact]
-        public void CreateConnection_OnMissingProviderName_Throws()
-        {
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                _ = _subject.CreateConnection("missingprovider");
-            });
-        }
-
-        [Fact]
-        public void CreateConnection_OnProviderFactoryNotRegistered_Throws()
-        {
-            Assert.Throws<ArgumentException>(() =>
-            {
-                _ = _subject.CreateConnection("badProviderName");
             });
         }
     }

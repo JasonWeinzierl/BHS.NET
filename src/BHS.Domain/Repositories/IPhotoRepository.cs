@@ -1,7 +1,6 @@
 ﻿using BHS.Contracts.Photos;
-using System.Threading.Tasks;
 
-namespace BHS.Domain.DataAccess
+namespace BHS.Domain.Repositories
 {
     public interface IPhotoRepository
     {

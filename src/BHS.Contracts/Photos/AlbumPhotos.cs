@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BHS.Contracts.Photos
+﻿namespace BHS.Contracts.Photos
 {
     public record AlbumPhotos(
         string Slug,

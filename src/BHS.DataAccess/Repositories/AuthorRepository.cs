@@ -1,9 +1,6 @@
 ﻿using BHS.Contracts;
 using BHS.DataAccess.Core;
-using BHS.Domain.DataAccess;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BHS.Domain.Repositories;
 
 namespace BHS.DataAccess.Repositories
 {
@@ -18,13 +15,13 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<IReadOnlyCollection<Author>> GetAll()
         {
-            var authors = await E.QueryAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetAll");
+            var authors = await E.ExecuteSprocQuery<Author>(DbConstants.BhsConnectionStringName, "dbo.Author_GetAll");
             return authors.ToList();
         }
 
         public Task<Author?> GetByUserName(string userName)
         {
-            return E.QuerySingleOrDefaultAsync<Author>(Constants.bhsConnectionStringName, "dbo.Author_GetByUserName", new { userName });
+            return E.ExecuteSprocQuerySingleOrDefault<Author>(DbConstants.BhsConnectionStringName, "dbo.Author_GetByUserName", new { userName });
         }
     }
 }

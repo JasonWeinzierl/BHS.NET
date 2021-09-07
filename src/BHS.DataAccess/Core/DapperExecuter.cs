@@ -1,34 +1,21 @@
 ﻿using Dapper;
-using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
+using System.Data.Common;
 
 namespace BHS.DataAccess.Core
 {
     public class DapperExecuter : IDbExecuter
     {
-        private readonly IDbConnectionFactory _factory;
+        private readonly ISqlConnectionFactory _factory;
 
-        public DapperExecuter(IDbConnectionFactory factory)
+        public DapperExecuter(ISqlConnectionFactory factory)
         {
             _factory = factory;
         }
 
-        public async Task<T?> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object? parameters = null)
+        public async Task<T?> ExecuteSprocQuerySingleOrDefault<T>(string connectionStringName, string commandText, object? parameters = null)
         {
-            using var connection = _factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
-
-            return await connection.ExecuteScalarAsync<T>(
-                commandText,
-                parameters,
-                commandType: CommandType.StoredProcedure);
-        }
-
-        public async Task<T?> QuerySingleOrDefaultAsync<T>(string connectionStringName, string commandText, object? parameters = null)
-        {
-            using var connection = _factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
+            using var connection = await Open(connectionStringName);
 
             return await connection.QuerySingleOrDefaultAsync<T>(
                 commandText,
@@ -36,10 +23,9 @@ namespace BHS.DataAccess.Core
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object? parameters = null)
+        public async Task<IEnumerable<T>> ExecuteSprocQuery<T>(string connectionStringName, string commandText, object? parameters = null)
         {
-            using var connection = _factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
+            using var connection = await Open(connectionStringName);
 
             return await connection.QueryAsync<T>(
                 commandText,
@@ -47,10 +33,9 @@ namespace BHS.DataAccess.Core
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2)> QueryMultipleAsync<T1, T2>(string connectionStringName, string commandText, object? parameters = null)
+        public async Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2)> ExecuteSprocQueryMultiple<T1, T2>(string connectionStringName, string commandText, object? parameters = null)
         {
-            using var connection = _factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
+            using var connection = await Open(connectionStringName);
 
             using var multiResult = await connection.QueryMultipleAsync(
                 commandText,
@@ -59,27 +44,11 @@ namespace BHS.DataAccess.Core
             return (await multiResult.ReadAsync<T1>(), await multiResult.ReadAsync<T2>());
         }
 
-        public async Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2, IEnumerable<T3> resultset3)> QueryMultipleAsync<T1, T2, T3>(string connectionStringName, string commandText, object? parameters = null)
+        private async Task<IDbConnection> Open(string connectionStringName)
         {
-            using var connection = _factory.CreateConnection(connectionStringName);
+            var connection = _factory.CreateConnection(connectionStringName);
             await connection.OpenAsync();
-
-            using var multiResult = await connection.QueryMultipleAsync(
-                commandText,
-                parameters,
-                commandType: CommandType.StoredProcedure);
-            return (await multiResult.ReadAsync<T1>(), await multiResult.ReadAsync<T2>(), await multiResult.ReadAsync<T3>());
-        }
-
-        public async Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object? parameters = null)
-        {
-            using var connection = _factory.CreateConnection(connectionStringName);
-            await connection.OpenAsync();
-
-            return await connection.ExecuteAsync(
-                commandText,
-                parameters,
-                commandType: CommandType.StoredProcedure);
+            return connection;
         }
     }
 }

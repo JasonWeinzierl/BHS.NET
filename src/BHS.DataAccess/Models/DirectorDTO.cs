@@ -1,5 +1,4 @@
 ﻿using BHS.Contracts.Leadership;
-using System;
 
 namespace BHS.DataAccess.Models
 {

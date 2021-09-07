@@ -1,10 +1,7 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Blog;
 using BHS.Domain.Services;
-using BHS.Domain.Services.Blog;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BHS.Web.Controllers
 {

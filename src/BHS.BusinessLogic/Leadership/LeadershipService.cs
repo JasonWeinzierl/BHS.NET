@@ -1,8 +1,6 @@
 ﻿using BHS.Contracts.Leadership;
-using BHS.Domain.DataAccess;
-using BHS.Domain.Services.Leadership;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using BHS.Domain.Repositories;
+using BHS.Domain.Services;
 
 namespace BHS.BusinessLogic.Leadership
 {

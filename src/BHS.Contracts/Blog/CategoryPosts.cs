@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BHS.Contracts.Blog
+﻿namespace BHS.Contracts.Blog
 {
     public record CategoryPosts(
         string Slug,

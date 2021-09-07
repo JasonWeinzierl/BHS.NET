@@ -1,9 +1,7 @@
 ﻿using BHS.Contracts;
-using BHS.Domain.DataAccess;
+using BHS.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.BusinessLogic.Tests

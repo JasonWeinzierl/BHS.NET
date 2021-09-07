@@ -1,9 +1,6 @@
 ﻿using BHS.Contracts.Blog;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace BHS.Domain.Services.Blog
+namespace BHS.Domain.Services
 {
     public interface IBlogService
     {

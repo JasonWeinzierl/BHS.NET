@@ -1,7 +1,5 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Photos;
-using System;
-using System.Collections.Generic;
 
 namespace BHS.DataAccess.Models
 {

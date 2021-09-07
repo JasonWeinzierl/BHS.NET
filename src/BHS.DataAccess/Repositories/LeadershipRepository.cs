@@ -1,11 +1,8 @@
 ﻿using BHS.Contracts.Leadership;
 using BHS.DataAccess.Core;
 using BHS.DataAccess.Models;
-using BHS.Domain.DataAccess;
+using BHS.Domain.Repositories;
 using BHS.Domain.Providers;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Repositories
 {
@@ -25,13 +22,13 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<IReadOnlyCollection<Officer>> GetCurrentOfficers()
         {
-            var results = await E.QueryAsync<OfficerDto>(Constants.bhsConnectionStringName, "leadership.Officer_GetAll");
+            var results = await E.ExecuteSprocQuery<OfficerDto>(DbConstants.BhsConnectionStringName, "leadership.Officer_GetAll");
             return results.OrderBy(r => r.SortOrder).Select(r => r.ToDomainModel()).ToList();
         }
 
         public async Task<IReadOnlyCollection<Director>> GetCurrentDirectors()
         {
-            var results = await E.QueryAsync<DirectorDto>(Constants.bhsConnectionStringName, "leadership.Director_GetCurrent", new
+            var results = await E.ExecuteSprocQuery<DirectorDto>(DbConstants.BhsConnectionStringName, "leadership.Director_GetCurrent", new
             {
                 startingYear = _dateTimeOffsetProvider.CurrentYear()
             });

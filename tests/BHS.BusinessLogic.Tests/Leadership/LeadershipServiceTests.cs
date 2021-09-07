@@ -1,8 +1,6 @@
 ﻿using BHS.Contracts.Leadership;
-using BHS.Domain.DataAccess;
+using BHS.Domain.Repositories;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.BusinessLogic.Leadership.Tests

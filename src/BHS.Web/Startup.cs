@@ -1,14 +1,7 @@
 using BHS.Web.IoC;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using System;
-using System.IO;
 using System.Reflection;
 
 namespace BHS.Web
@@ -62,6 +55,8 @@ namespace BHS.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // In production, use the compiled Angular SPA.
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
@@ -87,6 +82,7 @@ namespace BHS.Web
             {
                 spa.Options.SourcePath = "ClientApp";
 
+                // In development, you must start the front end with `npm run start`.
                 if (env.IsDevelopment())
                 {
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/");

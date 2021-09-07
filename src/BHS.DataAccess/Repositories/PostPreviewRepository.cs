@@ -1,11 +1,7 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.DataAccess.Core;
 using BHS.DataAccess.Models;
-using BHS.Domain.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BHS.Domain.Repositories;
 
 namespace BHS.DataAccess.Repositories
 {
@@ -20,7 +16,7 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<IReadOnlyCollection<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to)
         {
-            var results = await E.QueryAsync<PostPreviewCategoryDto>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_Search", new
+            var results = await E.ExecuteSprocQuery<PostPreviewCategoryDto>(DbConstants.BhsConnectionStringName, "blog.PostPreviewCategory_Search", new
             {
                 searchText = text,
                 fromDate = from,
@@ -34,7 +30,7 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<IReadOnlyCollection<PostPreview>> GetByCategorySlug(string categorySlug)
         {
-            var results = await E.QueryAsync<PostPreviewCategoryDto>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_GetByCategorySlug", new
+            var results = await E.ExecuteSprocQuery<PostPreviewCategoryDto>(DbConstants.BhsConnectionStringName, "blog.PostPreviewCategory_GetByCategorySlug", new
             {
                 categorySlug
             });
@@ -46,7 +42,7 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<IReadOnlyCollection<PostPreview>> GetByAuthorId(int authorId)
         {
-            var results = await E.QueryAsync<PostPreviewCategoryDto>(Constants.bhsConnectionStringName, "blog.PostPreviewCategory_GetByAuthorId", new
+            var results = await E.ExecuteSprocQuery<PostPreviewCategoryDto>(DbConstants.BhsConnectionStringName, "blog.PostPreviewCategory_GetByAuthorId", new
             {
                 authorId
             });

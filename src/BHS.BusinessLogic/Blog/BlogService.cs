@@ -1,11 +1,8 @@
 ﻿using BHS.Contracts.Blog;
-using BHS.Domain.DataAccess;
+using BHS.Domain.Repositories;
 using BHS.Domain.Exceptions;
-using BHS.Domain.Services.Blog;
+using BHS.Domain.Services;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BHS.BusinessLogic.Blog
 {

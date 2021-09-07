@@ -1,7 +1,6 @@
 using BHS.Web.IoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 using Xunit;
 
 namespace BHS.Web.Controllers.Tests

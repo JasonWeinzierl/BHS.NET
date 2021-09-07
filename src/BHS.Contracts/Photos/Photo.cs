@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BHS.Contracts.Photos
+﻿namespace BHS.Contracts.Photos
 {
     public record Photo(
         int Id,

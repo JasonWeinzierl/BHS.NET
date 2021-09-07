@@ -1,8 +1,5 @@
 ﻿using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.DataAccess.Repositories.Tests
@@ -42,7 +39,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.Search("a", start, end);
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.PostPreviewCategory_Search", _mockExecuter.CommandText);
 
             Assert.Equal("a", _mockExecuter.Parameters?.searchText);
@@ -87,7 +84,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetByCategorySlug("cat");
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.PostPreviewCategory_GetByCategorySlug", _mockExecuter.CommandText);
 
             Assert.Equal("cat", _mockExecuter.Parameters?.categorySlug);
@@ -130,7 +127,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetByAuthorId(1);
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.PostPreviewCategory_GetByAuthorId", _mockExecuter.CommandText);
 
             Assert.Equal(1, _mockExecuter.Parameters?.authorId);

@@ -1,6 +1,5 @@
 ﻿using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
-using System.Threading.Tasks;
 using Xunit;
 //using Xunit.Abstractions;
 
@@ -28,7 +27,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetBySlug("a");
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.Post_GetBySlug", _mockExecuter.CommandText);
 
             Assert.Equal("a", _mockExecuter.Parameters?.slug);

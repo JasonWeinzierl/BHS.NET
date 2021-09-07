@@ -1,9 +1,7 @@
 ﻿using BHS.Contracts;
-using BHS.Domain.DataAccess;
+using BHS.Domain.Repositories;
 using BHS.Domain.Services;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BHS.BusinessLogic
 {

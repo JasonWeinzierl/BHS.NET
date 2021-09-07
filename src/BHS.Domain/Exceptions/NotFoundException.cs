@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BHS.Domain.Exceptions
+﻿namespace BHS.Domain.Exceptions
 {
     [Serializable]
     public class NotFoundException : Exception

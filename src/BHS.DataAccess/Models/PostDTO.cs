@@ -1,8 +1,5 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Blog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BHS.DataAccess.Models
 {

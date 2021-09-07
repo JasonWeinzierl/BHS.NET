@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BHS.Domain.Providers
+﻿namespace BHS.Domain
 {
     public class ContactUsOptions
     {

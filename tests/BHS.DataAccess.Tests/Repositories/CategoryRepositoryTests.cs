@@ -1,7 +1,6 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.DataAccess.Repositories.Tests
@@ -24,7 +23,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetBySlug("y");
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.Category_GetBySlug", _mockExecuter.CommandText);
 
             Assert.Equal("y", _mockExecuter.Parameters?.slug);
@@ -40,7 +39,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetAll();
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("blog.CategorySummary_GetAll", _mockExecuter.CommandText);
         }
     }

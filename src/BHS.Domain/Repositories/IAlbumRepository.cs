@@ -1,8 +1,6 @@
 ﻿using BHS.Contracts.Photos;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace BHS.Domain.DataAccess
+namespace BHS.Domain.Repositories
 {
     public interface IAlbumRepository
     {

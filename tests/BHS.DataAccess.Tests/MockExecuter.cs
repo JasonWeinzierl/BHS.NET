@@ -1,8 +1,5 @@
 ﻿using BHS.DataAccess.Core;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 
 namespace BHS.DataAccess.Tests
 {
@@ -34,27 +31,6 @@ namespace BHS.DataAccess.Tests
         /// Result sets of multiple models to be returned.
         /// </value>
         public (IEnumerable<object> t1, IEnumerable<object> t2)? TwoManyResults { get; set; }
-        /// <summary>
-        /// Gets or sets a value for QueryMultiple{T1,T2,T3} queries.
-        /// </summary>
-        /// <value>
-        /// Result sets of multiple models to be returned.
-        /// </value>
-        public (IEnumerable<object> t1, IEnumerable<object> t2, IEnumerable<object> t3)? ThreeManyResults { get; set; }
-        /// <summary>
-        /// Gets or sets a value for Scalar queries.
-        /// </summary>
-        /// <value>
-        /// Object to be first cell's value.
-        /// </value>
-        public object? ScalarCell { get; set; }
-        /// <summary>
-        /// Gets or sets a value for NonQuery queries.
-        /// </summary>
-        /// <value>
-        /// Integer to be number of rows affected by NonQuery.
-        /// </value>
-        public int? NonQueryRowsAffected { get; set; }
 
 
         /// <summary>
@@ -76,19 +52,7 @@ namespace BHS.DataAccess.Tests
         public string? CommandText { get; private set; }
 
 
-        public Task<T?> ExecuteScalarAsync<T>(string connectionStringName, string commandText, object? parameters = null)
-        {
-            if (ScalarCell is not T ret)
-                throw new InvalidOperationException(nameof(ScalarCell) + " must have value.");
-
-            ConnectionStringName = connectionStringName;
-            CommandText = commandText;
-            Parameters = parameters;
-
-            return Task.FromResult((T?)ret);
-        }
-
-        public Task<T?> QuerySingleOrDefaultAsync<T>(string connectionStringName, string commandText, object? parameters = null)
+        public Task<T?> ExecuteSprocQuerySingleOrDefault<T>(string connectionStringName, string commandText, object? parameters = null)
         {
             if (SingleResult is not T ret)
                 throw new InvalidOperationException(nameof(SingleResult) + " must have value.");
@@ -100,7 +64,7 @@ namespace BHS.DataAccess.Tests
             return Task.FromResult((T?)ret);
         }
 
-        public Task<IEnumerable<T>> QueryAsync<T>(string connectionStringName, string commandText, object? parameters = null)
+        public Task<IEnumerable<T>> ExecuteSprocQuery<T>(string connectionStringName, string commandText, object? parameters = null)
         {
             if (ManyResults is not IEnumerable<T> ret)
                 throw new InvalidOperationException(nameof(ManyResults) + " must have value.");
@@ -112,7 +76,7 @@ namespace BHS.DataAccess.Tests
             return Task.FromResult(ret);
         }
 
-        public Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2)> QueryMultipleAsync<T1, T2>(string connectionStringName, string commandText, object? parameters = null)
+        public Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2)> ExecuteSprocQueryMultiple<T1, T2>(string connectionStringName, string commandText, object? parameters = null)
         {
             if (!TwoManyResults.HasValue)
                 throw new InvalidOperationException(nameof(TwoManyResults) + " must have value.");
@@ -124,34 +88,6 @@ namespace BHS.DataAccess.Tests
             Parameters = parameters;
 
             return Task.FromResult((ret1, ret2));
-        }
-
-        public Task<(IEnumerable<T1> resultset1, IEnumerable<T2> resultset2, IEnumerable<T3> resultset3)> QueryMultipleAsync<T1, T2, T3>(string connectionStringName, string commandText, object? parameters = null)
-        {
-            if (!ThreeManyResults.HasValue)
-                throw new InvalidOperationException(nameof(ThreeManyResults) + " must have value.");
-            if (ThreeManyResults.Value.t1 is not IEnumerable<T1> ret1
-                || ThreeManyResults.Value.t2 is not IEnumerable<T2> ret2
-                || ThreeManyResults.Value.t3 is not IEnumerable<T3> ret3)
-                throw new InvalidOperationException(nameof(ThreeManyResults) + " t1, t2, and t3 must each have value.");
-
-            ConnectionStringName = connectionStringName;
-            CommandText = commandText;
-            Parameters = parameters;
-
-            return Task.FromResult((ret1, ret2, ret3));
-        }
-
-        public Task<int> ExecuteNonQueryAsync(string connectionStringName, string commandText, object? parameters = null)
-        {
-            if (!NonQueryRowsAffected.HasValue)
-                throw new InvalidOperationException(nameof(NonQueryRowsAffected) + " must have value.");
-
-            ConnectionStringName = connectionStringName;
-            CommandText = commandText;
-            Parameters = parameters;
-
-            return Task.FromResult(NonQueryRowsAffected.Value);
         }
     }
 }

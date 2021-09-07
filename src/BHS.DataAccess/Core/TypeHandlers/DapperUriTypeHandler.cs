@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using System;
 
 namespace BHS.DataAccess.Core.TypeHandlers
 {

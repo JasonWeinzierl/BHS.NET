@@ -1,7 +1,5 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.DataAccess.Tests;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.DataAccess.Repositories.Tests
@@ -24,7 +22,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetById(2);
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("photos.Photo_GetById", _mockExecuter.CommandText);
 
             Assert.Equal(2, _mockExecuter.Parameters?.id);

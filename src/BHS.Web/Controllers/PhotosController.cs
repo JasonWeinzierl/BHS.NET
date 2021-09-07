@@ -1,8 +1,6 @@
 ﻿using BHS.Contracts.Photos;
-using BHS.Domain.Services.Photos;
+using BHS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BHS.Web.Controllers
 {

@@ -1,8 +1,6 @@
 ﻿using BHS.Contracts.Leadership;
-using BHS.Domain.Services.Leadership;
+using BHS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BHS.Web.Controllers
 {

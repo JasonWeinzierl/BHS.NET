@@ -1,8 +1,6 @@
 ﻿using BHS.Contracts;
 using BHS.DataAccess.Core;
-using BHS.Domain.DataAccess;
-using System;
-using System.Threading.Tasks;
+using BHS.Domain.Repositories;
 
 namespace BHS.DataAccess.Repositories
 {
@@ -17,7 +15,7 @@ namespace BHS.DataAccess.Repositories
 
         public async Task<ContactAlert> Insert(ContactAlertRequest contactRequest)
         {
-            var result = await E.QuerySingleOrDefaultAsync<ContactAlert>(Constants.bhsConnectionStringName, "dbo.ContactAlert_Insert", new
+            var result = await E.ExecuteSprocQuerySingleOrDefault<ContactAlert>(DbConstants.BhsConnectionStringName, "dbo.ContactAlert_Insert", new
             {
                 name = contactRequest.Name,
                 emailAddress = contactRequest.EmailAddress,

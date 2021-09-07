@@ -1,8 +1,6 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.DataAccess.Models;
 using BHS.DataAccess.Tests;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BHS.DataAccess.Repositories.Tests
@@ -39,7 +37,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetBySlug(slug);
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("photos.AlbumPhotos_GetBySlug", _mockExecuter.CommandText);
 
             Assert.Equal(slug, _mockExecuter.Parameters?.slug);
@@ -94,7 +92,7 @@ namespace BHS.DataAccess.Repositories.Tests
 
             _ = await _subject.GetAll();
 
-            Assert.Equal(Constants.bhsConnectionStringName, _mockExecuter.ConnectionStringName);
+            Assert.Equal(DbConstants.BhsConnectionStringName, _mockExecuter.ConnectionStringName);
             Assert.Equal("photos.Album_GetAll", _mockExecuter.CommandText);
         }
     }

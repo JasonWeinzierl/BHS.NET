@@ -1,7 +1,6 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.DataAccess.Core;
-using BHS.Domain.DataAccess;
-using System.Threading.Tasks;
+using BHS.Domain.Repositories;
 
 namespace BHS.DataAccess.Repositories
 {
@@ -16,7 +15,7 @@ namespace BHS.DataAccess.Repositories
 
         public Task<Photo?> GetById(int id)
         {
-            return E.QuerySingleOrDefaultAsync<Photo>(Constants.bhsConnectionStringName, "photos.Photo_GetById", new { id });
+            return E.ExecuteSprocQuerySingleOrDefault<Photo>(DbConstants.BhsConnectionStringName, "photos.Photo_GetById", new { id });
         }
     }
 }

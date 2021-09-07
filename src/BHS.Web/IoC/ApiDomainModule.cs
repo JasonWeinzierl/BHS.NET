@@ -2,20 +2,17 @@
 using BHS.BusinessLogic.Blog;
 using BHS.BusinessLogic.Leadership;
 using BHS.BusinessLogic.Photos;
+using BHS.DataAccess;
 using BHS.DataAccess.Core;
 using BHS.DataAccess.Core.TypeHandlers;
 using BHS.DataAccess.Providers;
 using BHS.DataAccess.Repositories;
-using BHS.Domain.DataAccess;
+using BHS.Domain;
+using BHS.Domain.Repositories;
 using BHS.Domain.Providers;
 using BHS.Domain.Services;
-using BHS.Domain.Services.Blog;
-using BHS.Domain.Services.Leadership;
-using BHS.Domain.Services.Photos;
 using Dapper;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using SendGrid.Extensions.DependencyInjection;
 using System.Data.Common;
 
@@ -29,14 +26,14 @@ namespace BHS.Web.IoC
         /// <returns> A reference to this instance after the operation has completed. </returns>
         public static IServiceCollection LoadApiDomain(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<ContactUsOptions>(configuration.GetSection(nameof(ContactUsOptions)));
+            services.Configure<ContactUsOptions>(opt => configuration.GetSection(nameof(ContactUsOptions)).Bind(opt));
 
-            services.AddSendGrid(options => configuration.GetSection("SendGridClientOptions").Bind(options));
+            services.AddSendGrid(opt => configuration.GetSection("SendGridClientOptions").Bind(opt));
 
-            DbProviderFactories.RegisterFactory("System.Data.SqlClient", SqlClientFactory.Instance);
+            DbProviderFactories.RegisterFactory(DbConstants.SqlClientProviderName, SqlClientFactory.Instance);
             SqlMapper.AddTypeHandler(DapperUriTypeHandler.Default);
 
-            services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
             services.AddSingleton<IDbExecuter, DapperExecuter>();
 
             services.AddSingleton<IPostRepository, PostRepository>();
