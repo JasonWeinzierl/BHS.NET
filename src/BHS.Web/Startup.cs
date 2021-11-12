@@ -70,6 +70,8 @@ namespace BHS.Web
             {
                 swaggerUIOptions.SwaggerEndpoint("v1/swagger.json", "BHS API V1");
                 swaggerUIOptions.RoutePrefix = "api/swagger";
+                swaggerUIOptions.EnableTryItOutByDefault();
+                swaggerUIOptions.DefaultModelsExpandDepth(-1);
             });
 
             app.UseRouting();
