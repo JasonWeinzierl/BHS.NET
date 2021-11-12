@@ -1,5 +1,6 @@
 using Serilog;
 using Serilog.Events;
+using Serilog.Extensions.Hosting;
 
 namespace BHS.Web
 {
@@ -26,7 +27,7 @@ namespace BHS.Web
             }
         }
 
-        private static Serilog.Extensions.Hosting.ReloadableLogger CreateBootstrapLogger() =>
+        private static ReloadableLogger CreateBootstrapLogger() =>
             new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()

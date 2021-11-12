@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts;
 using BHS.Domain;
-using BHS.Domain.Repositories;
 using BHS.Domain.Exceptions;
+using BHS.Domain.Repositories;
 using BHS.Domain.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -47,7 +47,7 @@ namespace BHS.BusinessLogic
 
         private async Task SendEmail(ContactAlert newAlert)
         {
-            // Windows Ids are only supported on Linux after .NET 6 #49412.
+            // Windows Ids are supported on Linux as of .NET 6 #49412.
             var cst = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
             var submitTime = GetSubmitTime(newAlert, cst);
 

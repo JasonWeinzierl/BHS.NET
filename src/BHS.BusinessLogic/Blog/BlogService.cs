@@ -1,6 +1,6 @@
 ﻿using BHS.Contracts.Blog;
-using BHS.Domain.Repositories;
 using BHS.Domain.Exceptions;
+using BHS.Domain.Repositories;
 using BHS.Domain.Services;
 using Microsoft.Extensions.Logging;
 
