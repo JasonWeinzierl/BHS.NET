@@ -1,7 +1,6 @@
 import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { filter, map } from 'rxjs/operators';
-import { IsLoadingService } from '@service-work/is-loading';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -11,11 +10,12 @@ import { Title } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
 
+  loadingCount = 0;
+
   public constructor(
     private router: Router,
     private titleService: Title,
     private activatedRoute: ActivatedRoute,
-    private isLoadingService: IsLoadingService,
   ) { }
 
   public setTitle(newTitle: string): void {
@@ -35,9 +35,9 @@ export class AppComponent implements OnInit {
       )
       .subscribe(event => {
         if (event instanceof RouteConfigLoadStart) {
-          this.isLoadingService.add();
+          this.loadingCount++;
         } else {
-          this.isLoadingService.remove();
+          this.loadingCount--;
         }
       });
 

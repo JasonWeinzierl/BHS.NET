@@ -7,7 +7,6 @@ import { CoreModule } from '@core/core.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
-import { IsLoadingModule } from '@service-work/is-loading';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
@@ -28,7 +27,6 @@ import { SharedModule } from '@shared/shared.module';
     MarkdownModule.forRoot({
       markedOptions: [bootstrapMarkedOptionsProvider]
     }),
-    IsLoadingModule,
 
     // core & shared
     CoreModule,

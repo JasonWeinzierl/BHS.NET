@@ -2,7 +2,6 @@ import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { BlogService } from '@data/service/blog.service';
 import { CategorySummary } from '@data/schema/category-summary';
 import { finalize } from 'rxjs/operators';
-import { IsLoadingService } from '@service-work/is-loading';
 import { PostPreview } from '@data/schema/post-preview';
 
 @Component({
@@ -15,38 +14,39 @@ export class BlogIndexComponent implements OnInit {
   categories: CategorySummary[] = [];
 
   searchText: string = '';
+  loading = false;
+  loadingPosts = false;
 
   constructor(
     private blogService: BlogService,
-    private isLoadingService: IsLoadingService,
   ) { }
 
   ngOnInit(): void {
-    this.isLoadingService.add();
+    this.loading = true;
     this.blogService.searchPosts()
       .pipe(
-        finalize(() => this.isLoadingService.remove()),
+        finalize(() => this.loading = false),
       )
       .subscribe(response => this.posts = response);
 
-    this.isLoadingService.add();
+    this.loading = true;
     this.blogService.getCategories()
       .pipe(
-        finalize(() => this.isLoadingService.remove()),
+        finalize(() => this.loading = false),
       )
       .subscribe(response => this.categories = response);
   }
 
   onSearch(searchText: string): void {
-    this.isLoadingService.add({key: 'searching-posts'});
+    this.loadingPosts = true;
     this.blogService.searchPosts(searchText)
       .pipe(
-        finalize(() => this.isLoadingService.remove({key: 'searching-posts'})),
+        finalize(() => this.loadingPosts = false),
       )
       .subscribe(response => this.posts = response);
   }
 
   trackPostPreview: TrackByFunction<PostPreview> = (_, item) => {
     return item.slug;
-  }
+  };
 }

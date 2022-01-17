@@ -4,7 +4,6 @@ import { BlogRoutingModule } from './blog-routing.module';
 import { CategoryPostsComponent } from './page/category-posts/category-posts.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IsLoadingDirectiveModule } from '@service-work/is-loading';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgModule } from '@angular/core';
 import { PostCardComponent } from './component/post-card/post-card.component';
@@ -22,7 +21,6 @@ import { SharedModule } from '@shared/shared.module';
     FormsModule,
 
     MarkdownModule.forChild(),
-    IsLoadingDirectiveModule,
 
     SharedModule,
     BlogRoutingModule,

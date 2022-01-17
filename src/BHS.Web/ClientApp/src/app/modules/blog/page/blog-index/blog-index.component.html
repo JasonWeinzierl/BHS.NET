@@ -17,7 +17,8 @@
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search Posts" aria-label="Search Posts" name="search"
               [(ngModel)]="searchText">
-            <button type="submit" class="btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)" swIsLoading="searching-posts">
+            <button type="submit" class="btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
+              <span *ngIf="loadingPosts" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               Search
             </button>
           </div>
