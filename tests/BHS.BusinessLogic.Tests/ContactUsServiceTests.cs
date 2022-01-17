@@ -1,7 +1,7 @@
 using BHS.Contracts;
 using BHS.Domain;
-using BHS.Domain.Repositories;
 using BHS.Domain.Exceptions;
+using BHS.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;

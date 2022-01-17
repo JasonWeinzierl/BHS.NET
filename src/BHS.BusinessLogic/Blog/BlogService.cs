@@ -2,7 +2,6 @@
 using BHS.Domain.Exceptions;
 using BHS.Domain.Repositories;
 using BHS.Domain.Services;
-using Microsoft.Extensions.Logging;
 
 namespace BHS.BusinessLogic.Blog
 {
@@ -12,20 +11,17 @@ namespace BHS.BusinessLogic.Blog
         private readonly IPostPreviewRepository _postPreviewRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IAuthorRepository _authorRepository;
-        private readonly ILogger _logger;
 
         public BlogService(
             IPostRepository postRepository,
             IPostPreviewRepository postPreviewRepository,
             ICategoryRepository categoryRepository,
-            IAuthorRepository authorRepository,
-            ILogger<BlogService> logger)
+            IAuthorRepository authorRepository)
         {
             _postRepository = postRepository;
             _postPreviewRepository = postPreviewRepository;
             _categoryRepository = categoryRepository;
             _authorRepository = authorRepository;
-            _logger = logger;
         }
 
         public async Task<CategoryPosts?> GetCategory(string slug)

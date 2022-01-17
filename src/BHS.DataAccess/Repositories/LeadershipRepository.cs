@@ -1,8 +1,8 @@
 ﻿using BHS.Contracts.Leadership;
 using BHS.DataAccess.Core;
 using BHS.DataAccess.Models;
-using BHS.Domain.Repositories;
 using BHS.Domain.Providers;
+using BHS.Domain.Repositories;
 
 namespace BHS.DataAccess.Repositories
 {

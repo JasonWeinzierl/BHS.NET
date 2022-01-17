@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Data;
 using System.Data.Common;
 
 namespace BHS.DataAccess.Core
@@ -42,7 +41,7 @@ namespace BHS.DataAccess.Core
         {
             try
             {
-                var connection =  DbProviderFactories.GetFactory(DbConstants.SqlClientProviderName).CreateConnection()
+                var connection = DbProviderFactories.GetFactory(DbConstants.SqlClientProviderName).CreateConnection()
                     ?? throw new InvalidOperationException("Provider factory returned null connection.");
 
                 connection.ConnectionString = connectionString;

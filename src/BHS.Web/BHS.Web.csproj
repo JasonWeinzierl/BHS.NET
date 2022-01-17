@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.1" />
     <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
@@ -52,7 +52,7 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm ci" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration=production" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:app:prod" />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>

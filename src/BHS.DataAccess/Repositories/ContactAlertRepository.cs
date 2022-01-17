@@ -4,7 +4,7 @@ using BHS.Domain.Repositories;
 
 namespace BHS.DataAccess.Repositories
 {
-    public class ContactAlertRepository :  IContactAlertRepository
+    public class ContactAlertRepository : IContactAlertRepository
     {
         protected IDbExecuter E { get; }
 

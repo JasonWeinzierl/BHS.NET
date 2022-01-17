@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using System.Data;
-using System.Data.Common;
 
 namespace BHS.DataAccess.Core
 {

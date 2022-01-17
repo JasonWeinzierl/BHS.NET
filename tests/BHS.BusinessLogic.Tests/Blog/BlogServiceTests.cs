@@ -1,8 +1,7 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Blog;
-using BHS.Domain.Repositories;
 using BHS.Domain.Exceptions;
-using Microsoft.Extensions.Logging;
+using BHS.Domain.Repositories;
 using Moq;
 using Xunit;
 
@@ -16,7 +15,6 @@ namespace BHS.BusinessLogic.Blog.Tests
         private readonly Mock<IPostPreviewRepository> _mockPreviewRepo;
         private readonly Mock<ICategoryRepository> _mockCatRepo;
         private readonly Mock<IAuthorRepository> _mockAuthorRepo;
-        private readonly Mock<ILogger<BlogService>> _logger;
 
         public BlogServiceTests()
         {
@@ -24,9 +22,8 @@ namespace BHS.BusinessLogic.Blog.Tests
             _mockPreviewRepo = new Mock<IPostPreviewRepository>(MockBehavior.Strict);
             _mockCatRepo = new Mock<ICategoryRepository>(MockBehavior.Strict);
             _mockAuthorRepo = new Mock<IAuthorRepository>(MockBehavior.Strict);
-            _logger = new Mock<ILogger<BlogService>>();
 
-            _subject = new BlogService(_mockPostRepo.Object, _mockPreviewRepo.Object, _mockCatRepo.Object, _mockAuthorRepo.Object, _logger.Object);
+            _subject = new BlogService(_mockPostRepo.Object, _mockPreviewRepo.Object, _mockCatRepo.Object, _mockAuthorRepo.Object);
         }
 
         [Fact]
