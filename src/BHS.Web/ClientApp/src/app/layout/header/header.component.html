@@ -7,16 +7,9 @@
   </div>
 
   <div class="container">
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <!--The museum is open as of June 1!  We are open Tuesday and Thursday from 1:00&ndash;4:00 and Saturday from 10:00&ndash;1:00-->
-      <strong>The museum is closed for the winter until Tuesday, March 1st.</strong>
-      During the winter break, museum repairs will be made and we will create new displays for your enjoyment in 2022.
-      You may contact the museum by calling <a href="tel:+18163223977">816-322-3977</a> and leaving a message.
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>The Belton Historical Society's general meeting scheduled for Sunday, January 23rd has been CANCELLED due to the increase in the Omicron Covid variant.</strong>
-      The next general meeting is scheduled for Sunday, April 24th at 2:30 in the Main Street Theater located behind the Belton Historical Museum.
+    <div *ngFor="let b of banners" [ngClass]="b.themeClass" class="alert alert-dismissible fade show" role="alert">
+      <strong *ngIf="b.lead">{{b.lead}}</strong>
+      {{b.body}}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   </div>
