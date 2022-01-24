@@ -22,18 +22,12 @@ namespace BHS.BusinessLogic.Photos
         }
 
         public Task<IReadOnlyCollection<Album>> GetAlbums()
-        {
-            return _albumRepository.GetAll();
-        }
+            => _albumRepository.GetAll();
 
         public Task<AlbumPhotos?> GetAlbum(string slug)
-        {
-            return _albumRepository.GetBySlug(slug);
-        }
+            => _albumRepository.GetBySlug(slug);
 
         public Task<Photo?> GetPhoto(int id)
-        {
-            return _photoRepository.GetById(id);
-        }
+            => _photoRepository.GetById(id);
     }
 }

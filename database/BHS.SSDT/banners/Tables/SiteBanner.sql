@@ -1,0 +1,12 @@
+﻿CREATE TABLE [banners].[SiteBanner]
+(
+	[Id] INT IDENTITY(1,1) CONSTRAINT PK_SiteBanner PRIMARY KEY,
+	[DateCreated] DATETIMEOFFSET NOT NULL CONSTRAINT DF_SiteBanner_DateCreated DEFAULT SYSDATETIMEOFFSET(),
+
+	[ThemeId] TINYINT NOT NULL CONSTRAINT DF_SiteBanner_ThemeId DEFAULT ((0)),
+	[Lead] NVARCHAR(4000) NULL,
+	[Body] NVARCHAR(4000) NULL,
+
+	CONSTRAINT FK_SiteBanner_AlertTheme FOREIGN KEY ([ThemeId]) REFERENCES [dbo].[AlertTheme] ([Id]) ON DELETE SET DEFAULT,
+	CONSTRAINT CK_SiteBanner_Content_AtLeastOneValue CHECK ([Lead] IS NOT NULL OR [Body] IS NOT NULL),
+);

@@ -14,13 +14,9 @@ namespace BHS.BusinessLogic.Leadership
         }
 
         public Task<IReadOnlyCollection<Officer>> GetOfficers()
-        {
-            return _leadershipRepository.GetCurrentOfficers();
-        }
+            => _leadershipRepository.GetCurrentOfficers();
 
         public Task<IReadOnlyCollection<Director>> GetDirectors()
-        {
-            return _leadershipRepository.GetCurrentDirectors();
-        }
+            => _leadershipRepository.GetCurrentDirectors();
     }
 }

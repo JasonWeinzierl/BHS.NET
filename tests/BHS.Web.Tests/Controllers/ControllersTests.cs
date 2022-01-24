@@ -37,6 +37,17 @@ namespace BHS.Web.Controllers.Tests
         }
 
         [Fact]
+        public void BannersController_Resolves()
+        {
+            _services.AddTransient<BannersController>();
+            using var serviceProvider = _services.BuildServiceProvider();
+
+            var controller = serviceProvider.GetService<BannersController>();
+
+            Assert.NotNull(controller);
+        }
+
+        [Fact]
         public void BlogController_Resolves()
         {
             _services.AddTransient<BlogController>();

@@ -1,10 +1,9 @@
-﻿CREATE PROCEDURE [blog].[Post_InsertInitial]
-	@slug VARCHAR(127),
-	@title NVARCHAR(255),
-	@contentMarkdown NVARCHAR(MAX),
-	@filePath VARCHAR(255) NULL,
-	@photosAlbumSlug VARCHAR(127) NULL,
-	@authorId INT NULL
+﻿CREATE PROCEDURE [banners].[SiteBanner_InsertInitial]
+	@date DATETIMEOFFSET,
+	@theme TINYINT = 0,
+	@lead NVARCHAR(4000) = NULL,
+	@body NVARCHAR(4000) = NULL,
+	@isEnabled BIT = 1
 AS
 BEGIN
 	DECLARE @_inNestedTransaction BIT;
@@ -21,15 +20,14 @@ BEGIN
 			SET @_inNestedTransaction = 1;
 		END;
 
-
+		
 		INSERT INTO
-				[blog].[Post]
-		VALUES	(@slug);
+				[banners].[SiteBanner]
+				([ThemeId], [Lead], [Body])
+		VALUES	(@theme, @lead, @body);
 
-		DECLARE @_revisionId BIGINT;
-		EXEC	@_revisionId = [blog].[_SetPostRevision] @slug, @title, @contentMarkdown, @filePath, @photosAlbumSlug, @authorId;
-
-		EXEC	[blog].[PostRevision_GetById] @_revisionId;
+		DECLARE @_bannerId INT = SCOPE_IDENTITY();
+		EXEC [banners].[SiteBanner_SetEnabled] @_bannerId, @isEnabled, @date;
 
 
 		IF	@@TRANCOUNT > 0

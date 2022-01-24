@@ -19,13 +19,9 @@ namespace BHS.BusinessLogic
         }
 
         public Task<Author?> GetAuthor(string username)
-        {
-            return _authorRepository.GetByUserName(username);
-        }
+            => _authorRepository.GetByUserName(username);
 
         public Task<IReadOnlyCollection<Author>> GetAuthors()
-        {
-            return _authorRepository.GetAll();
-        }
+            => _authorRepository.GetAll();
     }
 }

@@ -36,14 +36,10 @@ namespace BHS.BusinessLogic.Blog
         }
 
         public Task<Post?> GetPost(string slug)
-        {
-            return _postRepository.GetBySlug(slug);
-        }
+            => _postRepository.GetBySlug(slug);
 
         public Task<IReadOnlyCollection<CategorySummary>> GetCategories()
-        {
-            return _categoryRepository.GetAll();
-        }
+            => _categoryRepository.GetAll();
 
         public async Task<IReadOnlyCollection<PostPreview>> GetPostsByAuthor(string username)
         {
@@ -55,8 +51,6 @@ namespace BHS.BusinessLogic.Blog
         }
 
         public Task<IReadOnlyCollection<PostPreview>> SearchPosts(string? text, DateTime? from, DateTime? to)
-        {
-            return _postPreviewRepository.Search(text, from, to);
-        }
+            => _postPreviewRepository.Search(text, from, to);
     }
 }

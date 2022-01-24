@@ -1,4 +1,5 @@
 ﻿using BHS.BusinessLogic;
+using BHS.BusinessLogic.Banners;
 using BHS.BusinessLogic.Blog;
 using BHS.BusinessLogic.Leadership;
 using BHS.BusinessLogic.Photos;
@@ -44,6 +45,7 @@ namespace BHS.Web.IoC
             services.AddSingleton<IPhotoRepository, PhotoRepository>();
             services.AddSingleton<IAlbumRepository, AlbumRepository>();
             services.AddSingleton<ILeadershipRepository, LeadershipRepository>();
+            services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
 
             services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
 
@@ -52,6 +54,7 @@ namespace BHS.Web.IoC
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IContactUsService, ContactUsService>();
             services.AddScoped<ILeadershipService, LeadershipService>();
+            services.AddScoped<ISiteBannerService, SiteBannerService>();
 
             return services;
         }
