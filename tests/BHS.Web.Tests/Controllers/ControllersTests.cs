@@ -29,7 +29,7 @@ namespace BHS.Web.Controllers.Tests
         public void AuthorController_Resolves()
         {
             _services.AddTransient<AuthorController>();
-            var serviceProvider = _services.BuildServiceProvider();
+            using var serviceProvider = _services.BuildServiceProvider();
 
             var controller = serviceProvider.GetService<AuthorController>();
 
@@ -40,7 +40,7 @@ namespace BHS.Web.Controllers.Tests
         public void BlogController_Resolves()
         {
             _services.AddTransient<BlogController>();
-            var serviceProvider = _services.BuildServiceProvider();
+            using var serviceProvider = _services.BuildServiceProvider();
 
             var controller = serviceProvider.GetService<BlogController>();
 
@@ -51,7 +51,7 @@ namespace BHS.Web.Controllers.Tests
         public void ContactUsController_Resolves()
         {
             _services.AddTransient<ContactUsController>();
-            var serviceProvider = _services.BuildServiceProvider();
+            using var serviceProvider = _services.BuildServiceProvider();
 
             var controller = serviceProvider.GetService<ContactUsController>();
 
@@ -62,7 +62,7 @@ namespace BHS.Web.Controllers.Tests
         public void ErrorController_Resolves()
         {
             _services.AddTransient<ErrorController>();
-            var serviceProvider = _services.BuildServiceProvider();
+            using var serviceProvider = _services.BuildServiceProvider();
 
             var controller = serviceProvider.GetService<ErrorController>();
 
@@ -73,7 +73,7 @@ namespace BHS.Web.Controllers.Tests
         public void LeadershipController_Resolves()
         {
             _services.AddTransient<LeadershipController>();
-            var serviceProvider = _services.BuildServiceProvider();
+            using var serviceProvider = _services.BuildServiceProvider();
 
             var controller = serviceProvider.GetService<LeadershipController>();
 
@@ -84,7 +84,7 @@ namespace BHS.Web.Controllers.Tests
         public void PhotosController_Resolves()
         {
             _services.AddTransient<PhotosController>();
-            var serviceProvider = _services.BuildServiceProvider();
+            using var serviceProvider = _services.BuildServiceProvider();
 
             var controller = serviceProvider.GetService<PhotosController>();
 
