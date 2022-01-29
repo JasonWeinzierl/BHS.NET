@@ -120,18 +120,31 @@
               "src/**/*.html"
             ]
           }
-        }
-      }
-    },
-    "BHS.Web.ClientApp-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
             "devServerTarget": "BHS.Web.ClientApp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "BHS.Web.ClientApp:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "BHS.Web.ClientApp:serve",
+            "watch": true,
+            "headless": false
           },
           "configurations": {
             "production": {
@@ -139,17 +152,9 @@
             },
             "ci": {
               "devServerTarget": "BHS.Web.ClientApp:serve:production",
-              "protractorConfig": "e2e/protractor-ci.conf.js"
+              "watch": false,
+              "headless": true
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "e2e//**/*.ts",
-              "e2e//**/*.html"
-            ]
           }
         }
       }

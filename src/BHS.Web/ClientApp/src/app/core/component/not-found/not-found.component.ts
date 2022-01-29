@@ -15,7 +15,7 @@ export class NotFoundComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(take(1))
       .subscribe(data => {
-        this.closestPath = data.closestPath;
+        this.closestPath = data['closestPath'];
       });
   }
 }
