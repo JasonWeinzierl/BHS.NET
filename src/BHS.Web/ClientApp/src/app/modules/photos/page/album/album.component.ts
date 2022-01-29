@@ -32,11 +32,13 @@ export class AlbumComponent implements OnInit {
 
   private loadAlbum(slug: string): void {
     this.photosService.getAlbum(slug)
-      .subscribe(response => this.album = response,
-        (error: unknown) => {
+      .subscribe({
+        next: response => this.album = response,
+        error: (error: unknown) => {
           if (error instanceof HttpErrorResponse) {
             this.errors.push(error.message);
           }
-        });
+        }
+      });
   }
 }

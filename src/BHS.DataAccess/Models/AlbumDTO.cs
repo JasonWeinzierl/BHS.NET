@@ -26,8 +26,8 @@ namespace BHS.DataAccess.Models
             if (AuthorId.HasValue && AuthorDisplayName is not null)
                 author = new Author(AuthorId.Value, AuthorDisplayName, AuthorName);
             Photo? bannerPhoto = null;
-            if (BannerPhotoId.HasValue)
-                bannerPhoto = new Photo(BannerPhotoId.Value, BannerPhotoName, BannerPhotoImagePath, BannerPhotoDatePosted, BannerPhotoAuthorId);
+            if (BannerPhotoId.HasValue && BannerPhotoImagePath is not null && BannerPhotoDatePosted.HasValue)
+                bannerPhoto = new Photo(BannerPhotoId.Value, BannerPhotoName, BannerPhotoImagePath, BannerPhotoDatePosted.Value, BannerPhotoAuthorId);
             return new(Slug, Name, Description, bannerPhoto, BlogPostSlug, author);
         }
 
@@ -37,8 +37,8 @@ namespace BHS.DataAccess.Models
             if (AuthorId.HasValue && AuthorDisplayName is not null)
                 author = new Author(AuthorId.Value, AuthorDisplayName, AuthorName);
             Photo? bannerPhoto = null;
-            if (BannerPhotoId.HasValue)
-                bannerPhoto = new Photo(BannerPhotoId.Value, BannerPhotoName, BannerPhotoImagePath, BannerPhotoDatePosted, BannerPhotoAuthorId);
+            if (BannerPhotoId.HasValue && BannerPhotoImagePath is not null && BannerPhotoDatePosted.HasValue)
+                bannerPhoto = new Photo(BannerPhotoId.Value, BannerPhotoName, BannerPhotoImagePath, BannerPhotoDatePosted.Value, BannerPhotoAuthorId);
             return new(Slug, Name, Description, bannerPhoto, BlogPostSlug, author, photos);
         }
     }

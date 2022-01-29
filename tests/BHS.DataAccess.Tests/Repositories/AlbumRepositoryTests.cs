@@ -60,8 +60,8 @@ namespace BHS.DataAccess.Repositories.Tests
                 default,
                 default,
                 default);
-            var photo1 = new Photo(1, default, default, default, default);
-            var photo2 = new Photo(2, default, default, default, default);
+            var photo1 = new Photo(1, default, new Uri("http://test.com"), default, default);
+            var photo2 = new Photo(2, default, new Uri("http://test.com"), default, default);
             _mockExecuter.TwoManyResults = (new[] { album }, new[] { photo1, photo2 });
 
             var result = await _subject.GetBySlug(slug);
