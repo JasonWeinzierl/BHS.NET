@@ -30,7 +30,7 @@ namespace BHS.Web
                 swaggerGenOptions.IncludeXmlComments(GetXmlCommentsPath());
             });
 
-            services.LoadApiDomain(Configuration);
+            services.AddDomainServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -103,7 +103,7 @@ namespace BHS.Web
                 {
                     Name = "Jason W",
                     Email = "admin@beltonhistoricalsociety.org",
-                    Url = new Uri("http://jasonweinzierl.com")
+                    Url = new Uri("https://jasonweinzierl.com")
                 }
             };
 

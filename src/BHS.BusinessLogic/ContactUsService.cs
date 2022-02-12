@@ -32,7 +32,10 @@ namespace BHS.BusinessLogic
         public async Task<ContactAlert?> AddRequest(ContactAlertRequest request)
         {
             if (FailsHoneypotCheck(request))
+            {
+                _logger.LogInformation("ContactAlertRequest failed honeypot check.");
                 return null;
+            }
 
             if (string.IsNullOrWhiteSpace(request.EmailAddress))
                 throw new BadRequestException("Email address is required.");
@@ -74,9 +77,14 @@ Message:<br>
             var response = await _sendGridClient.SendEmailAsync(msg);
 
             if (response.IsSuccessStatusCode)
-                _logger.LogInformation("CreatedContactAlert {Id}: {StatusCode}", newAlert.Id, response.StatusCode);
+            {
+                _logger.LogInformation("CreatedContactAlert #{Id}: {StatusCode} {Status}", newAlert.Id, (int)response.StatusCode, response.StatusCode);
+            }
             else
-                _logger.LogError("FailedContactAlert {Id}: {StatusCode}", newAlert.Id, response.StatusCode, await response.Body.ReadAsStringAsync());
+            {
+                string errorString = await response.Body.ReadAsStringAsync();
+                _logger.LogError("FailedContactAlert #{Id}: {StatusCode} {Status} {Message}", newAlert.Id, (int)response.StatusCode, response.StatusCode, errorString);
+            }
         }
 
         private static DateTimeOffset GetSubmitTime(ContactAlert newAlert, TimeZoneInfo timeZoneInfo)

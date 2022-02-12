@@ -12,17 +12,16 @@ namespace BHS.Web.Controllers.Tests
 
         public ControllersTests()
         {
-            var inMemoryData = new Dictionary<string, string>
-            {
-                { "SendGridClientOptions:ApiKey", "fake api key" }
-            };
             var inMemoryConfig = new ConfigurationBuilder()
-                .AddInMemoryCollection(inMemoryData)
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    { "SendGridClientOptions:ApiKey", "fake api key" }
+                })
                 .Build();
 
-            _services = new ServiceCollection();
-            _services.AddSingleton<IConfiguration>(inMemoryConfig);
-            _services.LoadApiDomain(inMemoryConfig);
+            _services = new ServiceCollection()
+                    .AddSingleton<IConfiguration>(inMemoryConfig)
+                    .AddDomainServices(inMemoryConfig);
         }
 
         [Fact]

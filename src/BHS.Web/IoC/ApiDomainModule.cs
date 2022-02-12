@@ -22,15 +22,19 @@ namespace BHS.Web.IoC
     public static class ApiDomainModule
     {
         /// <summary>
-        /// Loads services in the BHS API domain.
+        /// Adds the required services for the BHS Web API.
         /// </summary>
-        /// <returns> A reference to this instance after the operation has completed. </returns>
-        public static IServiceCollection LoadApiDomain(this IServiceCollection services, IConfiguration configuration)
+        /// <returns> The <see cref="IServiceCollection"/>. </returns>
+        public static IServiceCollection AddDomainServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<ContactUsOptions>(opt => configuration.GetSection(nameof(ContactUsOptions)).Bind(opt));
+            AddDataAccess(services);
+            AddBusinessLogic(services, configuration);
 
-            services.AddSendGrid(opt => configuration.GetSection("SendGridClientOptions").Bind(opt));
+            return services;
+        }
 
+        private static void AddDataAccess(IServiceCollection services)
+        {
             DbProviderFactories.RegisterFactory(DbConstants.SqlClientProviderName, SqlClientFactory.Instance);
             SqlMapper.AddTypeHandler(DapperUriTypeHandler.Default);
 
@@ -48,6 +52,12 @@ namespace BHS.Web.IoC
             services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
 
             services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
+        }
+
+        private static void AddBusinessLogic(IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<ContactUsOptions>(opt => configuration.GetSection("ContactUsOptions").Bind(opt));
+            services.AddSendGrid(opt => configuration.GetSection("SendGridClientOptions").Bind(opt));
 
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IPhotosService, PhotosService>();
@@ -55,8 +65,6 @@ namespace BHS.Web.IoC
             services.AddScoped<IContactUsService, ContactUsService>();
             services.AddScoped<ILeadershipService, LeadershipService>();
             services.AddScoped<ISiteBannerService, SiteBannerService>();
-
-            return services;
         }
     }
 }
