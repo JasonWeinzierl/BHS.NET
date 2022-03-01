@@ -7,11 +7,11 @@ AS
 		GROUP BY
 				[PositionId]
 	)
-	SELECT	[Title]
-			, [Name]
-			, [SortOrder]
+	SELECT	p.[Title]
+			, o.[Name]
+			, p.[SortOrder]
 	FROM	[leadership].[OfficerPositionStart] ops JOIN
 			LatestPosition latest ON latest.[PositionId] = ops.[PositionId]
 				AND latest.DateStarted = ops.[DateStarted] JOIN
 			[leadership].[Officer] o ON o.[Id] = ops.[OfficerId] JOIN
-			[leadership].Position p ON p.[Id] = ops.[PositionId];
+			[leadership].[Position] p ON p.[Id] = ops.[PositionId];
