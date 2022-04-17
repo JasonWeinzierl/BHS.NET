@@ -5,6 +5,7 @@ on:
     branches:
     - main
     paths:
+    - 'BHS.sln'
     - 'src/**'
     - '!src/BHS.Web/ClientApp/**'
     - 'tests/**'
@@ -12,13 +13,10 @@ on:
     branches:
     - main
     paths:
+    - 'BHS.sln'
     - 'src/**'
     - '!src/BHS.Web/ClientApp/**'
     - 'tests/**'
-
-defaults:
-  run:
-    working-directory: ./src
 
 jobs:
   build:
