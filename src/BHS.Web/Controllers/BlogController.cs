@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts.Blog;
-using BHS.Domain.Services;
+using BHS.Domain.Blog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BHS.Web.Controllers
@@ -29,9 +29,8 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<Post>> GetPost(string slug)
         {
             var post = await _blogService.GetPost(slug);
-            if (post is null)
-                return NotFound();
-            return Ok(post);
+            if (post is null) return NotFound();
+            else return Ok(post);
         }
 
         /// <summary>
@@ -48,9 +47,8 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<CategoryPosts>> GetCategory(string slug)
         {
             var category = await _blogService.GetCategory(slug);
-            if (category is null)
-                return NotFound();
-            return Ok(category);
+            if (category is null) return NotFound();
+            else return Ok(category);
         }
     }
 }

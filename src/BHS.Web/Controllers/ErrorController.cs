@@ -1,4 +1,4 @@
-﻿using BHS.Domain.Exceptions;
+﻿using BHS.Domain;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +30,6 @@ namespace BHS.Web.Controllers
             exception switch
             {
                 BadRequestException => 400,
-                NotFoundException => 404,
                 _ => 500,
             };
     }

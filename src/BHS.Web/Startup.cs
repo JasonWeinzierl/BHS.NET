@@ -30,7 +30,8 @@ namespace BHS.Web
                 swaggerGenOptions.IncludeXmlComments(GetXmlCommentsPath());
             });
 
-            services.AddDomainServices(Configuration);
+            services.AddBhsDomain(Configuration)
+                    .AddBhsInfrastructure();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

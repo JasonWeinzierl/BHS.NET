@@ -1,6 +1,7 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Blog;
-using BHS.Domain.Services;
+using BHS.Domain.Authors;
+using BHS.Domain.Blog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BHS.Web.Controllers
@@ -34,9 +35,8 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<Author>> GetAuthor(string username)
         {
             var author = await _authorService.GetAuthor(username);
-            if (author is null)
-                return NotFound();
-            return Ok(author);
+            if (author is null) return NotFound();
+            else return Ok(author);
         }
 
         /// <summary>
@@ -44,6 +44,10 @@ namespace BHS.Web.Controllers
         /// </summary>
         [HttpGet("{username}/posts")]
         public async Task<ActionResult<IEnumerable<PostPreview>>> GetAuthorPosts(string username)
-            => Ok(await _blogService.GetPostsByAuthor(username));
+        {
+            var posts = await _blogService.GetPostsByAuthor(username);
+            if (posts is null) return NotFound();
+            else return Ok(posts);
+        }
     }
 }

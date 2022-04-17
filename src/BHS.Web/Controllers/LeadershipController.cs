@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts.Leadership;
-using BHS.Domain.Services;
+using BHS.Domain.Leadership;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BHS.Web.Controllers

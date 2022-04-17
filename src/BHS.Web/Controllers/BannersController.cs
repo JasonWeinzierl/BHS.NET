@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts.Banners;
-using BHS.Domain.Services;
+using BHS.Domain.Banners;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BHS.Web.Controllers

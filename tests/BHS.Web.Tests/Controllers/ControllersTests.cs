@@ -1,9 +1,10 @@
+using BHS.Web.Controllers;
 using BHS.Web.IoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace BHS.Web.Controllers.Tests
+namespace BHS.Web.Tests.Controllers
 {
     [Trait("Category", "CompositionRootTest")]
     public class ControllersTests
@@ -21,7 +22,9 @@ namespace BHS.Web.Controllers.Tests
 
             _services = new ServiceCollection()
                     .AddSingleton<IConfiguration>(inMemoryConfig)
-                    .AddDomainServices(inMemoryConfig);
+                    .AddLogging()
+                    .AddBhsDomain(inMemoryConfig)
+                    .AddBhsInfrastructure();
         }
 
         [Fact]

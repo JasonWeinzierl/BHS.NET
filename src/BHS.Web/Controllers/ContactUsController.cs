@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts;
-using BHS.Domain.Services;
+using BHS.Domain.ContactUs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BHS.Web.Controllers

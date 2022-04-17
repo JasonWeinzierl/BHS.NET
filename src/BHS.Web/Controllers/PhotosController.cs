@@ -1,5 +1,5 @@
 ﻿using BHS.Contracts.Photos;
-using BHS.Domain.Services;
+using BHS.Domain.Photos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BHS.Web.Controllers
@@ -22,9 +22,8 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<Photo>> GetPhoto(int id)
         {
             var photo = await _photosService.GetPhoto(id);
-            if (photo is null)
-                return NotFound();
-            return Ok(photo);
+            if (photo is null) return NotFound();
+            else return Ok(photo);
         }
 
         /// <summary>
@@ -41,9 +40,8 @@ namespace BHS.Web.Controllers
         public async Task<ActionResult<AlbumPhotos>> GetAlbum(string slug)
         {
             var album = await _photosService.GetAlbum(slug);
-            if (album is null)
-                return NotFound();
-            return Ok(album);
+            if (album is null) return NotFound();
+            else return Ok(album);
         }
     }
 }
