@@ -28,14 +28,13 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET 6
-      uses: actions/setup-dotnet@v1
+    - uses: actions/checkout@v3
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x'
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
+    - run: dotnet restore
+    - name: Run dotnet build
       run: dotnet build --no-restore --configuration Release
-    - name: Test
+    - name: Run dotnet test
       run: dotnet test --no-build --configuration Release --verbosity normal

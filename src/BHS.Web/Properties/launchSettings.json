@@ -1,12 +1,4 @@
-﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:56697",
-      "sslPort": 44353
-    }
-  },
+{
   "profiles": {
     "BHS.Web": {
       "commandName": "Project",

@@ -4,43 +4,43 @@
 [![Angular](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/angular.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/angular.yml)
 [![SSDT](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/ssdt.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/ssdt.yml)
 
-The Belton Historical Society website, built on ASP.NET Core, Angular, and SQL Server.
+The [Belton Historical Society website](https://www.beltonhistoricalsociety.org/), built on ASP.NET Core, Angular, and SQL Server.
 
-https://www.beltonhistoricalsociety.org/
+## Development Setup
 
-## Getting Started
-
-You will need the following:
+### Prerequisites
 
 - .NET 6 SDK and Visual Studio 2022
-- Angular CLI `npm install @angular/cli -g`
+- Node.JS and Angular CLI `npm install @angular/cli -g`
 - SQL Server 2019 and SQL Server Data Tools
 
-## Build and Debug
+### Build and Debug
 
-### SQL Server
+#### Database
 
-1. Set up a localhost database named "bhs".
-2. Ensure your login has Integrated Security access.
+1. Set up a localhost SQL Server database named "bhs".
+2. Ensure your Windows login has Integrated Security access.
 3. Publish the BHS.SSDT project to your local database.
 
-### Frontend
+#### Frontend
 
-1. Navigate to BHS.Web\ClientApp
+1. Open the BHS.Web/ClentApp directory in VS Code or other editor.
 2. `npm install`
-3. `npm run build`
-4. `npm run start`
+3. `npm run start`
+    - Use the included VS Code launch profiles to attach the debugger.
 
-This starts the angular development server on `localhost:4200`.  The API will proxy to this port.
+This starts the angular development server on `localhost:4200`.
+The backend API will forward requests to the development server if not handled by other middleware.
 
-### Backend
+#### Backend
 
-Use the launch profile in Visual Studio, or:
+Use the launch profile in Visual Studio, or
 
-1. `dotnet restore`
-2. `dotnet build`
-3. `dotnet run -p BHS.Web`
+```sh
+dotnet run --project src/BHS.Web/BHS.Web.csproj --launch-profile BHS.Web
+```
 
-This starts the web host and proxies SPA requests to the frontend.  Open a browser to the listening port.
+This starts the web application server and forwards SPA requests to the frontend.
 
-Navigate to /api/swagger to use the Swagger UI.  This does not require the frontend proxy.
+Navigate to `/api/swagger` to use the Swagger UI.
+This does not require the frontend development server to be running.

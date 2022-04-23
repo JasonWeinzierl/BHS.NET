@@ -18,6 +18,8 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v2
-    - uses: microsoft/setup-msbuild@v1
-    - run: msbuild database/BHS.SSDT/BHS.SSDT.sqlproj
+    - uses: actions/checkout@v3
+    - name: Setup msbuild
+      uses: microsoft/setup-msbuild@v1.1
+    - name: Run msbuild BHS.SSDT.sqlproj
+      run: msbuild database/BHS.SSDT/BHS.SSDT.sqlproj -verbosity:diag -property:Configuration=Release
