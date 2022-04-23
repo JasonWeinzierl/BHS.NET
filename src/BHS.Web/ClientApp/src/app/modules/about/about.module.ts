@@ -1,12 +1,12 @@
-import { AboutComponent } from './page/about/about.component';
+import { AboutComponent } from './pages/about/about.component';
 import { AboutRoutingModule } from './about-routing.module';
-import { CommonModule } from '@angular/common';
-import { DonationsComponent } from './page/donations/donations.component';
+import { DonationsComponent } from './pages/donations/donations.component';
 import { NgModule } from '@angular/core';
-import { OrganizationComponent } from './page/organization/organization.component';
-import { PrivacyPolicyComponent } from './page/privacy-policy/privacy-policy.component';
-import { TermsOfServiceComponent } from './page/terms-of-service/terms-of-service.component';
-import { WhoWeAreComponent } from './page/who-we-are/who-we-are.component';
+import { OrganizationComponent } from './pages/organization/organization.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { SharedModule } from '@shared/shared.module';
+import { TermsOfServiceComponent } from './pages/terms-of-service/terms-of-service.component';
+import { WhoWeAreComponent } from './pages/who-we-are/who-we-are.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { WhoWeAreComponent } from './page/who-we-are/who-we-are.component';
     WhoWeAreComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
 
     AboutRoutingModule,
   ]

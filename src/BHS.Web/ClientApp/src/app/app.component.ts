@@ -18,10 +18,6 @@ export class AppComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) { }
 
-  public setTitle(newTitle: string): void {
-    this.titleService.setTitle(newTitle + ' | Belton Historical Society');
-  }
-
   ngOnInit(): void {
     const appTitle = this.titleService.getTitle();
 
@@ -60,5 +56,9 @@ export class AppComponent implements OnInit {
       .subscribe((newTitle: string) => {
         this.setTitle(newTitle);
       });
+  }
+
+  private setTitle(newTitle: string): void {
+    this.titleService.setTitle(newTitle + ' | Belton Historical Society');
   }
 }

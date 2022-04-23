@@ -1,0 +1,93 @@
+<header>
+  <div class="brand">The Belton Historical Society</div>
+  <div class="address-bar">
+    <address>
+      P.O Box 1144 | Belton, MO 64012 | <a href="tel:+18163223977">816-322-3977</a>
+    </address>
+  </div>
+
+  <div class="container">
+    <alert *ngFor="let b of banners" [type]="b.alertType" [dismissible]="true">
+      <strong *ngIf="b.lead">{{b.lead}}</strong>
+      {{b.body}}
+    </alert>
+  </div>
+
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="['/']" title="Home">The Belton Historical Society</a>
+      <button type="button" class="navbar-toggler collapsed" aria-controls="navbarSupportedContent"
+        [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navgiation" (click)="isCollapsed = !!!isCollapsed">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div [collapse]="isCollapsed" [isAnimated]="true" class="navbar-collapse collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/apps/blog']" [routerLinkActive]="['active']">News</a>
+        </li>
+        <li class="nav-item dropdown" dropdown>
+          <a class="nav-link dropdown-toggle" dropdownToggle role="button" aria-haspopup="true">
+            Content
+          </a>
+          <ul class="dropdown-menu" *dropdownMenu role="menu">
+            <li><a class="dropdown-item" [routerLink]="['/apps/photos']" [routerLinkActive]="['active']">Photos</a></li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/apps/location']" [routerLinkActive]="['active']">The Museum</a>
+            </li>
+            <li>
+              <hr role="separator" class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/apps/members']" [routerLinkActive]="['active']">Members</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/contact']" [routerLinkActive]="['active']">Contact Us</a>
+        </li>
+        <li class="nav-item dropdown" dropdown>
+          <a class="nav-link dropdown-toggle" dropdownToggle role="button" aria-haspopup="true">
+            About
+          </a>
+          <ul class="dropdown-menu" *dropdownMenu role="menu">
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/who-we-are']" [routerLinkActive]="['active']">
+                Who We Are
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/by-laws-and-leadership']"
+                [routerLinkActive]="['active']">By-laws and Leadership</a>
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/donate']" [routerLinkActive]="['active']">Donate</a>
+            </li>
+            <li>
+              <hr role="separator" class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/this-site']" [routerLinkActive]="['active']">
+                About this Site
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/terms-of-service']" [routerLinkActive]="['active']">
+                Terms of Service
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" [routerLink]="['/about/privacy-policy']" [routerLinkActive]="['active']">
+                Privacy Policy
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

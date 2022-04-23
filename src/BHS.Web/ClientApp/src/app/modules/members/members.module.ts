@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { MembersListComponent } from './page/members-list.component';
+import { MembersListComponent } from './pages/members-list.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { NgModule } from '@angular/core';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [MembersListComponent],
   imports: [
-    CommonModule,
+    SharedModule,
 
     MembersRoutingModule,
   ]

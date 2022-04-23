@@ -1,9 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { ContactComponent } from './page/contact.component';
-import { ContactFormComponent } from './page/contact-form/contact-form.component';
+import { ContactComponent } from './pages/contact.component';
+import { ContactFormComponent } from './pages/contact-form/contact-form.component';
 import { ContactRoutingModule } from './contact-routing.module';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -11,11 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContactFormComponent
   ],
   imports: [
-    // angular
-    CommonModule,
-    ReactiveFormsModule,
-
-    // app
+    SharedModule,
     ContactRoutingModule,
   ]
 })

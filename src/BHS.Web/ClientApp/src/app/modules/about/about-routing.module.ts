@@ -1,11 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
-import { AboutComponent } from './page/about/about.component';
-import { DonationsComponent } from './page/donations/donations.component';
+import { AboutComponent } from './pages/about/about.component';
+import { DonationsComponent } from './pages/donations/donations.component';
 import { NgModule } from '@angular/core';
-import { OrganizationComponent } from './page/organization/organization.component';
-import { PrivacyPolicyComponent } from './page/privacy-policy/privacy-policy.component';
-import { TermsOfServiceComponent } from './page/terms-of-service/terms-of-service.component';
-import { WhoWeAreComponent } from './page/who-we-are/who-we-are.component';
+import { OrganizationComponent } from './pages/organization/organization.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './pages/terms-of-service/terms-of-service.component';
+import { WhoWeAreComponent } from './pages/who-we-are/who-we-are.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'this-site' },

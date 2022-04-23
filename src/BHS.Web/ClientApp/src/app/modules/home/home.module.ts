@@ -1,4 +1,4 @@
-import { HomeComponent } from './page/home.component';
+import { HomeComponent } from './pages/home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';

@@ -1,13 +1,13 @@
 import { BlogModule } from '@modules/blog/blog.module';
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ProfileIndexComponent } from './page/profile-index.component';
+import { ProfileIndexComponent } from './pages/profile-index.component';
 import { ProfileRoutingModule } from './profile-routing.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [ProfileIndexComponent],
   imports: [
-    CommonModule,
+    SharedModule,
 
     BlogModule,
     ProfileRoutingModule

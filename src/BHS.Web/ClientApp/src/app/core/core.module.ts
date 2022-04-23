@@ -1,17 +1,55 @@
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NotFoundComponent } from './component/not-found/not-found.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-options.provider';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MarkdownModule } from 'ngx-markdown';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
-import { throwIfAlreadyLoaded } from './guard/module-import.guard';
+import { throwIfAlreadyLoaded } from './guards/module-import.guard';
 
+/**
+ * Resources used by AppModule which are always and only loaded once.
+ *
+ * Examples:
+ *  - Route guards
+ *  - HTTP interceptors
+ *  - App-level services and components
+ *  - Logging
+ */
 @NgModule({
   declarations: [
-    NotFoundComponent
+    NotFoundComponent,
+    ContentLayoutComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
-    CommonModule,
-    RouterModule
-  ]
+    // angular
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule,
+
+    // ngx-markdown
+    MarkdownModule.forRoot({
+      markedOptions: [bootstrapMarkedOptionsProvider],
+    }),
+
+    // ngx-bootstrap
+    AlertModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    CarouselModule.forRoot(),
+    CollapseModule.forRoot(),
+  ],
+  providers: [Title],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

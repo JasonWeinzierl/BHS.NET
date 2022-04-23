@@ -1,4 +1,4 @@
-import { LocationComponent } from './page/location.component';
+import { LocationComponent } from './pages/location.component';
 import { LocationRoutingModule } from './location-routing.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
@@ -6,8 +6,8 @@ import { SharedModule } from '@shared/shared.module';
 @NgModule({
   declarations: [LocationComponent],
   imports: [
-    LocationRoutingModule,
     SharedModule,
+    LocationRoutingModule,
   ]
 })
 export class LocationModule { }
