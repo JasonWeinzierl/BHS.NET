@@ -5,4 +5,5 @@ AS
 			, [ImagePath]
 			, [DatePosted]
 			, [AuthorId]
+			, [Description]
 	FROM	[photos].[Photo];

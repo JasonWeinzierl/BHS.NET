@@ -1,4 +1,4 @@
-using BHS.Web.IoC;
+﻿using BHS.Web.IoC;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -27,7 +27,7 @@ namespace BHS.Web
             {
                 swaggerGenOptions.SwaggerDoc("v1", GetApiInfo());
 
-                swaggerGenOptions.IncludeXmlComments(GetXmlCommentsPath());
+                swaggerGenOptions.IncludeXmlComments(GetXmlCommentsPath(), includeControllerXmlComments: true);
             });
 
             services.AddBhsDomain(Configuration)

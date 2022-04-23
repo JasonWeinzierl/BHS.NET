@@ -7,6 +7,7 @@ BEGIN
 			, [ImagePath]
 			, [DatePosted]
 			, [AuthorId]
+			, [Description]
 	FROM	[photos].[Photo_View]
 	WHERE	[Id] = @id;
 END

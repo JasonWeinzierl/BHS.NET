@@ -2,20 +2,17 @@
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Core;
 
-namespace BHS.Infrastructure.Repositories
+namespace BHS.Infrastructure.Repositories;
+
+public class PhotoRepository : IPhotoRepository
 {
-    public class PhotoRepository : IPhotoRepository
+    protected IDbExecuter E { get; }
+
+    public PhotoRepository(IDbExecuter executer)
     {
-        protected IDbExecuter E { get; }
-
-        public PhotoRepository(IDbExecuter executer)
-        {
-            E = executer;
-        }
-
-        public Task<Photo?> GetById(int id)
-        {
-            return E.ExecuteSprocQuerySingleOrDefault<Photo>(DbConstants.BhsConnectionStringName, "photos.Photo_GetById", new { id });
-        }
+        E = executer;
     }
+
+    public async Task<Photo?> GetById(int id)
+        => await E.ExecuteSprocQuerySingleOrDefault<Photo>(DbConstants.BhsConnectionStringName, "photos.Photo_GetById", new { id });
 }
