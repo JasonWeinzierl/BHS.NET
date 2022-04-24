@@ -5,7 +5,7 @@
         <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', previousPhotoId]">&laquo; Previous</a>
       </div>
       <div class="col-8">
-        <a [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
+        Album: <a [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
       </div>
       <div class="col-2">
         <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', nextPhotoId]">Next &raquo;</a>
@@ -13,13 +13,13 @@
     </div>
   </div>
 
-  <img *ngIf="currentPhoto" src="{{currentPhoto.imagePath}}" class="card-img-top" alt="image failed to load">
+  <img *ngIf="currentPhoto" src="{{currentPhoto.imagePath}}" [title]="currentPhoto.name ?? currentPhoto.id" class="card-img-top" alt="image failed to load">
 
   <div *ngIf="currentPhoto" class="card-body">
-    <h1 class="card-title">
+    <h2 class="card-title">
       {{currentPhoto.name}}
-    </h1>
-    <p class="card-subtitle">{{currentPhoto.datePosted}}</p>
+    </h2>
+    <p *ngIf="currentPhoto.description" class="card-text">{{currentPhoto.description}}</p>
   </div>
 
   <div class="card-footer">

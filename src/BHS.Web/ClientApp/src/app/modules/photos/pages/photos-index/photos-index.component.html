@@ -1,25 +1,24 @@
 <div class="card">
   <div class="card-body">
-    <h1 class="card-title">Photo Gallery</h1>
-    <p>Photos from the history of Belton</p>
+    <h1 class="card-title">Photo Albums</h1>
+    <p>Photos from the society.</p>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-4" *ngFor="let album of albums">
     <div class="card">
-      <img *ngIf="album.bannerPhoto" src={{album.bannerPhoto.imagePath}} class="card-img-top" alt="">
+      <img *ngIf="album.bannerPhoto" src="{{album.bannerPhoto.imagePath}}" class="card-img-top" alt="{{album.bannerPhoto.name}}">
       <div class="card-body">
         <h2 class="card-title">
-          <a class="stretched-link" [routerLink]="['/apps/photos/album', album.slug]">{{album.slug}}</a>
+          <a class="stretched-link" [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
         </h2>
-        <p class="card-subtitle text-muted">{{album.name}}</p>
-        <p>{{album.description}}</p>
+        <p class="card-subtitle text-muted" *ngIf="album.description">{{album.description | snippet}}</p>
       </div>
     </div>
   </div>
 </div>
 
-<div class="alert alert-danger" *ngIf="error">
+<alert *ngIf="error" [type]="error">
   {{error}}
-</div>
+</alert>

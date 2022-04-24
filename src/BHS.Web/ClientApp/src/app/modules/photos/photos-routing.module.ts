@@ -9,15 +9,17 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: PhotosIndexComponent,
-    data: { title: 'Photo Gallery' },
+    data: { title: 'Photo Albums' },
   },
   {
     path: 'album/:slug',
     component: AlbumComponent,
+    data: { title: 'Album' },
   },
   {
     path: 'album/:slug/photo/:id',
-    component: AlbumPageComponent
+    component: AlbumPageComponent,
+    data: { title: 'Photo' },
   }
 ];
 

@@ -5,6 +5,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { SnippetPipe } from './pipes/snippet.pipe';
 import { SortByPipe } from './pipes/sort-by.pipe';
 
 /**
@@ -17,9 +18,13 @@ import { SortByPipe } from './pipes/sort-by.pipe';
   imports: [
     CommonModule,
   ],
-  declarations: [SortByPipe],
+  declarations: [
+    SortByPipe,
+    SnippetPipe,
+  ],
   exports: [
     SortByPipe,
+    SnippetPipe,
 
     // Make these available for all modules.
     CommonModule,

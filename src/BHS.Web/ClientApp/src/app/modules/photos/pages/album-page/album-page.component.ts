@@ -44,7 +44,7 @@ export class AlbumPageComponent implements OnInit {
 
   private loadAlbum(albumSlug: string, photoId: number): void {
     this.photosService.getAlbum(albumSlug)
-      .subscribe(response => {
+      .subscribe({next: response => {
         this.album = response;
         this.currentPhoto = this.album.photos.find(p => p.id === photoId);
 
@@ -59,10 +59,10 @@ export class AlbumPageComponent implements OnInit {
           this.previousPhotoId = this.album.photos[previousIndex].id;
           this.nextPhotoId = this.album.photos[nextIndex].id;
         }
-      }, (error: unknown) => {
+      }, error: (error: unknown) => {
         if (error instanceof HttpErrorResponse) {
           this.error = error.message;
         }
-      });
+      }});
   }
 }

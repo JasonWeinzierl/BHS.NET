@@ -7,7 +7,7 @@
     <h1 class="card-title">
       {{album.name}}
     </h1>
-    <p class="card-subtitle text-muted" *ngIf="album.author">Posted by {{album.author.displayName}}</p>
+    <p class="card-subtitle text-muted" *ngIf="album.author">Provided by {{album.author.displayName}}</p>
     <p>{{album.description}}</p>
   </div>
 </div>
@@ -19,10 +19,10 @@
       <div class="card-body">
         <h2 class="card-title">
           <a [routerLink]="['/apps/photos/album', album.slug, 'photo', photo.id]" class="stretched-link">
-            {{photo.name ? photo.name : photo.id}}
+            {{photo.name ?? photo.id}}
           </a>
         </h2>
-        <p class="card-subtitle text-muted" *ngIf="photo.datePosted">{{photo.datePosted}}</p>
+        <p class="card-subtitle text-muted" *ngIf="photo.description">{{photo.description | snippet}}</p>
       </div>
     </div>
   </div>

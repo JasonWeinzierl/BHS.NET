@@ -4,4 +4,5 @@ export interface Photo {
   imagePath: string;
   datePosted: Date;
   authorId?: number;
+  description?: string;
 }
