@@ -1,0 +1,57 @@
+name: Deploy
+
+on:
+    workflow_dispatch: {}
+
+jobs:
+    publish:
+        name: Publish
+        runs-on: ubuntu-latest
+        steps:
+
+        - uses: actions/checkout@v3
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v2
+          with:
+            dotnet-version: '6.0.x'
+
+        - name: Setup Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: '16'
+
+        - run: dotnet restore
+
+        - name: dotnet build
+          run: dotnet build --no-restore --configuration Release
+
+        - name: dotnet test
+          run: dotnet test --no-build --configuration Release --verbosity normal
+
+        - name: dotnet publish
+          run: dotnet publish src/BHS.Web/BHS.Web.csproj --no-build --configuration Release
+
+        - uses: actions/upload-artifact@v3
+          with:
+            name: bhs-web-publish
+            path: src/BHS.Web/bin/Release/net6.0/publish/
+          
+    deploy:
+        name: Publish
+        runs-on: self-hosted
+        needs: build
+        environment:
+            name: production
+            url: https://beltonhistoricalsociety.org/
+        steps:
+
+        - uses: actions/download-artifact@v3
+          with:
+            name: bhs-web-publish
+
+        - name: clean
+          run: rm -r /srv/bhsspa/publish
+
+        - name: copy
+          run: cp src/BHS.Web/bin/Release/net6.0/publish/* /srv/bhsspa/publish
