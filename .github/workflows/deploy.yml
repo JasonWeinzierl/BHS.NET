@@ -47,13 +47,11 @@ jobs:
             url: https://beltonhistoricalsociety.org/
         steps:
 
+        - name: Clean
+          run: rm -rf /srv/bhsspa/publish
+
         - name: Download
           uses: actions/download-artifact@v3
           with:
             name: bhs-web-publish
-
-        - name: Clean
-          run: rm -r /srv/bhsspa/publish
-
-        - name: Copy
-          run: cp src/BHS.Web/bin/Release/net6.0/publish/* /srv/bhsspa/publish
+            path: /srv/bhsspa/publish
