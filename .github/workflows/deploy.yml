@@ -32,13 +32,14 @@ jobs:
         - name: dotnet publish
           run: dotnet publish src/BHS.Web/BHS.Web.csproj --no-build --configuration Release
 
-        - uses: actions/upload-artifact@v3
+        - name: Upload
+          uses: actions/upload-artifact@v3
           with:
             name: bhs-web-publish
             path: src/BHS.Web/bin/Release/net6.0/publish/
           
     deploy:
-        name: Publish
+        name: Deploy
         runs-on: self-hosted
         needs: publish
         environment:
@@ -46,12 +47,13 @@ jobs:
             url: https://beltonhistoricalsociety.org/
         steps:
 
-        - uses: actions/download-artifact@v3
+        - name: Download
+          uses: actions/download-artifact@v3
           with:
             name: bhs-web-publish
 
-        - name: clean
+        - name: Clean
           run: rm -r /srv/bhsspa/publish
 
-        - name: copy
+        - name: Copy
           run: cp src/BHS.Web/bin/Release/net6.0/publish/* /srv/bhsspa/publish
