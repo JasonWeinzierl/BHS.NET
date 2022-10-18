@@ -40,7 +40,7 @@ jobs:
     deploy:
         name: Publish
         runs-on: self-hosted
-        needs: build
+        needs: publish
         environment:
             name: production
             url: https://beltonhistoricalsociety.org/
