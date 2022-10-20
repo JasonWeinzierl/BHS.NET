@@ -35,9 +35,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builds", "Builds", "{159F3C87-C585-4197-A50F-8383679960B7}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\angular.yml = .github\workflows\angular.yml
-		.github\workflows\deploy.yml = .github\workflows\deploy.yml
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.github\workflows\ssdt.yml = .github\workflows\ssdt.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
 Global
