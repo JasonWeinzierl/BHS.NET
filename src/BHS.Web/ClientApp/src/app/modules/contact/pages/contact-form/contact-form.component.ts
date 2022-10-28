@@ -1,5 +1,5 @@
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -9,13 +9,13 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent {
-  contactForm: FormGroup;
+  contactForm: UntypedFormGroup;
   isSubmitted = false;
   isAccepted = false;
   errors: string[] = [];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private contactService: ContactService
   ) {
     this.contactForm = this.formBuilder.group({
