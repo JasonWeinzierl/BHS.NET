@@ -15,46 +15,45 @@ using Microsoft.Data.SqlClient;
 using SendGrid.Extensions.DependencyInjection;
 using System.Data.Common;
 
-namespace BHS.Web.IoC
+namespace BHS.Web.IoC;
+
+public static class BhsApiModule
 {
-    public static class BhsApiModule
+    public static IServiceCollection AddBhsDomain(this IServiceCollection services)
     {
-        public static IServiceCollection AddBhsDomain(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<ContactUsOptions>(opt => configuration.GetSection("ContactUsOptions").Bind(opt));
-            services.AddSendGrid(opt => configuration.GetSection("SendGridClientOptions").Bind(opt));
+        services.AddOptions<ContactUsOptions>().BindConfiguration("ContactUsOptions").ValidateDataAnnotations();
+        services.AddSendGrid((provider, opt) => provider.GetRequiredService<IConfiguration>().GetSection("SendGridClientOptions").Bind(opt));
 
-            services.AddScoped<IBlogService, BlogService>();
-            services.AddScoped<IPhotosService, PhotosService>();
-            services.AddScoped<IAuthorService, AuthorService>();
-            services.AddScoped<IContactUsService, ContactUsService>();
-            services.AddScoped<ILeadershipService, LeadershipService>();
-            services.AddScoped<ISiteBannerService, SiteBannerService>();
+        services.AddScoped<IBlogService, BlogService>();
+        services.AddScoped<IPhotosService, PhotosService>();
+        services.AddScoped<IAuthorService, AuthorService>();
+        services.AddScoped<IContactUsService, ContactUsService>();
+        services.AddScoped<ILeadershipService, LeadershipService>();
+        services.AddScoped<ISiteBannerService, SiteBannerService>();
 
-            return services;
-        }
+        return services;
+    }
 
-        public static IServiceCollection AddBhsInfrastructure(this IServiceCollection services)
-        {
-            DbProviderFactories.RegisterFactory(DbConstants.SqlClientProviderName, SqlClientFactory.Instance);
-            SqlMapper.AddTypeHandler(DapperUriTypeHandler.Default);
+    public static IServiceCollection AddBhsInfrastructure(this IServiceCollection services)
+    {
+        DbProviderFactories.RegisterFactory(DbConstants.SqlClientProviderName, SqlClientFactory.Instance);
+        SqlMapper.AddTypeHandler(DapperUriTypeHandler.Default);
 
-            services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
-            services.AddSingleton<IDbExecuter, DapperExecuter>();
+        services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
+        services.AddSingleton<IDbExecuter, DapperExecuter>();
 
-            services.AddSingleton<IPostRepository, PostRepository>();
-            services.AddSingleton<IPostPreviewRepository, PostPreviewRepository>();
-            services.AddSingleton<ICategoryRepository, CategoryRepository>();
-            services.AddSingleton<IAuthorRepository, AuthorRepository>();
-            services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();
-            services.AddSingleton<IPhotoRepository, PhotoRepository>();
-            services.AddSingleton<IAlbumRepository, AlbumRepository>();
-            services.AddSingleton<ILeadershipRepository, LeadershipRepository>();
-            services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
+        services.AddSingleton<IPostRepository, PostRepository>();
+        services.AddSingleton<IPostPreviewRepository, PostPreviewRepository>();
+        services.AddSingleton<ICategoryRepository, CategoryRepository>();
+        services.AddSingleton<IAuthorRepository, AuthorRepository>();
+        services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();
+        services.AddSingleton<IPhotoRepository, PhotoRepository>();
+        services.AddSingleton<IAlbumRepository, AlbumRepository>();
+        services.AddSingleton<ILeadershipRepository, LeadershipRepository>();
+        services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
 
-            services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
+        services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
 
-            return services;
-        }
+        return services;
     }
 }

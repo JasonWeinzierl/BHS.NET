@@ -21,12 +21,12 @@ public class ControllersTests
             .Build();
 
         _services = new ServiceCollection()
-                .AddBhsDomain(inMemoryConfig)
+                .AddBhsDomain()
                 .AddBhsInfrastructure();
         
-        _services.AddHealthChecks();
         _services.AddSingleton<IConfiguration>(inMemoryConfig);
         _services.AddLogging();
+        _services.AddHealthChecks();
     }
 
     public static IEnumerable<object[]> Controllers => new[]

@@ -21,10 +21,10 @@ public class Startup
             configuration.RootPath = "ClientApp/dist";
         });
 
-        services.AddBhsHealthChecks(Configuration);
+        services.AddBhsHealthChecks();
         services.AddBhsSwagger();
 
-        services.AddBhsDomain(Configuration)
+        services.AddBhsDomain()
                 .AddBhsInfrastructure();
     }
 

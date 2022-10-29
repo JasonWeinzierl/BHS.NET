@@ -5,10 +5,10 @@ namespace BHS.Web;
 
 internal static class HealthChecksConfig
 {
-    public static void AddBhsHealthChecks(this IServiceCollection services, IConfiguration configuration)
+    public static void AddBhsHealthChecks(this IServiceCollection services)
     {
         services.AddHealthChecks()
-                .AddSqlServer(configuration.GetConnectionString("bhs"), name: "bhssql")
+                .AddSqlServer(provider => provider.GetRequiredService<IConfiguration>().GetConnectionString("bhs"), name: "bhssql")
                 .AddCheck<SendGridHealthCheck>("sendgrid");
     }
 }
