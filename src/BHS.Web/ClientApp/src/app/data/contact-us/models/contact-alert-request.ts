@@ -1,7 +1,9 @@
 export class ContactAlertRequest {
-    name?: string;
-    emailAddress!: string;
-    message?: string;
-    dateRequested?: Date;
-    body?: string;
+  constructor(
+    public name?: string | null,
+    public emailAddress?: string,
+    public message?: string | null,
+    public dateRequested?: Date | null,
+    public body?: string | null
+  ) { }
 }
