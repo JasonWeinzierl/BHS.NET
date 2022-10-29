@@ -1,9 +1,8 @@
 ﻿using BHS.Contracts;
 
-namespace BHS.Domain.ContactUs
+namespace BHS.Domain.ContactUs;
+
+public interface IContactAlertRepository
 {
-    public interface IContactAlertRepository
-    {
-        Task<ContactAlert> Insert(ContactAlertRequest contactRequest);
-    }
+    Task<ContactAlert> Insert(ContactAlertRequest contactRequest, CancellationToken cancellationToken = default);
 }

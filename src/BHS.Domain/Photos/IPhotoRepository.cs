@@ -1,9 +1,8 @@
 ﻿using BHS.Contracts.Photos;
 
-namespace BHS.Domain.Photos
+namespace BHS.Domain.Photos;
+
+public interface IPhotoRepository
 {
-    public interface IPhotoRepository
-    {
-        Task<Photo?> GetById(int id);
-    }
+    Task<Photo?> GetById(int id, CancellationToken cancellationToken = default);
 }

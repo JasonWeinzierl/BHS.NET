@@ -5,134 +5,143 @@ using BHS.Domain.Blog;
 using Moq;
 using Xunit;
 
-namespace BHS.Domain.Tests.Blog
+namespace BHS.Domain.Tests.Blog;
+
+public class BlogServiceTests
 {
-    public class BlogServiceTests
+    private readonly BlogService _subject;
+
+    private readonly Mock<IPostRepository> _mockPostRepo;
+    private readonly Mock<IPostPreviewRepository> _mockPreviewRepo;
+    private readonly Mock<ICategoryRepository> _mockCatRepo;
+    private readonly Mock<IAuthorRepository> _mockAuthorRepo;
+
+    public BlogServiceTests()
     {
-        private readonly BlogService _subject;
+        _mockPostRepo = new Mock<IPostRepository>(MockBehavior.Strict);
+        _mockPreviewRepo = new Mock<IPostPreviewRepository>(MockBehavior.Strict);
+        _mockCatRepo = new Mock<ICategoryRepository>(MockBehavior.Strict);
+        _mockAuthorRepo = new Mock<IAuthorRepository>(MockBehavior.Strict);
 
-        private readonly Mock<IPostRepository> _mockPostRepo;
-        private readonly Mock<IPostPreviewRepository> _mockPreviewRepo;
-        private readonly Mock<ICategoryRepository> _mockCatRepo;
-        private readonly Mock<IAuthorRepository> _mockAuthorRepo;
+        _subject = new BlogService(_mockPostRepo.Object, _mockPreviewRepo.Object, _mockCatRepo.Object, _mockAuthorRepo.Object);
+    }
 
-        public BlogServiceTests()
-        {
-            _mockPostRepo = new Mock<IPostRepository>(MockBehavior.Strict);
-            _mockPreviewRepo = new Mock<IPostPreviewRepository>(MockBehavior.Strict);
-            _mockCatRepo = new Mock<ICategoryRepository>(MockBehavior.Strict);
-            _mockAuthorRepo = new Mock<IAuthorRepository>(MockBehavior.Strict);
+    [Fact]
+    public async Task GetCategory_IfExists_GetsPosts()
+    {
+        string slug = "a";
+        _mockCatRepo
+            .Setup(r => r.GetBySlug(slug, default))
+            .ReturnsAsync(new Category("x", "y"));
+        _mockPreviewRepo
+            .Setup(r => r.GetByCategorySlug(slug, default))
+            .ReturnsAsync(Array.Empty<PostPreview>());
 
-            _subject = new BlogService(_mockPostRepo.Object, _mockPreviewRepo.Object, _mockCatRepo.Object, _mockAuthorRepo.Object);
-        }
+        var result = await _subject.GetCategory(slug);
 
-        [Fact]
-        public async Task GetCategory_IfExists_GetsPosts()
-        {
-            string slug = "a";
-            _mockCatRepo.Setup(r => r.GetBySlug(slug))
-                .ReturnsAsync(new Category("x", "y"));
-            _mockPreviewRepo.Setup(r => r.GetByCategorySlug(slug))
-                .ReturnsAsync(Array.Empty<PostPreview>());
+        Assert.NotNull(result);
+    }
 
-            var result = await _subject.GetCategory(slug);
+    [Fact]
+    public async Task GetCategory_IfNotExists_ReturnsNull()
+    {
+        string slug = "b";
+        _mockCatRepo
+            .Setup(r => r.GetBySlug(slug, default))
+            .ReturnsAsync((Category?)null);
 
-            Assert.NotNull(result);
-        }
+        var result = await _subject.GetCategory(slug);
 
-        [Fact]
-        public async Task GetCategory_IfNotExists_ReturnsNull()
-        {
-            string slug = "b";
-            _mockCatRepo.Setup(r => r.GetBySlug(slug))
-                .ReturnsAsync((Category?)null);
+        Assert.Null(result);
+    }
 
-            var result = await _subject.GetCategory(slug);
+    [Fact]
+    public async Task GetPost_CallsGetBySlug()
+    {
+        string slug = "c";
+        var expected = new Post(slug, string.Empty, string.Empty, null, null, null, default, default, Array.Empty<Category>());
+        _mockPostRepo
+            .Setup(r => r.GetBySlug(slug, default))
+            .ReturnsAsync(expected);
 
-            Assert.Null(result);
-        }
+        var result = await _subject.GetPost(slug);
 
-        [Fact]
-        public async Task GetPost_CallsGetBySlug()
-        {
-            string slug = "c";
-            var expected = new Post(slug, string.Empty, string.Empty, null, null, null, default, default, Array.Empty<Category>());
-            _mockPostRepo.Setup(r => r.GetBySlug(slug))
-                .ReturnsAsync(expected);
+        Assert.Equal(result, expected);
+    }
 
-            var result = await _subject.GetPost(slug);
+    [Fact]
+    public async Task GetCategories_CallsGetAll()
+    {
+        var expected = Array.Empty<CategorySummary>();
+        _mockCatRepo.Setup(r => r.GetAll(default)).ReturnsAsync(expected);
 
-            Assert.Equal(result, expected);
-        }
+        var result = await _subject.GetCategories();
 
-        [Fact]
-        public async Task GetCategories_CallsGetAll()
-        {
-            var expected = Array.Empty<CategorySummary>();
-            _mockCatRepo.Setup(r => r.GetAll()).ReturnsAsync(expected);
+        Assert.Equal(expected, result);
+    }
 
-            var result = await _subject.GetCategories();
+    [Fact]
+    public async Task GetPostsByAuthor_OnAuthorFound_CallsGetByAuthorId()
+    {
+        string uname = "a";
+        int id = 1;
+        var expected = Array.Empty<PostPreview>();
+        _mockAuthorRepo
+            .Setup(r => r.GetByUserName(uname, default))
+            .ReturnsAsync(new Author(id, "some user", "User"));
+        _mockPreviewRepo
+            .Setup(r => r.GetByAuthorId(id, default))
+            .ReturnsAsync(expected);
 
-            Assert.Equal(expected, result);
-        }
+        var result = await _subject.GetPostsByAuthor(uname);
 
-        [Fact]
-        public async Task GetPostsByAuthor_OnAuthorFound_CallsGetByAuthorId()
-        {
-            string uname = "a";
-            int id = 1;
-            var expected = Array.Empty<PostPreview>();
-            _mockAuthorRepo.Setup(r => r.GetByUserName(uname))
-                .ReturnsAsync(new Author(id, "some user", "User"));
-            _mockPreviewRepo.Setup(r => r.GetByAuthorId(id))
-                .ReturnsAsync(expected);
+        Assert.Equal(expected, result);
+    }
 
-            var result = await _subject.GetPostsByAuthor(uname);
+    [Fact]
+    public async Task GetPostsByAuthor_OnNoPostsFound_ReturnsEmpty()
+    {
+        string uname = "a";
+        int id = 3;
+        _mockAuthorRepo
+            .Setup(r => r.GetByUserName(It.IsAny<string>(), default))
+            .ReturnsAsync(new Author(id, "a", default));
+        _mockPreviewRepo
+            .Setup(r => r.GetByAuthorId(id, default))
+            .ReturnsAsync(Array.Empty<PostPreview>());
 
-            Assert.Equal(expected, result);
-        }
+        var result = await _subject.GetPostsByAuthor(uname);
 
-        [Fact]
-        public async Task GetPostsByAuthor_OnNoPostsFound_ReturnsEmpty()
-        {
-            string uname = "a";
-            int id = 3;
-            _mockAuthorRepo.Setup(r => r.GetByUserName(It.IsAny<string>()))
-                .ReturnsAsync(new Author(id, "a", default));
-            _mockPreviewRepo.Setup(r => r.GetByAuthorId(id))
-                .ReturnsAsync(Array.Empty<PostPreview>());
+        Assert.NotNull(result);
+        Assert.Empty(result);
+    }
 
-            var result = await _subject.GetPostsByAuthor(uname);
+    [Fact]
+    public async Task GetPostsByAuthor_OnAuthorNotFound_ReturnsNull()
+    {
+        string uname = "a";
+        _mockAuthorRepo
+            .Setup(r => r.GetByUserName(uname, default))
+            .ReturnsAsync((Author?)null);
 
-            Assert.NotNull(result);
-            Assert.Empty(result);
-        }
+        var result = await _subject.GetPostsByAuthor(uname);
 
-        [Fact]
-        public async Task GetPostsByAuthor_OnAuthorNotFound_ReturnsNull()
-        {
-            string uname = "a";
-            _mockAuthorRepo.Setup(r => r.GetByUserName(uname))
-                .ReturnsAsync((Author?)null);
+        Assert.Null(result);
+        _mockPreviewRepo.Verify(r => r.GetByAuthorId(It.IsAny<int>(), default), Times.Never, "Expected GetByAuthorId to never be called.");
+    }
 
-            var result = await _subject.GetPostsByAuthor(uname);
+    [Fact]
+    public async Task SearchPosts_CallsSearch()
+    {
+        string text = "abc";
+        var from = new DateTime(2021, 01, 06, 0, 0, 0);
+        var to = new DateTime(2021, 01, 06, 0, 1, 0);
+        _mockPreviewRepo
+            .Setup(r => r.Search(text, from, to, default))
+            .ReturnsAsync(Array.Empty<PostPreview>());
 
-            Assert.Null(result);
-            _mockPreviewRepo.Verify(r => r.GetByAuthorId(It.IsAny<int>()), Times.Never, "Expected GetByAuthorId to never be called.");
-        }
+        var result = await _subject.SearchPosts(text, from, to);
 
-        [Fact]
-        public async Task SearchPosts_CallsSearch()
-        {
-            string text = "abc";
-            var from = new DateTime(2021, 01, 06, 0, 0, 0);
-            var to = new DateTime(2021, 01, 06, 0, 1, 0);
-            _mockPreviewRepo.Setup(r => r.Search(text, from, to))
-                .ReturnsAsync(Array.Empty<PostPreview>());
-
-            var result = await _subject.SearchPosts(text, from, to);
-
-            Assert.Empty(result);
-        }
+        Assert.Empty(result);
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace BHS.Domain
+﻿namespace BHS.Domain;
+
+public interface IDateTimeOffsetProvider
 {
-    public interface IDateTimeOffsetProvider
-    {
-        DateTimeOffset Now();
-        int CurrentYear();
-    }
+    DateTimeOffset Now();
+    int CurrentYear();
 }

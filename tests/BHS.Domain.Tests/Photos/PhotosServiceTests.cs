@@ -4,58 +4,60 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-namespace BHS.Domain.Tests.Photos
+namespace BHS.Domain.Tests.Photos;
+
+public class PhotosServiceTests
 {
-    public class PhotosServiceTests
+    private readonly PhotosService _subject;
+
+    private readonly Mock<IPhotoRepository> _photoRepo;
+    private readonly Mock<IAlbumRepository> _albumRepo;
+    private readonly Mock<ILogger<PhotosService>> _logger;
+
+    public PhotosServiceTests()
     {
-        private readonly PhotosService _subject;
+        _photoRepo = new Mock<IPhotoRepository>(MockBehavior.Strict);
+        _albumRepo = new Mock<IAlbumRepository>(MockBehavior.Strict);
+        _logger = new Mock<ILogger<PhotosService>>();
 
-        private readonly Mock<IPhotoRepository> _photoRepo;
-        private readonly Mock<IAlbumRepository> _albumRepo;
-        private readonly Mock<ILogger<PhotosService>> _logger;
+        _subject = new PhotosService(_photoRepo.Object, _albumRepo.Object, _logger.Object);
+    }
 
-        public PhotosServiceTests()
-        {
-            _photoRepo = new Mock<IPhotoRepository>(MockBehavior.Strict);
-            _albumRepo = new Mock<IAlbumRepository>(MockBehavior.Strict);
-            _logger = new Mock<ILogger<PhotosService>>();
+    [Fact]
+    public async Task GetAlbums_CallsGetAll()
+    {
+        _albumRepo
+            .Setup(r => r.GetAll(default))
+            .ReturnsAsync(Array.Empty<Album>());
 
-            _subject = new PhotosService(_photoRepo.Object, _albumRepo.Object, _logger.Object);
-        }
+        var result = await _subject.GetAlbums();
 
-        [Fact]
-        public async Task GetAlbums_CallsGetAll()
-        {
-            _albumRepo.Setup(r => r.GetAll())
-                .ReturnsAsync(Array.Empty<Album>());
+        Assert.Empty(result);
+    }
 
-            var result = await _subject.GetAlbums();
+    [Fact]
+    public async Task GetAlbum_CallsGetBySlug()
+    {
+        string slug = "alb-2020";
+        _albumRepo
+            .Setup(r => r.GetBySlug(slug, default))
+            .ReturnsAsync((AlbumPhotos?)null);
 
-            Assert.Empty(result);
-        }
+        var result = await _subject.GetAlbum(slug);
 
-        [Fact]
-        public async Task GetAlbum_CallsGetBySlug()
-        {
-            string slug = "alb-2020";
-            _albumRepo.Setup(r => r.GetBySlug(slug))
-                .ReturnsAsync((AlbumPhotos?)null);
+        Assert.Null(result);
+    }
 
-            var result = await _subject.GetAlbum(slug);
+    [Fact]
+    public async Task GetPhoto_CallsGetById()
+    {
+        int id = 9;
+        _photoRepo
+            .Setup(r => r.GetById(id, default))
+            .ReturnsAsync((Photo?)null);
 
-            Assert.Null(result);
-        }
+        var result = await _subject.GetPhoto(id);
 
-        [Fact]
-        public async Task GetPhoto_CallsGetById()
-        {
-            int id = 9;
-            _photoRepo.Setup(r => r.GetById(id))
-                .ReturnsAsync((Photo?)null);
-
-            var result = await _subject.GetPhoto(id);
-
-            Assert.Null(result);
-        }
+        Assert.Null(result);
     }
 }

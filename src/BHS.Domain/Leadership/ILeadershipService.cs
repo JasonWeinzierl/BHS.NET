@@ -1,10 +1,9 @@
 ﻿using BHS.Contracts.Leadership;
 
-namespace BHS.Domain.Leadership
+namespace BHS.Domain.Leadership;
+
+public interface ILeadershipService
 {
-    public interface ILeadershipService
-    {
-        Task<IReadOnlyCollection<Officer>> GetOfficers();
-        Task<IReadOnlyCollection<Director>> GetDirectors();
-    }
+    Task<IReadOnlyCollection<Officer>> GetOfficers(CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<Director>> GetDirectors(CancellationToken cancellationToken = default);
 }

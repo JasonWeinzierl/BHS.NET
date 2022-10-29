@@ -2,26 +2,25 @@
 using BHS.Domain.Authors;
 using BHS.Infrastructure.Core;
 
-namespace BHS.Infrastructure.Repositories
+namespace BHS.Infrastructure.Repositories;
+
+public class AuthorRepository : IAuthorRepository
 {
-    public class AuthorRepository : IAuthorRepository
+    protected IDbExecuter E { get; }
+
+    public AuthorRepository(IDbExecuter executer)
     {
-        protected IDbExecuter E { get; }
+        E = executer;
+    }
 
-        public AuthorRepository(IDbExecuter executer)
-        {
-            E = executer;
-        }
+    public async Task<IReadOnlyCollection<Author>> GetAll(CancellationToken cancellationToken = default)
+    {
+        var authors = await E.ExecuteSprocQuery<Author>(DbConstants.BhsConnectionStringName, "dbo.Author_GetAll", cancellationToken: cancellationToken);
+        return authors.ToList();
+    }
 
-        public async Task<IReadOnlyCollection<Author>> GetAll()
-        {
-            var authors = await E.ExecuteSprocQuery<Author>(DbConstants.BhsConnectionStringName, "dbo.Author_GetAll");
-            return authors.ToList();
-        }
-
-        public Task<Author?> GetByUserName(string userName)
-        {
-            return E.ExecuteSprocQuerySingleOrDefault<Author>(DbConstants.BhsConnectionStringName, "dbo.Author_GetByUserName", new { userName });
-        }
+    public Task<Author?> GetByUserName(string userName, CancellationToken cancellationToken = default)
+    {
+        return E.ExecuteSprocQuerySingleOrDefault<Author>(DbConstants.BhsConnectionStringName, "dbo.Author_GetByUserName", new { userName }, cancellationToken);
     }
 }

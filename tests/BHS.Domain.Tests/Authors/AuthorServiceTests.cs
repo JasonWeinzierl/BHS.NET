@@ -4,43 +4,44 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-namespace BHS.Domain.Tests.Authors
+namespace BHS.Domain.Tests.Authors;
+
+public class AuthorServiceTests
 {
-    public class AuthorServiceTests
+    private readonly AuthorService Subject;
+
+    private readonly Mock<IAuthorRepository> _mockRepo;
+    private readonly Mock<ILogger<AuthorService>> _logger;
+
+    public AuthorServiceTests()
     {
-        private readonly AuthorService Subject;
+        _mockRepo = new Mock<IAuthorRepository>(MockBehavior.Strict);
+        _logger = new Mock<ILogger<AuthorService>>();
+        Subject = new AuthorService(_mockRepo.Object, _logger.Object);
+    }
 
-        private readonly Mock<IAuthorRepository> _mockRepo;
-        private readonly Mock<ILogger<AuthorService>> _logger;
+    [Fact]
+    public async Task GetAuthor_CallsGetByUserName()
+    {
+        string username = "bob";
+        _mockRepo
+            .Setup(r => r.GetByUserName(username, default))
+            .ReturnsAsync((Author?)null);
 
-        public AuthorServiceTests()
-        {
-            _mockRepo = new Mock<IAuthorRepository>(MockBehavior.Strict);
-            _logger = new Mock<ILogger<AuthorService>>();
-            Subject = new AuthorService(_mockRepo.Object, _logger.Object);
-        }
+        var result = await Subject.GetAuthor(username);
 
-        [Fact]
-        public async Task GetAuthor_CallsGetByUserName()
-        {
-            string username = "bob";
-            _mockRepo.Setup(r => r.GetByUserName(username))
-                .ReturnsAsync((Author?)null);
+        Assert.Null(result);
+    }
 
-            var result = await Subject.GetAuthor(username);
+    [Fact]
+    public async Task GetAuthors_CallsGetAll()
+    {
+        _mockRepo
+            .Setup(r => r.GetAll(default))
+            .ReturnsAsync(Array.Empty<Author>());
 
-            Assert.Null(result);
-        }
+        var result = await Subject.GetAuthors();
 
-        [Fact]
-        public async Task GetAuthors_CallsGetAll()
-        {
-            _mockRepo.Setup(r => r.GetAll())
-                .ReturnsAsync(Array.Empty<Author>());
-
-            var result = await Subject.GetAuthors();
-
-            Assert.Empty(result);
-        }
+        Assert.Empty(result);
     }
 }

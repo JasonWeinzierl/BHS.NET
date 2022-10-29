@@ -1,10 +1,9 @@
 ﻿using BHS.Contracts.Blog;
 
-namespace BHS.Domain.Blog
+namespace BHS.Domain.Blog;
+
+public interface ICategoryRepository
 {
-    public interface ICategoryRepository
-    {
-        Task<IReadOnlyCollection<CategorySummary>> GetAll();
-        Task<Category?> GetBySlug(string slug);
-    }
+    Task<IReadOnlyCollection<CategorySummary>> GetAll(CancellationToken cancellationToken = default);
+    Task<Category?> GetBySlug(string slug, CancellationToken cancellationToken = default);
 }

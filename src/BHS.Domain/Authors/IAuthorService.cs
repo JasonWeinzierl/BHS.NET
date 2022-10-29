@@ -1,10 +1,9 @@
 ﻿using BHS.Contracts;
 
-namespace BHS.Domain.Authors
+namespace BHS.Domain.Authors;
+
+public interface IAuthorService
 {
-    public interface IAuthorService
-    {
-        Task<Author?> GetAuthor(string userName);
-        Task<IReadOnlyCollection<Author>> GetAuthors();
-    }
+    Task<Author?> GetAuthor(string userName, CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<Author>> GetAuthors(CancellationToken cancellationToken = default);
 }

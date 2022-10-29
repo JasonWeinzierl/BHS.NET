@@ -25,7 +25,7 @@ public class ContactUsService : IContactUsService
         _logger = logger;
     }
 
-    public async Task<ContactAlert?> AddRequest(ContactAlertRequest request)
+    public async Task<ContactAlert?> AddRequest(ContactAlertRequest request, CancellationToken cancellationToken = default)
     {
         if (FailsHoneypotCheck(request))
         {
@@ -34,17 +34,17 @@ public class ContactUsService : IContactUsService
         }
 
         if (string.IsNullOrWhiteSpace(request.EmailAddress))
-            throw new InvalidContactRequest("Email address is required.");
+            throw new InvalidContactRequestException("Email address is required.");
 
-        var newAlert = await _contactAlertRepository.Insert(request);
-        await SendEmail(newAlert);
+        var newAlert = await _contactAlertRepository.Insert(request, cancellationToken);
+        await SendEmail(newAlert, cancellationToken);
 
         return newAlert;
     }
 
     private static bool FailsHoneypotCheck(ContactAlertRequest request) => !string.IsNullOrEmpty(request.Body);
 
-    private async Task SendEmail(ContactAlert newAlert)
+    private async Task SendEmail(ContactAlert newAlert, CancellationToken cancellationToken)
     {
         // Windows Ids are supported on Linux as of .NET 6 #49412.
         var cst = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
@@ -70,7 +70,7 @@ Message:<br>
         foreach (var toAddress in _options.ToAddresses)
             msg.AddTo(toAddress);
 
-        var response = await _sendGridClient.SendEmailAsync(msg);
+        var response = await _sendGridClient.SendEmailAsync(msg, cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {
@@ -78,7 +78,7 @@ Message:<br>
         }
         else
         {
-            string errorString = await response.Body.ReadAsStringAsync();
+            string errorString = await response.Body.ReadAsStringAsync(cancellationToken);
             _logger.LogError("FailedContactAlert #{Id}: {StatusCode} {Status} {Message}", newAlert.Id, (int)response.StatusCode, response.StatusCode, errorString);
         }
     }

@@ -1,10 +1,9 @@
 ﻿using BHS.Contracts.Photos;
 
-namespace BHS.Domain.Photos
+namespace BHS.Domain.Photos;
+
+public interface IAlbumRepository
 {
-    public interface IAlbumRepository
-    {
-        Task<AlbumPhotos?> GetBySlug(string slug);
-        Task<IReadOnlyCollection<Album>> GetAll();
-    }
+    Task<AlbumPhotos?> GetBySlug(string slug, CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<Album>> GetAll(CancellationToken cancellationToken = default);
 }

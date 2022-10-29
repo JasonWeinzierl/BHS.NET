@@ -3,41 +3,42 @@ using BHS.Domain.Leadership;
 using Moq;
 using Xunit;
 
-namespace BHS.Domain.Tests.Leadership
+namespace BHS.Domain.Tests.Leadership;
+
+public class LeadershipServiceTests
 {
-    public class LeadershipServiceTests
+    private readonly LeadershipService _subject;
+
+    private readonly Mock<ILeadershipRepository> _mockLeadRepo;
+
+    public LeadershipServiceTests()
     {
-        private readonly LeadershipService _subject;
+        _mockLeadRepo = new Mock<ILeadershipRepository>(MockBehavior.Strict);
 
-        private readonly Mock<ILeadershipRepository> _mockLeadRepo;
+        _subject = new LeadershipService(_mockLeadRepo.Object);
+    }
 
-        public LeadershipServiceTests()
-        {
-            _mockLeadRepo = new Mock<ILeadershipRepository>(MockBehavior.Strict);
+    [Fact]
+    public async Task GetOfficers_CallsGetCurrentOfficers()
+    {
+        _mockLeadRepo
+            .Setup(r => r.GetCurrentOfficers(default))
+            .ReturnsAsync(Array.Empty<Officer>());
 
-            _subject = new LeadershipService(_mockLeadRepo.Object);
-        }
+        var result = await _subject.GetOfficers();
 
-        [Fact]
-        public async Task GetOfficers_CallsGetCurrentOfficers()
-        {
-            _mockLeadRepo.Setup(r => r.GetCurrentOfficers())
-                .ReturnsAsync(Array.Empty<Officer>());
+        Assert.Empty(result);
+    }
 
-            var result = await _subject.GetOfficers();
+    [Fact]
+    public async Task GetDirectors_CallsGetCurrentDirectors()
+    {
+        _mockLeadRepo
+            .Setup(r => r.GetCurrentDirectors(default))
+            .ReturnsAsync(Array.Empty<Director>());
 
-            Assert.Empty(result);
-        }
+        var result = await _subject.GetDirectors();
 
-        [Fact]
-        public async Task GetDirectors_CallsGetCurrentDirectors()
-        {
-            _mockLeadRepo.Setup(r => r.GetCurrentDirectors())
-                .ReturnsAsync(Array.Empty<Director>());
-
-            var result = await _subject.GetDirectors();
-
-            Assert.Empty(result);
-        }
+        Assert.Empty(result);
     }
 }

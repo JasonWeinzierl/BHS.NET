@@ -1,10 +1,9 @@
 ﻿using BHS.Contracts.Leadership;
 
-namespace BHS.Infrastructure.Models
+namespace BHS.Infrastructure.Models;
+
+public record OfficerDto(string Title, string Name, int SortOrder)
 {
-    public record OfficerDto(string Title, string Name, int SortOrder)
-    {
-        public Officer ToDomainModel()
-            => new(Title, Name);
-    }
+    public Officer ToDomainModel()
+        => new(Title, Name);
 }

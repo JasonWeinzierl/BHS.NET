@@ -13,6 +13,6 @@ public class PhotoRepository : IPhotoRepository
         E = executer;
     }
 
-    public async Task<Photo?> GetById(int id)
-        => await E.ExecuteSprocQuerySingleOrDefault<Photo>(DbConstants.BhsConnectionStringName, "photos.Photo_GetById", new { id });
+    public async Task<Photo?> GetById(int id, CancellationToken cancellationToken = default)
+        => await E.ExecuteSprocQuerySingleOrDefault<Photo>(DbConstants.BhsConnectionStringName, "photos.Photo_GetById", new { id }, cancellationToken);
 }

@@ -1,9 +1,8 @@
 ﻿using BHS.Contracts.Banners;
 
-namespace BHS.Domain.Banners
+namespace BHS.Domain.Banners;
+
+public interface ISiteBannerRepository
 {
-    public interface ISiteBannerRepository
-    {
-        Task<IReadOnlyCollection<SiteBanner>> GetEnabled();
-    }
+    Task<IReadOnlyCollection<SiteBanner>> GetEnabled(CancellationToken cancellationToken = default);
 }

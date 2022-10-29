@@ -1,11 +1,10 @@
 ﻿using BHS.Contracts.Blog;
 
-namespace BHS.Domain.Blog
+namespace BHS.Domain.Blog;
+
+public interface IPostPreviewRepository
 {
-    public interface IPostPreviewRepository
-    {
-        Task<IReadOnlyCollection<PostPreview>> GetByAuthorId(int authorId);
-        Task<IReadOnlyCollection<PostPreview>> GetByCategorySlug(string categorySlug);
-        Task<IReadOnlyCollection<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to);
-    }
+    Task<IReadOnlyCollection<PostPreview>> GetByAuthorId(int authorId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<PostPreview>> GetByCategorySlug(string categorySlug, CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to, CancellationToken cancellationToken = default);
 }

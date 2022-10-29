@@ -1,18 +1,17 @@
 ﻿using BHS.Contracts.Banners;
 
-namespace BHS.Domain.Banners
+namespace BHS.Domain.Banners;
+
+public class SiteBannerService : ISiteBannerService
 {
-    public class SiteBannerService : ISiteBannerService
+    private readonly ISiteBannerRepository _bannerRepository;
+
+    public SiteBannerService(
+        ISiteBannerRepository bannerRepository)
     {
-        private readonly ISiteBannerRepository _bannerRepository;
-
-        public SiteBannerService(
-            ISiteBannerRepository bannerRepository)
-        {
-            _bannerRepository = bannerRepository;
-        }
-
-        public async Task<IReadOnlyCollection<SiteBanner>> GetEnabled()
-            => await _bannerRepository.GetEnabled();
+        _bannerRepository = bannerRepository;
     }
+
+    public async Task<IReadOnlyCollection<SiteBanner>> GetEnabled(CancellationToken cancellationToken = default)
+        => await _bannerRepository.GetEnabled(cancellationToken);
 }

@@ -1,6 +1,5 @@
-﻿namespace BHS.Contracts.Blog
-{
-    public record Category(
-        string Slug,
-        string Name);
-}
+﻿namespace BHS.Contracts.Blog;
+
+public record Category(
+    string Slug,
+    string Name);

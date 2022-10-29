@@ -3,33 +3,32 @@ using BHS.Domain.Banners;
 using Moq;
 using Xunit;
 
-namespace BHS.Domain.Tests.Banners
+namespace BHS.Domain.Tests.Banners;
+
+public class SiteBannerServiceTests
 {
-    public class SiteBannerServiceTests
+    private readonly Mock<ISiteBannerRepository> _mockRepo = new(MockBehavior.Strict);
+
+    private SiteBannerService Subject => new(_mockRepo.Object);
+
+    private void VerifyAll() => Mock.Verify(_mockRepo);
+
+    public class GetEnabled : SiteBannerServiceTests
     {
-        private readonly Mock<ISiteBannerRepository> _mockRepo = new(MockBehavior.Strict);
-
-        private SiteBannerService Subject => new(_mockRepo.Object);
-
-        private void VerifyAll() => Mock.Verify(_mockRepo);
-
-        public class GetEnabled : SiteBannerServiceTests
+        [Fact]
+        public async Task CallsRepo()
         {
-            [Fact]
-            public async Task CallsRepo()
-            {
-                // Arrange
-                _mockRepo
-                    .Setup(repo => repo.GetEnabled())
-                    .ReturnsAsync(Array.Empty<SiteBanner>());
+            // Arrange
+            _mockRepo
+                .Setup(repo => repo.GetEnabled(default))
+                .ReturnsAsync(Array.Empty<SiteBanner>());
 
-                // Act
-                var results = await Subject.GetEnabled();
+            // Act
+            var results = await Subject.GetEnabled();
 
-                // Assert
-                Assert.Empty(results);
-                VerifyAll();
-            }
+            // Assert
+            Assert.Empty(results);
+            VerifyAll();
         }
     }
 }

@@ -20,9 +20,9 @@ public class ContactUsController : ControllerBase
     /// </summary>
     [HttpPost("")]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
-    public async Task<ActionResult> Post(ContactAlertRequest contactRequest)
+    public async Task<ActionResult> Post(ContactAlertRequest contactRequest, CancellationToken cancellationToken = default)
     {
-        _ = await _contactUsService.AddRequest(contactRequest);
+        _ = await _contactUsService.AddRequest(contactRequest, cancellationToken);
         return Accepted();
     }
 }

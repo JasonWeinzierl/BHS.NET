@@ -1,4 +1,4 @@
-﻿using BHS.Domain;
+﻿using BHS.Domain.ContactUs;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +29,7 @@ public class ErrorController : ControllerBase
     private static int GetStatusCode(Exception? exception) =>
         exception switch
         {
-            InvalidContactRequest => StatusCodes.Status400BadRequest,
+            InvalidContactRequestException => StatusCodes.Status400BadRequest,
             _ => StatusCodes.Status500InternalServerError,
         };
 }

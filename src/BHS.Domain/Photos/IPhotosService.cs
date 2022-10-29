@@ -1,11 +1,10 @@
 ﻿using BHS.Contracts.Photos;
 
-namespace BHS.Domain.Photos
+namespace BHS.Domain.Photos;
+
+public interface IPhotosService
 {
-    public interface IPhotosService
-    {
-        Task<IReadOnlyCollection<Album>> GetAlbums();
-        Task<AlbumPhotos?> GetAlbum(string slug);
-        Task<Photo?> GetPhoto(int id);
-    }
+    Task<IReadOnlyCollection<Album>> GetAlbums(CancellationToken cancellationToken = default);
+    Task<AlbumPhotos?> GetAlbum(string slug, CancellationToken cancellationToken = default);
+    Task<Photo?> GetPhoto(int id, CancellationToken cancellationToken = default);
 }
