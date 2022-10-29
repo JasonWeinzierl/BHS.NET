@@ -63,7 +63,7 @@ namespace BHS.Domain.Tests.ContactUs
                 // Arrange
                 var request = new ContactAlertRequest(default, string.Empty, default, default, null);
 
-                await Assert.ThrowsAsync<BadRequestException>(async () =>
+                await Assert.ThrowsAsync<InvalidContactRequest>(async () =>
                 {
                     // Act
                     _ = await Subject.AddRequest(request);
