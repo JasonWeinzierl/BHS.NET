@@ -21,6 +21,7 @@ public class Startup
             configuration.RootPath = "ClientApp/dist";
         });
 
+        services.AddBhsHealthChecks(Configuration);
         services.AddBhsSwagger();
 
         services.AddBhsDomain(Configuration)

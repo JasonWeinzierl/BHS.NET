@@ -21,10 +21,12 @@ public class ControllersTests
             .Build();
 
         _services = new ServiceCollection()
-                .AddSingleton<IConfiguration>(inMemoryConfig)
-                .AddLogging()
                 .AddBhsDomain(inMemoryConfig)
                 .AddBhsInfrastructure();
+        
+        _services.AddHealthChecks();
+        _services.AddSingleton<IConfiguration>(inMemoryConfig);
+        _services.AddLogging();
     }
 
     public static IEnumerable<object[]> Controllers => new[]
@@ -34,6 +36,7 @@ public class ControllersTests
         new[] { typeof(BlogController) },
         new[] { typeof(ContactUsController) },
         new[] { typeof(ErrorController) },
+        new[] { typeof(HealthCheckController) },
         new[] { typeof(LeadershipController) },
         new[] { typeof(PhotosController) },
     };
