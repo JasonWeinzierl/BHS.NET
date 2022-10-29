@@ -1,0 +1,14 @@
+[
+  {
+    "slug": "album1",
+    "name": "Album 1",
+    "description": "A test album",
+    "bannerPhoto": null,
+    "blogPostSlug": null,
+    "author": {
+      "id": 99,
+      "displayName": "AnAuthor",
+      "name": "me"
+    }
+  }
+]
