@@ -44,7 +44,7 @@ namespace BHS.Infrastructure.Tests.Repositories
             var result = await _subject.GetBySlug("a");
 
             Assert.NotNull(result);
-            Assert.Equal(2, result?.Categories.Count);
+            Assert.Equal(2, result.Categories.Count);
         }
     }
 }

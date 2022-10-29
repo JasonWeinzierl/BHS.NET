@@ -104,6 +104,7 @@ namespace BHS.Domain.Tests.Blog
 
             var result = await _subject.GetPostsByAuthor(uname);
 
+            Assert.NotNull(result);
             Assert.Empty(result);
         }
 

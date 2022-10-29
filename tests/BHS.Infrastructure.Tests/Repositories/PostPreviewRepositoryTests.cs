@@ -57,9 +57,9 @@ namespace BHS.Infrastructure.Tests.Repositories
             var results = await _subject.Search("a", default, default);
 
             Assert.NotNull(results);
-            Assert.Equal(1, results?.Count());
-            Assert.Contains("cat1", results?.First().Categories.Select(c => c.Slug));
-            Assert.Contains("cat2", results?.First().Categories.Select(c => c.Slug));
+            Assert.Equal(1, results.Count);
+            Assert.Contains("cat1", results.First().Categories.Select(c => c.Slug));
+            Assert.Contains("cat2", results.First().Categories.Select(c => c.Slug));
         }
 
         [Fact]
@@ -100,9 +100,9 @@ namespace BHS.Infrastructure.Tests.Repositories
             var results = await _subject.GetByCategorySlug("y");
 
             Assert.NotNull(results);
-            Assert.Equal(1, results?.Count());
-            Assert.Contains("cat1", results?.First().Categories.Select(c => c.Slug));
-            Assert.Contains("cat2", results?.First().Categories.Select(c => c.Slug));
+            Assert.Equal(1, results.Count);
+            Assert.Contains("cat1", results.First().Categories.Select(c => c.Slug));
+            Assert.Contains("cat2", results.First().Categories.Select(c => c.Slug));
         }
 
         [Fact]
@@ -143,9 +143,9 @@ namespace BHS.Infrastructure.Tests.Repositories
             var results = await _subject.GetByAuthorId(1);
 
             Assert.NotNull(results);
-            Assert.Equal(1, results?.Count());
-            Assert.Contains("cat1", results?.First().Categories.Select(c => c.Slug));
-            Assert.Contains("cat2", results?.First().Categories.Select(c => c.Slug));
+            Assert.Equal(1, results.Count);
+            Assert.Contains("cat1", results.First().Categories.Select(c => c.Slug));
+            Assert.Contains("cat2", results.First().Categories.Select(c => c.Slug));
         }
     }
 }
