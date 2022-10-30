@@ -25,6 +25,8 @@
   </div>
   <div class="card-body">
     <markdown [data]="post.contentMarkdown"></markdown>
+    <hr *ngIf="post.photosAlbumSlug">
+    <app-entry-album [album]="postAlbum$ | async"></app-entry-album>
   </div>
   <div class="card-footer">
     <p>

@@ -5,8 +5,8 @@ export interface Post {
   slug: string;
   title: string;
   contentMarkdown: string;
-  filePath: string;
-  photosAlbumId?: number;
+  filePath: string | null;
+  photosAlbumSlug: string | null;
   author?: Author;
   datePublished: Date;
   dateLastModified: Date;

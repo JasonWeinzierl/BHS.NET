@@ -1,0 +1,6 @@
+<ng-container *ngIf="album">
+  <p class="text-muted">This post contains photos:</p>
+  <a *ngFor="let photo of album.photos" href="/apps/photos/album/{{album.slug}}/photo/{{photo.id}}">
+    <img [src]="photo.imagePath" class="img-fluid" [alt]="photo.name">
+  </a>
+</ng-container>
