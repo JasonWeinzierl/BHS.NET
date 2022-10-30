@@ -14,12 +14,12 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-      dotnet-version: '6.0.x'
+        dotnet-version: '6.0.x'
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-      node-version: '16'
+        node-version: '16'
 
     - run: dotnet restore
 
@@ -35,8 +35,8 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
-      name: bhs-web-publish
-      path: src/BHS.Web/bin/Release/net6.0/publish/
+        name: bhs-web-publish
+        path: src/BHS.Web/bin/Release/net6.0/publish/
       
   deploy:
     name: Deploy
@@ -54,8 +54,8 @@ jobs:
     - name: Download
       uses: actions/download-artifact@v3
       with:
-      name: bhs-web-publish
-      path: /srv/bhsspa/publish
+        name: bhs-web-publish
+        path: /srv/bhsspa/publish
 
     - run: docker-compose up -d --build bhsspa
       working-directory: /srv
