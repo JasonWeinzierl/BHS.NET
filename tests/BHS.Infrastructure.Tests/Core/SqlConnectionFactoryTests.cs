@@ -1,6 +1,7 @@
 ﻿using BHS.Infrastructure.Core;
 using Microsoft.Extensions.Configuration;
 using Moq;
+using Moq.Protected;
 using System.Data.Common;
 using Xunit;
 
@@ -31,6 +32,7 @@ public class SqlConnectionFactoryTests
             .SetupSet(c => c.ConnectionString = It.IsAny<string>())
             .Callback<string>(connStrName => ConnectionStringName = connStrName);
         mockConnection.As<IDisposable>().Setup(d => d.Dispose());
+        mockConnection.Protected().Setup("Dispose", new object[] { ItExpr.IsAny<bool>() });
 
         var mockPrvdrFctry = new Mock<DbProviderFactory>(MockBehavior.Strict);
         mockPrvdrFctry
@@ -44,6 +46,7 @@ public class SqlConnectionFactoryTests
     public void CreateConnection_Happy()
     {
         var result = _subject.CreateConnection("db");
+        result.Dispose();
 
         Assert.NotNull(result);
         Assert.Equal("mock connection string", ConnectionStringName);
