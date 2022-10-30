@@ -1,6 +1,7 @@
 name: Angular
 
 on:
+  workflow_dispatch: {}
   push:
     branches:
     - main
@@ -17,7 +18,7 @@ defaults:
     working-directory: ./src/BHS.Web/ClientApp
 
 jobs:
-  lint:
+  build-and-test:
 
     runs-on: ubuntu-latest
 
@@ -29,30 +30,6 @@ jobs:
         node-version: '16'
     - run: npm ci
     - run: npm run lint
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-    - run: npm ci
     - run: npm run build:app:prod
-
-  test:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-    - run: npm ci
     - run: npm run test:ci
     - run: npm run e2e:ci
