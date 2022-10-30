@@ -6,6 +6,10 @@
       </div>
       <div class="col-8">
         Album: <a [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
+        <ng-container *ngIf="album.blogPostSlug">
+          <br>
+          <a [routerLink]="['/apps/blog/entry', album.blogPostSlug]">Blog Post</a>
+        </ng-container>
       </div>
       <div class="col-2">
         <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', nextPhotoId]">Next &raquo;</a>

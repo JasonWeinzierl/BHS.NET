@@ -9,6 +9,9 @@
     </h1>
     <p class="card-subtitle text-muted" *ngIf="album.author">Provided by {{album.author.displayName}}</p>
     <p>{{album.description}}</p>
+    <p *ngIf="album.blogPostSlug">
+      <a [routerLink]="['/apps/blog/entry', album.blogPostSlug]">This album has a linked blog post.</a>
+    </p>
   </div>
 </div>
 
