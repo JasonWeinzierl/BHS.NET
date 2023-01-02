@@ -1,5 +1,5 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
+﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Text.Json.Serialization;
 
 namespace BHS.Web;
 

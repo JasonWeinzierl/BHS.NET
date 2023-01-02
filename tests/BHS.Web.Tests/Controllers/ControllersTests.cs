@@ -23,7 +23,7 @@ public class ControllersTests
         _services = new ServiceCollection()
                 .AddBhsDomain()
                 .AddBhsInfrastructure();
-        
+
         _services.AddSingleton<IConfiguration>(inMemoryConfig);
         _services.AddLogging();
         _services.AddHealthChecks();
