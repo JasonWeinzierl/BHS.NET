@@ -16,7 +16,7 @@ public class SqlConnectionFactoryTests
     public SqlConnectionFactoryTests()
     {
         const string connectionStringsSectionName = "ConnectionStrings";
-        var inMemoryData = new Dictionary<string, string>
+        var inMemoryData = new Dictionary<string, string?>
         {
             { $"{connectionStringsSectionName}:db", "mock connection string" },
         };

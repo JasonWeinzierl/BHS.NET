@@ -8,7 +8,7 @@ internal static class HealthChecksConfig
     public static void AddBhsHealthChecks(this IServiceCollection services)
     {
         services.AddHealthChecks()
-                .AddSqlServer(provider => provider.GetRequiredService<IConfiguration>().GetConnectionString("bhs"), name: "bhssql")
+                .AddSqlServer(provider => provider.GetRequiredService<IConfiguration>().GetConnectionString("bhs")!, name: "bhssql")
                 .AddCheck<SendGridHealthCheck>("sendgrid");
     }
 }

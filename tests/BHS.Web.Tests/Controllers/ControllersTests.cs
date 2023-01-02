@@ -14,7 +14,7 @@ public class ControllersTests
     public ControllersTests()
     {
         var inMemoryConfig = new ConfigurationBuilder()
-            .AddInMemoryCollection(new Dictionary<string, string>
+            .AddInMemoryCollection(new Dictionary<string, string?>
             {
                 { "SendGridClientOptions:ApiKey", "fake api key" }
             })
