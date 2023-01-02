@@ -10,7 +10,7 @@ The [Belton Historical Society website](https://www.beltonhistoricalsociety.org/
 
 ### Prerequisites
 
-- .NET 6 SDK and Visual Studio 2022
+- .NET 7 SDK and Visual Studio 2022
 - Node.JS and Angular CLI `npm install @angular/cli -g`
 - SQL Server 2019 and SQL Server Data Tools
 
