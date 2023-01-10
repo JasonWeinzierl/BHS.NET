@@ -8,7 +8,8 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddControllers()
+                .ConfigureBhs400Logging();
         services.AddSpaStaticFiles(configuration =>
         {
             configuration.RootPath = "ClientApp/dist";
