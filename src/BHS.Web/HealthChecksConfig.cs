@@ -5,6 +5,9 @@ namespace BHS.Web;
 
 internal static class HealthChecksConfig
 {
+    /// <summary>
+    /// Adds health checks.
+    /// </summary>
     public static void AddBhsHealthChecks(this IServiceCollection services)
     {
         services.AddHealthChecks()

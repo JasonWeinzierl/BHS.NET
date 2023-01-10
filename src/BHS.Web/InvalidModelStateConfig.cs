@@ -5,7 +5,15 @@ namespace BHS.Web;
 
 internal static class InvalidModelStateConfig
 {
-    public static IMvcBuilder ConfigureBhs400Logging(this IMvcBuilder builder)
+    /// <summary>
+    /// Adds logging when automatic 400 responses occur.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="ApiControllerAttribute"/> makes model validation errors automatically trigger an HTTP 400 response.
+    /// This method ensures those errors are logged while otherwise preserving the same response behavior.
+    /// </remarks>
+    /// <seealso href="https://learn.microsoft.com/en-us/aspnet/core/web-api#log-automatic-400-responses-1" />
+    public static IMvcBuilder AddBhs400Logging(this IMvcBuilder builder)
         => builder.ConfigureApiBehaviorOptions(options =>
         {
             var builtInFactory = options.InvalidModelStateResponseFactory;

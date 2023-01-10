@@ -5,6 +5,9 @@ namespace BHS.Web;
 
 internal static class SwaggerConfig
 {
+    /// <summary>
+    /// Adds the Swagger generator.
+    /// </summary>
     public static void AddBhsSwagger(this IServiceCollection services)
     {
         services.AddSwaggerGen(swaggerGenOptions =>
@@ -36,6 +39,9 @@ internal static class SwaggerConfig
         return Path.Combine(AppContext.BaseDirectory, xmlFile);
     }
 
+    /// <summary>
+    /// Registers middleware for Swagger and SwaggerUI.
+    /// </summary>
     public static void UseBhsSwagger(this IApplicationBuilder app)
     {
         app.UseSwagger(swaggerOptions =>
