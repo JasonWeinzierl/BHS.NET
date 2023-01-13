@@ -4,6 +4,7 @@ BEGIN
 	SELECT	[Title]
 			, [Name]
 			, [SortOrder]
+            , [DateStarted]
 	FROM	[leadership].[OfficerPosition_View]
 	ORDER BY
 			[SortOrder] ASC;

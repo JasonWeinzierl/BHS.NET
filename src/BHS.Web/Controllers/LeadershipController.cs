@@ -15,10 +15,16 @@ public class LeadershipController : ControllerBase
         _leadershipService = leadershipService;
     }
 
+    /// <summary>
+    /// Get all officers.
+    /// </summary>
     [HttpGet("officers")]
     public async Task<ActionResult<IList<Officer>>> GetOfficers(CancellationToken cancellationToken = default)
         => Ok(await _leadershipService.GetOfficers(cancellationToken));
 
+    /// <summary>
+    /// Get current directors.
+    /// </summary>
     [HttpGet("directors")]
     public async Task<ActionResult<IList<Director>>> GetDirectors(CancellationToken cancellationToken = default)
         => Ok(await _leadershipService.GetDirectors(cancellationToken));

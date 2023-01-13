@@ -10,6 +10,7 @@ AS
 	SELECT	p.[Title]
 			, o.[Name]
 			, p.[SortOrder]
+            , ops.[DateStarted]
 	FROM	[leadership].[OfficerPositionStart] ops JOIN
 			LatestPosition latest ON latest.[PositionId] = ops.[PositionId]
 				AND latest.DateStarted = ops.[DateStarted] JOIN

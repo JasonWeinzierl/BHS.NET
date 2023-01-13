@@ -30,7 +30,7 @@ public class LeadershipRepositoryTests
     [Fact]
     public async Task GetCurrentOfficers_Executes()
     {
-        _mockExecuter.ManyResults = new[] { new OfficerDto("x", "y", 1) };
+        _mockExecuter.ManyResults = new[] { new OfficerDto("x", "y", 1, default) };
 
         _ = await _subject.GetCurrentOfficers();
 
