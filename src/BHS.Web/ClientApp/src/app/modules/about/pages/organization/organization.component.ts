@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { catchError, Observable, of } from 'rxjs';
 import { Director, LeadershipService, Officer } from '@data/leadership';
+import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -7,35 +8,26 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.scss']
 })
-export class OrganizationComponent implements OnInit {
-  officers?: Officer[];
-  directors?: Director[];
+export class OrganizationComponent {
+  officers$: Observable<Officer[]>;
+  directors$: Observable<Director[]>;
 
   errors: string[] = [];
 
   constructor(
     private leadershipService: LeadershipService
-  ) { }
-
-  ngOnInit(): void {
-    this.leadershipService.getOfficers()
-      .subscribe(
-        response => this.officers = response,
-        (error: unknown) => {
-          if (error instanceof HttpErrorResponse) {
-            this.errors.push(error.message);
-          }
-        }
-      );
-
-    this.leadershipService.getDirectors()
-      .subscribe(
-        response => this.directors = response,
-        (error: unknown) => {
-          if (error instanceof HttpErrorResponse) {
-            this.errors.push(error.message);
-          }
-        }
-      );
+  ) {
+    this.officers$ = this.leadershipService.getOfficers().pipe(catchError((error: unknown) => {
+      if (error instanceof HttpErrorResponse) {
+        this.errors.push(error.message);
+      }
+      return of([]);
+    }));
+    this.directors$ = this.leadershipService.getDirectors().pipe(catchError((error: unknown) => {
+      if (error instanceof HttpErrorResponse) {
+        this.errors.push(error.message);
+      }
+      return of([]);
+    }));
   }
 }

@@ -5,27 +5,31 @@
 
       <div class="col-sm">
         <h2>Officers</h2>
-        <dl *ngIf="officers">
+        <dl *ngIf="officers$ | async as officers; else loadingOfficers">
           <ng-template ngFor let-officer [ngForOf]="officers">
             <dt>{{officer.title}}</dt>
             <dd>{{officer.name}}</dd>
           </ng-template>
         </dl>
-        <div *ngIf="!officers && !errors.length" class="spinner-grow" role="status">
-          <span class="visually-hidden">Loading officers...</span>
-        </div>
+        <ng-template #loadingOfficers>
+          <div *ngIf="!errors.length" class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading officers...</span>
+          </div>
+        </ng-template>
       </div>
 
       <div class="col-sm">
         <h2>Directors</h2>
-        <ul *ngIf="directors" class="list-unstyled">
+        <ul *ngIf="directors$ | async as directors; else loadingDirectors" class="list-unstyled">
           <li *ngFor="let director of directors">
             {{director.name}} ({{director.year}})
           </li>
         </ul>
-        <div *ngIf="!directors && !errors.length" class="spinner-grow" role="status">
-          <span class="visually-hidden">Loading directors...</span>
-        </div>
+        <ng-template #loadingDirectors>
+          <div *ngIf="!errors.length" class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading directors...</span>
+          </div>
+        </ng-template>
       </div>
 
       <div *ngFor="let e of errors" class="alert alert-danger" role="alert">
