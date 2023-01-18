@@ -12,6 +12,9 @@ using BHS.Infrastructure.Providers;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using SendGrid.Extensions.DependencyInjection;
 using System.Data.Common;
@@ -42,6 +45,8 @@ public static class BhsApiModule
 
     private static IServiceCollection AddMongoRepositories(this IServiceCollection services)
     {
+        BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.DateTime));
+
         services.TryAddSingleton<IMongoClient>(provider =>
         {
             var mongoConnStr = provider.GetRequiredService<IConfiguration>().GetConnectionString("bhsMongo");

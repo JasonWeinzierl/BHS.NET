@@ -1,13 +1,14 @@
 ﻿using BHS.Contracts.Leadership;
 using BHS.Domain;
 using BHS.Domain.Leadership;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
 
-internal sealed record DirectorDto([property: BsonId(IdGenerator = typeof(StringObjectIdGenerator))] string Id, string Name, int Year);
+internal sealed record DirectorDto(ObjectId Id, string Name, int Year);
+
+internal sealed record OfficerPositionDto(ObjectId Id, DateTimeOffset DateStarted, string Name, string Title, int SortOrder);
 
 public class LeadershipRepository : ILeadershipRepository
 {
@@ -24,20 +25,28 @@ public class LeadershipRepository : ILeadershipRepository
     {
         var collection = _db.GetCollection<DirectorDto>("directors");
 
-        var fb = Builders<DirectorDto>.Filter;
-        var filter = fb.Gte(x => x.Year, _dateTimeOffsetProvider.CurrentYear());
+        var results = collection.Aggregate()
+            .Match(x => x.Year > _dateTimeOffsetProvider.CurrentYear())
+            .Project(x => new Director(x.Name, x.Year.ToString()));
 
-        var results =  await (await collection.FindAsync(filter, cancellationToken: cancellationToken))
-            .ToListAsync(cancellationToken);
-
-        return results.Select(x => new Director(x.Name, x.Year.ToString())).ToList();
+        return await results.ToListAsync(cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<Officer>> GetCurrentOfficers(CancellationToken cancellationToken = default)
     {
-        var collection = _db.GetCollection<Officer>("officers");
+        var collection = _db.GetCollection<OfficerPositionDto>("officers");
 
-        var results = await collection.FindAsync(FilterDefinition<Officer>.Empty, cancellationToken: cancellationToken);
+        var results = collection.Aggregate()
+            .SortBy(x => x.DateStarted)
+            .Group(x => x.Title, x => new
+            {
+                Title = x.Key,
+                x.Last().Name,
+                x.Last().DateStarted,
+                x.Last().SortOrder,
+            })
+            .SortBy(x => x.SortOrder)
+            .Project(x => new Officer(x.Title, x.Name, x.DateStarted));
 
         return await results.ToListAsync(cancellationToken);
     }
