@@ -4,7 +4,7 @@ using BHS.Domain.Leadership;
 using BHS.Infrastructure.Core;
 using BHS.Infrastructure.Models;
 
-namespace BHS.Infrastructure.Repositories;
+namespace BHS.Infrastructure.Repositories.Sql;
 
 public class LeadershipRepository : ILeadershipRepository
 {

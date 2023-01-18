@@ -1,9 +1,9 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.Infrastructure.Models;
-using BHS.Infrastructure.Repositories;
+using BHS.Infrastructure.Repositories.Sql;
 using Xunit;
 
-namespace BHS.Infrastructure.Tests.Repositories;
+namespace BHS.Infrastructure.Tests.Repositories.Sql;
 
 public class AlbumRepositoryTests
 {
@@ -19,7 +19,7 @@ public class AlbumRepositoryTests
     [Fact]
     public async Task GetBySlug_Executes()
     {
-        string slug = "alb-2022";
+        var slug = "alb-2022";
         var album = new AlbumDto(
             slug,
             "some album",
@@ -47,7 +47,7 @@ public class AlbumRepositoryTests
     [Fact]
     public async Task GetBySlug_JoinsMultipleResults()
     {
-        string slug = "alb-2022";
+        var slug = "alb-2022";
         var album = new AlbumDto(
             slug,
             "some album",

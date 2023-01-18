@@ -2,7 +2,7 @@
 using BHS.Domain.ContactUs;
 using BHS.Infrastructure.Core;
 
-namespace BHS.Infrastructure.Repositories;
+namespace BHS.Infrastructure.Repositories.Sql;
 
 public class ContactAlertRepository : IContactAlertRepository
 {

@@ -9,7 +9,7 @@ using BHS.Infrastructure;
 using BHS.Infrastructure.Core;
 using BHS.Infrastructure.Core.TypeHandlers;
 using BHS.Infrastructure.Providers;
-using BHS.Infrastructure.Repositories;
+using BHS.Infrastructure.Repositories.Sql;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using SendGrid.Extensions.DependencyInjection;

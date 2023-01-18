@@ -1,9 +1,9 @@
 ﻿using BHS.Contracts.Blog;
 using BHS.Infrastructure.Models;
-using BHS.Infrastructure.Repositories;
+using BHS.Infrastructure.Repositories.Sql;
 using Xunit;
 
-namespace BHS.Infrastructure.Tests.Repositories;
+namespace BHS.Infrastructure.Tests.Repositories.Sql;
 
 public class CategoryRepositoryTests
 {

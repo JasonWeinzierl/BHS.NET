@@ -3,7 +3,7 @@ using BHS.Domain.Banners;
 using BHS.Infrastructure.Core;
 using BHS.Infrastructure.Models;
 
-namespace BHS.Infrastructure.Repositories;
+namespace BHS.Infrastructure.Repositories.Sql;
 
 public class SiteBannerRepository : ISiteBannerRepository
 {

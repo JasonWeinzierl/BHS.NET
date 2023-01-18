@@ -1,9 +1,9 @@
 ﻿using BHS.Infrastructure.Models;
-using BHS.Infrastructure.Repositories;
+using BHS.Infrastructure.Repositories.Sql;
 using Xunit;
 //using Xunit.Abstractions;
 
-namespace BHS.Infrastructure.Tests.Repositories;
+namespace BHS.Infrastructure.Tests.Repositories.Sql;
 
 public class PostRepositoryTests
 {
