@@ -18,8 +18,7 @@ public class Startup
         services.AddBhsHealthChecks();
         services.AddBhsSwagger();
 
-        services.AddBhsDomain()
-                .AddBhsInfrastructure();
+        services.AddBhsServices();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

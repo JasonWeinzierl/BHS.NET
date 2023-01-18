@@ -2,6 +2,7 @@
 using BHS.Web.IoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 using Xunit;
 
 namespace BHS.Web.Tests.Controllers;
@@ -20,10 +21,15 @@ public class ControllersTests
             })
             .Build();
 
-        _services = new ServiceCollection()
-                .AddBhsDomain()
-                .AddBhsInfrastructure();
+        _services = new ServiceCollection();
 
+        // Mock any services which shouldn't be instantiated.
+        _services.AddSingleton(Moq.Mock.Of<IMongoClient>());
+        
+        // Subject under test.
+        _services.AddBhsServices();
+
+        // Add other services provided by the Generic Host.
         _services.AddSingleton<IConfiguration>(inMemoryConfig);
         _services.AddLogging();
         _services.AddHealthChecks();

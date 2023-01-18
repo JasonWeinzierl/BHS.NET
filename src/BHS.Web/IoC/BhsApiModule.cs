@@ -9,9 +9,10 @@ using BHS.Infrastructure;
 using BHS.Infrastructure.Core;
 using BHS.Infrastructure.Core.TypeHandlers;
 using BHS.Infrastructure.Providers;
-using BHS.Infrastructure.Repositories.Sql;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using MongoDB.Driver;
 using SendGrid.Extensions.DependencyInjection;
 using System.Data.Common;
 
@@ -19,7 +20,7 @@ namespace BHS.Web.IoC;
 
 public static class BhsApiModule
 {
-    public static IServiceCollection AddBhsDomain(this IServiceCollection services)
+    public static IServiceCollection AddBhsServices(this IServiceCollection services)
     {
         services.AddOptions<ContactUsOptions>().BindConfiguration("ContactUsOptions").ValidateDataAnnotations();
         services.AddSendGrid((provider, opt) => provider.GetRequiredService<IConfiguration>().GetSection("SendGridClientOptions").Bind(opt));
@@ -31,10 +32,28 @@ public static class BhsApiModule
         services.AddScoped<ILeadershipService, LeadershipService>();
         services.AddScoped<ISiteBannerService, SiteBannerService>();
 
+        services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
+
+        //services.AddMongoRepositories();
+        services.AddSqlRepositories();
+
         return services;
     }
 
-    public static IServiceCollection AddBhsInfrastructure(this IServiceCollection services)
+    private static IServiceCollection AddMongoRepositories(this IServiceCollection services)
+    {
+        services.TryAddSingleton<IMongoClient>(provider =>
+        {
+            var mongoConnStr = provider.GetRequiredService<IConfiguration>().GetConnectionString("bhsMongo");
+            return new MongoClient(mongoConnStr);
+        });
+
+        services.AddScoped<ILeadershipRepository, Infrastructure.Repositories.Mongo.LeadershipRepository>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddSqlRepositories(this IServiceCollection services)
     {
         DbProviderFactories.RegisterFactory(DbConstants.SqlClientProviderName, SqlClientFactory.Instance);
         SqlMapper.AddTypeHandler(DapperUriTypeHandler.Default);
@@ -42,17 +61,16 @@ public static class BhsApiModule
         services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
         services.AddSingleton<IDbExecuter, DapperExecuter>();
 
-        services.AddSingleton<IPostRepository, PostRepository>();
-        services.AddSingleton<IPostPreviewRepository, PostPreviewRepository>();
-        services.AddSingleton<ICategoryRepository, CategoryRepository>();
-        services.AddSingleton<IAuthorRepository, AuthorRepository>();
-        services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();
-        services.AddSingleton<IPhotoRepository, PhotoRepository>();
-        services.AddSingleton<IAlbumRepository, AlbumRepository>();
-        services.AddSingleton<ILeadershipRepository, LeadershipRepository>();
-        services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
-
-        services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
+        // TryAddSingleton so that Mongo repositories can replace them.
+        services.TryAddSingleton<IPostRepository, Infrastructure.Repositories.Sql.PostRepository>();
+        services.TryAddSingleton<IPostPreviewRepository, Infrastructure.Repositories.Sql.PostPreviewRepository>();
+        services.TryAddSingleton<ICategoryRepository, Infrastructure.Repositories.Sql.CategoryRepository>();
+        services.TryAddSingleton<IAuthorRepository, Infrastructure.Repositories.Sql.AuthorRepository>();
+        services.TryAddSingleton<IContactAlertRepository, Infrastructure.Repositories.Sql.ContactAlertRepository>();
+        services.TryAddSingleton<IPhotoRepository, Infrastructure.Repositories.Sql.PhotoRepository>();
+        services.TryAddSingleton<IAlbumRepository, Infrastructure.Repositories.Sql.AlbumRepository>();
+        services.TryAddSingleton<ILeadershipRepository, Infrastructure.Repositories.Sql.LeadershipRepository>();
+        services.TryAddSingleton<ISiteBannerRepository, Infrastructure.Repositories.Sql.SiteBannerRepository>();
 
         return services;
     }
