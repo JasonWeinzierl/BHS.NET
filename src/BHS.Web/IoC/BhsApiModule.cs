@@ -53,7 +53,8 @@ public static class BhsApiModule
             return new MongoClient(mongoConnStr);
         });
 
-        services.AddScoped<ILeadershipRepository, Infrastructure.Repositories.Mongo.LeadershipRepository>();
+        services.AddSingleton<ILeadershipRepository, Infrastructure.Repositories.Mongo.LeadershipRepository>();
+        services.AddSingleton<IAlbumRepository, Infrastructure.Repositories.Mongo.AlbumRepository>();
 
         return services;
     }

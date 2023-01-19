@@ -1,31 +1,28 @@
 ﻿using BHS.Contracts.Leadership;
 using BHS.Domain;
 using BHS.Domain.Leadership;
-using MongoDB.Bson;
+using BHS.Infrastructure.Repositories.Mongo.Models;
 using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
 
-internal sealed record DirectorDto(ObjectId Id, string Name, int Year);
-
-internal sealed record OfficerPositionDto(ObjectId Id, DateTimeOffset DateStarted, string Name, string Title, int SortOrder);
-
 public class LeadershipRepository : ILeadershipRepository
 {
-    private readonly IMongoDatabase _db;
+    private readonly IMongoClient _mongoClient;
     private readonly IDateTimeOffsetProvider _dateTimeOffsetProvider;
+
+    private IMongoCollection<DirectorDto> DirectorCollection => _mongoClient.GetDatabase("bhs").GetCollection<DirectorDto>("directors");
+    private IMongoCollection<OfficerPositionDto> OfficerCollection => _mongoClient.GetDatabase("bhs").GetCollection<OfficerPositionDto>("officers");
 
     public LeadershipRepository(IMongoClient mongoClient, IDateTimeOffsetProvider dateTimeOffsetProvider)
     {
-        _db = mongoClient.GetDatabase("bhs");
+        _mongoClient = mongoClient;
         _dateTimeOffsetProvider = dateTimeOffsetProvider;
     }
 
     public async Task<IReadOnlyCollection<Director>> GetCurrentDirectors(CancellationToken cancellationToken = default)
     {
-        var collection = _db.GetCollection<DirectorDto>("directors");
-
-        var results = collection.Aggregate()
+        var results = DirectorCollection.Aggregate()
             .Match(x => x.Year > _dateTimeOffsetProvider.CurrentYear())
             .Project(x => new Director(x.Name, x.Year.ToString()));
 
@@ -34,9 +31,7 @@ public class LeadershipRepository : ILeadershipRepository
 
     public async Task<IReadOnlyCollection<Officer>> GetCurrentOfficers(CancellationToken cancellationToken = default)
     {
-        var collection = _db.GetCollection<OfficerPositionDto>("officers");
-
-        var results = collection.Aggregate()
+        var results = OfficerCollection.Aggregate()
             .SortBy(x => x.DateStarted)
             .Group(x => x.Title, x => new
             {
