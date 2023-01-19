@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Banners;
 
-namespace BHS.Infrastructure.Models;
+namespace BHS.Infrastructure.Repositories.Sql.Models;
 
 public record SiteBannerDTO(
     int Id,

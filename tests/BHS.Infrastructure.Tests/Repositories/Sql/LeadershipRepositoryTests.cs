@@ -1,6 +1,6 @@
 ﻿using BHS.Domain;
-using BHS.Infrastructure.Models;
 using BHS.Infrastructure.Repositories.Sql;
+using BHS.Infrastructure.Repositories.Sql.Models;
 using Moq;
 using Xunit;
 

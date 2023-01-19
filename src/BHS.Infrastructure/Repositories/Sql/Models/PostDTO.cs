@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Blog;
 
-namespace BHS.Infrastructure.Models;
+namespace BHS.Infrastructure.Repositories.Sql.Models;
 
 public record PostDto(
     string Slug,

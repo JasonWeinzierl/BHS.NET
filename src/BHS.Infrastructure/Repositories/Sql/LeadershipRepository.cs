@@ -2,7 +2,7 @@
 using BHS.Domain;
 using BHS.Domain.Leadership;
 using BHS.Infrastructure.Core;
-using BHS.Infrastructure.Models;
+using BHS.Infrastructure.Repositories.Sql.Models;
 
 namespace BHS.Infrastructure.Repositories.Sql;
 

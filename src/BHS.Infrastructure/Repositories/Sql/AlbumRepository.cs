@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts.Photos;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Core;
-using BHS.Infrastructure.Models;
+using BHS.Infrastructure.Repositories.Sql.Models;
 
 namespace BHS.Infrastructure.Repositories.Sql;
 

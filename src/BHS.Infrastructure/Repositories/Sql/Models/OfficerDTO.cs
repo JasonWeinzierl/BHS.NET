@@ -1,6 +1,6 @@
 ﻿using BHS.Contracts.Leadership;
 
-namespace BHS.Infrastructure.Models;
+namespace BHS.Infrastructure.Repositories.Sql.Models;
 
 public record OfficerDto(string Title, string Name, int SortOrder, DateTimeOffset DateStarted)
 {

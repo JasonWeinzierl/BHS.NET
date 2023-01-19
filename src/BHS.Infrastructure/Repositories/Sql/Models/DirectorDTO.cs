@@ -1,6 +1,6 @@
 ﻿using BHS.Contracts.Leadership;
 
-namespace BHS.Infrastructure.Models;
+namespace BHS.Infrastructure.Repositories.Sql.Models;
 
 public record DirectorDto(string Name, int Year)
 {

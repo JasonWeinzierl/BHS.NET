@@ -1,7 +1,7 @@
 ﻿using BHS.Contracts.Banners;
 using BHS.Domain.Banners;
 using BHS.Infrastructure.Core;
-using BHS.Infrastructure.Models;
+using BHS.Infrastructure.Repositories.Sql.Models;
 
 namespace BHS.Infrastructure.Repositories.Sql;
 

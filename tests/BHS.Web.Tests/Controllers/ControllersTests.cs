@@ -25,7 +25,7 @@ public class ControllersTests
 
         // Mock any services which shouldn't be instantiated.
         _services.AddSingleton(Moq.Mock.Of<IMongoClient>());
-        
+
         // Subject under test.
         _services.AddBhsServices();
 

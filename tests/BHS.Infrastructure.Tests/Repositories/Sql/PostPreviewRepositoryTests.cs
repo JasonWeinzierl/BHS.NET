@@ -1,5 +1,5 @@
-﻿using BHS.Infrastructure.Models;
-using BHS.Infrastructure.Repositories.Sql;
+﻿using BHS.Infrastructure.Repositories.Sql;
+using BHS.Infrastructure.Repositories.Sql.Models;
 using Xunit;
 
 namespace BHS.Infrastructure.Tests.Repositories.Sql;
