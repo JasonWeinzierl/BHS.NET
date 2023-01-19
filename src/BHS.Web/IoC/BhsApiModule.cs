@@ -16,6 +16,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Events;
 using SendGrid.Extensions.DependencyInjection;
 using System.Data.Common;
 
@@ -49,8 +50,15 @@ public static class BhsApiModule
 
         services.TryAddSingleton<IMongoClient>(provider =>
         {
+            var logger = provider.GetRequiredService<ILogger<MongoClient>>();
+
             var mongoConnStr = provider.GetRequiredService<IConfiguration>().GetConnectionString("bhsMongo");
-            return new MongoClient(mongoConnStr);
+            var clientSettings = MongoClientSettings.FromConnectionString(mongoConnStr);
+            clientSettings.ClusterConfigurator = builder =>
+            {
+                builder.Subscribe<CommandStartedEvent>(e => logger.LogDebug("{CommandName} - {Command}", e.CommandName, e.Command.ToJson()));
+            };
+            return new MongoClient(clientSettings);
         });
 
         services.AddSingleton<ILeadershipRepository, Infrastructure.Repositories.Mongo.LeadershipRepository>();
