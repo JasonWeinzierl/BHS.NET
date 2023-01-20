@@ -29,7 +29,7 @@ public class ContactUsServiceTests
             var request = new ContactAlertRequest(default, "x", default, default, null);
             _mockRepo
                 .Setup(r => r.Insert(request, default))
-                .ReturnsAsync(() => new ContactAlert(default, default, string.Empty, default, default, default));
+                .ReturnsAsync(() => new ContactAlert("1", default, string.Empty, default, default, default));
             _mockSgClient
                 .Setup(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => new Response(System.Net.HttpStatusCode.OK, default, default));

@@ -1,7 +1,7 @@
 ﻿namespace BHS.Contracts;
 
 public record ContactAlert(
-    int Id,
+    string Id,
     string? Name,
     string EmailAddress,
     string? Message,

@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts;
 using BHS.Infrastructure.Repositories.Sql;
+using BHS.Infrastructure.Repositories.Sql.Models;
 using Xunit;
 
 namespace BHS.Infrastructure.Tests.Repositories.Sql;
@@ -19,7 +20,7 @@ public class ContactAlertRepositoryTests
     public async Task Insert_Executes()
     {
         var request = new ContactAlertRequest("z", "x", "c", new DateTimeOffset(2020, 12, 16, 0, 0, 0, TimeSpan.FromHours(-6)), default);
-        _mockExecuter.SingleResult = new ContactAlert(default, default, string.Empty, default, default, default);
+        _mockExecuter.SingleResult = new ContactAlertDTO(1, default, string.Empty, default, default, default);
 
         _ = await _subject.Insert(request);
 
