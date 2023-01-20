@@ -18,7 +18,7 @@ public class AlbumRepository : IAlbumRepository
     {
         var results = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums")
             .Aggregate()
-            .Project(x => new AlbumDto(x.Id, x.Slug, x.Name, x.Description, x.BannerPhoto, x.BlogPostSlug, x.Contributor))
+            .Project(x => new AlbumDto(x.Slug, x.Name, x.Description, x.BannerPhoto, x.BlogPostSlug, x.Contributor))
             .ToListAsync(cancellationToken);
 
         return results.Select(x => x.ToAlbum()).ToList();
@@ -26,11 +26,8 @@ public class AlbumRepository : IAlbumRepository
 
     public async Task<AlbumPhotos?> GetBySlug(string slug, CancellationToken cancellationToken = default)
     {
-        var fb = Builders<AlbumPhotosDto>.Filter;
-        var filter = fb.Eq(x => x.Slug, slug);
-
         var cursor = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums")
-            .FindAsync(filter, cancellationToken: cancellationToken);
+            .FindAsync(x => x.Slug == slug, cancellationToken: cancellationToken);
         var result = await cursor.SingleOrDefaultAsync(cancellationToken);
 
         return result?.ToAlbumPhotos();
