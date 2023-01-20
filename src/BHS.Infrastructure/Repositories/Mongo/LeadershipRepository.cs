@@ -18,14 +18,14 @@ public class LeadershipRepository : ILeadershipRepository
     }
 
     public async Task<IReadOnlyCollection<Director>> GetCurrentDirectors(CancellationToken cancellationToken = default)
-        => await GetCollection<DirectorDto>("directors")
+        => await _mongoClient.GetBhsCollection<DirectorDto>("directors")
             .Aggregate()
             .Match(x => x.Year > _dateTimeOffsetProvider.CurrentYear())
             .Project(x => new Director(x.Name, x.Year.ToString()))
             .ToListAsync(cancellationToken);
 
     public async Task<IReadOnlyCollection<Officer>> GetCurrentOfficers(CancellationToken cancellationToken = default)
-        => await GetCollection<OfficerPositionDto>("officers")
+        => await _mongoClient.GetBhsCollection<OfficerPositionDto>("officers")
             .Aggregate()
             .SortBy(x => x.DateStarted)
             .Group(x => x.Title, x => new
@@ -38,7 +38,4 @@ public class LeadershipRepository : ILeadershipRepository
             .SortBy(x => x.SortOrder)
             .Project(x => new Officer(x.Title, x.Name, x.DateStarted))
             .ToListAsync(cancellationToken);
-
-    private IMongoCollection<T> GetCollection<T>(string collectionName)
-        => _mongoClient.GetDatabase("bhs").GetCollection<T>(collectionName);
 }

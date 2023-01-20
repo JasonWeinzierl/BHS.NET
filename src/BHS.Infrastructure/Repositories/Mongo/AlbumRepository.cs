@@ -1,5 +1,4 @@
-﻿using BHS.Contracts;
-using BHS.Contracts.Photos;
+﻿using BHS.Contracts.Photos;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Repositories.Mongo.Models;
 using MongoDB.Driver;
@@ -17,7 +16,7 @@ public class AlbumRepository : IAlbumRepository
 
     public async Task<IReadOnlyCollection<Album>> GetAll(CancellationToken cancellationToken = default)
     {
-        var results = await GetCollection<AlbumPhotosDto>("albums")
+        var results = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums")
             .Aggregate()
             .Project(x => new AlbumDto(x.Id, x.Slug, x.Name, x.Description, x.BannerPhoto, x.BlogPostSlug, x.Contributor))
             .ToListAsync(cancellationToken);
@@ -30,12 +29,10 @@ public class AlbumRepository : IAlbumRepository
         var fb = Builders<AlbumPhotosDto>.Filter;
         var filter = fb.Eq(x => x.Slug, slug);
 
-        var cursor = await GetCollection<AlbumPhotosDto>("albums").FindAsync(filter, cancellationToken: cancellationToken);
+        var cursor = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums")
+            .FindAsync(filter, cancellationToken: cancellationToken);
         var result = await cursor.SingleOrDefaultAsync(cancellationToken);
 
         return result?.ToAlbumPhotos();
     }
-
-    private IMongoCollection<T> GetCollection<T>(string collectionName)
-        => _mongoClient.GetDatabase("bhs").GetCollection<T>(collectionName);
 }

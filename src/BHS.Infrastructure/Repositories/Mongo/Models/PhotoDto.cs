@@ -3,6 +3,7 @@
 namespace BHS.Infrastructure.Repositories.Mongo.Models;
 
 internal sealed record PhotoDto(
+    int Id,
     string? Name,
     string ImagePath,
     DateTimeOffset DatePosted,
@@ -10,5 +11,9 @@ internal sealed record PhotoDto(
     string? Description)
 {
     public Photo ToPhoto()
-        => new(0, Name, new Uri(ImagePath), DatePosted, 0, Description); // TODO: zeros for ids!
+        => new(Id, Name, new Uri(ImagePath), DatePosted, 0, Description); // TODO: zeros for author id!
 }
+
+internal sealed record UnwoundPhotosDto(IReadOnlyCollection<PhotoDto> Photos);
+
+internal sealed record UnwoundPhotoDto(PhotoDto Photos);
