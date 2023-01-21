@@ -25,17 +25,19 @@ public class LeadershipRepository : ILeadershipRepository
             .ToListAsync(cancellationToken);
 
     public async Task<IReadOnlyCollection<Officer>> GetCurrentOfficers(CancellationToken cancellationToken = default)
-        => await _mongoClient.GetBhsCollection<OfficerPositionDto>("officers")
+        => await _mongoClient.GetBhsCollection<OfficerPositionDto>("officerPositions")
             .Aggregate()
-            .SortBy(x => x.DateStarted)
+            .Unwind<OfficerPositionDto, OfficerPositionUnwoundDto>(x => x.PositionHolders)
+            .Match(x => x.PositionHolders.DateStarted <= _dateTimeOffsetProvider.Now())
+            .SortBy(x => x.PositionHolders.DateStarted)
             .Group(x => x.Title, x => new
             {
                 Title = x.Key,
-                x.Last().Name,
-                x.Last().DateStarted,
                 x.Last().SortOrder,
+                x.Last().PositionHolders,
             })
+            .Match(x => x.PositionHolders.Name != null)
             .SortBy(x => x.SortOrder)
-            .Project(x => new Officer(x.Title, x.Name, x.DateStarted))
+            .Project(x => new Officer(x.Title, x.PositionHolders.Name!, x.PositionHolders.DateStarted))
             .ToListAsync(cancellationToken);
 }
