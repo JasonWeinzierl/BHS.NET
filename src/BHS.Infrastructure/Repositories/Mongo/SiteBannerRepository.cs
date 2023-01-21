@@ -19,16 +19,19 @@ public class SiteBannerRepository : ISiteBannerRepository
     }
 
     public async Task<IReadOnlyCollection<SiteBanner>> GetEnabled(CancellationToken cancellationToken = default)
-        => await _mongoClient.GetBhsCollection<SiteBannerRevisionDto>("bannerRevisions")
+        => await _mongoClient.GetBhsCollection<SiteBannerDto>("banners")
             .Aggregate()
-            .Match(x => x.DateModified <= _dateTimeOffsetProvider.Now())
-            .SortBy(x => x.DateModified)
-            .Group(x => x.RevisionId, x => new
+            .Unwind<SiteBannerDto, SiteBannerUnwoundDto>(x => x.StatusChanges)
+            .Match(x => x.StatusChanges.DateModified <= _dateTimeOffsetProvider.Now())
+            .SortBy(x => x.StatusChanges.DateModified)
+            .Group(x => x.Id, x => new
             {
-                x.Last().IsEnabled,
-                x.Last().Banner,
+                x.Last().StatusChanges.IsEnabled,
+                x.Last().ThemeId,
+                x.Last().Lead,
+                x.Last().Body,
             })
             .Match(x => x.IsEnabled)
-            .Project(x => new SiteBanner((AlertTheme)x.Banner.ThemeId, x.Banner.Lead, x.Banner.Body))
+            .Project(x => new SiteBanner((AlertTheme)x.ThemeId, x.Lead, x.Body))
             .ToListAsync(cancellationToken);
 }
