@@ -61,6 +61,7 @@ public static class BhsApiModule
             return new MongoClient(clientSettings);
         });
 
+        services.AddSingleton<IPostRepository, Infrastructure.Repositories.Mongo.PostRepository>();
         services.AddSingleton<ILeadershipRepository, Infrastructure.Repositories.Mongo.LeadershipRepository>();
         services.AddSingleton<IAlbumRepository, Infrastructure.Repositories.Mongo.AlbumRepository>();
         services.AddSingleton<IAuthorRepository, Infrastructure.Repositories.Mongo.AuthorRepository>();
