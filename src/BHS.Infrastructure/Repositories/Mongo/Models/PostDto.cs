@@ -90,14 +90,14 @@ internal sealed record PostLatestRevisionLatestDeletionUnwoundCategoryDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
     DateTimeOffset DateFirstPublished,
-    PostDeletionDto Deletions,
+    PostDeletionDto LatestDeletion,
     PostCategoryHistoryDto Categories);
 
 internal sealed record PostLatestRevisionLatestDeletionUnwoundCategoryUnwoundChangeDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
     DateTimeOffset DateFirstPublished,
-    PostDeletionDto Deletions,
+    PostDeletionDto LatestDeletion,
     PostCategoryUnwoundChangeDto Categories);
 
 internal sealed record PostCategoryUnwoundChangeDto(
@@ -109,7 +109,7 @@ internal sealed record PostCurrentSnapshotDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
     DateTimeOffset DateFirstPublished,
-    PostDeletionDto Deletions,
+    PostDeletionDto LatestDeletion,
     IEnumerable<PostCategoryDto> Categories)
 {
     public Post ToPost()

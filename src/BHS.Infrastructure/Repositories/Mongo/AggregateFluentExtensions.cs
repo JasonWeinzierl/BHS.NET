@@ -64,7 +64,7 @@ internal static class AggregateFluentExtensions
                 x.Key,
                 x.Last().LatestRevision,
                 x.Last().DateFirstPublished,
-                x.Last().Deletions,
+                x.Last().LatestDeletion,
                 x.Last().Categories,
             })
             .Match(x => x.Categories.Changes.IsEnabled)
@@ -72,7 +72,7 @@ internal static class AggregateFluentExtensions
                 x.Key,
                 x.Last().LatestRevision,
                 x.Last().DateFirstPublished,
-                x.Last().Deletions,
+                x.Last().LatestDeletion,
                 x.Select(y => new PostCategoryDto(y.Categories.Slug, y.Categories.Name)))
             );
 }
