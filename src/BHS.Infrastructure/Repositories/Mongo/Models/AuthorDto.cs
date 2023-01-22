@@ -8,7 +8,7 @@ internal sealed record AuthorDto(
     string? DisplayName)
 {
     public static AuthorDto? FromAuthor(Author? author)
-        => author is null ? null : new (author.DisplayName, author.Name);
+        => author is null ? null : new(author.DisplayName, author.Name);
 
     public Author ToAuthor()
         => new(0, UserName, DisplayName); // TODO: zeros for ids!

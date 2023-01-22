@@ -30,6 +30,7 @@ public class ErrorController : ControllerBase
         exception switch
         {
             InvalidContactRequestException => StatusCodes.Status400BadRequest,
+            NotImplementedException => StatusCodes.Status501NotImplemented,
             _ => StatusCodes.Status500InternalServerError,
         };
 }

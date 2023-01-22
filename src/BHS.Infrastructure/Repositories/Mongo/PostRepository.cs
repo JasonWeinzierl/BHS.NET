@@ -22,7 +22,7 @@ public class PostRepository : IPostRepository
         var result = await _mongoClient.GetBhsCollection<PostDto>("posts")
             .Aggregate()
             .Match(x => x.Slug == slug) // TODO: should be case insensitive & elsewhere!
-            .GetCurrentPostSnapshots(_dateTimeOffsetProvider.Now())
+            .GetCurrentPostSnapshotDtos(_dateTimeOffsetProvider.Now())
             .SingleOrDefaultAsync(cancellationToken);
         return result?.ToPost();
     }

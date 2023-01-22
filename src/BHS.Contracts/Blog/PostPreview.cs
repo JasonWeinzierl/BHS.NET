@@ -6,4 +6,4 @@ public record PostPreview(
     string ContentPreview,
     Author? Author,
     DateTimeOffset DatePublished,
-    ICollection<Category> Categories);
+    IEnumerable<Category> Categories);
