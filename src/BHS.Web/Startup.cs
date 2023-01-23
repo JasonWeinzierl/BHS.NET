@@ -1,4 +1,4 @@
-﻿using BHS.Web.IoC;
+﻿using BHS.Infrastructure.IoC;
 using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 

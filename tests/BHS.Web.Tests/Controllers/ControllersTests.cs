@@ -1,5 +1,5 @@
-﻿using BHS.Web.Controllers;
-using BHS.Web.IoC;
+﻿using BHS.Infrastructure.IoC;
+using BHS.Web.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;

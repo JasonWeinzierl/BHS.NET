@@ -5,13 +5,15 @@ using BHS.Domain.Blog;
 using BHS.Domain.ContactUs;
 using BHS.Domain.Leadership;
 using BHS.Domain.Photos;
-using BHS.Infrastructure;
 using BHS.Infrastructure.Core;
 using BHS.Infrastructure.Core.TypeHandlers;
 using BHS.Infrastructure.Providers;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
@@ -20,9 +22,9 @@ using MongoDB.Driver.Core.Events;
 using SendGrid.Extensions.DependencyInjection;
 using System.Data.Common;
 
-namespace BHS.Web.IoC;
+namespace BHS.Infrastructure.IoC;
 
-public static class BhsApiModule
+public static class BhsServiceCollectionExtensions
 {
     public static IServiceCollection AddBhsServices(this IServiceCollection services)
     {
@@ -71,15 +73,15 @@ public static class BhsApiModule
             return new MongoClient(clientSettings);
         });
 
-        services.AddSingleton<IPostRepository, Infrastructure.Repositories.Mongo.PostRepository>();
-        services.AddSingleton<IPostPreviewRepository, Infrastructure.Repositories.Mongo.PostPreviewRepository>();
-        services.AddSingleton<ICategoryRepository, Infrastructure.Repositories.Mongo.CategoryRepository>();
-        services.AddSingleton<ILeadershipRepository, Infrastructure.Repositories.Mongo.LeadershipRepository>();
-        services.AddSingleton<IAlbumRepository, Infrastructure.Repositories.Mongo.AlbumRepository>();
-        services.AddSingleton<IAuthorRepository, Infrastructure.Repositories.Mongo.AuthorRepository>();
-        services.AddSingleton<IContactAlertRepository, Infrastructure.Repositories.Mongo.ContactAlertRepository>();
-        services.AddSingleton<IPhotoRepository, Infrastructure.Repositories.Mongo.PhotoRepository>();
-        services.AddSingleton<ISiteBannerRepository, Infrastructure.Repositories.Mongo.SiteBannerRepository>();
+        services.AddSingleton<IPostRepository, Repositories.Mongo.PostRepository>();
+        services.AddSingleton<IPostPreviewRepository, Repositories.Mongo.PostPreviewRepository>();
+        services.AddSingleton<ICategoryRepository, Repositories.Mongo.CategoryRepository>();
+        services.AddSingleton<ILeadershipRepository, Repositories.Mongo.LeadershipRepository>();
+        services.AddSingleton<IAlbumRepository, Repositories.Mongo.AlbumRepository>();
+        services.AddSingleton<IAuthorRepository, Repositories.Mongo.AuthorRepository>();
+        services.AddSingleton<IContactAlertRepository, Repositories.Mongo.ContactAlertRepository>();
+        services.AddSingleton<IPhotoRepository, Repositories.Mongo.PhotoRepository>();
+        services.AddSingleton<ISiteBannerRepository, Repositories.Mongo.SiteBannerRepository>();
 
         return services;
     }
@@ -93,15 +95,15 @@ public static class BhsApiModule
         services.AddSingleton<IDbExecuter, DapperExecuter>();
 
         // TryAddSingleton so that Mongo repositories can replace them.
-        services.TryAddSingleton<IPostRepository, Infrastructure.Repositories.Sql.PostRepository>();
-        services.TryAddSingleton<IPostPreviewRepository, Infrastructure.Repositories.Sql.PostPreviewRepository>();
-        services.TryAddSingleton<ICategoryRepository, Infrastructure.Repositories.Sql.CategoryRepository>();
-        services.TryAddSingleton<IAuthorRepository, Infrastructure.Repositories.Sql.AuthorRepository>();
-        services.TryAddSingleton<IContactAlertRepository, Infrastructure.Repositories.Sql.ContactAlertRepository>();
-        services.TryAddSingleton<IPhotoRepository, Infrastructure.Repositories.Sql.PhotoRepository>();
-        services.TryAddSingleton<IAlbumRepository, Infrastructure.Repositories.Sql.AlbumRepository>();
-        services.TryAddSingleton<ILeadershipRepository, Infrastructure.Repositories.Sql.LeadershipRepository>();
-        services.TryAddSingleton<ISiteBannerRepository, Infrastructure.Repositories.Sql.SiteBannerRepository>();
+        services.TryAddSingleton<IPostRepository, Repositories.Sql.PostRepository>();
+        services.TryAddSingleton<IPostPreviewRepository, Repositories.Sql.PostPreviewRepository>();
+        services.TryAddSingleton<ICategoryRepository, Repositories.Sql.CategoryRepository>();
+        services.TryAddSingleton<IAuthorRepository, Repositories.Sql.AuthorRepository>();
+        services.TryAddSingleton<IContactAlertRepository, Repositories.Sql.ContactAlertRepository>();
+        services.TryAddSingleton<IPhotoRepository, Repositories.Sql.PhotoRepository>();
+        services.TryAddSingleton<IAlbumRepository, Repositories.Sql.AlbumRepository>();
+        services.TryAddSingleton<ILeadershipRepository, Repositories.Sql.LeadershipRepository>();
+        services.TryAddSingleton<ISiteBannerRepository, Repositories.Sql.SiteBannerRepository>();
 
         return services;
     }
