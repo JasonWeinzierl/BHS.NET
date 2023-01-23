@@ -63,6 +63,7 @@ public static class BhsApiModule
 
         services.AddSingleton<IPostRepository, Infrastructure.Repositories.Mongo.PostRepository>();
         services.AddSingleton<IPostPreviewRepository, Infrastructure.Repositories.Mongo.PostPreviewRepository>();
+        services.AddSingleton<ICategoryRepository, Infrastructure.Repositories.Mongo.CategoryRepository>();
         services.AddSingleton<ILeadershipRepository, Infrastructure.Repositories.Mongo.LeadershipRepository>();
         services.AddSingleton<IAlbumRepository, Infrastructure.Repositories.Mongo.AlbumRepository>();
         services.AddSingleton<IAuthorRepository, Infrastructure.Repositories.Mongo.AuthorRepository>();

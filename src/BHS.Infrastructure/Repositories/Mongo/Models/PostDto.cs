@@ -51,6 +51,13 @@ internal sealed record PostCategoryChangeDto(
     bool IsEnabled);
 
 
+internal sealed record PostUnwoundCategoryDto(
+    [property: BsonId] string Slug,
+    IReadOnlyCollection<PostRevisionDto> Revisions,
+    IReadOnlyCollection<PostDeletionDto> Deletions,
+    PostCategoryHistoryDto Categories);
+
+
 internal sealed record PostUnwoundRevisionDto(
     [property: BsonId] string Slug,
     PostRevisionDto Revisions,
