@@ -45,7 +45,10 @@ public class BlogService : IBlogService
         if (author is null)
             return null;
 
-        return await _postPreviewRepository.GetByAuthorId(author.Id, cancellationToken);
+        if (_postPreviewRepository is IPostPreviewRepositoryWithAuthorUsername byUsernameRepo)
+            return await byUsernameRepo.GetByAuthorUsername(username, cancellationToken);
+        else
+            return await _postPreviewRepository.GetByAuthorId(author.Id, cancellationToken);
     }
 
     public Task<IReadOnlyCollection<PostPreview>> SearchPosts(string? text, DateTime? from, DateTime? to, CancellationToken cancellationToken = default)

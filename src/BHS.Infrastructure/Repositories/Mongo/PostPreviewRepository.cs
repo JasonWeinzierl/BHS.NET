@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
 
-public class PostPreviewRepository : IPostPreviewRepository
+public class PostPreviewRepository : IPostPreviewRepository, IPostPreviewRepositoryWithAuthorUsername
 {
     private readonly IMongoClient _mongoClient;
     private readonly IDateTimeOffsetProvider _dateTimeOffsetProvider;
@@ -19,8 +19,16 @@ public class PostPreviewRepository : IPostPreviewRepository
 
     public Task<IReadOnlyCollection<PostPreview>> GetByAuthorId(int authorId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException(); // TODO: author ID is not stored in our current mongo schema!
+        throw new NotImplementedException("The MongoDB implementation of this repository does not support lookup by author ID.");
     }
+
+    public async Task<IReadOnlyCollection<PostPreview>> GetByAuthorUsername(string username, CancellationToken cancellationToken = default)
+        => await _mongoClient.GetBhsCollection<PostDto>("posts")
+            .Aggregate()
+            .GetCurrentPostSnapshotDtos(_dateTimeOffsetProvider.Now())
+            .Match(x => x.LatestRevision.Author!.Username == username)
+            .GetPreviews()
+            .ToListAsync(cancellationToken);
 
     public async Task<IReadOnlyCollection<PostPreview>> GetByCategorySlug(string categorySlug, CancellationToken cancellationToken = default)
         => await _mongoClient.GetBhsCollection<PostDto>("posts")

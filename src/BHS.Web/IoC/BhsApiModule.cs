@@ -47,6 +47,16 @@ public static class BhsApiModule
     private static IServiceCollection AddMongoRepositories(this IServiceCollection services)
     {
         BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.DateTime));
+        BsonClassMap.RegisterClassMap<Contracts.Author>(map =>
+        {
+            // Prevent Author.Id from being deserialized as Author._id
+            map.AutoMap();
+            map.UnmapProperty(c => c.Id);
+            map.MapMember(c => c.Id)
+                .SetElementName("Id")
+                .SetOrder(0)
+                .SetIsRequired(true);
+        });
 
         services.TryAddSingleton<IMongoClient>(provider =>
         {

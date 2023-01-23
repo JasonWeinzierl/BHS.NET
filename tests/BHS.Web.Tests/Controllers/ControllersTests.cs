@@ -7,12 +7,9 @@ using Xunit;
 
 namespace BHS.Web.Tests.Controllers;
 
-[Trait("Category", "CompositionRootTest")]
-public class ControllersTests
+public sealed class ControllerTestsClassFixture
 {
-    private readonly IServiceCollection _services;
-
-    public ControllersTests()
+    public ControllerTestsClassFixture()
     {
         var inMemoryConfig = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
@@ -21,18 +18,31 @@ public class ControllersTests
             })
             .Build();
 
-        _services = new ServiceCollection();
+        Services = new ServiceCollection();
 
         // Mock any services which shouldn't be instantiated.
-        _services.AddSingleton(Moq.Mock.Of<IMongoClient>());
+        Services.AddSingleton(Moq.Mock.Of<IMongoClient>());
 
         // Subject under test.
-        _services.AddBhsServices();
+        Services.AddBhsServices();
 
         // Add other services provided by the Generic Host.
-        _services.AddSingleton<IConfiguration>(inMemoryConfig);
-        _services.AddLogging();
-        _services.AddHealthChecks();
+        Services.AddSingleton<IConfiguration>(inMemoryConfig);
+        Services.AddLogging();
+        Services.AddHealthChecks();
+    }
+
+    public IServiceCollection Services { get; }
+}
+
+[Trait("Category", "CompositionRootTest")]
+public class ControllersTests : IClassFixture<ControllerTestsClassFixture>
+{
+    private readonly ControllerTestsClassFixture _fixture;
+
+    public ControllersTests(ControllerTestsClassFixture fixture)
+    {
+        _fixture = fixture;
     }
 
     public static IEnumerable<object[]> Controllers => new[]
@@ -51,8 +61,8 @@ public class ControllersTests
     [MemberData(nameof(Controllers))]
     public void Controller_Resolves(Type controllerType)
     {
-        _services.AddTransient(controllerType);
-        using var serviceProvider = _services.BuildServiceProvider();
+        _fixture.Services.AddTransient(controllerType);
+        using var serviceProvider = _fixture.Services.BuildServiceProvider();
 
         var controller = serviceProvider.GetService(controllerType);
 

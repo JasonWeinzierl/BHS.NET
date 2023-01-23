@@ -27,7 +27,7 @@ public class AuthorRepository : IAuthorRepository
     public async Task<Author?> GetByUserName(string userName, CancellationToken cancellationToken = default)
     {
         var cursor = await _mongoClient.GetBhsCollection<AuthorDto>("authors")
-            .FindAsync(x => x.UserName == userName, cancellationToken: cancellationToken);
+            .FindAsync(x => x.Username == userName, cancellationToken: cancellationToken);
         var result = await cursor.SingleOrDefaultAsync(cancellationToken);
 
         return result?.ToAuthor();
