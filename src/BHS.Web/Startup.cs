@@ -6,6 +6,13 @@ namespace BHS.Web;
 
 public class Startup
 {
+    public IConfiguration Configuration { get; }
+
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers()
@@ -15,7 +22,7 @@ public class Startup
             configuration.RootPath = "ClientApp/dist";
         });
 
-        services.AddBhsHealthChecks();
+        services.AddBhsHealthChecks(Configuration);
         services.AddBhsSwagger();
 
         services.AddBhsServices();
