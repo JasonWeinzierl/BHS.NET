@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Serilog.Context;
 
 namespace BHS.Web;
@@ -24,7 +25,15 @@ internal static class InvalidModelStateConfig
 
                 if (response is ObjectResult objectResult && objectResult.Value is HttpValidationProblemDetails problemDetails)
                 {
-                    var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                    var controllerType = context.HttpContext.GetEndpoint()
+                                                            ?.Metadata.GetMetadata<ControllerActionDescriptor>()
+                                                            ?.ControllerTypeInfo.AsType()
+                                                            ?? typeof(Program);
+
+                    var logger = context.HttpContext.RequestServices
+                                        .GetRequiredService<ILoggerFactory>()
+                                        .CreateLogger(controllerType);
+
                     using (LogContext.PushProperty("ValidationErrors", problemDetails.Errors))
                     {
                         logger.LogWarning("One or more validation errors occurred.");
