@@ -5,5 +5,5 @@ public record Photo(
     string? Name,
     Uri ImagePath,
     DateTimeOffset DatePosted,
-    int? AuthorId,
+    [property: Obsolete("This property will be replaced in a future release.")] int? AuthorId,
     string? Description);

@@ -17,6 +17,15 @@ public class LeadershipRepository : ILeadershipRepository
         _dateTimeOffsetProvider = dateTimeOffsetProvider;
     }
 
+    public async Task BulkUpsertDirectors(IEnumerable<Director> directors, CancellationToken cancellationToken = default)
+    {
+        var fb = Builders<Director>.Filter;
+
+        var models = directors.Select(dir => new ReplaceOneModel<Director>(fb.Eq(x => x.Name, dir.Name) & fb.Eq(x => x.Year, dir.Year), dir) { IsUpsert = true });
+
+        _ = await _mongoClient.GetBhsCollection<Director>("directors").BulkWriteAsync(models, cancellationToken: cancellationToken);
+    }
+
     public async Task<IReadOnlyCollection<Director>> GetCurrentDirectors(CancellationToken cancellationToken = default)
         => await _mongoClient.GetBhsCollection<DirectorDto>("directors")
             .Aggregate()
