@@ -26,4 +26,12 @@ public class ContactAlertRepository : IContactAlertRepository
 
         return alert.ToAlert();
     }
+
+    public async Task Backfill(DateTimeOffset dateCreated, ContactAlertRequest contactRequest, CancellationToken cancellationToken = default)
+    {
+        var dto = ContactAlertDto.FromRequest(contactRequest, dateCreated);
+
+        await _mongoClient.GetBhsCollection<ContactAlertDto>("contactAlerts")
+                .InsertOneAsync(dto, cancellationToken: cancellationToken);
+    }
 }

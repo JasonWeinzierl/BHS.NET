@@ -2,6 +2,7 @@
 using BHS.Domain;
 using BHS.Domain.Leadership;
 using BHS.Infrastructure.Repositories.Mongo.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
@@ -19,11 +20,12 @@ public class LeadershipRepository : ILeadershipRepository
 
     public async Task BulkUpsertDirectors(IEnumerable<Director> directors, CancellationToken cancellationToken = default)
     {
-        var fb = Builders<Director>.Filter;
+        var fb = Builders<DirectorDto>.Filter;
 
-        var models = directors.Select(dir => new ReplaceOneModel<Director>(fb.Eq(x => x.Name, dir.Name) & fb.Eq(x => x.Year, dir.Year), dir) { IsUpsert = true });
+        var dtos = directors.Select(x => new DirectorDto(ObjectId.GenerateNewId(new DateTime(int.Parse(x.Year), 0, 0)), x.Name, int.Parse(x.Year)));
+        var models = dtos.Select(dir => new ReplaceOneModel<DirectorDto>(fb.Eq(x => x.Name, dir.Name) & fb.Eq(x => x.Year, dir.Year), dir) { IsUpsert = true });
 
-        _ = await _mongoClient.GetBhsCollection<Director>("directors").BulkWriteAsync(models, cancellationToken: cancellationToken);
+        _ = await _mongoClient.GetBhsCollection<DirectorDto>("directors").BulkWriteAsync(models, cancellationToken: cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<Director>> GetCurrentDirectors(CancellationToken cancellationToken = default)
@@ -49,4 +51,13 @@ public class LeadershipRepository : ILeadershipRepository
             .SortBy(x => x.SortOrder)
             .Project(x => new Officer(x.Title, x.PositionHolders.Name!, x.PositionHolders.DateStarted))
             .ToListAsync(cancellationToken);
+
+    public async Task BackfillPosition(string Title, int SortOrder, IEnumerable<(string? Name, DateTimeOffset DateStarted)> officers, CancellationToken cancellationToken = default)
+    {
+        var dto = new OfficerPositionDto(Title, SortOrder, officers.Select(x => new OfficerDto(x.Name, x.DateStarted)).ToList());
+
+        var collection = _mongoClient.GetBhsCollection<OfficerPositionDto>("officerPositions");
+
+        await collection.InsertOneAsync(dto, cancellationToken: cancellationToken);
+    }
 }

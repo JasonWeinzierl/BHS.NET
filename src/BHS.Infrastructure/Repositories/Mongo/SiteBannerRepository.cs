@@ -3,6 +3,7 @@ using BHS.Contracts.Banners;
 using BHS.Domain;
 using BHS.Domain.Banners;
 using BHS.Infrastructure.Repositories.Mongo.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
@@ -34,4 +35,19 @@ public class SiteBannerRepository : ISiteBannerRepository
             .Match(x => x.IsEnabled)
             .Project(x => new SiteBanner((AlertTheme)x.ThemeId, x.Lead, x.Body))
             .ToListAsync(cancellationToken);
+
+    public async Task Backfill(
+        DateTimeOffset dateCreated,
+        SiteBanner banner,
+        IEnumerable<(DateTimeOffset DateModified, bool IsEnabled)> statusChanges,
+        CancellationToken cancellationToken = default)
+    {
+        var objectId = ObjectId.GenerateNewId(dateCreated.UtcDateTime);
+        var changeDtos = statusChanges.Select(x => new SiteBannerStatusChangeDto(x.DateModified, x.IsEnabled)).ToList();
+        var dto = new SiteBannerDto(objectId, (byte)banner.Theme, banner.Lead, banner.Body, changeDtos);
+
+        var collection = _mongoClient.GetBhsCollection<SiteBannerDto>("banners");
+
+        await collection.InsertOneAsync(dto, cancellationToken: cancellationToken);
+    }
 }

@@ -26,4 +26,11 @@ public class PostRepository : IPostRepository
             .SingleOrDefaultAsync(cancellationToken);
         return result?.ToPost();
     }
+
+    internal async Task BackfillPost(PostDto postDto, CancellationToken cancellationToken = default)
+    {
+        var collection = _mongoClient.GetBhsCollection<PostDto>("posts");
+
+        await collection.InsertOneAsync(postDto, cancellationToken: cancellationToken);
+    }
 }
