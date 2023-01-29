@@ -120,12 +120,14 @@ internal static class AggregateFluentExtensions
         else
             return aggregateFluent
                 .Match(x => x.LatestRevision.ContentMarkdown.Contains(searchText))
-                .Project(x => new PostCurrentSnapshotWithSearchTextIdxDto(
-                    x.Slug,
-                    x.LatestRevision,
-                    x.DateFirstPublished,
-                    x.Categories,
-                    x.LatestRevision.ContentMarkdown.IndexOf(searchText))
+                .AppendStage(PipelineStageDefinitionBuilder.Project<PostCurrentSnapshotDto, PostCurrentSnapshotWithSearchTextIdxDto>(
+                    x => new PostCurrentSnapshotWithSearchTextIdxDto(
+                        x.Slug,
+                        x.LatestRevision,
+                        x.DateFirstPublished,
+                        x.Categories,
+                        x.LatestRevision.ContentMarkdown.IndexOf(searchText) - 25),
+                    DbConstants.TranslationOptions)
                 )
                 .AppendStage(PipelineStageDefinitionBuilder.Project<PostCurrentSnapshotWithSearchTextIdxDto, PostPreview>(
                     x => new PostPreview(
