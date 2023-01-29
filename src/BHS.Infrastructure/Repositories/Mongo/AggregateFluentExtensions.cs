@@ -4,6 +4,7 @@ using BHS.Infrastructure.Repositories.Mongo.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
 
@@ -32,9 +33,9 @@ internal static class AggregateFluentExtensions
                 x.Last().Categories)
             )
             // Get latest Deletion
-            .Unwind<PostLatestRevisionDto, PostLatestRevisionUnwoundDeletionDto>(x => x.Deletions)
-            .Match(x => x.Deletions.DateDeleted <= now)
-            .SortBy(x => x.Deletions.DateDeleted)
+            .Unwind(x => x.Deletions, new AggregateUnwindOptions<PostLatestRevisionUnwoundDeletionDto>() { PreserveNullAndEmptyArrays = true })
+            .Match(x => x.Deletions == null || x.Deletions.DateDeleted <= now)
+            .SortBy(x => x.Deletions!.DateDeleted)
             .Group(x => x.Slug, x => new PostLatestRevisionUnwoundDeletionDto(
                 x.Key,
                 x.Last().LatestRevision,
@@ -58,25 +59,46 @@ internal static class AggregateFluentExtensions
                 )
             ))
             // Get enabled Categories
-            .Unwind<PostLatestRevisionUnwoundDeletionDto, PostLatestRevisionLatestDeletionUnwoundCategoryDto>(x => x.Categories)
-            .Unwind<PostLatestRevisionLatestDeletionUnwoundCategoryDto, PostLatestRevisionLatestDeletionUnwoundCategoryUnwoundChangeDto>(x => x.Categories.Changes)
-            .Match(x => x.Categories.Changes.DateChanged <= now)
-            .SortBy(x => x.Categories.Changes.DateChanged)
-            .Group(x => new { PostSlug = x.Slug, CategorySlug = x.Categories.Slug }, x => new
-            {
+            .Unwind(x => x.Categories, new AggregateUnwindOptions<PostLatestRevisionNotDeletedUnwoundCategoryDto> { PreserveNullAndEmptyArrays = true })
+            .Unwind(x => x.Categories!.Changes, new AggregateUnwindOptions<PostLatestRevisionNotDeletedUnwoundCategoryUnwoundChangeDto> { PreserveNullAndEmptyArrays = true })
+            .Match(x => x.Categories == null || x.Categories.Changes.DateChanged <= now)
+            .SortBy(x => x.Categories!.Changes.DateChanged)
+            .Group(x => new PostFlattenedGroupedCategorySlugIdDto(x.Slug, x.Categories!.Slug), x => new PostLatestRevisionFlattenedGroupedCategoryDto(
                 x.Key,
                 x.Last().LatestRevision,
                 x.Last().DateFirstPublished,
-                x.Last().LatestDeletion,
-                x.Last().Categories,
-            })
-            .Match(x => x.Categories.Changes.IsEnabled)
-            .Group(x => x.Key.PostSlug, x => new PostCurrentSnapshotDto(
-                x.Key,
-                x.Last().LatestRevision,
-                x.Last().DateFirstPublished,
-                x.Last().LatestDeletion,
-                x.Select(y => new PostCategoryDto(y.Categories.Slug, y.Categories.Name)))
+                x.Last().Categories))
+            .Match(x => x.Categories == null || x.Categories.Changes.IsEnabled)
+            // Re-combine unwound categories ONLY IF Category is not null (otherwise un-categorized posts get a null category).
+            // We must use BsonDocument here because we need the $$REMOVE System Variable.
+            .Group(new BsonDocumentProjectionDefinition<PostLatestRevisionFlattenedGroupedCategoryDto, PostCurrentSnapshotDto>(
+                new BsonDocument
+                {
+                    { "_id", $"$_id.{nameof(PostFlattenedGroupedCategorySlugIdDto.PostSlug)}" },
+                    { nameof(PostCurrentSnapshotDto.LatestRevision), new BsonDocument("$last", $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.LatestRevision)}") },
+                    { nameof(PostCurrentSnapshotDto.DateFirstPublished), new BsonDocument("$last", $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.DateFirstPublished)}") },
+                    { nameof(PostCurrentSnapshotDto.Categories),
+                        new BsonDocument(
+                            "$push",
+                            new BsonDocument(
+                                "$cond",
+                                new BsonArray
+                                {
+                                    new BsonDocument(
+                                        "$ne",
+                                        new BsonArray
+                                        {
+                                            $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.Categories)}",
+                                            BsonNull.Value
+                                        }),
+                                    new BsonDocument
+                                    {
+                                        { "_id", $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.Categories)}._id" },
+                                        { nameof(PostCategoryDto.Name), $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.Categories)}.{nameof(PostCategoryUnwoundChangeDto.Name)}" }
+                                    },
+                                    "$$REMOVE"
+                                })) }
+                })
             );
 
     [SuppressMessage("Performance", "CA1845:Use span-based 'string.Concat'", Justification = "CS8640:Expression tree cannot contain value of ref struct or restricted type 'ReadOnlySpan'.")]

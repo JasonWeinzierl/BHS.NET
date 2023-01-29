@@ -90,33 +90,40 @@ internal sealed record PostLatestRevisionUnwoundDeletionDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
     DateTimeOffset DateFirstPublished,
-    PostDeletionDto Deletions,
+    PostDeletionDto? Deletions,
     IReadOnlyCollection<PostCategoryHistoryDto> Categories);
 
-internal sealed record PostLatestRevisionLatestDeletionUnwoundCategoryDto(
+internal sealed record PostLatestRevisionNotDeletedUnwoundCategoryDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
     DateTimeOffset DateFirstPublished,
-    PostDeletionDto LatestDeletion,
-    PostCategoryHistoryDto Categories);
+    PostCategoryHistoryDto? Categories);
 
-internal sealed record PostLatestRevisionLatestDeletionUnwoundCategoryUnwoundChangeDto(
+internal sealed record PostLatestRevisionNotDeletedUnwoundCategoryUnwoundChangeDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
     DateTimeOffset DateFirstPublished,
-    PostDeletionDto LatestDeletion,
-    PostCategoryUnwoundChangeDto Categories);
+    PostCategoryUnwoundChangeDto? Categories);
 
 internal sealed record PostCategoryUnwoundChangeDto(
     [property: BsonId] string Slug,
     string Name,
     PostCategoryChangeDto Changes);
 
+internal sealed record PostLatestRevisionFlattenedGroupedCategoryDto(
+    [property: BsonId] PostFlattenedGroupedCategorySlugIdDto Id,
+    PostRevisionUnwoundPublicationDto LatestRevision,
+    DateTimeOffset DateFirstPublished,
+    PostCategoryUnwoundChangeDto? Categories);
+
+internal sealed record PostFlattenedGroupedCategorySlugIdDto(
+    string PostSlug,
+    string? CategorySlug);
+
 internal sealed record PostCurrentSnapshotDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
     DateTimeOffset DateFirstPublished,
-    PostDeletionDto LatestDeletion,
     IEnumerable<PostCategoryDto> Categories)
 {
     public Post ToPost()
