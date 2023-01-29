@@ -4,7 +4,6 @@ using BHS.Infrastructure.Repositories.Mongo.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
 
@@ -104,34 +103,39 @@ internal static class AggregateFluentExtensions
     [SuppressMessage("Performance", "CA1845:Use span-based 'string.Concat'", Justification = "CS8640:Expression tree cannot contain value of ref struct or restricted type 'ReadOnlySpan'.")]
     public static IAggregateFluent<PostPreview> GetPreviews(this IAggregateFluent<PostCurrentSnapshotDto> aggregateFluent, string? searchText = null)
     {
+        // Need to use AppendStage instead of Project directly because we need to pass in TranslationOptions.
+
         if (searchText is null)
             return aggregateFluent
-                .Project(x => new PostPreview(
-                    x.Slug,
-                    x.LatestRevision.Title,
-                    x.LatestRevision.ContentMarkdown.Substring(0, 135) + "…",
-                    x.LatestRevision.Author == null ? null : new Author(0, x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName), // TODO: author id zero!
-                    x.DateFirstPublished,
-                    x.Categories.Select(x => new Category(x.Slug, x.Name)))
+                .AppendStage(PipelineStageDefinitionBuilder.Project<PostCurrentSnapshotDto, PostPreview>(
+                    x => new PostPreview(
+                        x.Slug,
+                        x.LatestRevision.Title,
+                        x.LatestRevision.ContentMarkdown.Substring(0, 135) + "…",
+                        x.LatestRevision.Author == null ? null : new Author(0, x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName), // TODO: author id zero!
+                        x.DateFirstPublished,
+                        x.Categories.Select(x => new Category(x.Slug, x.Name))),
+                    DbConstants.TranslationOptions)
                 );
         else
             return aggregateFluent
                 .Match(x => x.LatestRevision.ContentMarkdown.Contains(searchText))
-                .Project(x => new
-                {
+                .Project(x => new PostCurrentSnapshotWithSearchTextIdxDto(
                     x.Slug,
                     x.LatestRevision,
                     x.DateFirstPublished,
                     x.Categories,
-                    SearchTextHighlightStart = x.LatestRevision.ContentMarkdown.IndexOf(searchText),
-                })
-                .Project(x => new PostPreview(
-                    x.Slug,
-                    x.LatestRevision.Title,
-                    "…" + x.LatestRevision.ContentMarkdown.Substring(x.SearchTextHighlightStart, 135) + "…",
-                    x.LatestRevision.Author == null ? null : new Author(0, x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName), // TODO: author id zero!
-                    x.DateFirstPublished,
-                    x.Categories.Select(x => new Category(x.Slug, x.Name)))
+                    x.LatestRevision.ContentMarkdown.IndexOf(searchText))
+                )
+                .AppendStage(PipelineStageDefinitionBuilder.Project<PostCurrentSnapshotWithSearchTextIdxDto, PostPreview>(
+                    x => new PostPreview(
+                        x.Slug,
+                        x.LatestRevision.Title,
+                        "…" + x.LatestRevision.ContentMarkdown.Substring(x.SearchTextHighlightStart, 135) + "…",
+                        x.LatestRevision.Author == null ? null : new Author(0, x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName), // TODO: author id zero!
+                        x.DateFirstPublished,
+                        x.Categories.Select(x => new Category(x.Slug, x.Name))),
+                    DbConstants.TranslationOptions)
                 );
     }
 }

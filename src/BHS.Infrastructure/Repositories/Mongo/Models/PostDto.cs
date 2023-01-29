@@ -138,3 +138,10 @@ internal sealed record PostCurrentSnapshotDto(
             LatestRevision.Publications.DatePublished,
             Categories.Select(x => x.ToCategory()).ToList());
 }
+
+internal sealed record PostCurrentSnapshotWithSearchTextIdxDto(
+    [property: BsonId] string Slug,
+    PostRevisionUnwoundPublicationDto LatestRevision,
+    DateTimeOffset DateFirstPublished,
+    IEnumerable<PostCategoryDto> Categories,
+    int SearchTextHighlightStart);
