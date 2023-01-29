@@ -22,7 +22,7 @@ public class LeadershipRepository : ILeadershipRepository
     {
         var fb = Builders<DirectorDto>.Filter;
 
-        var dtos = directors.Select(x => new DirectorDto(ObjectId.GenerateNewId(new DateTime(int.Parse(x.Year), 0, 0)), x.Name, int.Parse(x.Year)));
+        var dtos = directors.Select(x => new DirectorDto(ObjectId.GenerateNewId(new DateTime(int.Parse(x.Year), 1, 1)), x.Name, int.Parse(x.Year)));
         var models = dtos.Select(dir => new ReplaceOneModel<DirectorDto>(fb.Eq(x => x.Name, dir.Name) & fb.Eq(x => x.Year, dir.Year), dir) { IsUpsert = true });
 
         _ = await _mongoClient.GetBhsCollection<DirectorDto>("directors").BulkWriteAsync(models, cancellationToken: cancellationToken);
