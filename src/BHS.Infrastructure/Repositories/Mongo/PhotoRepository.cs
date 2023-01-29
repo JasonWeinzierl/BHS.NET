@@ -20,7 +20,7 @@ public class PhotoRepository : IPhotoRepository
             .Aggregate()
             .Project(x => new UnwoundPhotosDto(x.Photos))
             .Unwind<UnwoundPhotosDto, UnwoundPhotoDto>(x => x.Photos)
-            .Match(x => x.Photos.Id == id)
+            .Match(x => x.Photos.LegacyId == id)
             .SingleOrDefaultAsync(cancellationToken);
         return result?.Photos.ToPhoto();
     }

@@ -1,4 +1,5 @@
-﻿using BHS.Contracts.Photos;
+﻿using BHS.Contracts;
+using BHS.Contracts.Photos;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Repositories.Mongo.Models;
 using MongoDB.Driver;
@@ -14,11 +15,12 @@ public class AlbumRepository : IAlbumRepository
         _mongoClient = mongoClient;
     }
 
-    public async Task BulkUpsert(IEnumerable<AlbumPhotos> albums, CancellationToken cancellationToken = default)
+    public async Task BulkUpsert(IEnumerable<AlbumPhotos> albums, IEnumerable<Author> authors, CancellationToken cancellationToken = default)
     {
         var fb = Builders<AlbumPhotosDto>.Filter;
 
-        var models = albums.Select(a => new ReplaceOneModel<AlbumPhotosDto>(fb.Where(x => x.Slug == a.Slug), AlbumPhotosDto.FromAlbumPhotos(a)) { IsUpsert = true });
+        var authorsDict = authors.ToDictionary(x => x.Id, x => x.DisplayName);
+        var models = albums.Select(a => new ReplaceOneModel<AlbumPhotosDto>(fb.Where(x => x.Slug == a.Slug), AlbumPhotosDto.FromAlbumPhotos(a, authorsDict)) { IsUpsert = true });
 
         _ = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums").BulkWriteAsync(models, cancellationToken: cancellationToken);
     }
@@ -42,11 +44,12 @@ public class AlbumRepository : IAlbumRepository
         return result?.ToAlbumPhotos();
     }
 
-    public async Task<AlbumPhotos> UpsertAlbumPhotos(AlbumPhotos albumPhotos, CancellationToken cancellationToken = default)
+    public async Task<AlbumPhotos> UpsertAlbumPhotos(AlbumPhotos albumPhotos, IEnumerable<Author> authors, CancellationToken cancellationToken = default)
     {
         var collection = _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums");
 
-        var dto = AlbumPhotosDto.FromAlbumPhotos(albumPhotos);
+        var authorsDict = authors.ToDictionary(x => x.Id, x => x.DisplayName);
+        var dto = AlbumPhotosDto.FromAlbumPhotos(albumPhotos, authorsDict);
         var replaceOptions = new ReplaceOptions { IsUpsert = true };
 
         _ = await collection.ReplaceOneAsync(x => x.Slug == dto.Slug, dto, replaceOptions, cancellationToken);

@@ -147,6 +147,10 @@ internal sealed class MigrationWorker : BackgroundService
 
         _logger.LogInformation("Migrating photos.");
 
+        _logger.LogInformation("Fetching authors from sql to populate photo author usernames...");
+        var sqlAuthorsRepo = new Infrastructure.Repositories.Sql.AuthorRepository(_dbExecuter);
+        var authors = await sqlAuthorsRepo.GetAll(cancellationToken);
+
         _logger.LogInformation("Fetching all photo albums from sql...");
         var sqlRepo = new Infrastructure.Repositories.Sql.AlbumRepository(_dbExecuter);
         var albums = await sqlRepo.GetAll(cancellationToken);
@@ -154,7 +158,7 @@ internal sealed class MigrationWorker : BackgroundService
 
         _logger.LogInformation("Upserting {Count} photo albums into mongo...", allAlbumPhotos.Length);
         var mongoRepo = new Infrastructure.Repositories.Mongo.AlbumRepository(_mongoClient);
-        await mongoRepo.BulkUpsert(allAlbumPhotos, cancellationToken);
+        await mongoRepo.BulkUpsert(allAlbumPhotos, authors, cancellationToken);
 
         _logger.LogInformation("Successfully migrated {Count} albums.", allAlbumPhotos.Length);
     }
