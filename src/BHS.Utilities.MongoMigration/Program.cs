@@ -1,12 +1,17 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Banners;
 using BHS.Domain;
+using BHS.Infrastructure;
 using BHS.Infrastructure.Core;
 using BHS.Infrastructure.IoC;
 using BHS.Infrastructure.Repositories.Mongo.Models;
 using Dapper;
+using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Linq;
+using Serilog.Events;
+using Serilog.Parsing;
+using System.Text.Json;
+using SerilogMongoLogEvent = Serilog.Sinks.MongoDB.LogEntry;
 
 namespace BHS.Utilities.MongoMigration;
 
@@ -67,6 +72,8 @@ internal sealed class MigrationWorker : BackgroundService
         await MigrateContactAlerts(stoppingToken);
         await MigrateOfficers(stoppingToken);
         await MigrateBlog(stoppingToken);
+
+        await MigrateLogs(stoppingToken);
 
         _logger.LogInformation("Migration complete!");
         _hostApplicationLifetime.StopApplication();
@@ -308,5 +315,144 @@ internal sealed class MigrationWorker : BackgroundService
         }
 
         _logger.LogInformation("Successfully migrated {Count} blog posts.", postDtos.Count);
+    }
+
+    private sealed record SqlLog(
+        int Id,
+        string? Message,
+        string? MessageTemplate,
+        byte Level,
+        DateTimeOffset TimeStamp,
+        string? Exception,
+        string? LogEvent,
+        string? RequestPath);
+
+    private sealed class SubclassedSerilogMongoLogEvent : SerilogMongoLogEvent
+    {
+        public bool FromSql { get; set; } = true;
+    }
+
+    private async Task MigrateLogs(CancellationToken cancellationToken)
+    {
+        using var scope = _logger.BeginScope(nameof(MigrateLogs));
+
+        _logger.LogInformation("Migrating application logs.");
+
+        _logger.LogInformation("Fetching logs from sql...");
+        IEnumerable<SqlLog> sqlLogs;
+        using (var sqlConn = _connFactory.CreateConnection("bhs"))
+        {
+            await sqlConn.OpenAsync(cancellationToken);
+            sqlLogs = await sqlConn.QueryAsync<SqlLog>("SELECT * FROM [dbo].[Log] WITH (NOLOCK)");
+        }
+
+        _logger.LogInformation("Creating mongo log entries...");
+        var mongoLogs = new List<SubclassedSerilogMongoLogEvent>();
+        var messageTemplateParser = new MessageTemplateParser();
+        foreach (var log in sqlLogs)
+        {
+            var serilogEntry = BuildSerilogLogEntry(log, messageTemplateParser);
+
+            var mongoLog = SerilogMongoLogEvent.MapFrom(serilogEntry);
+            mongoLog.Id = ObjectId.GenerateNewId(log.TimeStamp.UtcDateTime).ToString();
+            mongoLog.Exception = ParseToStringedException(log.Exception);
+
+            // Custom class to add a FromSql flag to all these records.
+            var subclassedLog = new SubclassedSerilogMongoLogEvent
+            {
+                Id = mongoLog.Id,
+                Level = mongoLog.Level,
+                UtcTimeStamp = mongoLog.UtcTimeStamp,
+                MessageTemplate = mongoLog.MessageTemplate,
+                RenderedMessage = mongoLog.RenderedMessage,
+                Properties = mongoLog.Properties,
+                Exception = mongoLog.Exception,
+
+                FromSql = true,
+            };
+
+            mongoLogs.Add(subclassedLog);
+        }
+
+        _logger.LogInformation("Inserting {Count} logs into mongo...", mongoLogs.Count);
+        await _mongoClient.GetBhsCollection<SubclassedSerilogMongoLogEvent>("logs").InsertManyAsync(mongoLogs, cancellationToken: cancellationToken);
+
+        _logger.LogInformation("Successfully inserted {Count} logs.", mongoLogs.Count);
+    }
+
+    private static LogEvent BuildSerilogLogEntry(SqlLog log, MessageTemplateParser messageTemplateParser)
+    {
+        var serilogProperties = new List<LogEventProperty>();
+        if (log.LogEvent != null)
+        {
+            using var logEventJson = JsonDocument.Parse(log.LogEvent);
+            var properties = logEventJson.RootElement.GetProperty("Properties");
+            foreach (var p in properties.EnumerateObject())
+            {
+                var value = ParseValueToSerilog(p.Value);
+                var serilogProperty = new LogEventProperty(p.Name, value);
+                serilogProperties.Add(serilogProperty);
+            }
+        }
+
+        var serilogMessageTemplate = messageTemplateParser.Parse(log.MessageTemplate!); // Should never be null.
+
+        var serilogEntry = new LogEvent(
+            log.TimeStamp,
+            (LogEventLevel)log.Level,
+            null, // Set exception later.
+            serilogMessageTemplate,
+            serilogProperties);
+        return serilogEntry;
+    }
+
+    private static LogEventPropertyValue ParseValueToSerilog(JsonElement value)
+        // Similar to internal PropertyValueConverter.
+        => value.ValueKind switch
+        {
+            JsonValueKind.Null => new ScalarValue(null),
+            JsonValueKind.String => new ScalarValue(value.GetString()),
+            JsonValueKind.True or JsonValueKind.False => new ScalarValue(value.GetBoolean()),
+            JsonValueKind.Number => value.TryGetInt32(out int i) ? new ScalarValue(i) : new ScalarValue(value.GetDouble()),
+            JsonValueKind.Array => new SequenceValue(value.EnumerateArray().Select(ParseValueToSerilog)), // resursive
+            JsonValueKind.Object => new DictionaryValue(value.EnumerateObject().Select(x => KeyValuePair.Create(new ScalarValue(x.Name), ParseValueToSerilog(x.Value)))), // recursive
+            _ => new ScalarValue(value.GetString() ?? "")
+        };
+
+    private static BsonDocument? ParseToStringedException(string? str)
+    {
+        if (str is null) return null;
+
+        int colonStart = str.IndexOf(':');
+
+        string everythingBeforeColon = str[..colonStart];
+        string fullName;
+        if (everythingBeforeColon.Contains(' '))
+            fullName = str[..str.IndexOf(' ')];
+        else
+            fullName = everythingBeforeColon;
+        string type = fullName[(fullName.LastIndexOf('.') + 1)..];
+        string source = fullName[..fullName.LastIndexOf('.')];
+
+        int messageStart = colonStart + 2;
+        string message;
+        if (str.Contains("--->"))
+        {
+            message = str[messageStart..str.IndexOf("\n ---> ")];
+        }
+        else
+        {
+            message = str[messageStart..str.IndexOf("\n   ")];
+        }
+
+        // Stack trace (and inner exceptions) is complicated to parse; just save ToString for now, and future me can parse as desired.
+
+        return new BsonDocument
+        {
+            ["_t"] = type,
+            ["Source"] = source,
+            ["Message"] = message,
+            ["ToString"] = str,
+        };
     }
 }
