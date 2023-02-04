@@ -16,7 +16,7 @@ env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
   NODE_VERSION: '18'
-  WORKING_DIRECTORY: src/BHS.Web
+  ENTRYPOINT_DIRECTORY: src/BHS.Web
 
 jobs:
   build:
@@ -38,13 +38,13 @@ jobs:
 
 
     - name: dotnet restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+      run: dotnet restore
 
     - name: dotnet build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+      run: dotnet build --no-restore --configuration ${{ env.CONFIGURATION }}
 
     - name: dotnet test
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
 
 
     - run: npm ci
@@ -64,7 +64,7 @@ jobs:
 
 
     - name: dotnet publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      run: dotnet publish "${{ env.ENTRYPOINT_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
