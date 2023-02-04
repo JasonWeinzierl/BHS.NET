@@ -20,6 +20,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="7.0.0-rc2.10" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.2" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Serilog.Sinks.MongoDB" Version="5.3.1" />
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
@@ -48,8 +49,10 @@
   </Target>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm ci" />
+    <!-- Install packages if not already downloaded -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm ci" Condition=" !Exists('$(SpaRoot)node_modules') " />
+    
+    <!-- Ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:app:prod" />
 
     <!-- Include the newly-built files in the publish output -->

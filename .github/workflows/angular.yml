@@ -2,11 +2,11 @@ name: Angular
 
 on:
   workflow_dispatch: {}
-  push:
-    branches:
-    - main
-    paths:
-    - 'src/BHS.Web/ClientApp/**'
+  #push:
+  #  branches:
+  #  - main
+  #  paths:
+  #  - 'src/BHS.Web/ClientApp/**'
   pull_request:
     branches:
     - main

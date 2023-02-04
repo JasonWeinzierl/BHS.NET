@@ -1,0 +1,95 @@
+name: Azure Release
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+    - main
+    paths:
+    - BHS.sln
+    - src/**
+    - tests/**
+
+env:
+  AZURE_WEBAPP_NAME: beltonhistorical
+  AZURE_WEBAPP_PACKAGE_PATH: src/BHS.Web/publish
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 7.0.x
+  NODE_VERSION: '18'
+  WORKING_DIRECTORY: src/BHS.Web
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+
+    - name: dotnet restore
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+
+    - name: dotnet build
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+
+    - name: dotnet test
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build --verbosity normal
+
+
+    - run: npm ci
+      working-directory: ./src/BHS.Web/ClientApp
+
+    - run: npm run lint
+      working-directory: ./src/BHS.Web/ClientApp
+
+    - run: npm run build:app:prod
+      working-directory: ./src/BHS.Web/ClientApp
+
+    - run: npm run test:ci
+      working-directory: ./src/BHS.Web/ClientApp
+
+    - run: npm run e2e:ci
+      working-directory: ./src/BHS.Web/ClientApp
+
+
+    - name: dotnet publish
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  deploy:
+    if: github.repository_owner == 'JasonWeinzierl'
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: production
+
+    steps:
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.beltonhistorical_EC69 }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}

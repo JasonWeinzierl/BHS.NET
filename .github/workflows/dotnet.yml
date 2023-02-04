@@ -2,14 +2,14 @@ name: .NET
 
 on:
   workflow_dispatch: {}
-  push:
-    branches:
-    - main
-    paths:
-    - 'BHS.sln'
-    - 'src/**'
-    - '!src/BHS.Web/ClientApp/**'
-    - 'tests/**'
+  #push:
+  #  branches:
+  #  - main
+  #  paths:
+  #  - 'BHS.sln'
+  #  - 'src/**'
+  #  - '!src/BHS.Web/ClientApp/**'
+  #  - 'tests/**'
   pull_request:
     branches:
     - main

@@ -36,13 +36,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builds", "Builds", "{159F3C
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\angular.yml = .github\workflows\angular.yml
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\azure-release.yml = .github\workflows\azure-release.yml
 		.github\workflows\release.yml = .github\workflows\release.yml
 		.github\workflows\ssdt.yml = .github\workflows\ssdt.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{6FFB7600-C5C9-46F6-A45C-62861B0BFC5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHS.Utilities.MongoMigration", "src\BHS.Utilities.MongoMigration\BHS.Utilities.MongoMigration.csproj", "{8F68318B-5047-4EEF-9425-6174C0136744}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Utilities.MongoMigration", "src\BHS.Utilities.MongoMigration\BHS.Utilities.MongoMigration.csproj", "{8F68318B-5047-4EEF-9425-6174C0136744}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -40,8 +40,8 @@ public static class BhsServiceCollectionExtensions
 
         services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
 
-        //services.AddMongoRepositories();
-        services.AddSqlRepositories();
+        services.AddMongoRepositories();
+        //services.AddSqlRepositories();
 
         return services;
     }
