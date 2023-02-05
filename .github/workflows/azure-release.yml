@@ -38,13 +38,13 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
 
 
-    - name: dotnet restore
+    - name: Run dotnet restore
       run: dotnet restore
 
-    - name: dotnet build
+    - name: Run dotnet build
       run: dotnet build --no-restore --configuration ${{ env.CONFIGURATION }}
 
-    - name: dotnet test
+    - name: Run dotnet test
       run: dotnet test --no-build --verbosity normal
 
 
@@ -64,7 +64,7 @@ jobs:
       working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
 
 
-    - name: dotnet publish
+    - name: Run dotnet publish
       run: dotnet publish "${{ env.ENTRYPOINT_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
     - name: Upload Artifacts
