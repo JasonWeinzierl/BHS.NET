@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
 
-public class PostPreviewRepository : IPostPreviewRepository, IPostPreviewRepositoryWithAuthorUsername
+public class PostPreviewRepository : IPostPreviewRepository
 {
     private readonly IMongoClient _mongoClient;
     private readonly IDateTimeOffsetProvider _dateTimeOffsetProvider;
@@ -17,11 +17,6 @@ public class PostPreviewRepository : IPostPreviewRepository, IPostPreviewReposit
         _dateTimeOffsetProvider = dateTimeOffsetProvider;
     }
 
-    public Task<IReadOnlyCollection<PostPreview>> GetByAuthorId(int authorId, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException("The MongoDB implementation of this repository does not support lookup by author ID.");
-    }
-
     public async Task<IReadOnlyCollection<PostPreview>> GetByAuthorUsername(string username, CancellationToken cancellationToken = default)
         => await _mongoClient.GetBhsCollection<PostDto>("posts")
             .Aggregate()
@@ -30,13 +25,17 @@ public class PostPreviewRepository : IPostPreviewRepository, IPostPreviewReposit
             .GetPreviews()
             .ToListAsync(cancellationToken);
 
-    public async Task<IReadOnlyCollection<PostPreview>> GetByCategorySlug(string categorySlug, CancellationToken cancellationToken = default)
-        => await _mongoClient.GetBhsCollection<PostDto>("posts")
-            .Aggregate()
-            .GetCurrentPostSnapshotDtos(_dateTimeOffsetProvider.Now())
-            .Match(x => x.Categories.Any(y => y.Slug == categorySlug))
-            .GetPreviews()
-            .ToListAsync(cancellationToken);
+    public async Task<CategoryPosts?> GetCategoryPosts(string categorySlug, CancellationToken cancellationToken = default)
+    {
+        var posts = await _mongoClient.GetBhsCollection<PostDto>("posts")
+                .Aggregate()
+                .GetCurrentPostSnapshotDtos(_dateTimeOffsetProvider.Now())
+                .Match(x => x.Categories.Any(y => y.Slug == categorySlug))
+                .GetPreviews()
+                .ToListAsync(cancellationToken);
+        string categoryName = posts.First().Categories.First(x => x.Slug == categorySlug).Name;
+        return new CategoryPosts(categorySlug, categoryName, posts);
+    }
 
     public async Task<IReadOnlyCollection<PostPreview>> Search(string? text, DateTimeOffset? from, DateTimeOffset? to, CancellationToken cancellationToken = default)
         => await _mongoClient.GetBhsCollection<PostDto>("posts")

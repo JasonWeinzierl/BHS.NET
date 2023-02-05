@@ -12,8 +12,8 @@ export class AlbumPageComponent implements OnInit {
   album?: AlbumPhotos;
   currentPhoto?: Photo;
 
-  previousPhotoId: number = 0;
-  nextPhotoId: number = 0;
+  previousPhotoId: string = '';
+  nextPhotoId: string = '';
 
   error?: string;
 
@@ -31,18 +31,17 @@ export class AlbumPageComponent implements OnInit {
         return;
       }
 
-      const photoIdStr = params.get('id');
-      if (!photoIdStr) {
+      const photoId = params.get('id');
+      if (!photoId) {
         this.error = 'Failed to get photo id from URL.';
         return;
       }
-      const photoId = +photoIdStr;
 
       this.loadAlbum(albumSlug, photoId);
     });
   }
 
-  private loadAlbum(albumSlug: string, photoId: number): void {
+  private loadAlbum(albumSlug: string, photoId: string): void {
     this.photosService.getAlbum(albumSlug)
       .subscribe({next: response => {
         this.album = response;

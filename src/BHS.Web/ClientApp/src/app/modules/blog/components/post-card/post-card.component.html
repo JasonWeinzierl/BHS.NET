@@ -9,7 +9,7 @@
       Posted
       <span *ngIf="post.author">
         by
-        <a [routerLink]="['/apps/profile', post.author.displayName]">{{post.author.displayName}}</a>
+        <a [routerLink]="['/apps/profile', post.author.username]">{{post.author.name}}</a>
       </span>
       on {{post.datePublished | date:'EEEE, d MMMM y \'at\' h:mm:ss a'}}
     </p>

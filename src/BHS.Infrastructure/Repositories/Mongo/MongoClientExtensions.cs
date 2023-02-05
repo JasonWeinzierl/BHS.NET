@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace BHS.Infrastructure;
+namespace BHS.Infrastructure.Repositories.Mongo;
 
 internal static class MongoClientExtensions
 {

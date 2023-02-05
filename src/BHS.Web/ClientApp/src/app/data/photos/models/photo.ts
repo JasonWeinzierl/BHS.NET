@@ -1,8 +1,9 @@
 export interface Photo {
-  id: number;
+  id: string;
+  legacyId: number;
   name?: string;
   imagePath: string;
   datePosted: Date;
-  authorId?: number;
+  authorUsername?: string;
   description?: string;
 }

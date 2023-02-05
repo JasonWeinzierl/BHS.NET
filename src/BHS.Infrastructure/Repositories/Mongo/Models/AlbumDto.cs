@@ -1,4 +1,5 @@
-﻿using BHS.Contracts.Photos;
+﻿using BHS.Contracts;
+using BHS.Contracts.Photos;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Diagnostics.CodeAnalysis;
@@ -14,7 +15,7 @@ internal record AlbumDto(
     string? AuthorUsername)
 {
     public Album ToAlbum()
-        => new(Slug, Name, Description, BannerPhoto?.ToPhoto(), BlogPostSlug, AuthorUsername is null ? null : new(0, AuthorUsername, null)); // TODO: author id zero
+        => new(Slug, Name, Description, BannerPhoto?.ToPhoto(), BlogPostSlug, AuthorUsername is null ? null : new(AuthorUsername, null));
 }
 
 internal sealed record AlbumPhotosDto(
@@ -26,21 +27,18 @@ internal sealed record AlbumPhotosDto(
     string? AuthorUsername,
     IReadOnlyCollection<PhotoDto> Photos) : AlbumDto(Slug, Name, Description, BannerPhoto, BlogPostSlug, AuthorUsername)
 {
-    public AlbumPhotos ToAlbumPhotos()
-        => new(Slug, Name, Description, BannerPhoto?.ToPhoto(), BlogPostSlug, AuthorUsername is null ? null : new(0, AuthorUsername, null), Photos.Select(x => x.ToPhoto()).ToList()); // TODO: author id zero
+    public AlbumPhotos ToAlbumPhotos(string? authorDisplayName) // TODO: this and ToAlbum lose the author's display name.  need de-normalize author and store the whole object within albums.
+        => new(Slug, Name, Description, BannerPhoto?.ToPhoto(), BlogPostSlug, AuthorUsername is null ? null : new Author(AuthorUsername, authorDisplayName), Photos.Select(x => x.ToPhoto()).ToList());
 
-    public static AlbumPhotosDto FromAlbumPhotos(AlbumPhotos albumPhotos, IDictionary<int, string> authors)
+    public static AlbumPhotosDto FromAlbumPhotos(AlbumPhotos albumPhotos)
         => new(
             albumPhotos.Slug,
             albumPhotos.Name,
             albumPhotos.Description,
-            PhotoDto.FromPhoto(
-                ObjectId.GenerateNewId(albumPhotos.BannerPhoto?.DatePosted.UtcDateTime ?? DateTime.UtcNow),
-                albumPhotos.BannerPhoto,
-                albumPhotos.BannerPhoto?.AuthorId.HasValue == true ? authors[albumPhotos.BannerPhoto.AuthorId.Value] : null),
+            PhotoDto.FromPhoto(albumPhotos.BannerPhoto),
             albumPhotos.BlogPostSlug,
-            albumPhotos.Author?.DisplayName,
-            albumPhotos.Photos.Select(x => PhotoDto.FromPhoto(ObjectId.GenerateNewId(x.DatePosted.UtcDateTime), x, x.AuthorId.HasValue ? authors[x.AuthorId.Value] : null)).ToList());
+            albumPhotos.Author?.Username,
+            albumPhotos.Photos.Select(x => PhotoDto.FromPhoto(x)).ToList());
 }
 
 internal sealed record PhotoDto(
@@ -53,11 +51,11 @@ internal sealed record PhotoDto(
     string? Description)
 {
     public Photo ToPhoto()
-        => new(LegacyId, Name, new Uri(ImagePath), DatePosted, 0, Description); // TODO: zeros for author id!
+        => new(Id.ToString(), LegacyId, Name, new Uri(ImagePath), DatePosted, AuthorUsername, Description);
 
     [return: NotNullIfNotNull(nameof(photo))]
-    public static PhotoDto? FromPhoto(ObjectId Id, Photo? photo, string? authorUsername)
-        => photo is null ? null : new PhotoDto(Id, photo.Id, photo.Name, photo.ImagePath.ToString(), photo.DatePosted, authorUsername, photo.Description);
+    public static PhotoDto? FromPhoto(Photo? photo)
+        => photo is null ? null : new PhotoDto(ObjectId.Parse(photo.Id), photo.LegacyId, photo.Name, photo.ImagePath.ToString(), photo.DatePosted, photo.AuthorUsername, photo.Description);
 }
 
 internal sealed record UnwoundPhotosDto(IReadOnlyCollection<PhotoDto> Photos);

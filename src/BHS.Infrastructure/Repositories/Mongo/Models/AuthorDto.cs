@@ -10,8 +10,8 @@ internal sealed record AuthorDto(
 {
     [return: NotNullIfNotNull(nameof(author))]
     public static AuthorDto? FromAuthor(Author? author)
-        => author is null ? null : new(author.DisplayName, author.Name);
+        => author is null ? null : new(author.Username, author.Name);
 
     public Author ToAuthor()
-        => new(0, Username, DisplayName); // TODO: zeros for ids!
+        => new(Username, DisplayName);
 }

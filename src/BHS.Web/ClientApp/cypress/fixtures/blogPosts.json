@@ -4,8 +4,7 @@
     "title": "Post 1",
     "contentPreview": "This is a test post...",
     "author": {
-      "id": 99,
-      "displayName": "AnAuthor",
+      "username": "AnAuthor",
       "name": "me"
     },
     "datePublished": "2000-01-01T00:00:00Z",

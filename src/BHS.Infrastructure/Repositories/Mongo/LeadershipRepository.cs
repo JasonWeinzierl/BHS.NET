@@ -18,16 +18,6 @@ public class LeadershipRepository : ILeadershipRepository
         _dateTimeOffsetProvider = dateTimeOffsetProvider;
     }
 
-    public async Task BulkUpsertDirectors(IEnumerable<Director> directors, CancellationToken cancellationToken = default)
-    {
-        var fb = Builders<DirectorDto>.Filter;
-
-        var dtos = directors.Select(x => new DirectorDto(ObjectId.GenerateNewId(new DateTime(int.Parse(x.Year), 1, 1)), x.Name, int.Parse(x.Year)));
-        var models = dtos.Select(dir => new ReplaceOneModel<DirectorDto>(fb.Eq(x => x.Name, dir.Name) & fb.Eq(x => x.Year, dir.Year), dir) { IsUpsert = true });
-
-        _ = await _mongoClient.GetBhsCollection<DirectorDto>("directors").BulkWriteAsync(models, cancellationToken: cancellationToken);
-    }
-
     public async Task<IReadOnlyCollection<Director>> GetCurrentDirectors(CancellationToken cancellationToken = default)
         => await _mongoClient.GetBhsCollection<DirectorDto>("directors")
             .Aggregate()
@@ -51,13 +41,4 @@ public class LeadershipRepository : ILeadershipRepository
             .SortBy(x => x.SortOrder)
             .Project(x => new Officer(x.Title, x.PositionHolders.Name!, x.PositionHolders.DateStarted))
             .ToListAsync(cancellationToken);
-
-    public async Task BackfillPosition(string Title, int SortOrder, IEnumerable<(string? Name, DateTimeOffset DateStarted)> officers, CancellationToken cancellationToken = default)
-    {
-        var dto = new OfficerPositionDto(Title, SortOrder, officers.Select(x => new OfficerDto(x.Name, x.DateStarted)).ToList());
-
-        var collection = _mongoClient.GetBhsCollection<OfficerPositionDto>("officerPositions");
-
-        await collection.InsertOneAsync(dto, cancellationToken: cancellationToken);
-    }
 }

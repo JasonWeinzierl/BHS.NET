@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <img *ngIf="currentPhoto" src="{{currentPhoto.imagePath}}" [title]="currentPhoto.name ?? currentPhoto.id" class="card-img-top" alt="image failed to load">
+  <img *ngIf="currentPhoto" src="{{currentPhoto.imagePath}}" [title]="currentPhoto.name" class="card-img-top" alt="image failed to load">
 
   <div *ngIf="currentPhoto" class="card-body">
     <h2 class="card-title">

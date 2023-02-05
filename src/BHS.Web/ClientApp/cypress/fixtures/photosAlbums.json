@@ -6,8 +6,7 @@
     "bannerPhoto": null,
     "blogPostSlug": null,
     "author": {
-      "id": 99,
-      "displayName": "AnAuthor",
+      "username": "AnAuthor",
       "name": "me"
     }
   }

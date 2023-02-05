@@ -8,11 +8,11 @@ namespace BHS.Web.Controllers;
 [Route("api/leadership")]
 public class LeadershipController : ControllerBase
 {
-    private readonly ILeadershipService _leadershipService;
+    private readonly ILeadershipRepository _leadershipRepo;
 
-    public LeadershipController(ILeadershipService leadershipService)
+    public LeadershipController(ILeadershipRepository leadershipRepo)
     {
-        _leadershipService = leadershipService;
+        _leadershipRepo = leadershipRepo;
     }
 
     /// <summary>
@@ -20,12 +20,12 @@ public class LeadershipController : ControllerBase
     /// </summary>
     [HttpGet("officers")]
     public async Task<ActionResult<IList<Officer>>> GetOfficers(CancellationToken cancellationToken = default)
-        => Ok(await _leadershipService.GetOfficers(cancellationToken));
+        => Ok(await _leadershipRepo.GetCurrentOfficers(cancellationToken));
 
     /// <summary>
     /// Get current directors.
     /// </summary>
     [HttpGet("directors")]
     public async Task<ActionResult<IList<Director>>> GetDirectors(CancellationToken cancellationToken = default)
-        => Ok(await _leadershipService.GetDirectors(cancellationToken));
+        => Ok(await _leadershipRepo.GetCurrentDirectors(cancellationToken));
 }

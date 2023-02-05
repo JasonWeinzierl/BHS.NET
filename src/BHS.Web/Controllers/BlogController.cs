@@ -8,11 +8,18 @@ namespace BHS.Web.Controllers;
 [Route("api/blog")]
 public class BlogController : ControllerBase
 {
-    private readonly IBlogService _blogService;
+    private readonly IPostPreviewRepository _previewRepo;
+    private readonly IPostRepository _postRepo;
+    private readonly ICategoryRepository _categoryRepo;
 
-    public BlogController(IBlogService blogService)
+    public BlogController(
+        IPostPreviewRepository previewRepo,
+        IPostRepository postRepo,
+        ICategoryRepository categoryRepo)
     {
-        _blogService = blogService;
+        _previewRepo = previewRepo;
+        _postRepo = postRepo;
+        _categoryRepo = categoryRepo;
     }
 
     /// <summary>
@@ -20,7 +27,7 @@ public class BlogController : ControllerBase
     /// </summary>
     [HttpGet("posts")]
     public async Task<ActionResult<IEnumerable<PostPreview>>> SearchPosts(string? q, DateTime? from, DateTime? to, CancellationToken cancellationToken = default)
-        => Ok(await _blogService.SearchPosts(q, from, to, cancellationToken));
+        => Ok(await _previewRepo.Search(q, from, to, cancellationToken));
 
     /// <summary>
     /// Get a post
@@ -28,7 +35,7 @@ public class BlogController : ControllerBase
     [HttpGet("posts/{slug}")]
     public async Task<ActionResult<Post>> GetPost(string slug, CancellationToken cancellationToken = default)
     {
-        var post = await _blogService.GetPost(slug, cancellationToken);
+        var post = await _postRepo.GetBySlug(slug, cancellationToken);
         if (post is null) return NotFound();
         else return Ok(post);
     }
@@ -38,7 +45,7 @@ public class BlogController : ControllerBase
     /// </summary>
     [HttpGet("categories")]
     public async Task<ActionResult<IEnumerable<CategorySummary>>> GetCategories(CancellationToken cancellationToken = default)
-        => Ok(await _blogService.GetCategories(cancellationToken));
+        => Ok(await _categoryRepo.GetAll(cancellationToken));
 
     /// <summary>
     /// Get a category and its posts.
@@ -46,7 +53,7 @@ public class BlogController : ControllerBase
     [HttpGet("categories/{slug}")]
     public async Task<ActionResult<CategoryPosts>> GetCategory(string slug, CancellationToken cancellationToken = default)
     {
-        var category = await _blogService.GetCategory(slug, cancellationToken);
+        var category = await _previewRepo.GetCategoryPosts(slug, cancellationToken);
         if (category is null) return NotFound();
         else return Ok(category);
     }

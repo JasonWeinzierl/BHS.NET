@@ -8,24 +8,11 @@ namespace BHS.Web.Controllers;
 [Route("api/photos")]
 public class PhotosController : ControllerBase
 {
-    private readonly IPhotosService _photosService;
+    private readonly IAlbumRepository _albumRepo;
 
-    public PhotosController(IPhotosService photosService)
+    public PhotosController(IAlbumRepository albumRepo)
     {
-        _photosService = photosService;
-    }
-
-    /// <summary>
-    /// Gets a photo.
-    /// </summary>
-    [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Photo))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Photo>> GetPhoto(int id, CancellationToken cancellationToken = default)
-    {
-        var photo = await _photosService.GetPhoto(id, cancellationToken);
-        if (photo is null) return NotFound();
-        else return Ok(photo);
+        _albumRepo = albumRepo;
     }
 
     /// <summary>
@@ -33,18 +20,31 @@ public class PhotosController : ControllerBase
     /// </summary>
     [HttpGet("albums")]
     public async Task<ActionResult<IEnumerable<Album>>> GetAlbums(CancellationToken cancellationToken = default)
-        => Ok(await _photosService.GetAlbums(cancellationToken));
+        => Ok(await _albumRepo.GetAll(cancellationToken));
 
     /// <summary>
     /// Gets an album and its photos.
     /// </summary>
-    [HttpGet("albums/{slug}")]
+    [HttpGet("albums/{albumSlug}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AlbumPhotos))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<AlbumPhotos>> GetAlbum(string slug, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<AlbumPhotos>> GetAlbum(string albumSlug, CancellationToken cancellationToken = default)
     {
-        var album = await _photosService.GetAlbum(slug, cancellationToken);
+        var album = await _albumRepo.GetBySlug(albumSlug, cancellationToken);
         if (album is null) return NotFound();
         else return Ok(album);
+    }
+
+    /// <summary>
+    /// Gets a photo for a particular album.
+    /// </summary>
+    [HttpGet("albums/{albumSlug}/photos/{photoId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Photo))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Photo>> GetPhoto(string albumSlug, string photoId, CancellationToken cancellationToken)
+    {
+        var photo = await _albumRepo.GetPhoto(albumSlug, photoId, cancellationToken);
+        if (photo is null) return NotFound();
+        else return Ok(photo);
     }
 }

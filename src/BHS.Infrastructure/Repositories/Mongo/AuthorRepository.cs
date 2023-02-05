@@ -19,7 +19,7 @@ public class AuthorRepository : IAuthorRepository
     {
         var fb = Builders<AuthorDto>.Filter;
 
-        var models = authors.Select(a => new ReplaceOneModel<AuthorDto>(fb.Where(x => x.Username == a.DisplayName), AuthorDto.FromAuthor(a)) { IsUpsert = true });
+        var models = authors.Select(a => new ReplaceOneModel<AuthorDto>(fb.Where(x => x.Username == a.Username), AuthorDto.FromAuthor(a)) { IsUpsert = true });
 
         _ = await _mongoClient.GetBhsCollection<AuthorDto>("authors").BulkWriteAsync(models, cancellationToken: cancellationToken);
     }
@@ -33,10 +33,10 @@ public class AuthorRepository : IAuthorRepository
         return results.Select(x => x.ToAuthor()).ToList();
     }
 
-    public async Task<Author?> GetByUserName(string userName, CancellationToken cancellationToken = default)
+    public async Task<Author?> GetByUsername(string username, CancellationToken cancellationToken = default)
     {
         var cursor = await _mongoClient.GetBhsCollection<AuthorDto>("authors")
-            .FindAsync(x => x.Username == userName, cancellationToken: cancellationToken);
+            .FindAsync(x => x.Username == username, cancellationToken: cancellationToken);
         var result = await cursor.SingleOrDefaultAsync(cancellationToken);
 
         return result?.ToAuthor();

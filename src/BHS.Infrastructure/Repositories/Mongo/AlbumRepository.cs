@@ -2,6 +2,7 @@
 using BHS.Contracts.Photos;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Repositories.Mongo.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;
@@ -13,16 +14,6 @@ public class AlbumRepository : IAlbumRepository
     public AlbumRepository(IMongoClient mongoClient)
     {
         _mongoClient = mongoClient;
-    }
-
-    public async Task BulkUpsert(IEnumerable<AlbumPhotos> albums, IEnumerable<Author> authors, CancellationToken cancellationToken = default)
-    {
-        var fb = Builders<AlbumPhotosDto>.Filter;
-
-        var authorsDict = authors.ToDictionary(x => x.Id, x => x.DisplayName);
-        var models = albums.Select(a => new ReplaceOneModel<AlbumPhotosDto>(fb.Where(x => x.Slug == a.Slug), AlbumPhotosDto.FromAlbumPhotos(a, authorsDict)) { IsUpsert = true });
-
-        _ = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums").BulkWriteAsync(models, cancellationToken: cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<Album>> GetAll(CancellationToken cancellationToken = default)
@@ -41,19 +32,31 @@ public class AlbumRepository : IAlbumRepository
             .FindAsync(x => x.Slug == slug, cancellationToken: cancellationToken);
         var result = await cursor.SingleOrDefaultAsync(cancellationToken);
 
-        return result?.ToAlbumPhotos();
+        return result?.ToAlbumPhotos(null);
     }
 
-    public async Task<AlbumPhotos> UpsertAlbumPhotos(AlbumPhotos albumPhotos, IEnumerable<Author> authors, CancellationToken cancellationToken = default)
+    public async Task<Photo?> GetPhoto(string albumSlug, string photoId, CancellationToken cancellationToken = default)
+    {
+        var photoObjectId = ObjectId.Parse(photoId);
+        var result = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums")
+            .Aggregate()
+            .Match(x => x.Slug == albumSlug)
+            .Project(x => new UnwoundPhotosDto(x.Photos))
+            .Unwind<UnwoundPhotosDto, UnwoundPhotoDto>(x => x.Photos)
+            .Match(x => x.Photos.Id == photoObjectId)
+            .SingleOrDefaultAsync(cancellationToken);
+        return result?.Photos.ToPhoto();
+    }
+
+    public async Task<AlbumPhotos> UpsertAlbumPhotos(AlbumPhotos albumPhotos, CancellationToken cancellationToken = default)
     {
         var collection = _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums");
 
-        var authorsDict = authors.ToDictionary(x => x.Id, x => x.DisplayName);
-        var dto = AlbumPhotosDto.FromAlbumPhotos(albumPhotos, authorsDict);
+        var dto = AlbumPhotosDto.FromAlbumPhotos(albumPhotos);
         var replaceOptions = new ReplaceOptions { IsUpsert = true };
 
         _ = await collection.ReplaceOneAsync(x => x.Slug == dto.Slug, dto, replaceOptions, cancellationToken);
 
-        return dto.ToAlbumPhotos();
+        return dto.ToAlbumPhotos(albumPhotos.Author?.Name);
     }
 }

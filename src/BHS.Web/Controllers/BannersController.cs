@@ -8,11 +8,11 @@ namespace BHS.Web.Controllers;
 [Route("api/banners")]
 public class BannersController : ControllerBase
 {
-    private readonly ISiteBannerService _bannerService;
+    private ISiteBannerRepository _bannerRepo;
 
-    public BannersController(ISiteBannerService bannerService)
+    public BannersController(ISiteBannerRepository bannerRepo)
     {
-        _bannerService = bannerService;
+        _bannerRepo = bannerRepo;
     }
 
     /// <summary>
@@ -20,5 +20,5 @@ public class BannersController : ControllerBase
     /// </summary>
     [HttpGet("current")]
     public async Task<ActionResult<IEnumerable<SiteBanner>>> GetEnabled(CancellationToken cancellationToken = default)
-        => Ok(await _bannerService.GetEnabled(cancellationToken));
+        => Ok(await _bannerRepo.GetEnabled(cancellationToken));
 }

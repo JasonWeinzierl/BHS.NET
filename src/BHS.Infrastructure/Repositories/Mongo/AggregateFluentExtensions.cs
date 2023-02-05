@@ -112,7 +112,7 @@ internal static class AggregateFluentExtensions
                         x.Slug,
                         x.LatestRevision.Title,
                         x.LatestRevision.ContentMarkdown.Substring(0, 135) + "…",
-                        x.LatestRevision.Author == null ? null : new Author(0, x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName), // TODO: author id zero!
+                        x.LatestRevision.Author == null ? null : new Author(x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName),
                         x.DateFirstPublished,
                         x.Categories.Select(x => new Category(x.Slug, x.Name))),
                     DbConstants.TranslationOptions)
@@ -134,7 +134,7 @@ internal static class AggregateFluentExtensions
                         x.Slug,
                         x.LatestRevision.Title,
                         "…" + x.LatestRevision.ContentMarkdown.Substring(x.SearchTextHighlightStart, 135) + "…",
-                        x.LatestRevision.Author == null ? null : new Author(0, x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName), // TODO: author id zero!
+                        x.LatestRevision.Author == null ? null : new Author(x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName),
                         x.DateFirstPublished,
                         x.Categories.Select(x => new Category(x.Slug, x.Name))),
                     DbConstants.TranslationOptions)

@@ -10,15 +10,15 @@ namespace BHS.Web.Controllers;
 [Route("api/author")]
 public class AuthorController : ControllerBase
 {
-    private readonly IBlogService _blogService;
-    private readonly IAuthorService _authorService;
+    private readonly IPostPreviewRepository _postRepo;
+    private readonly IAuthorRepository _authorRepo;
 
     public AuthorController(
-        IBlogService blogService,
-        IAuthorService authorService)
+        IPostPreviewRepository postRepo,
+        IAuthorRepository authorRepo)
     {
-        _blogService = blogService;
-        _authorService = authorService;
+        _postRepo = postRepo;
+        _authorRepo = authorRepo;
     }
 
     /// <summary>
@@ -26,7 +26,7 @@ public class AuthorController : ControllerBase
     /// </summary>
     [HttpGet("")]
     public async Task<ActionResult<IEnumerable<Author>>> GetAuthors(CancellationToken cancellationToken = default)
-        => Ok(await _authorService.GetAuthors(cancellationToken));
+        => Ok(await _authorRepo.GetAll(cancellationToken));
 
     /// <summary>
     /// Get an author.
@@ -34,7 +34,7 @@ public class AuthorController : ControllerBase
     [HttpGet("{username}")]
     public async Task<ActionResult<Author>> GetAuthor(string username, CancellationToken cancellationToken = default)
     {
-        var author = await _authorService.GetAuthor(username, cancellationToken);
+        var author = await _authorRepo.GetByUsername(username, cancellationToken);
         if (author is null) return NotFound();
         else return Ok(author);
     }
@@ -45,7 +45,7 @@ public class AuthorController : ControllerBase
     [HttpGet("{username}/posts")]
     public async Task<ActionResult<IEnumerable<PostPreview>>> GetAuthorPosts(string username, CancellationToken cancellationToken = default)
     {
-        var posts = await _blogService.GetPostsByAuthor(username, cancellationToken);
+        var posts = await _postRepo.GetByAuthorUsername(username, cancellationToken);
         if (posts is null) return NotFound();
         else return Ok(posts);
     }

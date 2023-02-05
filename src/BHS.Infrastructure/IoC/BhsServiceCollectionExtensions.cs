@@ -6,6 +6,7 @@ using BHS.Domain.ContactUs;
 using BHS.Domain.Leadership;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Providers;
+using BHS.Infrastructure.Repositories.Mongo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -26,12 +27,7 @@ public static class BhsServiceCollectionExtensions
         services.AddOptions<ContactUsOptions>().BindConfiguration("ContactUsOptions").ValidateDataAnnotations();
         services.AddSendGrid((provider, opt) => provider.GetRequiredService<IConfiguration>().GetSection("SendGridClientOptions").Bind(opt));
 
-        services.AddScoped<IBlogService, BlogService>();
-        services.AddScoped<IPhotosService, PhotosService>();
-        services.AddScoped<IAuthorService, AuthorService>();
         services.AddScoped<IContactUsService, ContactUsService>();
-        services.AddScoped<ILeadershipService, LeadershipService>();
-        services.AddScoped<ISiteBannerService, SiteBannerService>();
 
         services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
 
@@ -43,16 +39,6 @@ public static class BhsServiceCollectionExtensions
     private static IServiceCollection AddMongoRepositories(this IServiceCollection services)
     {
         BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.DateTime));
-        BsonClassMap.RegisterClassMap<Contracts.Author>(map =>
-        {
-            // Prevent Author.Id from being deserialized as Author._id
-            map.AutoMap();
-            map.UnmapProperty(c => c.Id);
-            map.MapMember(c => c.Id)
-                .SetElementName("Id")
-                .SetOrder(0)
-                .SetIsRequired(true);
-        });
 
         services.TryAddSingleton<IMongoClient>(provider =>
         {
@@ -67,15 +53,14 @@ public static class BhsServiceCollectionExtensions
             return new MongoClient(clientSettings);
         });
 
-        services.AddSingleton<IPostRepository, Repositories.Mongo.PostRepository>();
-        services.AddSingleton<IPostPreviewRepository, Repositories.Mongo.PostPreviewRepository>();
-        services.AddSingleton<ICategoryRepository, Repositories.Mongo.CategoryRepository>();
-        services.AddSingleton<ILeadershipRepository, Repositories.Mongo.LeadershipRepository>();
-        services.AddSingleton<IAlbumRepository, Repositories.Mongo.AlbumRepository>();
-        services.AddSingleton<IAuthorRepository, Repositories.Mongo.AuthorRepository>();
-        services.AddSingleton<IContactAlertRepository, Repositories.Mongo.ContactAlertRepository>();
-        services.AddSingleton<IPhotoRepository, Repositories.Mongo.PhotoRepository>();
-        services.AddSingleton<ISiteBannerRepository, Repositories.Mongo.SiteBannerRepository>();
+        services.AddSingleton<IPostRepository, PostRepository>();
+        services.AddSingleton<IPostPreviewRepository, PostPreviewRepository>();
+        services.AddSingleton<ICategoryRepository, CategoryRepository>();
+        services.AddSingleton<ILeadershipRepository, LeadershipRepository>();
+        services.AddSingleton<IAlbumRepository, AlbumRepository>();
+        services.AddSingleton<IAuthorRepository, AuthorRepository>();
+        services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();
+        services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
 
         return services;
     }

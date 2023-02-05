@@ -23,7 +23,7 @@ export class PhotosService {
     return this.http.get<AlbumPhotos>(this.baseUrl + '/albums/' + slug);
   }
 
-  getPhoto(photoId: number): Observable<Photo> {
-    return this.http.get<Photo>(this.baseUrl + '/' + photoId);
+  getPhoto(albumSlug: string, photoId: string): Observable<Photo> {
+    return this.http.get<Photo>(this.baseUrl + '/albums/' + albumSlug + '/photos/' + photoId);
   }
 }
