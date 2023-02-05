@@ -1,10 +1,9 @@
 # BHS.NET
 
-[![.NET](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/dotnet.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/dotnet.yml)
-[![Angular](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/angular.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/angular.yml)
-[![SSDT](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/ssdt.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/ssdt.yml)
+The [Belton Historical Society website](https://www.beltonhistoricalsociety.org/),
+built on ASP.NET Core, Angular, and MongoDB.
 
-The [Belton Historical Society website](https://www.beltonhistoricalsociety.org/), built on ASP.NET Core, Angular, and SQL Server.
+[![Azure Release](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/azure-release.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/azure-release.yml)
 
 ## Development Setup
 
@@ -12,15 +11,15 @@ The [Belton Historical Society website](https://www.beltonhistoricalsociety.org/
 
 - .NET 7 SDK and Visual Studio 2022
 - Node.JS and Angular CLI `npm install @angular/cli -g`
-- SQL Server 2019 and SQL Server Data Tools
+- MongoDB
 
 ### Build and Debug
 
 #### Database
 
-1. Set up a localhost SQL Server database named "bhs".
-2. Ensure your Windows login has Integrated Security access.
-3. Publish the BHS.SSDT project to your local database.
+1. You must have access to an instance of MongoDB.
+    - Either use a free cloud offering or set up a local instance.
+2. Put your connection string in `ConnectionStrings:bhsMongo`.
 
 #### Frontend
 
@@ -29,8 +28,9 @@ The [Belton Historical Society website](https://www.beltonhistoricalsociety.org/
 3. `npm run start`
     - Use the included VS Code launch profiles to attach the debugger.
 
-This starts the angular development server on `localhost:4200`.
-The backend API will forward requests to the development server if not handled by other middleware.
+This starts the angular development server on `localhost:4200`, but backend requests will not succeed.
+See the next section for starting up the backend
+so that the web host can forward requests to the frontend development server if not handled by other middleware.
 
 #### Backend
 
@@ -41,6 +41,8 @@ dotnet run --project src/BHS.Web/BHS.Web.csproj --launch-profile BHS.Web
 ```
 
 This starts the web application server and forwards SPA requests to the frontend.
+Test the frontend application through the launched browser window.
 
 Navigate to `/api/swagger` to use the Swagger UI.
 This does not require the frontend development server to be running.
+

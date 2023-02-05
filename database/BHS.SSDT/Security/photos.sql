@@ -1,2 +1,0 @@
-﻿CREATE SCHEMA [photos]
-	AUTHORIZATION [dbo];

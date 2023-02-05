@@ -1,12 +1,7 @@
-name: Angular
+name: Angular PR
 
 on:
   workflow_dispatch: {}
-  #push:
-  #  branches:
-  #  - main
-  #  paths:
-  #  - 'src/BHS.Web/ClientApp/**'
   pull_request:
     branches:
     - main

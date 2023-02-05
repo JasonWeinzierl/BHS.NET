@@ -11,7 +11,6 @@ internal static class HealthChecksConfig
     public static void AddBhsHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHealthChecks()
-                //.AddSqlServer(provider => provider.GetRequiredService<IConfiguration>().GetConnectionString("bhs")!, name: "bhssql")
                 .AddMongoDb(configuration.GetConnectionString("bhsMongo")!)
                 .AddCheck<SendGridHealthCheck>("sendgrid");
     }

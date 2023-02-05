@@ -20,10 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{FAC7551A-9265-45C6-A624-0F2427050CF1}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BHS.SSDT", "database\BHS.SSDT\BHS.SSDT.sqlproj", "{EB2C04B8-2B1E-439B-95AF-A8D5D8C9B078}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4406DB72-4E36-4A11-AABB-38DB63D6C22C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Infrastructure.Tests", "tests\BHS.Infrastructure.Tests\BHS.Infrastructure.Tests.csproj", "{B4F7FB0F-DD5E-4102-BACB-F0CF8923D169}"
@@ -34,16 +30,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Domain.Tests", "tests\B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builds", "Builds", "{159F3C87-C585-4197-A50F-8383679960B7}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\angular.yml = .github\workflows\angular.yml
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.github\workflows\azure-release.yml = .github\workflows\azure-release.yml
-		.github\workflows\release.yml = .github\workflows\release.yml
-		.github\workflows\ssdt.yml = .github\workflows\ssdt.yml
+		.github\workflows\angular-pr.yml = .github\workflows\angular-pr.yml
+		.github\workflows\dotnet-pr.yml = .github\workflows\dotnet-pr.yml
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{6FFB7600-C5C9-46F6-A45C-62861B0BFC5C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Utilities.MongoMigration", "src\BHS.Utilities.MongoMigration\BHS.Utilities.MongoMigration.csproj", "{8F68318B-5047-4EEF-9425-6174C0136744}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +57,6 @@ Global
 		{AB34D166-6C35-4435-8E44-CEF3216F0D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB34D166-6C35-4435-8E44-CEF3216F0D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB34D166-6C35-4435-8E44-CEF3216F0D17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB2C04B8-2B1E-439B-95AF-A8D5D8C9B078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB2C04B8-2B1E-439B-95AF-A8D5D8C9B078}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{EB2C04B8-2B1E-439B-95AF-A8D5D8C9B078}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB2C04B8-2B1E-439B-95AF-A8D5D8C9B078}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{B4F7FB0F-DD5E-4102-BACB-F0CF8923D169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B4F7FB0F-DD5E-4102-BACB-F0CF8923D169}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4F7FB0F-DD5E-4102-BACB-F0CF8923D169}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -83,20 +69,14 @@ Global
 		{7F5C1621-8FF8-4EA9-93D6-4D1EBCC7322D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F5C1621-8FF8-4EA9-93D6-4D1EBCC7322D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F5C1621-8FF8-4EA9-93D6-4D1EBCC7322D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F68318B-5047-4EEF-9425-6174C0136744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F68318B-5047-4EEF-9425-6174C0136744}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F68318B-5047-4EEF-9425-6174C0136744}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F68318B-5047-4EEF-9425-6174C0136744}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{EB2C04B8-2B1E-439B-95AF-A8D5D8C9B078} = {FAC7551A-9265-45C6-A624-0F2427050CF1}
 		{B4F7FB0F-DD5E-4102-BACB-F0CF8923D169} = {4406DB72-4E36-4A11-AABB-38DB63D6C22C}
 		{E13F0BCB-8675-4903-940B-E755B9BE403D} = {4406DB72-4E36-4A11-AABB-38DB63D6C22C}
 		{7F5C1621-8FF8-4EA9-93D6-4D1EBCC7322D} = {4406DB72-4E36-4A11-AABB-38DB63D6C22C}
-		{8F68318B-5047-4EEF-9425-6174C0136744} = {6FFB7600-C5C9-46F6-A45C-62861B0BFC5C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {78F6B374-6C30-4282-A380-FCFBC02FB329}
