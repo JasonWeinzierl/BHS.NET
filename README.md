@@ -1,5 +1,7 @@
 # BHS.NET
 
+**NOTE: This branch is the SQL Server implementation.  This application now uses MongoDB instead, and this branch is only available for historical purposes.**
+
 [![.NET](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/dotnet.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/dotnet.yml)
 [![Angular](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/angular.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/angular.yml)
 [![SSDT](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/ssdt.yml/badge.svg)](https://github.com/JasonWeinzierl/BHS.NET/actions/workflows/ssdt.yml)
