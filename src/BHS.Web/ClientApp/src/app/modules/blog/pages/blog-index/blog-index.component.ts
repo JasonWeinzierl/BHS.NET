@@ -1,47 +1,39 @@
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BlogService, CategorySummary, PostPreview } from '@data/blog';
-import { Component, OnInit, TrackByFunction } from '@angular/core';
-import { finalize } from 'rxjs/operators';
+import { Component, TrackByFunction } from '@angular/core';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-index',
   templateUrl: './blog-index.component.html',
   styleUrls: ['./blog-index.component.scss']
 })
-export class BlogIndexComponent implements OnInit {
-  posts: PostPreview[] = [];
-  categories: CategorySummary[] = [];
+export class BlogIndexComponent {
+  posts$: Observable<PostPreview[]>;
+  categories$: Observable<CategorySummary[]>;
+  private searchTextSubject = new BehaviorSubject('');
 
-  searchText: string = '';
-  loading = false;
-  loadingPosts = false;
+  searchText = '';
+  loadingCategories = true;
+  loadingPosts = true;
 
   constructor(
     private blogService: BlogService,
-  ) { }
-
-  ngOnInit(): void {
-    this.loading = true;
-    this.blogService.searchPosts()
+  ) {
+    this.posts$ = this.searchTextSubject.asObservable()
       .pipe(
-        finalize(() => this.loading = false),
-      )
-      .subscribe(response => this.posts = response);
-
-    this.loading = true;
-    this.blogService.getCategories()
+        switchMap((searchText) => this.blogService.searchPosts(searchText)),
+        tap(_ => this.loadingPosts = false),
+      );
+    this.categories$ = this.blogService.getCategories()
       .pipe(
-        finalize(() => this.loading = false),
-      )
-      .subscribe(response => this.categories = response);
+        finalize(() => this.loadingCategories = false),
+      );
   }
 
   onSearch(searchText: string): void {
     this.loadingPosts = true;
-    this.blogService.searchPosts(searchText)
-      .pipe(
-        finalize(() => this.loadingPosts = false),
-      )
-      .subscribe(response => this.posts = response);
+    this.searchTextSubject.next(searchText);
   }
 
   trackPostPreview: TrackByFunction<PostPreview> = (_, item) => {
