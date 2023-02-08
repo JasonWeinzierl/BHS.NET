@@ -1,6 +1,7 @@
 import { BlogService, CategoryPosts } from '@data/blog';
-import { Component, OnInit } from '@angular/core';
+import { catchError, filter, finalize, map, Observable, of, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -8,40 +9,35 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './category-posts.component.html',
   styleUrls: ['./category-posts.component.scss']
 })
-export class CategoryPostsComponent implements OnInit {
-  category?: CategoryPosts;
+export class CategoryPostsComponent {
+  category$: Observable<CategoryPosts>;
   error?: string;
-  isLoading = false;
+  isLoading = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private blogService: BlogService,
-  ) { }
-
-  ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      const slug = params.get('slug');
-
-      if (!slug) {
-        this.error = 'Failed to get category slug from URL.';
-        return;
-      }
-
-      this.isLoading = true;
-      this.loadCategory(slug);
-    });
-  }
-
-
-  private loadCategory(slug: string): void {
-    this.blogService.getCategory(slug)
-      .subscribe(
-        response => this.category = { ...response },
-        (error: unknown) => {
-          if (error instanceof HttpErrorResponse) {
-            this.error = error.message;
-          }
-        })
-      .add(() => this.isLoading = false);
+  ) {
+    this.category$ = this.activatedRoute.paramMap.pipe(
+      map(params => {
+        const slug = params.get('slug');
+        if (!slug) {
+          this.error = 'Failed to get category slug from URL.';
+          return null;
+        }
+        return slug;
+      }),
+      filter(slug => slug !== null),
+      switchMap(slug => this.blogService.getCategory(slug!)),
+      catchError((err: unknown) => {
+        if (err instanceof HttpErrorResponse) {
+          this.error = err.message;
+        } else {
+          this.error = 'An error occurred.';
+        }
+        return of();
+      }),
+      finalize(() => this.isLoading = false),
+    );
   }
 }

@@ -1,8 +1,14 @@
-<div class="card" *ngIf="category">
-  <div class="card-body">
-    <h1 class="card-title">{{category.name}}</h1>
+<ng-container *ngIf="category$ | async as category">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">{{category.name}}</h1>
+    </div>
   </div>
-</div>
+
+  <div>
+    <app-post-card [post]="post" *ngFor="let post of category.posts"></app-post-card>
+  </div>
+</ng-container>
 
 <div *ngIf="isLoading" class="d-flex justify-content-center">
   <div class="spinner-grow text-light" role="status">
@@ -10,10 +16,6 @@
   </div>
 </div>
 
-<div *ngIf="category">
-  <app-post-card [post]="post" *ngFor="let post of category.posts"></app-post-card>
-</div>
-
-<div class="alert alert-danger" *ngIf="error">
+<div *ngIf="error" class="alert alert-danger">
   {{error}}
 </div>
