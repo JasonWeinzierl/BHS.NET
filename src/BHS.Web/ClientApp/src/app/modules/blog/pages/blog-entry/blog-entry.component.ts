@@ -1,8 +1,8 @@
 import { AlbumPhotos, PhotosService } from '@data/photos';
 import { BlogService, Post } from '@data/blog';
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { catchError, filter, finalize, map, Observable, of, switchMap, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -10,47 +10,42 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './blog-entry.component.html',
   styleUrls: ['./blog-entry.component.scss']
 })
-export class BlogEntryComponent implements OnInit {
-  post?: Post;
+export class BlogEntryComponent {
+  post$: Observable<Post>;
   postAlbum$: Observable<AlbumPhotos> = of();
   error?: string;
-  isLoading = false;
+  isLoading = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private blogService: BlogService,
     private photosService: PhotosService,
-  ) { }
-
-  ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      const slug = params.get('slug');
-
-      if (!slug) {
-        this.error = 'Failed to get entry slug from URL.';
-        return;
-      }
-
-      this.isLoading = true;
-      this.loadPost(slug);
-    });
-  }
-
-  private loadPost(slug: string): void {
-    this.blogService.getPost(slug)
-      .subscribe({
-        next: response => {
-          this.post = { ...response };
-          if (this.post.photosAlbumSlug) {
-            this.postAlbum$ = this.photosService.getAlbum(this.post.photosAlbumSlug);
-          }
-        },
-        error: (error: unknown) => {
-          if (error instanceof HttpErrorResponse) {
-            this.error = error.message;
-          }
+  ) {
+    this.post$ = this.activatedRoute.paramMap.pipe(
+      map(params => {
+        const slug = params.get('slug');
+        if (!slug) {
+          this.error = 'Failed to get entry slug from URL.';
+          return null;
         }
-      })
-      .add(() => this.isLoading = false);
+        return slug;
+      }),
+      filter(slug => slug !== null),
+      switchMap(slug => this.blogService.getPost(slug!)),
+      tap(post => {
+        if (post.photosAlbumSlug) {
+          this.postAlbum$ = this.photosService.getAlbum(post.photosAlbumSlug);
+        }
+      }),
+      catchError((err: unknown) => {
+        if (err instanceof HttpErrorResponse) {
+          this.error = err.message;
+        } else {
+          this.error = 'An error occurred.';
+        }
+        return of();
+      }),
+      finalize(() => this.isLoading = false),
+    );
   }
 }

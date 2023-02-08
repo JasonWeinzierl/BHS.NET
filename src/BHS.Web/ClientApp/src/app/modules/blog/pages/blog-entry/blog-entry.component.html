@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div *ngIf="post" class="card">
+<div *ngIf="post$ | async as post" class="card">
   <div class="card-header">
     <h1 class="card-title">{{post.title}}</h1>
     <p class="card-subtitle text-muted">
