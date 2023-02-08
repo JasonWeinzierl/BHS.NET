@@ -33,6 +33,8 @@ public class PostPreviewRepository : IPostPreviewRepository
                 .Match(x => x.Categories.Any(y => y.Slug == categorySlug))
                 .GetPreviews()
                 .ToListAsync(cancellationToken);
+        if (!posts.Any()) return null;
+
         string categoryName = posts.First().Categories.First(x => x.Slug == categorySlug).Name;
         return new CategoryPosts(categorySlug, categoryName, posts);
     }
