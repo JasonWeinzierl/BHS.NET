@@ -19,7 +19,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, '../coverage'),
+      dir: require('path').join(__dirname, './coverage/bhs.web.clientapp'),
       subdir: '.',
       reporters: [
         { type: 'html' },
@@ -27,10 +27,6 @@ module.exports = function (config) {
       ],
     },
     reporters: ['progress', 'kjhtml'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
     browsers: ['Chrome'],
     customLaunchers: {
       ChromeHeadlessCI: {
@@ -38,7 +34,6 @@ module.exports = function (config) {
         flags: ['--no-sandbox', '--disable-gpu']
       }
     },
-    singleRun: false,
     restartOnFileChange: true,
   });
 };

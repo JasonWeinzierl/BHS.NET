@@ -12,8 +12,7 @@
     "test:ci": "ng test --configuration ci",
     "e2e": "ng e2e",
     "e2e:ci": "ng e2e --configuration ci",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "ct": "cypress run --component"
   },
   "private": true,
   "dependencies": {

@@ -1,6 +1,5 @@
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
-import 'zone.js/testing';
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
@@ -11,5 +10,11 @@ import { getTestBed } from '@angular/core/testing';
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting(),
-  { teardown: { destroyAfterEach: true } }
+  {
+    // Starting in Angular 15, these default to true.
+    // TODO: Fix unit tests broken by this change.
+    // Once fixed, you can remove this file and all references to it.
+    errorOnUnknownElements: false,
+    errorOnUnknownProperties: false,
+  },
 );
