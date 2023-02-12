@@ -1,2 +1,2 @@
 <router-outlet></router-outlet>
-<div *ngIf="loadingCount > 0" class="router-load-indicator">Loading...</div>
+<div *ngIf="loading$ | async" class="router-load-indicator">Loading...</div>

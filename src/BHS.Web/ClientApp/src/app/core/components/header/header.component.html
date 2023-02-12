@@ -7,7 +7,7 @@
   </div>
 
   <div class="container">
-    <alert *ngFor="let b of banners" [type]="b.alertType" [dismissible]="true">
+    <alert *ngFor="let b of banners$ | async" [type]="b.alertType" [dismissible]="true">
       <strong *ngIf="b.lead">{{b.lead}}</strong>
       {{b.body}}
     </alert>

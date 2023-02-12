@@ -1,12 +1,13 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss']
+  styleUrls: ['./contact-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ContactFormComponent {
   contactForm = this.formBuilder.nonNullable.group({
@@ -47,6 +48,8 @@ export class ContactFormComponent {
             } else {
               this.errors.push(error.message);
             }
+          } else {
+            this.errors.push('');
           }
           this.isSubmitted = false;
         }});

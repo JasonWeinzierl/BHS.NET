@@ -1,14 +1,15 @@
 import { AlbumPhotos, PhotosService } from '@data/photos';
 import { BlogService, Post } from '@data/blog';
-import { catchError, filter, finalize, map, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-blog-entry',
   templateUrl: './blog-entry.component.html',
-  styleUrls: ['./blog-entry.component.scss']
+  styleUrls: ['./blog-entry.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogEntryComponent {
   post$: Observable<Post>;

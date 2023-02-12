@@ -1,33 +1,30 @@
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, combineLatest, map, Observable, of } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Director, LeadershipService, Officer } from '@data/leadership';
-import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.scss']
+  styleUrls: ['./organization.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganizationComponent {
-  officers$: Observable<Officer[]>;
-  directors$: Observable<Director[]>;
-
-  errors: string[] = [];
+  vm$: Observable<{ officers: Array<Officer>, directors: Array<Director>, error?: string }>;
 
   constructor(
     private leadershipService: LeadershipService
   ) {
-    this.officers$ = this.leadershipService.getOfficers().pipe(catchError((error: unknown) => {
-      if (error instanceof HttpErrorResponse) {
-        this.errors.push(error.message);
-      }
-      return of([]);
-    }));
-    this.directors$ = this.leadershipService.getDirectors().pipe(catchError((error: unknown) => {
-      if (error instanceof HttpErrorResponse) {
-        this.errors.push(error.message);
-      }
-      return of([]);
-    }));
+    this.vm$ = combineLatest([this.leadershipService.getOfficers(), this.leadershipService.getDirectors()])
+      .pipe(
+        map(value => ({ officers: value[0], directors: value[1] }) ),
+        catchError((error: unknown) => {
+          let msg = 'An error occurred';
+          if (error instanceof HttpErrorResponse) {
+            msg = error.message;
+          }
+          return of({ officers: [], directors: [], error: msg });
+        }),
+      );
   }
 }

@@ -1,41 +1,37 @@
 <div class="card">
   <div class="card-body">
     <h1 class="card-title">Leadership</h1>
-    <div class="row">
+    <div class="row" *ngIf="vm$ | async as vm; else loading">
 
       <div class="col-sm">
         <h2>Officers</h2>
-        <dl *ngIf="officers$ | async as officers; else loadingOfficers">
-          <ng-template ngFor let-officer [ngForOf]="officers">
+        <dl>
+          <ng-template ngFor let-officer [ngForOf]="vm.officers">
             <dt>{{officer.title}}</dt>
             <dd [title]="officer.dateStarted | date:'\'since\' yyyy'">{{officer.name}}</dd>
           </ng-template>
         </dl>
-        <ng-template #loadingOfficers>
-          <div *ngIf="!errors.length" class="spinner-grow" role="status">
-            <span class="visually-hidden">Loading officers...</span>
-          </div>
-        </ng-template>
       </div>
 
       <div class="col-sm">
         <h2>Directors</h2>
-        <ul *ngIf="directors$ | async as directors; else loadingDirectors" class="list-unstyled">
-          <li *ngFor="let director of directors">
+        <ul class="list-unstyled">
+          <li *ngFor="let director of vm.directors">
             {{director.name}} ({{director.year}})
           </li>
         </ul>
-        <ng-template #loadingDirectors>
-          <div *ngIf="!errors.length" class="spinner-grow" role="status">
-            <span class="visually-hidden">Loading directors...</span>
-          </div>
-        </ng-template>
       </div>
 
-      <div *ngFor="let e of errors" class="alert alert-danger" role="alert">
-        {{e}}
-      </div>
+      <alert *ngIf="vm.error" type="danger">
+        {{vm.error}}
+      </alert>
     </div>
+
+    <ng-template #loading>
+      <div class="spinner-grow" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </ng-template>
   </div>
 </div>
 

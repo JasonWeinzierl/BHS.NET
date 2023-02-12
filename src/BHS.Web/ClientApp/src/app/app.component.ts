@@ -1,17 +1,18 @@
 import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { filter, map } from 'rxjs/operators';
 import { InsightsService } from '@core/services/insights.service';
+import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AppComponent implements OnInit {
-
-  loadingCount = 0;
+  public loading$: Observable<boolean>;
 
   public constructor(
     private router: Router,
@@ -20,26 +21,19 @@ export class AppComponent implements OnInit {
     private insightsService: InsightsService,
   ) {
     this.insightsService.init();
-  }
-
-  ngOnInit(): void {
-    const appTitle = this.titleService.getTitle();
-
-    this.router.events
+    this.loading$ = this.router.events
       .pipe(
         filter(
           event =>
             event instanceof RouteConfigLoadStart ||
             event instanceof RouteConfigLoadEnd,
-        )
-      )
-      .subscribe(event => {
-        if (event instanceof RouteConfigLoadStart) {
-          this.loadingCount++;
-        } else {
-          this.loadingCount--;
-        }
-      });
+        ),
+        map(event => event instanceof RouteConfigLoadStart),
+      );
+  }
+
+  ngOnInit(): void {
+    const appTitle = this.titleService.getTitle();
 
     this.router.events
       .pipe(

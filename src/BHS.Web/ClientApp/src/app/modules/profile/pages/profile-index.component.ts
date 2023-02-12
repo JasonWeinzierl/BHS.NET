@@ -1,5 +1,6 @@
 import { Author, AuthorService } from '@data/authors';
-import { Component, OnInit } from '@angular/core';
+import { catchError, combineLatest, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PostPreview } from '@data/blog';
@@ -7,47 +8,42 @@ import { PostPreview } from '@data/blog';
 @Component({
   selector: 'app-profile-index',
   templateUrl: './profile-index.component.html',
-  styleUrls: ['./profile-index.component.scss']
+  styleUrls: ['./profile-index.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileIndexComponent implements OnInit {
-  author?: Author;
-  posts: PostPreview[] = [];
-  errors: string[] = [];
+export class ProfileIndexComponent {
+  vm$: Observable<{ author?: Author, posts: Array<PostPreview> }>;
+  isLoading = true;
+  error?: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private authorService: AuthorService,
-  ) { }
-
-  ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      const username = params.get('username');
-      if (!username) {
-        this.errors.push('Failed to get username from URL.');
-        return;
-      }
-
-      this.loadAuthor(username);
-    });
-  }
-
-
-  private loadAuthor(username: string): void {
-    this.authorService.getAuthor(username)
-      .subscribe(authorResponse => {
-        this.author = authorResponse;
-      }, (authorError: unknown) => {
-        if (authorError instanceof HttpErrorResponse) {
-          this.errors.push(authorError.message);
-        }
-      });
-
-    this.authorService.getAuthorPosts(username)
-      .subscribe(postsResponse => this.posts = postsResponse,
-        (postsError: unknown) => {
-          if (postsError instanceof HttpErrorResponse) {
-            this.errors.push(postsError.message);
+  ) {
+    this.vm$ = this.activatedRoute.paramMap
+      .pipe(
+        map(params => {
+          const username = params.get('username');
+          if (!username) {
+            this.error = 'Failed to get username from URL.';
           }
-        });
+          return username;
+        }),
+        filter(username => !!username),
+        switchMap(username => combineLatest([
+          this.authorService.getAuthor(username!),
+          this.authorService.getAuthorPosts(username!)
+        ])),
+        tap(() => this.isLoading = false),
+        map(value => ({ author: value[0], posts: value[1] }) ),
+        catchError((error: unknown) => {
+          if (error instanceof HttpErrorResponse) {
+            this.error = error.message;
+          } else {
+            this.error = 'An error occurred.';
+          }
+          return of();
+        }),
+      );
   }
 }

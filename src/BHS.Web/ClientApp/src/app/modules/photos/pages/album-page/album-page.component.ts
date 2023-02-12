@@ -1,14 +1,16 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-album-page',
   templateUrl: './album-page.component.html',
-  styleUrls: ['./album-page.component.scss']
+  styleUrls: ['./album-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AlbumPageComponent implements OnInit {
+  isLoading = true;
   album?: AlbumPhotos;
   currentPhoto?: Photo;
 

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { map, Observable } from 'rxjs';
 import { AlertTheme } from '@data/banners/models/alert-theme';
 import { SiteBanner } from '@data/banners/models/site-banner';
 import { SiteBannerService } from '@data/banners/services/site-banner.service';
@@ -15,24 +16,25 @@ class SiteBannerStyled implements SiteBanner {
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   isCollapsed = true;
 
-  banners: Array<SiteBannerStyled> = [];
+  banners$: Observable<Array<SiteBannerStyled>>;
 
   constructor(
     private bannerService: SiteBannerService
-   ) { }
+   ) {
+    this.banners$ = this.bannerService.getEnabled()
+      .pipe(
+        map(banners => this.createStyledBanners(banners)),
+      );
+   }
 
-  ngOnInit(): void {
-    this.bannerService.getEnabled()
-      .subscribe(banners => this.setBanners(banners));
-  }
-
-  private setBanners(banners: Array<SiteBanner>): void {
-    this.banners = banners.map(b => {
+  private createStyledBanners(banners: Array<SiteBanner>): Array<SiteBannerStyled> {
+    return banners.map(b => {
       let alertType = 'light';
 
       switch (b.theme) {

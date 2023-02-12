@@ -1,3 +1,9 @@
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+  <div class="spinner-grow text-light" role="status">
+    <span class="visually-hidden">Loading photo...</span>
+  </div>
+</div>
+
 <div class="card" *ngIf="album">
   <div class="card-header">
     <div class="text-center row">
@@ -41,6 +47,6 @@
   </div>
 </div>
 
-<div class="alert alert-danger" *ngIf="error">
+<alert *ngIf="error" type="danger">
   {{error}}
-</div>
+</alert>

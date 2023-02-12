@@ -9,19 +9,31 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-4" *ngFor="let author of authors">
-    <div class="card">
-      <div class="card-body">
-        <h2 class="card-title">
-          <a [routerLink]="['/apps/profile', author.username]">{{author.name}}</a>
-        </h2>
-        <p>{{author.name}}</p>
+<ng-container *ngIf="vm$ | async as vm; else loadingMembers">
+
+  <div class="row">
+    <div class="col-md-4" *ngFor="let author of vm.authors">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">
+            <a [routerLink]="['/apps/profile', author.username]">{{author.name}}</a>
+          </h2>
+          <p>{{author.name}}</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="alert alert-danger" *ngIf="error">
-  {{error}}
-</div>
+  <alert *ngIf="vm.error" type="danger">
+    {{vm.error}}
+  </alert>
+
+</ng-container>
+
+<ng-template #loadingMembers>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-grow text-light" role="status">
+      <span class="visually-hidden">Loading members...</span>
+    </div>
+  </div>
+</ng-template>

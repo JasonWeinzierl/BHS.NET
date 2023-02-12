@@ -3,13 +3,13 @@
 
     <h1 class="card-title">Contact Us</h1>
 
-    <div *ngFor="let error of errors; let i = index" role="alert"
-      class="alert alert-danger alert-dismissible fade show">
+    <alert *ngFor="let error of errors" type="danger" [dismissible]="true">
       There was an error submitting your message. {{error}}
       <hr>
-      <p class="small text-muted mb-0">Please <a [routerLink]="['/about/this-site']">email the webmaster</a> if this keeps happening.</p>
-      <button type="button" class="btn-close" aria-label="Close" (click)="removeError(i)"></button>
-    </div>
+      <p class="small text-muted mb-0">
+        Please <a [routerLink]="['/about/this-site']">email the webmaster</a> if this keeps happening.
+      </p>
+    </alert>
 
     <div class="progress" *ngIf="isSubmitted && !isAccepted">
       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>

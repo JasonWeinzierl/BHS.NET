@@ -1,12 +1,13 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BlogService, CategorySummary, PostPreview } from '@data/blog';
-import { Component, TrackByFunction } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TrackByFunction } from '@angular/core';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-index',
   templateUrl: './blog-index.component.html',
-  styleUrls: ['./blog-index.component.scss']
+  styleUrls: ['./blog-index.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogIndexComponent {
   posts$: Observable<PostPreview[]>;
