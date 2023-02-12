@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Pipe({name: 'sortBy'})
 class MockSortByPipe implements PipeTransform {
-  transform(value: any): any {
+  transform(value: unknown): unknown {
     return value;
   }
 }

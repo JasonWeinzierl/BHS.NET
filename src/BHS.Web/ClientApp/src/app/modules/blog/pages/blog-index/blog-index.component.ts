@@ -24,7 +24,7 @@ export class BlogIndexComponent {
     this.posts$ = this.searchTextSubject.asObservable()
       .pipe(
         switchMap((searchText) => this.blogService.searchPosts(searchText)),
-        tap(_ => this.loadingPosts = false),
+        tap(() => this.loadingPosts = false),
       );
     this.categories$ = this.blogService.getCategories()
       .pipe(

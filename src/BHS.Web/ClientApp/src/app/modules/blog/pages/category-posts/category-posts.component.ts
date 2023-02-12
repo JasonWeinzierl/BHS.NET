@@ -28,7 +28,7 @@ export class CategoryPostsComponent {
         return slug;
       }),
       filter(slug => !!slug),
-      switchMap(slug => this.blogService.getCategory(slug!)),
+      switchMap(slug => this.blogService.getCategory(slug ?? '')),
       tap(() => this.isLoading = false),
       catchError((err: unknown) => {
         if (err instanceof HttpErrorResponse) {

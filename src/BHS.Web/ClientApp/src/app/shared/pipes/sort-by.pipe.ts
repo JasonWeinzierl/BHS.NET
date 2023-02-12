@@ -14,7 +14,7 @@ export class SortByPipe implements PipeTransform {
    * @param column Property to sort by, array sorted with `.sort()` if empty.
    * @returns The sorted array.
    */
-  transform(value: any[], order: 'asc'|'desc' = 'asc', column?: string): any[] {
+  transform<T>(value: T[], order: 'asc'|'desc' = 'asc', column?: string): T[] {
     if (!value || !order) {
       return value;
     }

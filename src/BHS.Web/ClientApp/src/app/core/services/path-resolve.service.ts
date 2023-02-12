@@ -7,8 +7,6 @@ import { paths } from '@app/app-paths';
 })
 export class PathResolveService implements Resolve<string | null> {
 
-  constructor() { }
-
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

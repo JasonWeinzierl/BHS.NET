@@ -31,8 +31,8 @@ export class BlogEntryComponent {
         }
         return slug;
       }),
-      filter(slug => slug !== null),
-      switchMap(slug => this.blogService.getPost(slug!)),
+      filter(slug => !!slug),
+      switchMap(slug => this.blogService.getPost(slug ?? '')),
       tap(post => {
         if (post.photosAlbumSlug) {
           this.postAlbum$ = this.photosService.getAlbum(post.photosAlbumSlug);

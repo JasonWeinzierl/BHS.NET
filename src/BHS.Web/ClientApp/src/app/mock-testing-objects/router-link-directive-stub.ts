@@ -6,11 +6,11 @@ import { Directive, HostListener, Input } from '@angular/core';
   selector: '[routerLink]'
 })
 export class RouterLinkDirectiveStub {
-  @Input('routerLink') linkParams: any;
-  navigatedTo: any = null;
+  @Input() routerLink: string | unknown[] | null | undefined;
+  navigatedTo: string | unknown[] | null | undefined = null;
 
   @HostListener('click')
   onClick(): void {
-    this.navigatedTo = this.linkParams;
+    this.navigatedTo = this.routerLink;
   }
 }

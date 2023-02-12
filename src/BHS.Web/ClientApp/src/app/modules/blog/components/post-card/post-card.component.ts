@@ -9,7 +9,4 @@ import { PostPreview } from '@data/blog';
 })
 export class PostCardComponent {
   @Input() post!: PostPreview;
-
-  constructor() { }
-
 }

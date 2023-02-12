@@ -1,5 +1,5 @@
-export const environment: any = {
+export const environment = {
   appInsights: {
-    connectionString: undefined,
+    connectionString: '',
   },
 };

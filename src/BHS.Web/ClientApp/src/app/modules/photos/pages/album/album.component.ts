@@ -28,7 +28,7 @@ export class AlbumComponent {
           return slug;
         }),
         filter(slug => !!slug),
-        switchMap(slug => this.photosService.getAlbum(slug!)),
+        switchMap(slug => this.photosService.getAlbum(slug ?? '')),
         tap(() => this.isLoading = false),
         catchError((err: unknown) => {
           if (err instanceof HttpErrorResponse) {

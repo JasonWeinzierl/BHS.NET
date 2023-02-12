@@ -7,7 +7,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ContentLayoutComponent {
-
-  constructor() { }
-
 }

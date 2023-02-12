@@ -16,7 +16,7 @@ export class ContactService {
   /**
    * @returns No Content
    */
-  sendMessage(request: ContactAlertRequest): Observable<any> {
+  sendMessage(request: ContactAlertRequest): Observable<object> {
     return this.http.post(this.baseUrl, request);
   }
 }

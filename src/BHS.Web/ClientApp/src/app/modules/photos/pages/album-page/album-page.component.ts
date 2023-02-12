@@ -14,8 +14,8 @@ export class AlbumPageComponent implements OnInit {
   album?: AlbumPhotos;
   currentPhoto?: Photo;
 
-  previousPhotoId: string = '';
-  nextPhotoId: string = '';
+  previousPhotoId = '';
+  nextPhotoId = '';
 
   error?: string;
 
