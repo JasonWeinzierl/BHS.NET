@@ -1,6 +1,7 @@
 import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { filter, map } from 'rxjs/operators';
+import { InsightsService } from '@core/services/insights.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -16,7 +17,10 @@ export class AppComponent implements OnInit {
     private router: Router,
     private titleService: Title,
     private activatedRoute: ActivatedRoute,
-  ) { }
+    private insightsService: InsightsService,
+  ) {
+    this.insightsService.init();
+  }
 
   ngOnInit(): void {
     const appTitle = this.titleService.getTitle();

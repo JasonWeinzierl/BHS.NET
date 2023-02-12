@@ -12,11 +12,11 @@
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="7.0.0-rc2.5" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0-beta2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.2" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Serilog.Sinks.MongoDB" Version="5.3.1" />
@@ -36,24 +36,11 @@
     <ProjectReference Include="..\BHS.Domain\BHS.Domain.csproj" />
   </ItemGroup>
 
-  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
-    <!-- Ensure Node.js is installed -->
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-  </Target>
-
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- Install packages if not already downloaded -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm ci" Condition=" !Exists('$(SpaRoot)node_modules') " />
-    
-    <!-- Ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:app:prod" />
+    <!-- Ensure the JS resources are already built -->
+    <Error Condition=" !Exists('$(SpaRoot)dist\index.html') " Text="dist/index.html is required to publish this project. To continue, please build the JS resources." />
 
-    <!-- Include the newly-built files in the publish output -->
+    <!-- Include the JS resources in the publish output -->
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)dist\**" />
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">

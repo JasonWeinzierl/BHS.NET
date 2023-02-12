@@ -1,6 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
 import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-options.provider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -49,7 +50,13 @@ import { throwIfAlreadyLoaded } from './guards/module-import.guard';
     CarouselModule.forRoot(),
     CollapseModule.forRoot(),
   ],
-  providers: [Title],
+  providers: [
+    Title,
+    {
+      provide: ErrorHandler,
+      useClass: ApplicationinsightsAngularpluginErrorService,
+    }
+  ],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

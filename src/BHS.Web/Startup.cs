@@ -15,6 +15,8 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddApplicationInsightsTelemetry();
+
         services.AddControllers()
                 .AddBhs400Logging();
         services.AddSpaStaticFiles(configuration =>
