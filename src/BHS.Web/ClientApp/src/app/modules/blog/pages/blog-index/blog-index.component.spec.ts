@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Pipe, PipeTransform } from '@angular/core';
 import { BlogIndexComponent } from './blog-index.component';
 import { BlogService } from '@data/blog';
+import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Pipe({name: 'sortBy'})
@@ -18,7 +19,8 @@ describe('BlogIndexComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FormsModule,
       ],
       declarations: [
         BlogIndexComponent,
@@ -26,7 +28,7 @@ describe('BlogIndexComponent', () => {
       ],
       providers: [
         BlogService,
-      ]
+      ],
     })
     .compileComponents();
   }));

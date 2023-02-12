@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { FooterComponent } from './footer.component';
+import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -8,7 +8,7 @@ describe('FooterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FooterComponent ]
+      declarations: [ FooterComponent, RouterLinkDirectiveStub ],
     })
     .compileComponents();
   }));

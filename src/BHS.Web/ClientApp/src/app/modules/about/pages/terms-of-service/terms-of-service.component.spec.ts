@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
 import { TermsOfServiceComponent } from './terms-of-service.component';
 
 describe('TermsOfServiceComponent', () => {
@@ -8,7 +8,7 @@ describe('TermsOfServiceComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TermsOfServiceComponent ]
+      declarations: [ TermsOfServiceComponent, RouterLinkDirectiveStub ],
     })
     .compileComponents();
   }));

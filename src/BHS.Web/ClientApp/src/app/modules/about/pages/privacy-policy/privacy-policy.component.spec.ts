@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { PrivacyPolicyComponent } from './privacy-policy.component';
+import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
 
 describe('PrivacyPolicyComponent', () => {
   let component: PrivacyPolicyComponent;
@@ -8,7 +8,7 @@ describe('PrivacyPolicyComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrivacyPolicyComponent ]
+      declarations: [ PrivacyPolicyComponent, RouterLinkDirectiveStub ],
     })
     .compileComponents();
   }));

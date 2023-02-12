@@ -2,6 +2,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotFoundComponent } from './not-found.component';
 import { of } from 'rxjs';
+import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
@@ -10,7 +11,8 @@ describe('NotFoundComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        NotFoundComponent
+        NotFoundComponent,
+        RouterLinkDirectiveStub,
       ],
       providers: [
         {
