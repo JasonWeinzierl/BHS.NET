@@ -1,16 +1,25 @@
 import { AppComponent } from '@app/app.component';
+import { InsightsService } from '@core/services/insights.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed } from '@angular/core/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
+    const insightsService = jasmine.createSpyObj<InsightsService>('insightsService', ['init']);
+
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
       ],
       declarations: [
         AppComponent,
-      ]
+      ],
+      providers: [
+        {
+          provide: InsightsService,
+          useValue: insightsService,
+        }
+      ],
     })
     .compileComponents();
   });
