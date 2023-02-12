@@ -36,6 +36,7 @@ export class BlogEntryComponent {
         if (post.photosAlbumSlug) {
           this.postAlbum$ = this.photosService.getAlbum(post.photosAlbumSlug);
         }
+        this.isLoading = false;
       }),
       catchError((err: unknown) => {
         if (err instanceof HttpErrorResponse) {
@@ -45,7 +46,6 @@ export class BlogEntryComponent {
         }
         return of();
       }),
-      finalize(() => this.isLoading = false),
     );
   }
 }
