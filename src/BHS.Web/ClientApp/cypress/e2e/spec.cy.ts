@@ -1,6 +1,8 @@
+import { createBanner, createBlogPostPreview, createCategorySummary, createPhotoAlbum } from 'cypress/factories/dataFactories';
+
 describe('ClientApp', () => {
   beforeEach(() => {
-    cy.intercept('GET', '/api/banners/current', { fixture: 'currentBanners' }).as('currentBanners');
+    cy.intercept('GET', '/api/banners/current', [ createBanner() ]).as('currentBanners');
   });
 
   it('should display welcome message', () => {
@@ -9,8 +11,8 @@ describe('ClientApp', () => {
   });
 
   it('should navigate to News', () => {
-    cy.intercept('GET', '/api/blog/posts', { fixture: 'blogPosts' }).as('blogPosts');
-    cy.intercept('GET', '/api/blog/categories', { fixture: 'blogCategories' }).as('blogCategories');
+    cy.intercept('GET', '/api/blog/posts', [ createBlogPostPreview() ]).as('blogPosts');
+    cy.intercept('GET', '/api/blog/categories', [ createCategorySummary() ]).as('blogCategories');
 
     cy.visit('/');
     cy.get('.nav-item > a').contains('News').click();
@@ -19,7 +21,7 @@ describe('ClientApp', () => {
   });
 
   it('should navigate to Photos', () => {
-    cy.intercept('GET', '/api/photos/albums', { fixture: 'photosAlbums' }).as('photosAlbums');
+    cy.intercept('GET', '/api/photos/albums', [ createPhotoAlbum() ]).as('photosAlbums');
 
     cy.visit('/');
     cy.get('.nav-item > a').contains('Content').click();
