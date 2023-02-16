@@ -8,8 +8,8 @@ export const createCategorySummary = (overrides?: NestedPartial<CategorySummary>
   return mergePartially.deep(
     {
       postsCount: faker.datatype.number(),
-      slug: faker.internet.domainWord(),
-      name: faker.company.name(),
+      slug: faker.lorem.slug(),
+      name: faker.lorem.word(),
     },
     overrides,
   );
@@ -19,7 +19,7 @@ export const createBlogPostPreview = (overrides?: NestedPartial<PostPreview>): P
   return mergePartially.deep(
     {
       slug: faker.internet.domainWord(),
-      title: faker.company.name(),
+      title: faker.lorem.word(),
       contentPreview: faker.lorem.paragraph(),
       datePublished: faker.date.past(),
       author: {
@@ -29,7 +29,7 @@ export const createBlogPostPreview = (overrides?: NestedPartial<PostPreview>): P
       categories: [
         {
           slug: faker.internet.domainWord(),
-          name: faker.company.name(),
+          name: faker.lorem.word(),
         },
       ],
     },
@@ -52,7 +52,7 @@ export const createPhotoAlbum = (overrides?: NestedPartial<Album>): Album=> {
   return mergePartially.deep(
     {
       slug: faker.internet.domainWord(),
-      name: faker.company.name(),
+      name: faker.lorem.word(),
       description: faker.lorem.sentence(),
       author: {
         username: faker.internet.userName(),
