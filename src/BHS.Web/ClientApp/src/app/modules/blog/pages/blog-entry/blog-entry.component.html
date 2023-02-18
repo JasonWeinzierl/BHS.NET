@@ -20,7 +20,8 @@
         by
         <a [routerLink]="['/apps/profile', post.author.username]">{{post.author.name}}</a>
       </span>
-      on {{post.datePublished | date:'EEEE, d MMMM y \'at\' h:mm:ss a'}}
+      on
+      <app-date [datetime]="post.datePublished"></app-date>
     </p>
   </div>
   <div class="card-body">

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DateComponent } from '@shared/components/date/date.component';
 import { PostCardComponent } from './post-card.component';
 import { PostPreview } from '@data/blog/models/post-preview';
 import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
@@ -9,7 +10,7 @@ describe('PostCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostCardComponent, RouterLinkDirectiveStub ],
+      declarations: [ PostCardComponent, RouterLinkDirectiveStub, DateComponent ],
     })
     .compileComponents();
   });

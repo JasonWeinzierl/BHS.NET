@@ -4,6 +4,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
+import { DateComponent } from './components/date/date.component';
 import { NgModule } from '@angular/core';
 import { SnippetPipe } from './pipes/snippet.pipe';
 import { SortByPipe } from './pipes/sort-by.pipe';
@@ -21,10 +22,12 @@ import { SortByPipe } from './pipes/sort-by.pipe';
   declarations: [
     SortByPipe,
     SnippetPipe,
+    DateComponent,
   ],
   exports: [
     SortByPipe,
     SnippetPipe,
+    DateComponent,
 
     // Make these available for all modules.
     CommonModule,
