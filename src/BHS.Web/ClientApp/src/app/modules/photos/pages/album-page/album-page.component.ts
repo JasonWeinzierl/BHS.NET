@@ -64,6 +64,7 @@ export class AlbumPageComponent implements OnInit {
         if (error instanceof HttpErrorResponse) {
           this.error = error.message;
         }
-      }});
+      }})
+      .add(() => this.isLoading = false);
   }
 }
