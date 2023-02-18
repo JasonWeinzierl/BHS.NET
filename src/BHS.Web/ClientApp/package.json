@@ -14,7 +14,8 @@
     "test:ci": "ng test --configuration ci",
     "e2e": "ng e2e",
     "e2e:ci": "ng e2e --configuration ci",
-    "ct": "cypress run --component"
+    "ct": "ng run BHS.Web.ClientApp:ct",
+    "ct:ci": "ng run BHS.Web.ClientApp:ct:ci"
   },
   "private": true,
   "dependencies": {

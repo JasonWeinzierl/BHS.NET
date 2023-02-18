@@ -155,6 +155,11 @@
           "configurations": {
             "development": {
               "devServerTarget": "BHS.Web.ClientApp:serve:development"
+            },
+            "ci": {
+              "devServerTarget": "BHS.Web.ClientApp:serve:production",
+              "watch": false,
+              "headless": true
             }
           }
         },
