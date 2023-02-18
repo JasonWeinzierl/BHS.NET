@@ -9,21 +9,21 @@ const routes: Routes = [
     path: '',
     component: BlogIndexComponent,
     pathMatch: 'full',
-    data: { title: 'News' }
+    data: { title: 'News' },
   },
   {
     path: 'entry/:slug',
     component: BlogEntryComponent,
-    data: { title: 'Post' }
+    data: { title: 'Post' },
   },
   {
     path: 'category/:slug',
-    component: CategoryPostsComponent
-  }
+    component: CategoryPostsComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class BlogRoutingModule { }

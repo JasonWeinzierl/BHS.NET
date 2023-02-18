@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(
         filter(
-          event => event instanceof NavigationEnd
+          event => event instanceof NavigationEnd,
         ),
         map(() => {
           let child = this.activatedRoute.firstChild;
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
             return child.snapshot.data['title'];
           }
           return appTitle;
-        })
+        }),
       )
       .subscribe((newTitle: string) => {
         this.setTitle(newTitle);

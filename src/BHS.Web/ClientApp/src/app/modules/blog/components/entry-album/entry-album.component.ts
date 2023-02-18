@@ -5,7 +5,7 @@ import { AlbumPhotos } from '@data/photos';
   selector: 'app-entry-album',
   templateUrl: './entry-album.component.html',
   styleUrls: ['./entry-album.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntryAlbumComponent {
   @Input() album: AlbumPhotos | null = null;

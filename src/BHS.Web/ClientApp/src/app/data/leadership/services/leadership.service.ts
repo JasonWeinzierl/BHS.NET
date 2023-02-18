@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Officer } from '@data/leadership/models/officer';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LeadershipService {
   private baseUrl = '/api/leadership';

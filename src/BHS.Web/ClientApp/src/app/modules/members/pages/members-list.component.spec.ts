@@ -10,14 +10,14 @@ describe('MembersListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       declarations: [
-        MembersListComponent
+        MembersListComponent,
       ],
       providers: [
-        AuthorService
-      ]
+        AuthorService,
+      ],
     })
     .compileComponents();
   });

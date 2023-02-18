@@ -7,12 +7,12 @@ const routes: Routes = [
     path: '',
     component: MembersListComponent,
     pathMatch: 'full',
-    data: { title: 'Members' }
-  }
+    data: { title: 'Members' },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class MembersRoutingModule { }

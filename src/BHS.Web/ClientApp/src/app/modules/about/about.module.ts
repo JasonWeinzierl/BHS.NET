@@ -15,12 +15,12 @@ import { WhoWeAreComponent } from './pages/who-we-are/who-we-are.component';
     OrganizationComponent,
     PrivacyPolicyComponent,
     TermsOfServiceComponent,
-    WhoWeAreComponent
+    WhoWeAreComponent,
   ],
   imports: [
     SharedModule,
 
     AboutRoutingModule,
-  ]
+  ],
 })
 export class AboutModule { }

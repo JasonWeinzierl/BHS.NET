@@ -22,7 +22,7 @@ export class AlbumPageComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private photosService: PhotosService
+    private photosService: PhotosService,
   ) { }
 
   ngOnInit(): void {

@@ -17,7 +17,7 @@ export class AlbumComponent {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private photosService: PhotosService
+    private photosService: PhotosService,
     ) {
       this.album$ = this.activatedRoute.paramMap.pipe(
         map(params => {

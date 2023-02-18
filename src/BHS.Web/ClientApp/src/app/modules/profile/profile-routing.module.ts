@@ -6,12 +6,12 @@ const routes: Routes = [
   {
     path: ':username',
     pathMatch: 'full',
-    component: ProfileIndexComponent
-  }
+    component: ProfileIndexComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ProfileRoutingModule { }

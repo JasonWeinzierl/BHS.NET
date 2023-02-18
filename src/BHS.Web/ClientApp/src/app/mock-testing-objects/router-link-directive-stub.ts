@@ -3,7 +3,7 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: '[routerLink]'
+  selector: '[routerLink]',
 })
 export class RouterLinkDirectiveStub {
   @Input() routerLink: string | unknown[] | null | undefined;

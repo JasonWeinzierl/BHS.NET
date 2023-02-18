@@ -25,7 +25,7 @@ export class HeaderComponent {
   banners$: Observable<Array<SiteBannerStyled>>;
 
   constructor(
-    private bannerService: SiteBannerService
+    private bannerService: SiteBannerService,
    ) {
     this.banners$ = this.bannerService.getEnabled()
       .pipe(

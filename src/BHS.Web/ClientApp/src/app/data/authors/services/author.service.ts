@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { PostPreview } from '@data/blog/models/post-preview';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthorService {
   private baseUrl = '/api/author';

@@ -10,14 +10,14 @@ describe('OrganizationComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       declarations: [
-        OrganizationComponent
+        OrganizationComponent,
       ],
       providers: [
-        LeadershipService
-      ]
+        LeadershipService,
+      ],
     })
     .compileComponents();
   }));

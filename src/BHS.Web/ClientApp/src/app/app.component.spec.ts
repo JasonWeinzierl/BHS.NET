@@ -9,7 +9,7 @@ describe('AppComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
       ],
       declarations: [
         AppComponent,
@@ -18,7 +18,7 @@ describe('AppComponent', () => {
         {
           provide: InsightsService,
           useValue: insightsService,
-        }
+        },
       ],
     })
     .compileComponents();
@@ -29,7 +29,7 @@ describe('AppComponent', () => {
       const app = fixture.componentInstance;
 
       expect(app).toBeTruthy();
-    }
+    },
   );
 
   // it('should render title in an h1 tag', () => {

@@ -24,7 +24,7 @@ import { SharedModule } from '@shared/shared.module';
     BlogRoutingModule,
   ],
   exports: [
-    PostCardComponent
-  ]
+    PostCardComponent,
+  ],
 })
 export class BlogModule { }

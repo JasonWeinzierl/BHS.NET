@@ -14,10 +14,10 @@ describe('AlbumPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
       declarations: [
-        AlbumPageComponent
+        AlbumPageComponent,
       ],
       providers: [
         PhotosService,
@@ -26,11 +26,11 @@ describe('AlbumPageComponent', () => {
           useValue: {
             'paramMap': of(convertToParamMap({
               slug: '3',
-              id: '4'
-            }))
-          }
-        }
-      ]
+              id: '4',
+            })),
+          },
+        },
+      ],
     })
     .compileComponents();
   });

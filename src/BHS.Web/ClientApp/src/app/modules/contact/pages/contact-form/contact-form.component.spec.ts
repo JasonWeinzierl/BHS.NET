@@ -15,12 +15,12 @@ describe('ContactFormComponent', () => {
         ReactiveFormsModule,
       ],
       declarations: [
-        ContactFormComponent
+        ContactFormComponent,
       ],
       providers: [
         FormBuilder,
-        ContactService
-      ]
+        ContactService,
+      ],
     })
     .compileComponents();
   }));

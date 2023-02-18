@@ -7,7 +7,7 @@ import { Post } from '@data/blog/models/post';
 import { PostPreview } from '@data/blog/models/post-preview';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BlogService {
   private baseUrl = '/api/blog';

@@ -8,7 +8,7 @@ describe('EntryAlbumComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EntryAlbumComponent ]
+      declarations: [ EntryAlbumComponent ],
     })
     .compileComponents();
 

@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { paths } from '@app/app-paths';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PathResolveService implements Resolve<string | null> {
 
   resolve(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): string | null {
     const typoPath = state.url.replace('/', '');
     const threshold = this.getThreshold(typoPath);
@@ -70,7 +70,7 @@ export class PathResolveService implements Resolve<string | null> {
           matrix[i][j] = Math.min(
             matrix[i - 1][j - 1] + 1,
             matrix[i][j - 1] + 1,
-            matrix[i - 1][j] + 1
+            matrix[i - 1][j] + 1,
           );
         }
       }

@@ -19,11 +19,11 @@ describe('NotFoundComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             'data': of(convertToParamMap({
-              path: '123/456'
-            }))
-          }
-        }
-      ]
+              path: '123/456',
+            })),
+          },
+        },
+      ],
     })
     .compileComponents();
   });

@@ -12,10 +12,10 @@ describe('ProfileIndexComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       declarations: [
-        ProfileIndexComponent
+        ProfileIndexComponent,
       ],
       providers: [
         AuthorService,
@@ -23,11 +23,11 @@ describe('ProfileIndexComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             'paramMap': of(convertToParamMap({
-              username: 'abc'
-            }))
-          }
-        }
-      ]
+              username: 'abc',
+            })),
+          },
+        },
+      ],
     })
     .compileComponents();
   });

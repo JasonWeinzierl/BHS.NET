@@ -8,11 +8,11 @@ const routes: Routes = [
     component: HomeComponent,
     pathMatch: 'full',
     data: { title: 'Home' },
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class HomeRoutingModule { }

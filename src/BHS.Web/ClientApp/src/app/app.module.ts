@@ -14,6 +14,6 @@ import { SharedModule } from '@shared/shared.module';
 
     AppRoutingModule, // app-level routing (with lazy-loading)
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -12,7 +12,7 @@ describe('BlogEntryComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       declarations: [
         BlogEntryComponent,
@@ -23,11 +23,11 @@ describe('BlogEntryComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             'paramMap': of(convertToParamMap({
-              slug: '123'
-            }))
-          }
-        }
-      ]
+              slug: '123',
+            })),
+          },
+        },
+      ],
     })
     .compileComponents();
   });

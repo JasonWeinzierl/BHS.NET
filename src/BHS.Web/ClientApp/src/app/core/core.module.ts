@@ -55,7 +55,7 @@ import { throwIfAlreadyLoaded } from './guards/module-import.guard';
     {
       provide: ErrorHandler,
       useClass: ApplicationinsightsAngularpluginErrorService,
-    }
+    },
   ],
 })
 export class CoreModule {

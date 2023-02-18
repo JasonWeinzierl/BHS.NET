@@ -5,7 +5,7 @@ import { environment } from '@env';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InsightsService {
   private angularPlugin = new AngularPlugin();

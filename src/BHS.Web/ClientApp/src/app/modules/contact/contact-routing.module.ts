@@ -6,12 +6,12 @@ const routes: Routes = [
     {
         path: '',
         component: ContactComponent,
-        data: { title: 'Contact Us' }
-    }
+        data: { title: 'Contact Us' },
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class ContactRoutingModule { }

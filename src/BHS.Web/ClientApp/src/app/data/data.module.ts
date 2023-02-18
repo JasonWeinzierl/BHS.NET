@@ -10,6 +10,6 @@ import { NgModule } from '@angular/core';
   declarations: [],
   imports: [
     HttpClientModule,
-  ]
+  ],
 })
 export class DataModule { }

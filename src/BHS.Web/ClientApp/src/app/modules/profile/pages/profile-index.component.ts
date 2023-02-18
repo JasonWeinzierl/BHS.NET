@@ -32,7 +32,7 @@ export class ProfileIndexComponent {
         filter(username => !!username),
         switchMap(username => combineLatest([
           this.authorService.getAuthor(username ?? ''),
-          this.authorService.getAuthorPosts(username ?? '')
+          this.authorService.getAuthorPosts(username ?? ''),
         ])),
         tap(() => this.isLoading = false),
         map(value => ({ author: value[0], posts: value[1] }) ),

@@ -10,7 +10,7 @@ import { SharedModule } from '@shared/shared.module';
     SharedModule,
 
     BlogModule,
-    ProfileRoutingModule
-  ]
+    ProfileRoutingModule,
+  ],
 })
 export class ProfileModule { }

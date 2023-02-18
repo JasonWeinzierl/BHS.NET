@@ -29,5 +29,5 @@ const markedOptionsFactory = (): MarkedOptions => {
  */
 export const bootstrapMarkedOptionsProvider: FactoryProvider = {
   provide: MarkedOptions,
-  useFactory: markedOptionsFactory
+  useFactory: markedOptionsFactory,
 };

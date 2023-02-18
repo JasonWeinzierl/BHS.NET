@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ContactComponent } from './contact.component';
 
 @Component({
-  selector: 'app-contact-form'
+  selector: 'app-contact-form',
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 class ContactFormComponentStub { }

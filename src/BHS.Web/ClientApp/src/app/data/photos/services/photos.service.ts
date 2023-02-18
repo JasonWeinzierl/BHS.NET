@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Photo } from '@data/photos/models/photo';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PhotosService {
   private baseUrl = '/api/photos';

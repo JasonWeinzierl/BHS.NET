@@ -12,10 +12,10 @@ describe('AlbumComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       declarations: [
-        AlbumComponent
+        AlbumComponent,
       ],
       providers: [
         PhotosService,
@@ -23,11 +23,11 @@ describe('AlbumComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             'paramMap': of(convertToParamMap({
-              slug: '3'
-            }))
-          }
-        }
-      ]
+              slug: '3',
+            })),
+          },
+        },
+      ],
     })
     .compileComponents();
   });

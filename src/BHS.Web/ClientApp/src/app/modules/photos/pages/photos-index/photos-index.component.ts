@@ -15,7 +15,7 @@ export class PhotosIndexComponent {
   error?: string;
 
   constructor(
-    private photosService: PhotosService
+    private photosService: PhotosService,
   ) {
     this.albums$ = this.photosService.getAlbums()
       .pipe(

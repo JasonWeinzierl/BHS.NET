@@ -88,6 +88,10 @@
             "ignoreCase": true
           }
         ],
+        "comma-dangle": [
+          "warn",
+          "always-multiline"
+        ],
         "@typescript-eslint/explicit-function-return-type": [
           "error",
           {

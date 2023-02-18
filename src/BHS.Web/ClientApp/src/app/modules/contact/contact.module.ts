@@ -7,11 +7,11 @@ import { SharedModule } from '@shared/shared.module';
 @NgModule({
   declarations: [
     ContactComponent,
-    ContactFormComponent
+    ContactFormComponent,
   ],
   imports: [
     SharedModule,
     ContactRoutingModule,
-  ]
+  ],
 })
 export class ContactModule { }

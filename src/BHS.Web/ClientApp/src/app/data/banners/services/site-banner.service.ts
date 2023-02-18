@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SiteBanner } from '@data/banners/models/site-banner';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SiteBannerService {
   private baseUrl = '/api/banners';

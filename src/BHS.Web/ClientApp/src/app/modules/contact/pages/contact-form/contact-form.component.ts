@@ -22,7 +22,7 @@ export class ContactFormComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private contactService: ContactService
+    private contactService: ContactService,
   ) { }
 
   onSubmit(): void {

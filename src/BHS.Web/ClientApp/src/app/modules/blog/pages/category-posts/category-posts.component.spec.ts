@@ -12,10 +12,10 @@ describe('CategoryPostsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       declarations: [
-        CategoryPostsComponent
+        CategoryPostsComponent,
       ],
       providers: [
         BlogService,
@@ -23,11 +23,11 @@ describe('CategoryPostsComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             'paramMap': of(convertToParamMap({
-              slug: '123'
-            }))
-          }
-        }
-      ]
+              slug: '123',
+            })),
+          },
+        },
+      ],
     })
     .compileComponents();
   });

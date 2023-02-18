@@ -8,6 +8,6 @@ import { SharedModule } from '@shared/shared.module';
   imports: [
     SharedModule,
     LocationRoutingModule,
-  ]
+  ],
 })
 export class LocationModule { }

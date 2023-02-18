@@ -4,6 +4,6 @@ export class ContactAlertRequest {
     public emailAddress?: string,
     public message?: string | null,
     public dateRequested?: Date | null,
-    public body?: string | null
+    public body?: string | null,
   ) { }
 }

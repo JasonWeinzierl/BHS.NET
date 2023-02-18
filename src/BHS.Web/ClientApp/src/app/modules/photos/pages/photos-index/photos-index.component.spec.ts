@@ -9,11 +9,11 @@ describe('PhotosIndexComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientModule
+        HttpClientModule,
       ],
       declarations: [
-        PhotosIndexComponent
-      ]
+        PhotosIndexComponent,
+      ],
     })
     .compileComponents();
   });

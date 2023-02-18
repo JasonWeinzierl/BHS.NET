@@ -9,6 +9,6 @@ import { SharedModule } from '@shared/shared.module';
     SharedModule,
 
     MembersRoutingModule,
-  ]
+  ],
 })
 export class MembersModule { }

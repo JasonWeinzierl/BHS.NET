@@ -28,8 +28,8 @@ describe('HeaderComponent', () => {
         {
           provide: SiteBannerService,
           useValue: bannerService,
-        }
-      ]
+        },
+      ],
     })
     .compileComponents();
   }));

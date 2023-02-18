@@ -6,12 +6,12 @@ const routes: Routes = [
     {
         path: '',
         component: LocationComponent,
-        data: { title: 'Location' }
-    }
+        data: { title: 'Location' },
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class LocationRoutingModule { }

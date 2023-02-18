@@ -20,11 +20,11 @@ const routes: Routes = [
     path: 'album/:slug/photo/:id',
     component: AlbumPageComponent,
     data: { title: 'Photo' },
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class PhotosRoutingModule { }
