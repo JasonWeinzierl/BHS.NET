@@ -21,7 +21,7 @@ internal static class SwaggerConfig
     private static OpenApiInfo GetApiInfo()
         => new()
         {
-            Version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "vnext",
+            Version = GetDocumentVersion(),
             Title = "BHS API",
             Description = "API for the Belton Historical Society",
             TermsOfService = new Uri("/about/terms-of-service", UriKind.Relative),
@@ -47,6 +47,9 @@ internal static class SwaggerConfig
 
     private static string GetDocumentName()
         => $"v{Assembly.GetExecutingAssembly().GetName().Version?.Major.ToString() ?? "next"}";
+
+    private static string GetDocumentVersion()
+        => $"v{Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "next"}";
 
     /// <summary>
     /// Registers middleware for Swagger and SwaggerUI.
