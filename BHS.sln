@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		GitVersion.yml = GitVersion.yml
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -30,8 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Domain.Tests", "tests\B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builds", "Builds", "{159F3C87-C585-4197-A50F-8383679960B7}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\azure-release.yml = .github\workflows\azure-release.yml
 		.github\workflows\angular-pr.yml = .github\workflows\angular-pr.yml
+		.github\workflows\azure-release.yml = .github\workflows\azure-release.yml
 		.github\workflows\dotnet-pr.yml = .github\workflows\dotnet-pr.yml
 	EndProjectSection
 EndProject

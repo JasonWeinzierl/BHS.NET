@@ -9,6 +9,10 @@ const transformedConfig = `export const environment = {
   appInsights: {
     connectionString: '${process.env['APPLICATIONINSIGHTS_CONNECTION_STRING']}',
   },
+  version: {
+    semver: '${process.env['SEMANTIC_VERSION']}',
+    info: '${process.env['INFORMATIONAL_VERSION']}',
+  },
 };
 `;
 
