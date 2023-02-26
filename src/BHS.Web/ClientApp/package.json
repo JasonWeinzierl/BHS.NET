@@ -7,7 +7,7 @@
     "build:prod": "run-s transform:prod build:app:prod",
     "build:app": "ng build",
     "build:app:prod": "ng build --configuration production",
-    "transform:prod": "npx ts-node -O '{\"module\": \"commonjs\"}' ./transform-environment.ts production",
+    "transform:prod": "npx ts-node -O '{\"module\": \"commonjs\"}' ./scripts/transform-environment.ts production",
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
     "test": "ng test",

@@ -3,7 +3,8 @@
  */
 import { writeFileSync } from 'fs';
 
-const targetPath = './src/environments/environment.production.ts';
+const targetPath = `${__dirname}/../src/environments/environment.production.ts`;
+console.info(`Creating production environment file at ${targetPath}`);
 
 const transformedConfig = `export const environment = {
   appInsights: {
@@ -17,3 +18,4 @@ const transformedConfig = `export const environment = {
 `;
 
 writeFileSync(targetPath, transformedConfig, 'utf8');
+console.info('Finished creating environment file.');
