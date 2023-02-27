@@ -49,7 +49,7 @@ internal static class SwaggerConfig
         => $"v{Assembly.GetExecutingAssembly().GetName().Version?.Major.ToString() ?? "next"}";
 
     private static string GetDocumentVersion()
-        => $"v{Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "next"}";
+        => $"v{Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "next"}";
 
     /// <summary>
     /// Registers middleware for Swagger and SwaggerUI.
