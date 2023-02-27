@@ -1,4 +1,7 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 namespace BHS.Web;
@@ -10,12 +13,66 @@ internal static class SwaggerConfig
     /// </summary>
     public static void AddBhsSwagger(this IServiceCollection services)
     {
-        services.AddSwaggerGen(swaggerGenOptions =>
+        services.AddSwaggerGen(opt =>
         {
-            swaggerGenOptions.SwaggerDoc(GetDocumentName(), GetApiInfo());
+            opt.SwaggerDoc(GetDocumentName(), GetApiInfo());
+            opt.IncludeXmlComments(GetXmlCommentsPath(), includeControllerXmlComments: true);
 
-            swaggerGenOptions.IncludeXmlComments(GetXmlCommentsPath(), includeControllerXmlComments: true);
+            // Defines a Bearer security scheme.
+            // Swagger UI will add the Authorize button to the UI and accept a Bearer token.
+            opt.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.Http,
+                Description = "JWT Authorization header using the Bearer scheme.",
+                Scheme = JwtBearerDefaults.AuthenticationScheme, // The name to put in the Authorization header before the bearer token.
+                BearerFormat = "JWT", // Documentation purposes; indicates how the bearer token is formatted.
+            });
+
+            // Selectively applies the Bearer security scheme to endpoints.
+            // Swagger UI will send the Bearer token with each request if the scheme is applied.
+            // This is more accurate than opt.AddSecurityRequirement() which applies the scheme globally.
+            opt.OperationFilter<SecurityRequirementsOperationFilter>();
         });
+    }
+
+    public class SecurityRequirementsOperationFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            // Skip endpoints with [AllowAnonymous].
+            bool hasAllowAnonymous = context.ApiDescription.CustomAttributes().OfType<AllowAnonymousAttribute>().Any();
+            if (hasAllowAnonymous)
+                return;
+
+            // Only apply to method endpoints with [Authorize].
+            // This is necessary if not applying auth by default with app.MapControllers().RequireAuthorization().
+            bool authorize = context.ApiDescription.CustomAttributes().OfType<AuthorizeAttribute>().Any();
+            if (!authorize)
+                return;
+
+            // Add possible auth response codes.
+            operation.Responses.Add(StatusCodes.Status401Unauthorized.ToString(), new OpenApiResponse { Description = "Unauthorized" });
+            operation.Responses.Add(StatusCodes.Status403Forbidden.ToString(), new OpenApiResponse { Description = "Forbidden" });
+
+            // Create reference to the scheme definition.
+            var schemeReference = new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "bearerAuth", // Dictionary key pointing to the definition's name.
+                    Type = ReferenceType.SecurityScheme,
+                },
+            };
+
+            // Add the scheme as a security requirement.
+            operation.Security = new[]
+            {
+                new OpenApiSecurityRequirement
+                {
+                    [schemeReference] = Array.Empty<string>(), // Empty because the array is only used for OAuth2 scopes.
+                }
+            };
+        }
     }
 
     private static OpenApiInfo GetApiInfo()

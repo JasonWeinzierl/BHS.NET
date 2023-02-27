@@ -17,11 +17,15 @@ public class Startup
     {
         services.AddApplicationInsightsTelemetry();
 
+        // Set up auth and read from config section named "Authentication".
+        services.AddAuthentication()
+                .AddJwtBearer();
+
         services.AddControllers()
                 .AddBhs400Logging();
-        services.AddSpaStaticFiles(configuration =>
+        services.AddSpaStaticFiles(opt =>
         {
-            configuration.RootPath = "ClientApp/dist";
+            opt.RootPath = "ClientApp/dist";
         });
 
         services.AddBhsHealthChecks(Configuration);
@@ -62,6 +66,10 @@ public class Startup
         app.UseBhsSwagger();
 
         app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

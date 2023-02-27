@@ -46,3 +46,14 @@ Test the frontend application through the launched browser window.
 Navigate to `/api/swagger` to use the Swagger UI.
 This does not require the frontend development server to be running.
 
+#### Authentication
+
+Set up User Secrets (or edit `appsettings.Production.json`) with the following:
+
+```json
+{
+  "Authentication:Schemes:Bearer:Authority": "https://AUTH_DOMAIN/",
+  "Authentication:Schemes:Bearer:ValidAudiences:0": "AUDIENCE",
+  "Authentication:Schemes:Bearer:ValidIssuer": "AUTH_DOMAIN"
+}
+```
