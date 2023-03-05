@@ -1,11 +1,14 @@
 import { AppComponent } from '@app/app.component';
+import { AuthService } from '@auth0/auth0-angular';
 import { InsightsService } from '@core/services/insights.service';
+import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed } from '@angular/core/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     const insightsService = jasmine.createSpyObj<InsightsService>('insightsService', ['init']);
+    const auth = jasmine.createSpyObj<AuthService>('auth', {}, {'isLoading$': of()});
 
     await TestBed.configureTestingModule({
       imports: [
@@ -18,6 +21,10 @@ describe('AppComponent', () => {
         {
           provide: InsightsService,
           useValue: insightsService,
+        },
+        {
+          provide: AuthService,
+          useValue: auth,
         },
       ],
     })

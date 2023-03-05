@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Directive, Input } from '@angular/core';
 import { RouterLinkActiveDirectiveStub, RouterLinkDirectiveStub } from '@app/mock-testing-objects';
+import { AuthService } from '@auth0/auth0-angular';
 import { HeaderComponent } from './header.component';
 import { of } from 'rxjs';
 import { SiteBannerService } from '@data/banners/services/site-banner.service';
@@ -21,6 +22,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const bannerService = jasmine.createSpyObj<SiteBannerService>('bannerService', {'getEnabled': of()});
+    const auth = jasmine.createSpyObj<AuthService>('auth', {}, {'isAuthenticated$': of()});
 
     TestBed.configureTestingModule({
       declarations: [ HeaderComponent, RouterLinkDirectiveStub, RouterLinkActiveDirectiveStub, CollapseDirectiveStub ],
@@ -28,6 +30,10 @@ describe('HeaderComponent', () => {
         {
           provide: SiteBannerService,
           useValue: bannerService,
+        },
+        {
+          provide: AuthService,
+          useValue: auth,
         },
       ],
     })
