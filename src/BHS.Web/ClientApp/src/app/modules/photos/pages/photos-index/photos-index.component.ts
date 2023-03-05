@@ -25,6 +25,7 @@ export class PhotosIndexComponent {
             this.error = error.message;
           } else {
             this.error = 'An error occurred.';
+            console.error(error); // TODO: OnPush causes these errors to never appear.  review all components accordingly.
           }
           return of();
         }),
