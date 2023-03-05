@@ -50,6 +50,7 @@ public static class BhsServiceCollectionExtensions
             {
                 builder.Subscribe<CommandStartedEvent>(e => logger.LogDebug("{CommandName} - {Command}", e.CommandName, e.Command.ToJson()));
             };
+            clientSettings.LinqProvider = MongoDB.Driver.Linq.LinqProvider.V2; // TODO: V3 causes errors; investigate and resolve.
             return new MongoClient(clientSettings);
         });
 
