@@ -46,14 +46,27 @@ Test the frontend application through the launched browser window.
 Navigate to `/api/swagger` to use the Swagger UI.
 This does not require the frontend development server to be running.
 
-#### Authentication
+#### Auth
 
-Set up User Secrets (or edit `appsettings.Production.json`) with the following:
+This application uses Auth0;
+you must set up an Auth0 tenant with RBAC permissions matching those set up in `Startup.cs`.
+
+
+Set up the API's configuration with the following:
 
 ```json
 {
-  "Authentication:Schemes:Bearer:Authority": "https://AUTH_DOMAIN/",
-  "Authentication:Schemes:Bearer:ValidAudiences:0": "AUDIENCE",
-  "Authentication:Schemes:Bearer:ValidIssuer": "AUTH_DOMAIN"
+  "Authentication:Schemes:Bearer:Authority": "https://AUTH0_DOMAIN/",
+  "Authentication:Schemes:Bearer:ValidAudiences:0": "AUTH0_AUDIENCE",
+  "Authentication:Schemes:Bearer:ValidIssuer": "AUTH0_DOMAIN"
 }
 ```
+
+If using environment variables, remember to use `__` instead of `:` for separating sections.
+
+
+To set up the frontend's configuration, set environment variables before running `transform-environment.ts`:
+
+- `AUTH0_DOMAIN`
+- `AUTH0_CLIENT_ID`
+- `AUTH0_AUDIENCE`

@@ -1,4 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@auth0/auth0-angular';
 import { ContentLayoutComponent } from './core/components/content-layout/content-layout.component';
 import { NgModule } from '@angular/core';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
@@ -55,12 +56,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('@modules/about/about.module').then(m => m.AboutModule),
       },
-      {
-        path: 'admin',
-        loadChildren: () =>
-          import('@modules/admin/admin.module').then(m => m.AdminModule),
-      },
     ],
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('@modules/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuard], // Must use canActivate because canLoad and canMatch don't seem to redirect to login properly.
   },
   {
     path: '**',

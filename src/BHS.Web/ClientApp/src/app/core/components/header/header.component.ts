@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AlertTheme } from '@data/banners/models/alert-theme';
+import { AuthService } from '@auth0/auth0-angular';
 import { SiteBanner } from '@data/banners/models/site-banner';
 import { SiteBannerService } from '@data/banners/services/site-banner.service';
 
@@ -23,15 +24,17 @@ export class HeaderComponent {
   isCollapsed = true;
 
   banners$: Observable<Array<SiteBannerStyled>>;
+  isAuthenticated$ = this.auth.isAuthenticated$;
 
   constructor(
     private bannerService: SiteBannerService,
-   ) {
+    private auth: AuthService,
+  ) {
     this.banners$ = this.bannerService.getEnabled()
       .pipe(
         map(banners => this.createStyledBanners(banners)),
       );
-   }
+  }
 
   private createStyledBanners(banners: Array<SiteBanner>): Array<SiteBannerStyled> {
     return banners.map(b => {

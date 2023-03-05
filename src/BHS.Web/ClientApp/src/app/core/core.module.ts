@@ -1,5 +1,7 @@
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
 import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-options.provider';
@@ -8,9 +10,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
+import { environment } from '@env';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { HttpClientModule } from '@angular/common/http';
 import { MarkdownModule } from 'ngx-markdown';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
@@ -39,6 +41,23 @@ import { throwIfAlreadyLoaded } from './guards/module-import.guard';
     HttpClientModule,
     RouterModule,
 
+    // auth0
+    AuthModule.forRoot({
+      ...environment.auth0,
+      // Need to use local storage instead of in-memory login due to some browsers' privacy features.
+      useRefreshTokens: true,
+      cacheLocation: 'localstorage',
+      // Specify which backend routes need auth.
+      httpInterceptor: {
+        allowedList: [
+          {
+            uri: '/api/admin/*', // TODO: For now, no routes will match this. Revisit when authenticated routes are implemented.
+            allowAnonymous: true,
+          },
+        ],
+      },
+    }),
+
     // ngx-markdown
     MarkdownModule.forRoot({
       markedOptions: [bootstrapMarkedOptionsProvider],
@@ -55,6 +74,11 @@ import { throwIfAlreadyLoaded } from './guards/module-import.guard';
     {
       provide: ErrorHandler,
       useClass: ApplicationinsightsAngularpluginErrorService,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
+      multi: true,
     },
   ],
 })

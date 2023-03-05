@@ -17,9 +17,16 @@ public class Startup
     {
         services.AddApplicationInsightsTelemetry();
 
-        // Set up auth and read from config section named "Authentication".
+        // Set up authentication and read from config section named "Authentication".
         services.AddAuthentication()
                 .AddJwtBearer();
+
+        // Set up claim-based authorization.
+        services.AddAuthorization(opt =>
+        {
+            // TODO: add policies as routes needing authorization are implemented.
+            //opt.AddPolicy("WriteAccess", policy => policy.RequireClaim(claimType: "permissions", "blog:write"));
+        });
 
         services.AddControllers()
                 .AddBhs400Logging();

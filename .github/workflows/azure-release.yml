@@ -73,6 +73,9 @@ jobs:
       working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
       env:
         APPLICATIONINSIGHTS_CONNECTION_STRING: ${{ vars.bhsinsights_connstr }}
+        AUTH0_DOMAIN: ${{ vars.auth0_domain }}
+        AUTH0_CLIENT_ID: ${{ vars.auth0_client_id }}
+        AUTH0_AUDIENCE: ${{ vars.auth0_audience }}
         SEMANTIC_VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
         INFORMATIONAL_VERSION: ${{ steps.gitversion.outputs.informationalVersion }}
 

@@ -50,6 +50,9 @@
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/contact']" [routerLinkActive]="['active']">Contact Us</a>
         </li>
+        <li *ngIf="isAuthenticated$ | async" class="nav-item">
+          <a class="nav-link" [routerLink]="['/admin']" [routerLinkActive]="['active']">Admin</a>
+        </li>
         <li class="nav-item dropdown" dropdown>
           <a class="nav-link dropdown-toggle" dropdownToggle role="button" aria-haspopup="true">
             About

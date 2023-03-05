@@ -1,8 +1,9 @@
 import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { filter, map } from 'rxjs/operators';
+import { merge, Observable } from 'rxjs';
+import { AuthService } from '@auth0/auth0-angular';
 import { InsightsService } from '@core/services/insights.service';
-import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -19,17 +20,21 @@ export class AppComponent implements OnInit {
     private titleService: Title,
     private activatedRoute: ActivatedRoute,
     private insightsService: InsightsService,
+    private auth: AuthService,
   ) {
     this.insightsService.init();
-    this.loading$ = this.router.events
-      .pipe(
-        filter(
-          event =>
-            event instanceof RouteConfigLoadStart ||
-            event instanceof RouteConfigLoadEnd,
+    this.loading$ = merge(
+      this.router.events
+        .pipe(
+          filter(
+            event =>
+              event instanceof RouteConfigLoadStart ||
+              event instanceof RouteConfigLoadEnd,
+          ),
+          map(event => event instanceof RouteConfigLoadStart),
         ),
-        map(event => event instanceof RouteConfigLoadStart),
-      );
+      this.auth.isLoading$,
+    );
   }
 
   ngOnInit(): void {

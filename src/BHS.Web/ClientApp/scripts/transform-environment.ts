@@ -10,6 +10,15 @@ const transformedConfig = `export const environment = {
   appInsights: {
     connectionString: '${process.env['APPLICATIONINSIGHTS_CONNECTION_STRING']}',
   },
+  auth0: {
+    domain: '${process.env['AUTH0_DOMAIN']}',
+    clientId: '${process.env['AUTH0_CLIENT_ID']}',
+    authorizationParams: {
+      audience: '${process.env['AUTH0_AUDIENCE']}',
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      redirect_uri: window.location.origin,
+    },
+  },
   version: {
     semver: '${process.env['SEMANTIC_VERSION']}',
     info: '${process.env['INFORMATIONAL_VERSION']}',
