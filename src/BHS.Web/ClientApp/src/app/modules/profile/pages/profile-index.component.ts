@@ -1,5 +1,5 @@
 import { Author, AuthorService } from '@data/authors';
-import { catchError, combineLatest, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, combineLatest, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -12,9 +12,7 @@ import { PostPreview } from '@data/blog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileIndexComponent {
-  vm$: Observable<{ author?: Author, posts: Array<PostPreview> }>;
-  isLoading = true;
-  error?: string;
+  vm$: Observable<{ author?: Author, posts: Array<PostPreview>, isLoading: boolean, error?: string }>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -25,24 +23,24 @@ export class ProfileIndexComponent {
         map(params => {
           const username = params.get('username');
           if (!username) {
-            this.error = 'Failed to get username from URL.';
+            throw new Error('Failed to get username from URL.');
           }
           return username;
         }),
-        filter(username => !!username),
         switchMap(username => combineLatest([
-          this.authorService.getAuthor(username ?? ''),
-          this.authorService.getAuthorPosts(username ?? ''),
+          this.authorService.getAuthor(username),
+          this.authorService.getAuthorPosts(username),
         ])),
-        tap(() => this.isLoading = false),
-        map(value => ({ author: value[0], posts: value[1] }) ),
+        map(value => ({ author: value[0], posts: value[1], isLoading: false }) ),
+        startWith({ posts: [], isLoading: true }),
         catchError((error: unknown) => {
+          let msg = 'An error occurred.';
           if (error instanceof HttpErrorResponse) {
-            this.error = error.message;
+            msg = error.message;
           } else {
-            this.error = 'An error occurred.';
+            console.error(error);
           }
-          return of();
+          return of({ posts: [], isLoading: false, error: msg });
         }),
       );
   }

@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-album-page',
   templateUrl: './album-page.component.html',
   styleUrls: ['./album-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Default, // TODO: Refactor to OnPush
 })
 export class AlbumPageComponent implements OnInit {
   isLoading = true;

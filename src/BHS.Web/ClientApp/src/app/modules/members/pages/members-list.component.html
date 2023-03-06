@@ -9,9 +9,19 @@
   </div>
 </div>
 
-<ng-container *ngIf="vm$ | async as vm; else loadingMembers">
+<ng-container *ngIf="vm$ | async as vm">
 
-  <div class="row">
+  <alert *ngIf="vm.error" type="danger">
+    {{vm.error}}
+  </alert>
+
+  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
+    <div class="spinner-grow text-light" role="status">
+      <span class="visually-hidden">Loading members...</span>
+    </div>
+  </div>
+
+  <div *ngIf="vm.authors.length" class="row">
     <div class="col-md-4" *ngFor="let author of vm.authors">
       <div class="card">
         <div class="card-body">
@@ -24,16 +34,4 @@
     </div>
   </div>
 
-  <alert *ngIf="vm.error" type="danger">
-    {{vm.error}}
-  </alert>
-
 </ng-container>
-
-<ng-template #loadingMembers>
-  <div class="d-flex justify-content-center">
-    <div class="spinner-grow text-light" role="status">
-      <span class="visually-hidden">Loading members...</span>
-    </div>
-  </div>
-</ng-template>

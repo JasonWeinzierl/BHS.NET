@@ -1,5 +1,5 @@
 import { Album, PhotosService } from '@data/photos';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, startWith } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -10,24 +10,23 @@ import { HttpErrorResponse } from '@angular/common/http';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhotosIndexComponent {
-  albums$: Observable<Array<Album>>;
-  isLoading = true;
-  error?: string;
+  vm$: Observable<{ albums: Array<Album>, isLoading: boolean, error?: string }>;
 
   constructor(
     private photosService: PhotosService,
   ) {
-    this.albums$ = this.photosService.getAlbums()
+    this.vm$ = this.photosService.getAlbums()
       .pipe(
-        tap(() => this.isLoading = false),
+        map(albums => ({ albums, isLoading: false })),
+        startWith({ albums: [], isLoading: true }),
         catchError((error: unknown) => {
+          let msg = 'An error occurred.';
           if (error instanceof HttpErrorResponse) {
-            this.error = error.message;
+            msg = error.message;
           } else {
-            this.error = 'An error occurred.';
-            console.error(error); // TODO: OnPush causes these errors to never appear.  review all components accordingly.
+            console.error(error);
           }
-          return of();
+          return of({ albums: [], isLoading: false, error: msg });
         }),
       );
   }

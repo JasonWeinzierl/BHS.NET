@@ -1,10 +1,15 @@
-<div *ngIf="isLoading" class="d-flex justify-content-center">
-  <div class="spinner-grow text-light" role="status">
-    <span class="visually-hidden">Loading profile...</span>
-  </div>
-</div>
-
 <ng-container *ngIf="vm$ | async as vm">
+
+  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
+    <div class="spinner-grow text-light" role="status">
+      <span class="visually-hidden">Loading profile...</span>
+    </div>
+  </div>
+
+  <alert *ngIf="vm.error" type="danger">
+    {{vm.error}}
+  </alert>
+
   <div class="card" *ngIf="vm.author">
     <div class="card-body">
       <h1 class="card-title">
@@ -15,8 +20,5 @@
   </div>
 
   <app-post-card *ngFor="let post of vm.posts" [post]="post"></app-post-card>
-</ng-container>
 
-<alert *ngIf="error" type="danger">
-  {{error}}
-</alert>
+</ng-container>

@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Default, // TODO: Refactor to OnPush
 })
 export class ContactFormComponent {
   contactForm = this.formBuilder.nonNullable.group({

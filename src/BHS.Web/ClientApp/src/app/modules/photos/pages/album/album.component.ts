@@ -1,5 +1,5 @@
 import { AlbumPhotos, PhotosService } from '@data/photos';
-import { catchError, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,32 +11,31 @@ import { HttpErrorResponse } from '@angular/common/http';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlbumComponent {
-  album$: Observable<AlbumPhotos>;
-  isLoading = true;
-  error?: string;
+  vm$: Observable<{ album?: AlbumPhotos, isLoading: boolean, error?: string }>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private photosService: PhotosService,
     ) {
-      this.album$ = this.activatedRoute.paramMap.pipe(
+      this.vm$ = this.activatedRoute.paramMap.pipe(
         map(params => {
           const slug = params.get('slug');
           if (!slug) {
-            this.error = 'Failed to get album slug from URL.';
+            throw new Error('Failed to get album slug from URL.');
           }
           return slug;
         }),
-        filter(slug => !!slug),
-        switchMap(slug => this.photosService.getAlbum(slug ?? '')),
-        tap(() => this.isLoading = false),
+        switchMap(slug => this.photosService.getAlbum(slug)),
+        map(album => ({ album, isLoading: false })),
+        startWith({ isLoading: true }),
         catchError((err: unknown) => {
+          let msg = 'An error occurred.';
           if (err instanceof HttpErrorResponse) {
-            this.error = err.message;
+            msg = err.message;
           } else {
-            this.error = 'An error occurred.';
+            console.error(err);
           }
-          return of();
+          return of({ isLoading: false, error: msg });
         }),
       );
     }
