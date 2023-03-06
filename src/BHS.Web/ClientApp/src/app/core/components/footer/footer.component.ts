@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
-  year: number;
+  year: string;
 
   constructor() {
-    this.year = new Date().getFullYear();
+    this.year = environment.version.commitDate.split('-')[0];
   }
 }

@@ -22,6 +22,7 @@ const transformedConfig = `export const environment = {
   version: {
     semver: '${process.env['SEMANTIC_VERSION']}',
     info: '${process.env['INFORMATIONAL_VERSION']}',
+    commitDate: '${process.env['COMMIT_DATE']}',
   },
 };
 `;
