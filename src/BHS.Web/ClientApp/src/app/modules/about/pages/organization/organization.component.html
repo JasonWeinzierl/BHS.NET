@@ -1,10 +1,15 @@
 <div class="card">
   <div class="card-body">
     <h1 class="card-title">Leadership</h1>
-    <div class="row" *ngIf="vm$ | async as vm; else loading">
+    <div class="row" *ngIf="vm$ | async as vm">
 
       <div class="col-sm">
         <h2>Officers</h2>
+
+        <div *ngIf="vm.isLoading" class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+
         <dl>
           <ng-template ngFor let-officer [ngForOf]="vm.officers">
             <dt>{{officer.title}}</dt>
@@ -15,6 +20,11 @@
 
       <div class="col-sm">
         <h2>Directors</h2>
+
+        <div *ngIf="vm.isLoading" class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+
         <ul class="list-unstyled">
           <li *ngFor="let director of vm.directors">
             {{director.name}} ({{director.year}})
@@ -25,13 +35,8 @@
       <alert *ngIf="vm.error" type="danger">
         {{vm.error}}
       </alert>
-    </div>
 
-    <ng-template #loading>
-      <div class="spinner-grow" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </ng-template>
+    </div>
   </div>
 </div>
 
