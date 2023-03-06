@@ -1,21 +1,25 @@
-<div *ngIf="isLoading" class="d-flex justify-content-center">
-  <div class="spinner-grow text-light" role="status">
-    <span class="visually-hidden">Loading category...</span>
-  </div>
-</div>
+<ng-container *ngIf="vm$ | async as vm">
 
-<alert *ngIf="error" type="danger">
-  {{error}}
-</alert>
-
-<ng-container *ngIf="category$ | async as category">
-  <div class="card">
-    <div class="card-body">
-      <h1 class="card-title">{{category.name}}</h1>
+  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
+    <div class="spinner-grow text-light" role="status">
+      <span class="visually-hidden">Loading category...</span>
     </div>
   </div>
 
-  <div>
-    <app-post-card [post]="post" *ngFor="let post of category.posts"></app-post-card>
-  </div>
+  <alert *ngIf="vm.error" type="danger">
+    {{vm.error}}
+  </alert>
+
+  <ng-container *ngIf="vm.category">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="card-title">{{vm.category.name}}</h1>
+      </div>
+    </div>
+
+    <div>
+      <app-post-card [post]="post" *ngFor="let post of vm.category.posts"></app-post-card>
+    </div>
+  </ng-container>
+
 </ng-container>
