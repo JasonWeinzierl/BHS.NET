@@ -11,22 +11,7 @@
 <div class="row">
 
   <div class="col-lg-9">
-    <div class="card">
-      <div class="card-body">
-        <form>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Posts" aria-label="Search Posts" name="search" [(ngModel)]="searchText">
-            <button type="submit" class="btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
-              <span *ngIf="loadingPosts" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Search
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <ng-container *ngIf="posts$ | async as posts">
-      <app-post-card *ngFor="let post of posts | sortBy: 'desc' : 'datePublished'; trackBy: trackPostPreview" [post]="post" [attr.data-testid]="post.slug"></app-post-card>
-    </ng-container>
+    <app-posts-search></app-posts-search>
   </div>
 
   <div class="col-lg-3">
@@ -34,24 +19,33 @@
       <div class="card-body">
         <h2 class="card-title">Categories</h2>
       </div>
-      <div class="list-group list-group-flush" *ngIf="categories$ | async as categories">
-        <a *ngFor="let category of categories" [routerLink]="['/apps/blog/category', category.slug]"
-          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-          {{category.name}}
-          <span class="badge bg-primary rounded-pill">{{category.postsCount}}</span>
-        </a>
-      </div>
-      <div *ngIf="loadingCategories" class="list-group list-group-flush">
-        <span class="list-group-item placeholder-glow">
-          <span class="placeholder col-7"></span>
-        </span>
-        <span class="list-group-item placeholder-glow">
-          <span class="placeholder col-4"></span>
-        </span>
-        <span class="list-group-item placeholder-glow">
-          <span class="placeholder col-5"></span>
-        </span>
-      </div>
+      <ng-container *ngIf="categoriesVm$ | async as categoriesVm">
+
+        <div class="list-group list-group-flush" *ngIf="!categoriesVm.isLoading">
+          <span *ngIf="categoriesVm.error" class="list-group-item list-group-item-danger">
+            {{categoriesVm.error}}
+          </span>
+
+          <a *ngFor="let category of categoriesVm.categories" [routerLink]="['/apps/blog/category', category.slug]"
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            {{category.name}}
+            <span class="badge bg-primary rounded-pill">{{category.postsCount}}</span>
+          </a>
+        </div>
+
+        <div *ngIf="categoriesVm.isLoading" class="list-group list-group-flush">
+          <span class="list-group-item placeholder-glow">
+            <span class="placeholder col-7"></span>
+          </span>
+          <span class="list-group-item placeholder-glow">
+            <span class="placeholder col-4"></span>
+          </span>
+          <span class="list-group-item placeholder-glow">
+            <span class="placeholder col-5"></span>
+          </span>
+        </div>
+
+      </ng-container>
     </div>
   </div>
 

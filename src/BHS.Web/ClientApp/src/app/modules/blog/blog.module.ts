@@ -7,6 +7,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { NgModule } from '@angular/core';
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { SharedModule } from '@shared/shared.module';
+import { PostsSearchComponent } from './components/posts-search/posts-search.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SharedModule } from '@shared/shared.module';
     BlogEntryComponent,
     CategoryPostsComponent,
     EntryAlbumComponent,
+    PostsSearchComponent,
   ],
   imports: [
     SharedModule,

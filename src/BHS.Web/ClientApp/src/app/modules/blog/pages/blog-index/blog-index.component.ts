@@ -1,7 +1,8 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { BlogService, CategorySummary, PostPreview } from '@data/blog';
-import { ChangeDetectionStrategy, Component, TrackByFunction } from '@angular/core';
-import { finalize, switchMap, tap } from 'rxjs/operators';
+import { BlogService, CategorySummary } from '@data/blog';
+import { catchError, map, startWith } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-blog-index',
@@ -10,34 +11,23 @@ import { finalize, switchMap, tap } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogIndexComponent {
-  posts$: Observable<PostPreview[]>;
-  categories$: Observable<CategorySummary[]>;
-  private searchTextSubject = new BehaviorSubject('');
-
-  searchText = '';
-  loadingCategories = true;
-  loadingPosts = true;
+  categoriesVm$: Observable<{ categories: Array<CategorySummary>, isLoading: boolean, error?: string }>;
 
   constructor(
     private blogService: BlogService,
   ) {
-    this.posts$ = this.searchTextSubject.asObservable()
-      .pipe(
-        switchMap((searchText) => this.blogService.searchPosts(searchText)),
-        tap(() => this.loadingPosts = false),
-      );
-    this.categories$ = this.blogService.getCategories()
-      .pipe(
-        finalize(() => this.loadingCategories = false),
-      );
+    this.categoriesVm$ = this.blogService.getCategories().pipe(
+      map(categories => ({ categories, isLoading: false })),
+      startWith({ categories: [], isLoading: true }),
+      catchError((err: unknown) => {
+        let msg = 'An error occurred.';
+        if (err instanceof HttpErrorResponse) {
+          msg = err.message;
+        } else {
+          console.error(err);
+        }
+        return of({ categories: [], isLoading: false, error: msg });
+      }),
+    );
   }
-
-  onSearch(searchText: string): void {
-    this.loadingPosts = true;
-    this.searchTextSubject.next(searchText);
-  }
-
-  trackPostPreview: TrackByFunction<PostPreview> = (_, item) => {
-    return item.slug;
-  };
 }
