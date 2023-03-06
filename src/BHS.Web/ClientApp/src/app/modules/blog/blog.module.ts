@@ -6,8 +6,8 @@ import { EntryAlbumComponent } from './components/entry-album/entry-album.compon
 import { MarkdownModule } from 'ngx-markdown';
 import { NgModule } from '@angular/core';
 import { PostCardComponent } from './components/post-card/post-card.component';
-import { SharedModule } from '@shared/shared.module';
 import { PostsSearchComponent } from './components/posts-search/posts-search.component';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
