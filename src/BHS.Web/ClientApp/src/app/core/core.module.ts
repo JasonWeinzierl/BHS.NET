@@ -17,6 +17,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 import { throwIfAlreadyLoaded } from './guards/module-import.guard';
+import { ToastrModule } from 'ngx-toastr';
 
 /**
  * Resources used by AppModule which are always and only loaded once.
@@ -68,6 +69,9 @@ import { throwIfAlreadyLoaded } from './guards/module-import.guard';
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
     CollapseModule.forRoot(),
+
+    // ngx-toastr
+    ToastrModule.forRoot(),
   ],
   providers: [
     Title,

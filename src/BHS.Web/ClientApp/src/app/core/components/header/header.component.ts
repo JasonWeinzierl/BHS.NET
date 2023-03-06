@@ -1,9 +1,11 @@
+import { catchError, map, Observable, of } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { map, Observable } from 'rxjs';
 import { AlertTheme } from '@data/banners/models/alert-theme';
 import { AuthService } from '@auth0/auth0-angular';
+import { HttpErrorResponse } from '@angular/common/http';
 import { SiteBanner } from '@data/banners/models/site-banner';
 import { SiteBannerService } from '@data/banners/services/site-banner.service';
+import { ToastrService } from 'ngx-toastr';
 
 class SiteBannerStyled implements SiteBanner {
  constructor(
@@ -28,11 +30,23 @@ export class HeaderComponent {
 
   constructor(
     private bannerService: SiteBannerService,
+    private toastr: ToastrService,
     private auth: AuthService,
   ) {
     this.banners$ = this.bannerService.getEnabled()
       .pipe(
         map(banners => this.createStyledBanners(banners)),
+        catchError((err: unknown) => {
+          const title = 'Site banners could not be loaded.';
+          let msg = 'An error occurred.';
+          if (err instanceof HttpErrorResponse) {
+            msg = err.message;
+          } else {
+            console.error(err);
+          }
+          this.toastr.error(msg, title);
+          return of();
+        }),
       );
   }
 

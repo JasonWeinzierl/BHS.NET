@@ -8,6 +8,7 @@ import { DateComponent } from './components/date/date.component';
 import { NgModule } from '@angular/core';
 import { SnippetPipe } from './pipes/snippet.pipe';
 import { SortByPipe } from './pipes/sort-by.pipe';
+import { ToastrModule } from 'ngx-toastr';
 
 /**
  * Resources used by more than one module.
@@ -37,6 +38,7 @@ import { SortByPipe } from './pipes/sort-by.pipe';
     BsDropdownModule, // ngx-bootstrap
     CarouselModule, // ngx-bootstrap
     CollapseModule, // ngx-bootstrap
+    ToastrModule, // ngx-toastr
   ],
 })
 export class SharedModule { }

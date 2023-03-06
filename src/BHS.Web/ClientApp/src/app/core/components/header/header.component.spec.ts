@@ -5,6 +5,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { HeaderComponent } from './header.component';
 import { of } from 'rxjs';
 import { SiteBannerService } from '@data/banners/services/site-banner.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
@@ -22,6 +23,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const bannerService = jasmine.createSpyObj<SiteBannerService>('bannerService', {'getEnabled': of()});
+    const toastr = jasmine.createSpyObj<ToastrService>('toastr', ['error']);
     const auth = jasmine.createSpyObj<AuthService>('auth', {}, {'isAuthenticated$': of()});
 
     TestBed.configureTestingModule({
@@ -30,6 +32,10 @@ describe('HeaderComponent', () => {
         {
           provide: SiteBannerService,
           useValue: bannerService,
+        },
+        {
+          provide: ToastrService,
+          useValue: toastr,
         },
         {
           provide: AuthService,
