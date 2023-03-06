@@ -29,13 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Web.Tests", "tests\BHS.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Domain.Tests", "tests\BHS.Domain.Tests\BHS.Domain.Tests.csproj", "{7F5C1621-8FF8-4EA9-93D6-4D1EBCC7322D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builds", "Builds", "{159F3C87-C585-4197-A50F-8383679960B7}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\angular-pr.yml = .github\workflows\angular-pr.yml
-		.github\workflows\azure-release.yml = .github\workflows\azure-release.yml
-		.github\workflows\dotnet-pr.yml = .github\workflows\dotnet-pr.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
