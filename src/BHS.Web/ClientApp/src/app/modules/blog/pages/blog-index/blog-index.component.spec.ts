@@ -1,39 +1,36 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Pipe, PipeTransform } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BlogIndexComponent } from './blog-index.component';
 import { BlogService } from '@data/blog';
-import { FormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Component } from '@angular/core';
+import { of } from 'rxjs';
 
-@Pipe({name: 'sortBy'})
-class MockSortByPipe implements PipeTransform {
-  transform(value: unknown): unknown {
-    return value;
-  }
-}
+@Component({
+  selector: 'app-posts-search',
+})
+// eslint-disable-next-line @angular-eslint/component-class-suffix
+class PostsSearchComponentStub { }
 
 describe('BlogIndexComponent', () => {
   let component: BlogIndexComponent;
   let fixture: ComponentFixture<BlogIndexComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        FormsModule,
-      ],
+  beforeEach(async () => {
+    const blogService = jasmine.createSpyObj<BlogService>('blogService', { 'getCategories': of() });
+
+    await TestBed.configureTestingModule({
       declarations: [
         BlogIndexComponent,
-        MockSortByPipe,
+        PostsSearchComponentStub,
       ],
       providers: [
-        BlogService,
+        {
+          provide: BlogService,
+          useValue: blogService,
+        },
       ],
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(BlogIndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

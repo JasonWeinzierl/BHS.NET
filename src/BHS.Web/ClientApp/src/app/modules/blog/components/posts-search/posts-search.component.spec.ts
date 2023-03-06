@@ -1,7 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Pipe, PipeTransform } from '@angular/core';
 import { BlogService } from '@data/blog';
+import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { PostsSearchComponent } from './posts-search.component';
+
+@Pipe({name: 'sortBy'})
+class MockSortByPipe implements PipeTransform {
+  transform(value: unknown): unknown {
+    return value;
+  }
+}
 
 describe('PostsSearchComponent', () => {
   let component: PostsSearchComponent;
@@ -11,7 +20,13 @@ describe('PostsSearchComponent', () => {
     const blogService = jasmine.createSpyObj<BlogService>('blogService', { 'searchPosts': of() });
 
     await TestBed.configureTestingModule({
-      declarations: [ PostsSearchComponent ],
+      imports: [
+        FormsModule,
+      ],
+      declarations: [
+        PostsSearchComponent,
+        MockSortByPipe,
+      ],
       providers: [
         {
           provide: BlogService,
