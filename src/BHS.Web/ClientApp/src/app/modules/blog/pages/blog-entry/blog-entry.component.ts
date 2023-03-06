@@ -1,6 +1,6 @@
 import { AlbumPhotos, PhotosService } from '@data/photos';
 import { BlogService, Post } from '@data/blog';
-import { catchError, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -12,40 +12,40 @@ import { HttpErrorResponse } from '@angular/common/http';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogEntryComponent {
-  post$: Observable<Post>;
-  postAlbum$: Observable<AlbumPhotos> = of();
-  error?: string;
-  isLoading = true;
+  vm$: Observable<{ post?: Post, postAlbum: AlbumPhotos | null, isLoading: boolean, error?: string }>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private blogService: BlogService,
     private photosService: PhotosService,
   ) {
-    this.post$ = this.activatedRoute.paramMap.pipe(
+    this.vm$ = this.activatedRoute.paramMap.pipe(
       map(params => {
         const slug = params.get('slug');
         if (!slug) {
-          this.error = 'Failed to get entry slug from URL.';
-          return null;
+          throw new Error('Failed to get entry slug from URL.');
         }
         return slug;
       }),
-      filter(slug => !!slug),
-      switchMap(slug => this.blogService.getPost(slug ?? '')),
-      tap(post => {
+      switchMap(slug => this.blogService.getPost(slug)),
+      switchMap(post => {
         if (post.photosAlbumSlug) {
-          this.postAlbum$ = this.photosService.getAlbum(post.photosAlbumSlug);
-        }
-        this.isLoading = false;
-      }),
-      catchError((err: unknown) => {
-        if (err instanceof HttpErrorResponse) {
-          this.error = err.message;
+          return this.photosService.getAlbum(post.photosAlbumSlug).pipe(
+            map(album => ({ post, postAlbum: album, isLoading: false })),
+          );
         } else {
-          this.error = 'An error occurred.';
+          return of({ post, postAlbum: null, isLoading: false });
         }
-        return of();
+      }),
+      startWith({ postAlbum: null, isLoading: true }),
+      catchError((err: unknown) => {
+        let msg = 'An error occurred.';
+        if (err instanceof HttpErrorResponse) {
+          msg = err.message;
+        } else {
+          console.error(msg);
+        }
+        return of({ postAlbum: null, isLoading: false, error: msg });
       }),
     );
   }

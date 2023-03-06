@@ -1,41 +1,45 @@
-<div *ngIf="error" class="card bg-warning">
-  <div class="card-body">
-    <h1 class="card-title">An error occurred</h1>
-    {{error}}
-  </div>
-</div>
+<ng-container *ngIf="vm$ | async as vm">
 
-<div *ngIf="isLoading" class="d-flex justify-content-center">
-  <div class="spinner-grow text-light" role="status">
-    <span class="visually-hidden">Loading post...</span>
+  <div *ngIf="vm.error" class="card bg-warning">
+    <div class="card-body">
+      <h1 class="card-title">An error occurred</h1>
+      {{vm.error}}
+    </div>
   </div>
-</div>
 
-<div *ngIf="post$ | async as post" class="card">
-  <div class="card-header">
-    <h1 class="card-title">{{post.title}}</h1>
-    <p class="card-subtitle text-muted">
-      Posted
-      <span *ngIf="post.author">
-        by
-        <a [routerLink]="['/apps/profile', post.author.username]">{{post.author.name}}</a>
-      </span>
-      on
-      <app-date [datetime]="post.datePublished"></app-date>
-    </p>
+  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
+    <div class="spinner-grow text-light" role="status">
+      <span class="visually-hidden">Loading post...</span>
+    </div>
   </div>
-  <div class="card-body">
-    <markdown [data]="post.contentMarkdown"></markdown>
-    <hr *ngIf="post.photosAlbumSlug">
-    <app-entry-album [album]="postAlbum$ | async"></app-entry-album>
+
+  <div *ngIf="vm.post" class="card">
+    <div class="card-header">
+      <h1 class="card-title">{{vm.post.title}}</h1>
+      <p class="card-subtitle text-muted">
+        Posted
+        <span *ngIf="vm.post.author">
+          by
+          <a [routerLink]="['/apps/profile', vm.post.author.username]">{{vm.post.author.name}}</a>
+        </span>
+        on
+        <app-date [datetime]="vm.post.datePublished"></app-date>
+      </p>
+    </div>
+    <div class="card-body">
+      <markdown [data]="vm.post.contentMarkdown"></markdown>
+      <hr *ngIf="vm.post.photosAlbumSlug">
+      <app-entry-album [album]="vm.postAlbum"></app-entry-album>
+    </div>
+    <div class="card-footer">
+      <p>
+        Categories:
+        <a [routerLink]="['/apps/blog/category', cat.slug]" *ngFor="let cat of vm.post.categories"
+          class="btn btn-outline-secondary btn-sm me-sm-2">
+          {{cat.name}}
+        </a>
+      </p>
+    </div>
   </div>
-  <div class="card-footer">
-    <p>
-      Categories:
-      <a [routerLink]="['/apps/blog/category', cat.slug]" *ngFor="let cat of post.categories"
-        class="btn btn-outline-secondary btn-sm me-sm-2">
-        {{cat.name}}
-      </a>
-    </p>
-  </div>
-</div>
+
+</ng-container>
