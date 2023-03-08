@@ -14,7 +14,12 @@ public sealed class ControllerTestsClassFixture
         var inMemoryConfig = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
-                { "SendGridClientOptions:ApiKey", "fake api key" }
+                { "SendGridClientOptions:ApiKey", "fake api key" },
+
+                { "ContactUsOptions:ToAddresses:0", "test@test.com" },
+
+                { "NotificationOptions:FromAddress", "test@test.com" },
+                { "NotificationOptions:FromName", "test" },
             })
             .Build();
 

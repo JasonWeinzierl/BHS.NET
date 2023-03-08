@@ -1,8 +1,9 @@
-﻿namespace BHS.Domain.ContactUs;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BHS.Domain.ContactUs;
 
 public class ContactUsOptions
 {
-    public string? FromAddress { get; set; }
-    public string? FromName { get; set; }
+    [MinLength(1)]
     public IList<string> ToAddresses { get; set; } = new List<string>();
 }

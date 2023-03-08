@@ -1,5 +1,6 @@
 ﻿using BHS.Domain.Notifications;
 using BHS.Infrastructure.Adapters;
+using Microsoft.Extensions.Options;
 using Moq;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -10,15 +11,18 @@ namespace BHS.Infrastructure.Tests.Adapters;
 
 public class SendGridEmailAdapterTests
 {
+    private readonly NotificationOptions _options = new();
     private readonly Mock<ISendGridClient> _mockSgClient = new(MockBehavior.Strict);
 
-    private SendGridEmailAdapter Subject => new(_mockSgClient.Object);
+    private SendGridEmailAdapter Subject => new(Options.Create(_options), _mockSgClient.Object);
 
     [Fact]
     public async Task SendsMessage()
     {
         // Arrange
-        var request = new EmailMessageRequest("test@test.com", "test person", new[] { "test2@test.com" }, "test subject", "<p>Hi</p>", "Hi");
+        _options.FromAddress = "test@test.com";
+        _options.FromName = "test person";
+        var request = new EmailMessageRequest(new[] { "test2@test.com" }, "test subject", "<p>Hi</p>", "Hi");
 
         var httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
         
@@ -49,7 +53,7 @@ public class SendGridEmailAdapterTests
     [Fact]
     public async Task IfNoToAddresses_Throws()
     {
-        var request = new EmailMessageRequest("", "", Array.Empty<string>(), "", "", "");
+        var request = new EmailMessageRequest(Array.Empty<string>(), "", "", "");
 
         var ex = await Assert.ThrowsAsync<ArgumentException>(async () =>
         {

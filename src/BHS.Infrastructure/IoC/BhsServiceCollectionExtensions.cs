@@ -27,6 +27,7 @@ public static class BhsServiceCollectionExtensions
     public static IServiceCollection AddBhsServices(this IServiceCollection services)
     {
         services.AddOptions<ContactUsOptions>().BindConfiguration("ContactUsOptions").ValidateDataAnnotations();
+        services.AddOptions<NotificationOptions>().BindConfiguration("NotificationOptions").ValidateDataAnnotations();
         services.AddSendGrid((provider, opt) => provider.GetRequiredService<IConfiguration>().GetSection("SendGridClientOptions").Bind(opt));
 
         services.AddScoped<IContactUsService, ContactUsService>();

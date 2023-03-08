@@ -1,4 +1,5 @@
 ﻿using BHS.Domain.Notifications;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -6,10 +7,14 @@ namespace BHS.Infrastructure.Adapters;
 
 public class SendGridEmailAdapter : IEmailAdapter
 {
+    private readonly NotificationOptions _options;
     private readonly ISendGridClient _sendGridClient;
 
-    public SendGridEmailAdapter(ISendGridClient sendGridClient)
+    public SendGridEmailAdapter(
+        IOptions<NotificationOptions> options,
+        ISendGridClient sendGridClient)
     {
+        _options = options.Value;
         _sendGridClient = sendGridClient;
     }
 
@@ -21,7 +26,7 @@ public class SendGridEmailAdapter : IEmailAdapter
 
         var sendGridMessage = new SendGridMessage
         {
-            From = new EmailAddress(request.FromAddress, request.FromName), // TODO: This should not be in the request because it's configured in SendGrid.
+            From = new EmailAddress(_options.FromAddress, _options.FromName),
             Subject = request.Subject,
             HtmlContent = request.MessageHtml,
             PlainTextContent = request.MessagePlainText,

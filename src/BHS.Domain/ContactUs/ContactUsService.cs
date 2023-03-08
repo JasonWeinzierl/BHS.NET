@@ -1,8 +1,7 @@
 ﻿using BHS.Contracts;
+using BHS.Domain.Notifications;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace BHS.Domain.ContactUs;
 
@@ -10,18 +9,18 @@ public class ContactUsService : IContactUsService
 {
     private readonly ContactUsOptions _options;
     private readonly IContactAlertRepository _contactAlertRepository;
-    private readonly ISendGridClient _sendGridClient;
+    private readonly IEmailAdapter _emailAdapter;
     private readonly ILogger _logger;
 
     public ContactUsService(
         IOptions<ContactUsOptions> options,
         IContactAlertRepository contactAlertRepository,
-        ISendGridClient sendGridClient, // TODO: replace with IEmailAdapter
+        IEmailAdapter emailAdapter,
         ILogger<ContactUsService> logger)
     {
         _options = options.Value;
         _contactAlertRepository = contactAlertRepository;
-        _sendGridClient = sendGridClient;
+        _emailAdapter = emailAdapter;
         _logger = logger;
     }
 
@@ -50,27 +49,25 @@ public class ContactUsService : IContactUsService
         var cst = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
         var submitTime = GetSubmitTime(newAlert, cst);
 
-        var msg = new SendGridMessage
-        {
-            From = new EmailAddress(_options.FromAddress, _options.FromName),
-            Subject = "Website Comment: " + newAlert.Name
-        };
-        msg.AddContent(MimeType.Text, newAlert.Message);
-        msg.AddContent(MimeType.Html, @$"
+        string userMessage = newAlert.Message ?? "(no message was provided)";
+
+        var msg = new EmailMessageRequest(
+            _options.ToAddresses,
+            "Website Comment: " + newAlert.Name,
+            @$"
 <p>The following message has been submitted to the Belton Historical Society:</p>
 
 <p>
 Name: {newAlert.Name}<br>
 Email Address: {newAlert.EmailAddress}<br>
 Message:<br>
-{newAlert.Message}
+{userMessage}
 </p>
 
-<p><i>Submitted on {submitTime:dddd, d MMMM yyyy HH:mm:ss zzz} .</i></p>");
-        foreach (var toAddress in _options.ToAddresses)
-            msg.AddTo(toAddress);
+<p><i>Submitted on {submitTime:dddd, d MMMM yyyy HH:mm:ss zzz} .</i></p>",
+            userMessage);
 
-        var response = await _sendGridClient.SendEmailAsync(msg, cancellationToken);
+        var response = await _emailAdapter.Send(msg, cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {
