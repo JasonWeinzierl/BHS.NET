@@ -4,7 +4,9 @@ using BHS.Domain.Banners;
 using BHS.Domain.Blog;
 using BHS.Domain.ContactUs;
 using BHS.Domain.Leadership;
+using BHS.Domain.Notifications;
 using BHS.Domain.Photos;
+using BHS.Infrastructure.Adapters;
 using BHS.Infrastructure.Providers;
 using BHS.Infrastructure.Repositories.Mongo;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +30,7 @@ public static class BhsServiceCollectionExtensions
         services.AddSendGrid((provider, opt) => provider.GetRequiredService<IConfiguration>().GetSection("SendGridClientOptions").Bind(opt));
 
         services.AddScoped<IContactUsService, ContactUsService>();
+        services.TryAddScoped<IEmailAdapter, SendGridEmailAdapter>();
 
         services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
 

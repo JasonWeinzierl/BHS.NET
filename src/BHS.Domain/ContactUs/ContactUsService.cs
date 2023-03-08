@@ -16,7 +16,7 @@ public class ContactUsService : IContactUsService
     public ContactUsService(
         IOptions<ContactUsOptions> options,
         IContactAlertRepository contactAlertRepository,
-        ISendGridClient sendGridClient,
+        ISendGridClient sendGridClient, // TODO: replace with IEmailAdapter
         ILogger<ContactUsService> logger)
     {
         _options = options.Value;
