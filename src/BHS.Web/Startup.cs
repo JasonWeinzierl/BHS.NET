@@ -84,11 +84,10 @@ public class Startup
 
         app.UseSpa(spa =>
         {
-            spa.Options.SourcePath = "ClientApp";
-
             // In development, you must start the front end with `npm run start`.
             if (env.IsDevelopment())
             {
+                spa.Options.SourcePath = "ClientApp";
                 spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/");
             }
         });
