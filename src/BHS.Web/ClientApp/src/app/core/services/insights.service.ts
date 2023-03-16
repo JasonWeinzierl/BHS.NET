@@ -1,7 +1,7 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import { AngularPlugin } from '@microsoft/applicationinsights-angularplugin-js';
+import { AppEnvironment } from 'src/environments';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { environment } from '@env';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class InsightsService {
   private angularPlugin = new AngularPlugin();
   private appInsights = new ApplicationInsights({
     config: {
-      connectionString: environment.appInsights?.connectionString,
+      connectionString: this.env.appInsights?.connectionString,
 
       enableCorsCorrelation: true,
       enableRequestHeaderTracking: true,
@@ -29,6 +29,7 @@ export class InsightsService {
 
   constructor(
     private router: Router,
+    private env: AppEnvironment,
   ) { }
 
   init(): void {

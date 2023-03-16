@@ -4,13 +4,13 @@ import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
+import { auth0ConfigProvider } from './providers/auth0-config.provider';
 import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-options.provider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
-import { environment } from '@env';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MarkdownModule } from 'ngx-markdown';
@@ -43,21 +43,7 @@ import { ToastrModule } from 'ngx-toastr';
     RouterModule,
 
     // auth0
-    AuthModule.forRoot({
-      ...environment.auth0,
-      // Need to use local storage instead of in-memory login due to some browsers' privacy features.
-      useRefreshTokens: true,
-      cacheLocation: 'localstorage',
-      // Specify which backend routes need auth.
-      httpInterceptor: {
-        allowedList: [
-          {
-            uri: '/api/admin/*', // TODO: For now, no routes will match this. Revisit when authenticated routes are implemented.
-            allowAnonymous: true,
-          },
-        ],
-      },
-    }),
+    AuthModule.forRoot(),
 
     // ngx-markdown
     MarkdownModule.forRoot({
@@ -84,6 +70,7 @@ import { ToastrModule } from 'ngx-toastr';
       useClass: AuthHttpInterceptor,
       multi: true,
     },
+    auth0ConfigProvider,
   ],
 })
 export class CoreModule {

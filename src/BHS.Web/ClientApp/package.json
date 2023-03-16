@@ -4,10 +4,9 @@
   "scripts": {
     "start": "ng serve --open",
     "build": "run-s lint build:app",
-    "build:prod": "run-s transform:prod build:app:prod",
     "build:app": "ng build",
     "build:app:prod": "ng build --configuration production",
-    "transform:prod": "npx ts-node -O '{\"module\": \"commonjs\"}' ./scripts/transform-environment.ts production",
+    "transform:app:prod": "npx ts-node -O '{\"module\": \"commonjs\"}' ./scripts/transform-app-version.ts",
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
     "test": "ng test",

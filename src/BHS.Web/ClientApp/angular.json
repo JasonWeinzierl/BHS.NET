@@ -30,7 +30,8 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/assets"
+              "src/assets",
+              "src/environment.json"
             ],
             "styles": [
               "src/styles.scss"
@@ -55,8 +56,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.production.ts"
+                  "replace": "src/environments/app-version.ts",
+                  "with": "src/environments/app-version.production.ts"
                 }
               ],
               "outputHashing": "all",

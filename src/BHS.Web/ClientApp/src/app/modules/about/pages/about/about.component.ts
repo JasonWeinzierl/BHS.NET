@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { environment } from '@env';
+import { appVersion } from 'src/environments';
 
 @Component({
   selector: 'app-about',
@@ -8,5 +8,5 @@ import { environment } from '@env';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent {
-  version = environment.version;
+  version = appVersion;
 }

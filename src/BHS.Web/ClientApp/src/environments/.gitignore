@@ -1,2 +1,2 @@
 # Ignore transformed environment files modified at build time.
-environment.*.ts
+app-environment.*.ts
