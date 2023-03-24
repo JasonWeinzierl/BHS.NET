@@ -40,6 +40,10 @@ public class Program
             {
                 configuration.ReadFrom.Configuration(context.Configuration);
             })
+            .ConfigureAppConfiguration((context, cfgBuilder) =>
+            {
+                cfgBuilder.AddAzureAppConfiguration(context);
+            })
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
