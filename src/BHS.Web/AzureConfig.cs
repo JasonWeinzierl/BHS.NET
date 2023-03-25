@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+﻿using Azure.Identity;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Serilog;
 
 namespace BHS.Web;
@@ -23,6 +24,8 @@ internal static class AzureConfig
         {
             options
                 .Connect(connectionString)
+                // Use the default credential which aggregates several different credential types.
+                .ConfigureKeyVault(kvOptions => kvOptions.SetCredential(new DefaultAzureCredential()))
                 // Load configuration values with no label.
                 .Select(KeyFilter.Any, LabelFilter.Null)
                 // Override with any configuration values specific to current hosting environment.
