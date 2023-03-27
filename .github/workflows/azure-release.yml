@@ -69,7 +69,7 @@ jobs:
     - run: npm run lint
       working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
 
-    - run: run run transform:app:prod
+    - run: npm run transform:app:prod
       working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
       env:
         SEMANTIC_VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
