@@ -2,7 +2,7 @@ import { AppEnvironment } from './environments';
 import { AppModule } from './app/app.module';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-fetch('/environment.json') // TODO: instead of serving static file, have the backend load from azure App Configuration.
+fetch('/api/client-app-environment')
   .then(async response => {
 
     // Try to parse.
