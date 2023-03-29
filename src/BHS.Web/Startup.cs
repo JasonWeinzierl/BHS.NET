@@ -64,7 +64,7 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
-        // In production, use the compiled Angular SPA.
+        // In release builds, use the compiled Angular SPA.
         if (!env.IsDevelopment())
         {
             app.UseSpaStaticFiles();

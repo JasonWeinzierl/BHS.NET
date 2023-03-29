@@ -25,6 +25,6 @@ jobs:
         node-version: '18'
     - run: npm ci
     - run: npm run lint
-    - run: npm run build:app:prod
+    - run: npm run build:app:release
     - run: npm run test:ci
     - run: npm run e2e:ci

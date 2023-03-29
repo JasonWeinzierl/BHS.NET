@@ -40,7 +40,7 @@
             ]
           },
           "configurations": {
-            "production": {
+            "release": {
               "budgets": [
                 {
                   "type": "initial",
@@ -56,7 +56,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/app-version.ts",
-                  "with": "src/environments/app-version.production.ts"
+                  "with": "src/environments/app-version.release.ts"
                 }
               ],
               "outputHashing": "all",
@@ -76,8 +76,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "BHS.Web.ClientApp:build:production"
+            "release": {
+              "browserTarget": "BHS.Web.ClientApp:build:release"
             },
             "development": {
               "browserTarget": "BHS.Web.ClientApp:build:development"
@@ -132,8 +132,8 @@
             "devServerTarget": "BHS.Web.ClientApp:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:production"
+            "release": {
+              "devServerTarget": "BHS.Web.ClientApp:serve:release"
             }
           }
         },
@@ -157,7 +157,7 @@
               "devServerTarget": "BHS.Web.ClientApp:serve:development"
             },
             "ci": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:production",
+              "devServerTarget": "BHS.Web.ClientApp:serve:release",
               "watch": false,
               "headless": true
             }
@@ -171,11 +171,11 @@
             "headless": false
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:production"
+            "release": {
+              "devServerTarget": "BHS.Web.ClientApp:serve:release"
             },
             "ci": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:production",
+              "devServerTarget": "BHS.Web.ClientApp:serve:release",
               "watch": false,
               "headless": true
             }
