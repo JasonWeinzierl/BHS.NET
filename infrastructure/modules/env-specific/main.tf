@@ -399,12 +399,6 @@ resource "auth0_client" "bhs_spa" {
     infinite_token_lifetime      = true
     infinite_idle_token_lifetime = true
   }
-  grant_types = [
-    "authorization_code",
-    "implicit",
-    "refresh_token",
-    "client_credentials",
-  ]
 }
 
 resource "auth0_resource_server" "bhs_api" {
