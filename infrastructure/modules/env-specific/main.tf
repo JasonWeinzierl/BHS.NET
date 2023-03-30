@@ -13,10 +13,14 @@ resource "github_repository_environment" "this" {
   environment = var.environment
   repository  = data.github_repository.bhs.name
 
-  reviewers {
-    users = [
-      data.github_user.me.id
-    ]
+  dynamic "reviewers" {
+    for_each = var.auto_deploy ? [] : [1]
+
+    content {
+      users = [
+        data.github_user.me.id,
+      ]
+    }
   }
   deployment_branch_policy {
     protected_branches     = true
@@ -110,6 +114,7 @@ resource "azurerm_cosmosdb_account" "bhs_db" {
   offer_type           = "Standard"
   kind                 = "MongoDB"
   mongo_server_version = "4.2"
+  enable_free_tier     = var.enable_free_cosmos
 
   ip_range_filter = "0.0.0.0"
 
@@ -146,6 +151,7 @@ resource "azurerm_role_assignment" "bhs_web_key_vault" {
   principal_id         = azurerm_linux_web_app.bhs_web.identity[0].principal_id
 }
 
+# TODO: this needs to be managed by terraform since the keyvault is.
 data "azurerm_key_vault_secret" "send_grid_api_key" {
   name         = "send-grid-api-key"
   key_vault_id = azurerm_key_vault.bhs.id
@@ -243,7 +249,7 @@ resource "azurerm_app_configuration_key" "auth0_domain" {
 
 
 resource "azurerm_storage_account" "bhs" {
-  name                = "beltonhistoricalstorage"
+  name                = "beltonhistoricalstorage" # TODO: not env-specific. custom domain? CDN for http?
   resource_group_name = azurerm_resource_group.bhs.name
   location            = azurerm_resource_group.bhs.location
 
@@ -286,7 +292,7 @@ resource "azurerm_service_plan" "bhs" {
 }
 
 resource "azurerm_linux_web_app" "bhs_web" {
-  name                = "beltonhistorical"
+  name                = "beltonhistorical" # TODO: env-specific name
   resource_group_name = azurerm_resource_group.bhs.name
   location            = azurerm_resource_group.bhs.location
   service_plan_id     = azurerm_service_plan.bhs.id
@@ -297,6 +303,7 @@ resource "azurerm_linux_web_app" "bhs_web" {
     always_on         = false
     ftps_state        = "Disabled"
     health_check_path = "/api/healthcheck/status"
+    http2_enabled     = true
   }
 
   identity {
@@ -351,52 +358,17 @@ resource "azurerm_app_service_custom_hostname_binding" "bhs_free" {
   app_service_name    = azurerm_linux_web_app.bhs_web.name
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "bhs_root" {
-  hostname            = "beltonhistoricalsociety.org"
+module "bhs_hostnames" {
+  for_each = {
+    for index, x in var.custom_hostnames :
+    x.name => x.hostname
+  }
+
+  source = "../custom-hostname"
+
+  hostname            = each.value
   resource_group_name = azurerm_resource_group.bhs.name
   app_service_name    = azurerm_linux_web_app.bhs_web.name
-
-  # These are managed through the certificate bindings.
-  lifecycle {
-    ignore_changes = [
-      ssl_state,
-      thumbprint,
-    ]
-  }
-}
-
-resource "azurerm_app_service_custom_hostname_binding" "bhs_www" {
-  hostname            = "www.beltonhistoricalsociety.org"
-  resource_group_name = azurerm_resource_group.bhs.name
-  app_service_name    = azurerm_linux_web_app.bhs_web.name
-
-  # These are managed through the certificate bindings.
-  lifecycle {
-    ignore_changes = [
-      ssl_state,
-      thumbprint,
-    ]
-  }
-}
-
-resource "azurerm_app_service_managed_certificate" "bhs_root" {
-  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.bhs_root.id
-}
-
-resource "azurerm_app_service_managed_certificate" "bhs_www" {
-  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.bhs_www.id
-}
-
-resource "azurerm_app_service_certificate_binding" "bhs_root" {
-  hostname_binding_id = azurerm_app_service_custom_hostname_binding.bhs_root.id
-  certificate_id      = azurerm_app_service_managed_certificate.bhs_root.id
-  ssl_state           = "SniEnabled"
-}
-
-resource "azurerm_app_service_certificate_binding" "bhs_www" {
-  hostname_binding_id = azurerm_app_service_custom_hostname_binding.bhs_www.id
-  certificate_id      = azurerm_app_service_managed_certificate.bhs_www.id
-  ssl_state           = "SniEnabled"
 }
 
 
@@ -407,16 +379,10 @@ resource "auth0_client" "bhs_spa" {
   description = ""
   app_type    = "spa"
 
-  allowed_logout_urls = [
-    "https://beltonhistoricalsociety.org",
-  ]
-  callbacks = [
-    "https://beltonhistoricalsociety.org",
-  ]
-  logo_uri = "https://beltonhistoricalsociety.org/assets/img/2019/icons/apple-touch-icon.png"
-  web_origins = [
-    "https://beltonhistoricalsociety.org",
-  ]
+  allowed_logout_urls = [for x in var.custom_hostnames : "https://${x.hostname}"]
+  callbacks           = [for x in var.custom_hostnames : "https://${x.hostname}"]
+  web_origins         = [for x in var.custom_hostnames : "https://${x.hostname}"]
+  logo_uri            = "https://beltonhistoricalsociety.org/assets/img/2019/icons/apple-touch-icon.png"
 
   is_first_party       = true
   oidc_conformant      = true
