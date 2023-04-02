@@ -21,6 +21,11 @@ terraform {
       source  = "auth0/auth0"
       version = "~>0.45.0"
     }
+
+    sendgrid = {
+      source  = "Meuko/sendgrid"
+      version = "1.0.5" # Community provider, do not upgrade without inspecting changes.
+    }
   }
 
   backend "azurerm" {
@@ -40,3 +45,5 @@ provider "github" {}
 provider "auth0" {}
 
 provider "azuread" {}
+
+provider "sendgrid" {}

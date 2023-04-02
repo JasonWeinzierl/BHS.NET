@@ -84,3 +84,26 @@ provider "registry.terraform.io/integrations/github" {
     "zh:f99eec731e03cc6a28996c875bd435887cd7ea75ec07cc77b9e768bb12da2227",
   ]
 }
+
+provider "registry.terraform.io/meuko/sendgrid" {
+  version     = "1.0.5"
+  constraints = "1.0.5"
+  hashes = [
+    "h1:+WTOzG8tx1c6dtmwIIXuTNRolkBIsOmSugL3w5HAsYY=",
+    "zh:12bb532e44423034796ee78c6d827484d50f4bb37c4c816bcc2cd6db1f9d9896",
+    "zh:16a23ec3285ef7874a278ca49e0d8128d0ce5fe99e2f29b9bce3dd6793951098",
+    "zh:1798dfc7d5cb7b7961baf7b2ddf3e6a0b11425763b989904d052f7fdae8dfb06",
+    "zh:225e2ce8aa98fc56d11f5230cc39b74b033f22eb3370a19821eef5e7d6763cad",
+    "zh:2f8f686827412a7efe37db771537638114cc4fba9c97ee8081ed72c8e3a2f207",
+    "zh:3acb993893ecc4a79548fed0900a3d1d40aa83e092eb020ae1916db4296d5805",
+    "zh:586e055fa16fd2fdbced7b66bf9456bf0cd3bce752c55941f10cc922ee81dbc8",
+    "zh:600b5019963de0f8b45cbe50a191a48650f257ad6c56962ac5f0e0bbe973d55e",
+    "zh:606601b172e2f83d45e39ebdcd4bfc63174c4f7979b83ba22c8b7af93fc07bfd",
+    "zh:7ce8a92516837b23e8ddfc8720270c68c5906eb0acb396ad7885c7fb47d7becd",
+    "zh:863eb4d2968fe4b142fad6959422835baec1ad54f8dd4545b1e6a4d010e5b61a",
+    "zh:d90bc1f05f49e56382712a0f925e39ace424d3155dc0971f48bb4fb9d1066767",
+    "zh:e656416a62b11f2d2bc29a6ccea1e7bee10e1992fe3f7034f5eec319611d1059",
+    "zh:e684bb3839f1e323ebf9ab1f1643c30405a4a3f6c15e0bca796920f6e4cfc0b3",
+    "zh:fbd1fee2c9df3aa19cf8851ce134dea6e45ea01cb85695c1726670c285797e25",
+  ]
+}

@@ -94,6 +94,20 @@ resource "azurerm_role_assignment" "bhs_github_actions" {
 }
 
 
+resource "sendgrid_api_key" "bhs_mail_send" {
+  name = "bhs-${var.environment}-web-mailsend"
+  scopes = [
+    "2fa_required",
+    "mail.send",
+    "sender_verification_eligible",
+    "whitelabel.create",
+    "whitelabel.delete",
+    "whitelabel.read",
+    "whitelabel.update",
+  ]
+}
+
+
 data "azurerm_client_config" "current" {}
 
 data "azurerm_resource_group" "bhs_shared" {
@@ -151,10 +165,11 @@ resource "azurerm_role_assignment" "bhs_web_key_vault" {
   principal_id         = azurerm_linux_web_app.bhs_web.identity[0].principal_id
 }
 
-# TODO: this needs to be managed by terraform since the keyvault is.
-data "azurerm_key_vault_secret" "send_grid_api_key" {
-  name         = "send-grid-api-key"
+resource "azurerm_key_vault_secret" "send_grid_api_key" {
   key_vault_id = azurerm_key_vault.bhs.id
+
+  name  = "send-grid-api-key"
+  value = sendgrid_api_key.bhs_mail_send.api_key
 }
 
 resource "azurerm_key_vault_secret" "bhs_db_connstr" {
@@ -173,7 +188,7 @@ resource "azurerm_app_configuration_key" "send_grid_api_key" {
   configuration_store_id = data.azurerm_app_configuration.bhs.id
 
   type                = "vault"
-  vault_key_reference = data.azurerm_key_vault_secret.send_grid_api_key.versionless_id
+  vault_key_reference = azurerm_key_vault_secret.send_grid_api_key.versionless_id
 
   label = var.environment
   key   = "SendGridClientOptions:ApiKey"
