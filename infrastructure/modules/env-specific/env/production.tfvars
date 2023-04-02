@@ -12,3 +12,5 @@ custom_hostnames = [
     hostname = "www.beltonhistoricalsociety.org",
   },
 ]
+storage_account_name = "beltonhistoricalstorage"
+app_service_name = "beltonhistorical"

@@ -264,7 +264,7 @@ resource "azurerm_app_configuration_key" "auth0_domain" {
 
 
 resource "azurerm_storage_account" "bhs" {
-  name                = "beltonhistoricalstorage" # TODO: not env-specific. custom domain? CDN for http?
+  name                = var.storage_account_name
   resource_group_name = azurerm_resource_group.bhs.name
   location            = azurerm_resource_group.bhs.location
 
@@ -307,7 +307,7 @@ resource "azurerm_service_plan" "bhs" {
 }
 
 resource "azurerm_linux_web_app" "bhs_web" {
-  name                = "beltonhistorical" # TODO: env-specific name
+  name                = var.app_service_name
   resource_group_name = azurerm_resource_group.bhs.name
   location            = azurerm_resource_group.bhs.location
   service_plan_id     = azurerm_service_plan.bhs.id
