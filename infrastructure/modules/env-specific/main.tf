@@ -359,6 +359,8 @@ resource "azurerm_linux_web_app" "bhs_web" {
   }
 
   app_settings = {
+    ASPNETCORE_ENVIRONMENT = title(var.environment),
+
     // TODO: figure out if this is all necessary?
     // see https://github.com/Azure/appservice-landing-zone-accelerator/blob/main/scenarios/secure-baseline-multitenant/terraform/modules/spoke/app-service/main.tf
     APPINSIGHTS_INSTRUMENTATIONKEY                  = azurerm_application_insights.bhs.instrumentation_key
