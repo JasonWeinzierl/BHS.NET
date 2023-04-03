@@ -3,18 +3,20 @@
 ## Provision
 
 ```sh
+az login
+
 cd modules/shared
 terraform init
 terraform apply
 
-cd ../env-specific
+cd modules/env-specific
 terraform init
 
+../../LoadDotEnv.ps1 staging
 terraform workspace select staging
 terraform apply -var-file="env/staging.tfvars"
 
-# Don't forget to swap env var credentials too!
-
+../../LoadDotEnv.ps1 production
 terraform workspace select default
 terraform apply -var-file="env/production.tfvars"
 ```
