@@ -37,7 +37,11 @@ Populate environment variables:
 
 The `LoadDotEnv.ps1` script in this directory can help load these values from a `.env` file with Powershell.
 
-### Auth0
+### Manual Steps
+
+The GitHub repo, the Azure subscription, the domain purchased through namecheap, and several Auth0 resources are not managed in terraform.
+
+#### Auth0 pre-provision
 
 Auth0 Tenants cannot be created via terraform and must be created in their UI first.
 
@@ -46,7 +50,14 @@ Auth0 Tenants cannot be created via terraform and must be created in their UI fi
 3. Authorize the new application to call the Auth0 Management API with all scopes.
 4. Use the resulting credentials to populate the required environment variables above.
 
-You will need to swap credentials when switching terraform workspaces.
+#### Auth0 post-provision
+
+After provisioning, you'll need to manually delete the auto-created connections in Auth0's UI.
+This is both a database connection and a google-oauth2 connection.
+
+#### DNS propagation
+
+Creating the hostname bindings may fail until DNS updates have propagated.
 
 ## Standards
 

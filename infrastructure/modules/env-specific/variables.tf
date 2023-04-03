@@ -28,6 +28,11 @@ variable "app_service_name" {
   type        = string
 }
 
+variable "cosmos_account_name" {
+  description = "The globally unique name for the cosmos account."
+  type        = string
+}
+
 variable "enable_root_binding" {
   description = "True if a binding for the root hostname should be created."
   type        = bool

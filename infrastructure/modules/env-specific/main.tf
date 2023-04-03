@@ -1,4 +1,3 @@
-# TODO: set up staging environment for integration tests
 
 data "github_user" "me" {
   username = "JasonWeinzierl"
@@ -122,7 +121,7 @@ resource "azurerm_resource_group" "bhs" {
 
 
 resource "azurerm_cosmosdb_account" "bhs_db" {
-  name                = "bhsmongo"
+  name                = var.cosmos_account_name
   resource_group_name = azurerm_resource_group.bhs.name
   location            = azurerm_resource_group.bhs.location
 
@@ -160,6 +159,12 @@ resource "azurerm_key_vault" "bhs" {
   sku_name                  = "standard"
 }
 
+resource "azurerm_role_assignment" "me_admin" {
+  scope                = azurerm_key_vault.bhs.id
+  role_definition_name = "Key Vault Administrator"
+  principal_id         = data.azuread_client_config.current.object_id
+}
+
 resource "azurerm_role_assignment" "bhs_web_key_vault" {
   scope                = azurerm_key_vault.bhs.id
   role_definition_name = "Key Vault Secrets User"
@@ -171,6 +176,10 @@ resource "azurerm_key_vault_secret" "send_grid_api_key" {
 
   name  = "send-grid-api-key"
   value = sendgrid_api_key.bhs_mail_send.api_key
+
+  depends_on = [
+    azurerm_role_assignment.me_admin,
+  ]
 }
 
 resource "azurerm_key_vault_secret" "bhs_db_connstr" {
@@ -178,6 +187,10 @@ resource "azurerm_key_vault_secret" "bhs_db_connstr" {
 
   name  = "connection-strings-bhs-mongo"
   value = replace(azurerm_cosmosdb_account.bhs_db.connection_strings[0], "/?", "/${azurerm_cosmosdb_mongo_database.bhs_db.name}?")
+
+  depends_on = [
+    azurerm_role_assignment.me_admin,
+  ]
 }
 
 data "azurerm_app_configuration" "bhs" {
@@ -368,12 +381,6 @@ resource "azurerm_linux_web_app" "bhs_web" {
   }
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "bhs_free" {
-  hostname            = "${azurerm_linux_web_app.bhs_web.name}.azurewebsites.net"
-  resource_group_name = azurerm_resource_group.bhs.name
-  app_service_name    = azurerm_linux_web_app.bhs_web.name
-}
-
 module "bhs_hostname_root" {
   count = var.enable_root_binding ? 1 : 0
 
@@ -390,6 +397,10 @@ module "bhs_hostname_subdomain" {
   hostname            = "${var.subdomain}.beltonhistoricalsociety.org"
   resource_group_name = azurerm_resource_group.bhs.name
   app_service_name    = azurerm_linux_web_app.bhs_web.name
+
+  depends_on = [
+    namecheap_domain_records.subdomain_beltonhistoricalsociety_org, # NOTE: This may still fail to create until the records have propagated.
+  ]
 }
 
 
@@ -438,7 +449,7 @@ resource "auth0_resource_server" "bhs_api" {
 }
 
 resource "auth0_connection" "bhs_userpassauth" {
-  name     = "Username-Password-Authentication"
+  name     = "Username-Password-Authentication2" # WARNING: Auth0 automatically creates a database connection when a client is created. You must manually delete that connection in the UI.
   strategy = "auth0"
 
   options {
@@ -474,16 +485,23 @@ resource "auth0_connection_client" "bhs_userpassauth_spa_assoc" {
 
 
 # TODO: set up the A record for the root domain, if enable_root_binding is true.
+# TODO: move this to custom-hostname module?
 
 resource "namecheap_domain_records" "subdomain_beltonhistoricalsociety_org" {
   domain = "beltonhistoricalsociety.org"
   mode   = "MERGE"
 
   record {
-    address  = azurerm_app_service_custom_hostname_binding.bhs_free.hostname
     hostname = var.subdomain
-    mx_pref  = 10
+    address  = "${azurerm_linux_web_app.bhs_web.name}.azurewebsites.net"
     ttl      = 1799
     type     = "CNAME"
+  }
+
+  record {
+    hostname = "asuid.${var.subdomain}"
+    address  = azurerm_linux_web_app.bhs_web.custom_domain_verification_id
+    ttl      = 1799
+    type     = "TXT"
   }
 }
