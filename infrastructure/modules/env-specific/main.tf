@@ -1,4 +1,3 @@
-# TODO: import dns records for our registrar
 # TODO: set up staging environment for integration tests
 
 data "github_user" "me" {
@@ -93,6 +92,8 @@ resource "azurerm_role_assignment" "bhs_github_actions" {
   principal_id         = azuread_service_principal.bhs_github_actions.object_id
 }
 
+
+# TODO: import sendgrid domain authentication to use in dns records.
 
 resource "sendgrid_api_key" "bhs_mail_send" {
   name = "bhs-${var.environment}-web-mailsend"
@@ -373,15 +374,20 @@ resource "azurerm_app_service_custom_hostname_binding" "bhs_free" {
   app_service_name    = azurerm_linux_web_app.bhs_web.name
 }
 
-module "bhs_hostnames" {
-  for_each = {
-    for index, x in var.custom_hostnames :
-    x.name => x.hostname
-  }
+module "bhs_hostname_root" {
+  count = var.enable_root_binding ? 1 : 0
 
   source = "../custom-hostname"
 
-  hostname            = each.value
+  hostname            = "beltonhistoricalsociety.org"
+  resource_group_name = azurerm_resource_group.bhs.name
+  app_service_name    = azurerm_linux_web_app.bhs_web.name
+}
+
+module "bhs_hostname_subdomain" {
+  source = "../custom-hostname"
+
+  hostname            = "${var.subdomain}.beltonhistoricalsociety.org"
   resource_group_name = azurerm_resource_group.bhs.name
   app_service_name    = azurerm_linux_web_app.bhs_web.name
 }
@@ -389,14 +395,19 @@ module "bhs_hostnames" {
 
 data "auth0_tenant" "bhs" {}
 
+locals {
+  subdomain_hostname = "https://${var.subdomain}.beltonhistoricalsociety.org"
+  hostnames          = var.enable_root_binding ? ["https://beltonhistoricalsociety.org", local.subdomain_hostname] : [local.subdomain_hostname]
+}
+
 resource "auth0_client" "bhs_spa" {
   name        = "BHS"
   description = ""
   app_type    = "spa"
 
-  allowed_logout_urls = [for x in var.custom_hostnames : "https://${x.hostname}"]
-  callbacks           = [for x in var.custom_hostnames : "https://${x.hostname}"]
-  web_origins         = [for x in var.custom_hostnames : "https://${x.hostname}"]
+  allowed_logout_urls = local.hostnames
+  callbacks           = local.hostnames
+  web_origins         = local.hostnames
   logo_uri            = "https://beltonhistoricalsociety.org/assets/img/2019/icons/apple-touch-icon.png"
 
   is_first_party       = true
@@ -459,4 +470,20 @@ resource "auth0_connection" "bhs_userpassauth" {
 resource "auth0_connection_client" "bhs_userpassauth_spa_assoc" {
   connection_id = auth0_connection.bhs_userpassauth.id
   client_id     = auth0_client.bhs_spa.id
+}
+
+
+# TODO: set up the A record for the root domain, if enable_root_binding is true.
+
+resource "namecheap_domain_records" "subdomain_beltonhistoricalsociety_org" {
+  domain = "beltonhistoricalsociety.org"
+  mode   = "MERGE"
+
+  record {
+    address  = azurerm_app_service_custom_hostname_binding.bhs_free.hostname
+    hostname = var.subdomain
+    mx_pref  = 10
+    ttl      = 1799
+    type     = "CNAME"
+  }
 }

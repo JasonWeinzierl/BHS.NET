@@ -26,6 +26,11 @@ terraform {
       source  = "Meuko/sendgrid"
       version = "1.0.5" # Community provider, do not upgrade without inspecting changes.
     }
+
+    namecheap = {
+      source  = "namecheap/namecheap"
+      version = "~>2.1.0"
+    }
   }
 
   backend "azurerm" {
@@ -47,3 +52,5 @@ provider "auth0" {}
 provider "azuread" {}
 
 provider "sendgrid" {}
+
+provider "namecheap" {}

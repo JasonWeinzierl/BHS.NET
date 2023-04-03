@@ -29,6 +29,9 @@ Populate environment variables:
 * AUTH0_CLIENT_ID
 * AUTH0_CLIENT_SECRET
 * SENDGRID_API_KEY (needs Full Access. We will use this API key to create additional API keys for Mail Send.)
+* NAMECHEAP_USER_NAME
+* NAMECHEAP_API_USER
+* NAMECHEAP_API_KEY
 
 The `LoadDotEnv.ps1` script in this directory can help load these values from a `.env` file with Powershell.
 
