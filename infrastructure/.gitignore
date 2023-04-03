@@ -24,4 +24,4 @@ override.tf.json
 terraform.rc
 
 # dotenv
-.env
+.env*
