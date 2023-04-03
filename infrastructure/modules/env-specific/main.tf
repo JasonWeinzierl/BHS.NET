@@ -333,6 +333,10 @@ resource "azurerm_linux_web_app" "bhs_web" {
     ftps_state        = "Disabled"
     health_check_path = "/api/healthcheck/status"
     http2_enabled     = true
+    
+    application_stack {
+      dotnet_version = "7.0"
+    }
   }
 
   identity {
