@@ -11,7 +11,6 @@ on:
     - tests/**
 
 env:
-  AZURE_WEBAPP_NAME: beltonhistorical
   AZURE_WEBAPP_PACKAGE_PATH: src/BHS.Web/publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
@@ -102,6 +101,8 @@ jobs:
     environment:
       name: staging
       url: https://staging.beltonhistoricalsociety.org
+    env:
+      AZURE_WEBAPP_NAME: staging-beltonhistorical
 
     steps:
 
@@ -132,6 +133,8 @@ jobs:
     environment:
       name: production
       url: https://www.beltonhistoricalsociety.org
+    env:
+      AZURE_WEBAPP_NAME: beltonhistorical
 
     steps:
 
