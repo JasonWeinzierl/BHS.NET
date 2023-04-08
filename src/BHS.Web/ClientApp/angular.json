@@ -62,7 +62,7 @@
               "outputHashing": "all",
               "namedChunks": true
             },
-            "development": {
+            "debug": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -71,7 +71,7 @@
               "namedChunks": true
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "debug"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -79,11 +79,11 @@
             "release": {
               "browserTarget": "BHS.Web.ClientApp:build:release"
             },
-            "development": {
-              "browserTarget": "BHS.Web.ClientApp:build:development"
+            "debug": {
+              "browserTarget": "BHS.Web.ClientApp:build:debug"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "debug"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -153,8 +153,8 @@
             "testingType": "component"
           },
           "configurations": {
-            "development": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:development"
+            "debug": {
+              "devServerTarget": "BHS.Web.ClientApp:serve:debug"
             },
             "ci": {
               "devServerTarget": "BHS.Web.ClientApp:serve:release",
