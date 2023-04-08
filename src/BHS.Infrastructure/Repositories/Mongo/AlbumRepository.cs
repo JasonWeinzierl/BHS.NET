@@ -37,7 +37,9 @@ public class AlbumRepository : IAlbumRepository
 
     public async Task<Photo?> GetPhoto(string albumSlug, string photoId, CancellationToken cancellationToken = default)
     {
-        var photoObjectId = ObjectId.Parse(photoId);
+        if (!ObjectId.TryParse(photoId, out var photoObjectId))
+            throw new InvalidPhotoIdException("The requested photo id is not formatted correctly. It must consist of 24 hexadecimal digits.");
+
         var result = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums")
             .Aggregate()
             .Match(x => x.Slug == albumSlug)

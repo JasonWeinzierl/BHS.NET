@@ -1,4 +1,5 @@
 ﻿using BHS.Domain.ContactUs;
+using BHS.Domain.Photos;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +31,10 @@ public class ErrorController : ControllerBase
         exception switch
         {
             InvalidContactRequestException => StatusCodes.Status400BadRequest,
+            InvalidPhotoIdException => StatusCodes.Status400BadRequest,
+
             NotImplementedException => StatusCodes.Status501NotImplemented,
+
             _ => StatusCodes.Status500InternalServerError,
         };
 }
