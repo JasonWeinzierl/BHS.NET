@@ -62,6 +62,7 @@
               "outputHashing": "all",
               "namedChunks": true
             },
+            "ci": {},
             "debug": {
               "buildOptimizer": false,
               "optimization": false,
@@ -76,8 +77,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "release": {
-              "browserTarget": "BHS.Web.ClientApp:build:release"
+            "ci": {
+              "browserTarget": "BHS.Web.ClientApp:build:ci"
             },
             "debug": {
               "browserTarget": "BHS.Web.ClientApp:build:debug"
@@ -126,41 +127,22 @@
             ]
           }
         },
-        "cypress-run": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "BHS.Web.ClientApp:serve"
-          },
-          "configurations": {
-            "release": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:release"
-            }
-          }
-        },
-        "cypress-open": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "watch": true,
-            "headless": false
-          }
-        },
         "e2e": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "BHS.Web.ClientApp:serve",
-            "watch": true,
-            "headless": false
+            "configFile": "cypress/configFiles/cypress.config.integration.ts"
           },
           "configurations": {
-            "release": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:release"
-            },
             "ci": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:release",
-              "watch": false,
+              "devServerTarget": "BHS.Web.ClientApp:serve:ci",
               "headless": true
+            },
+            "debug": {
+              "devServerTarget": "BHS.Web.ClientApp:serve",
+              "watch": true
             }
-          }
+          },
+          "defaultConfiguration": "debug"
         }
       }
     }

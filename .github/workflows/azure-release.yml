@@ -81,7 +81,7 @@ jobs:
     - run: npm run test:ci
       working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
 
-    - run: npm run e2e:ci
+    - run: npm run integration:ci
       working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
 
 

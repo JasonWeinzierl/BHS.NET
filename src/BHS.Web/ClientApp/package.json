@@ -11,8 +11,8 @@
     "lint": "ng lint",
     "test": "ng test",
     "test:ci": "ng test --configuration ci",
-    "e2e": "ng e2e",
-    "e2e:ci": "ng e2e --configuration ci"
+    "integration": "ng e2e",
+    "integration:ci": "ng e2e --configuration ci"
   },
   "private": true,
   "dependencies": {

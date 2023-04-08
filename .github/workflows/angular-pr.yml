@@ -25,6 +25,6 @@ jobs:
         node-version: '18'
     - run: npm ci
     - run: npm run lint
-    - run: npm run build:app:release # TODO: this breaks because transform:app:prod is required.
+    - run: npm run build:app:ci
     - run: npm run test:ci
-    - run: npm run e2e:ci
+    - run: npm run integration:ci
