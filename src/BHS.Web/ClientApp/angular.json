@@ -144,25 +144,6 @@
             "headless": false
           }
         },
-        "ct": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "BHS.Web.ClientApp:serve",
-            "watch": true,
-            "headless": false,
-            "testingType": "component"
-          },
-          "configurations": {
-            "debug": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:debug"
-            },
-            "ci": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:release",
-              "watch": false,
-              "headless": true
-            }
-          }
-        },
         "e2e": {
           "builder": "@cypress/schematic:cypress",
           "options": {
