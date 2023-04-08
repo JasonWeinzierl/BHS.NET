@@ -143,6 +143,14 @@
             }
           },
           "defaultConfiguration": "debug"
+        },
+        "smoke": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "configFile": "cypress/configFiles/cypress.config.smoke.ts",
+            "devServerTarget": "BHS.Web.ClientApp:serve",
+            "watch": true
+          }
         }
       }
     }
