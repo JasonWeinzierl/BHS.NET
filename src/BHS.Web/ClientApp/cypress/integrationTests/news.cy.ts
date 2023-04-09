@@ -1,9 +1,6 @@
-import { createBanner, createBlogPostPreview, createCategorySummary } from 'cypress/factories/dataFactories';
+import { createBlogPostPreview, createCategorySummary } from 'cypress/factories/dataFactories';
 
 describe('News', () => {
-  beforeEach(() => {
-    cy.intercept('GET', '/api/banners/current', [ createBanner() ]).as('currentBanners');
-  });
 
   it('should navigate to News', () => {
     cy.intercept('GET', '/api/blog/posts', [ createBlogPostPreview() ]).as('blogPosts');
@@ -32,4 +29,5 @@ describe('News', () => {
       cy.get(`[data-testid=${preview1.slug}]`).contains('.card-subtitle', preview1.author.name);
     }
   });
+
 });
