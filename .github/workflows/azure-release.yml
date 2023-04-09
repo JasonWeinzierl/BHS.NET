@@ -43,6 +43,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODE_VERSION }}
+        cache: npm
+        cache-dependency-path: '${{ env.CLIENTAPP_DIRECTORY }}/package-lock.json'
 
 
     - name: Run gitversion
