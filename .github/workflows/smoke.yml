@@ -1,11 +1,28 @@
 name: Smoke Tests
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      base-url:
+        required: false
+        type: string
+        description: The base URL of the subject under test.
+        default: https://staging.beltonhistoricalsociety.org/
+      node-version:
+        required: false
+        type: string
+        description: Version Spec of the Node.js version to use.
+        default: '18'
+  workflow_call:
+    inputs:
+      base-url:
+        required: true
+        type: string
+      node-version:
+        required: true
+        type: string
 
 env:
-  CYPRESS_BASE_URL: https://staging.beltonhistoricalsociety.org/
-  NODE_VERSION: '18'
   CLIENTAPP_DIRECTORY: ./src/BHS.Web/ClientApp
 
 jobs:
@@ -19,7 +36,7 @@ jobs:
     - name: Setup Node.js with caching
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ env.NODE_VERSION }}
+        node-version: ${{ inputs.node-version }}
         cache: npm
         cache-dependency-path: '${{ env.CLIENTAPP_DIRECTORY }}/package-lock.json'
   
@@ -28,3 +45,4 @@ jobs:
       with:
         config-file: cypress/configFiles/cypress.config.smoke.ts
         working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
+        config: baseUrl=${{ inputs.base-url }}

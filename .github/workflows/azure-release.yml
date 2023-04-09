@@ -17,6 +17,8 @@ env:
   NODE_VERSION: '18'
   ENTRYPOINT_DIRECTORY: src/BHS.Web
   CLIENTAPP_DIRECTORY: ./src/BHS.Web/ClientApp
+  STAGING_URL: https://staging.beltonhistoricalsociety.org/
+  PRODUCTION_URL: https://beltonhistoricalsociety.org/
 
 jobs:
   build:
@@ -39,7 +41,7 @@ jobs:
       with:
         versionSpec: '5.x'
 
-    - name: Setup Node.js
+    - name: Setup Node.js with caching
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODE_VERSION }}
@@ -96,13 +98,14 @@ jobs:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
+
   deploy-stage:
     if: github.repository_owner == 'JasonWeinzierl'  
     runs-on: ubuntu-latest
     needs: build
     environment:
       name: staging
-      url: https://staging.beltonhistoricalsociety.org
+      url: ${{ env.STAGING_URL }}
     env:
       AZURE_WEBAPP_NAME: staging-beltonhistorical
 
@@ -126,15 +129,23 @@ jobs:
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
 
+  smoke-test-stage:
+    needs: deploy-stage
+    uses: ./.github/workflows/smoke.yml
+    with:
+      base-url: ${{ env.STAGING_URL }}
+      node-version: ${{ env.NODE_VERSION }}
+
+
   deploy-prod:
     if: github.repository_owner == 'JasonWeinzierl'
     runs-on: ubuntu-latest
     needs:
       - build
-      - deploy-stage
+      - smoke-test-stage
     environment:
       name: production
-      url: https://www.beltonhistoricalsociety.org
+      url: ${{ env.PRODUCTION_URL }}
     env:
       AZURE_WEBAPP_NAME: beltonhistorical
 
@@ -156,3 +167,11 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+
+  smoke-test-prod:
+    needs: deploy-prod
+    uses: ./.github/workflows/smoke.yml
+    with:
+      base-url: ${{ env.PRODUCTION_URL }}
+      node-version: ${{ env.NODE_VERSION }}
