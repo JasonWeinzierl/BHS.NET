@@ -17,8 +17,6 @@ env:
   NODE_VERSION: '18'
   ENTRYPOINT_DIRECTORY: src/BHS.Web
   CLIENTAPP_DIRECTORY: ./src/BHS.Web/ClientApp
-  STAGING_URL: https://staging.beltonhistoricalsociety.org/
-  PRODUCTION_URL: https://beltonhistoricalsociety.org/
 
 jobs:
   build:
@@ -105,7 +103,7 @@ jobs:
     needs: build
     environment:
       name: staging
-      url: ${{ env.STAGING_URL }}
+      url: https://staging.beltonhistoricalsociety.org/
     env:
       AZURE_WEBAPP_NAME: staging-beltonhistorical
 
@@ -133,8 +131,7 @@ jobs:
     needs: deploy-stage
     uses: ./.github/workflows/smoke.yml
     with:
-      base-url: ${{ env.STAGING_URL }}
-      node-version: ${{ env.NODE_VERSION }}
+      base-url: https://staging.beltonhistoricalsociety.org/
 
 
   deploy-prod:
@@ -145,7 +142,7 @@ jobs:
       - smoke-test-stage
     environment:
       name: production
-      url: ${{ env.PRODUCTION_URL }}
+      url: https://beltonhistoricalsociety.org/
     env:
       AZURE_WEBAPP_NAME: beltonhistorical
 
@@ -173,5 +170,4 @@ jobs:
     needs: deploy-prod
     uses: ./.github/workflows/smoke.yml
     with:
-      base-url: ${{ env.PRODUCTION_URL }}
-      node-version: ${{ env.NODE_VERSION }}
+      base-url: https://beltonhistoricalsociety.org/

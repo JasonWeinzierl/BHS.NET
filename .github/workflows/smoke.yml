@@ -8,22 +8,15 @@ on:
         type: string
         description: The base URL of the subject under test.
         default: https://staging.beltonhistoricalsociety.org/
-      node-version:
-        required: false
-        type: string
-        description: Version Spec of the Node.js version to use.
-        default: '18'
   workflow_call:
     inputs:
       base-url:
         required: true
         type: string
-      node-version:
-        required: true
-        type: string
 
 env:
   CLIENTAPP_DIRECTORY: ./src/BHS.Web/ClientApp
+  NODE_VERSION: '18'
 
 jobs:
   smoke:
@@ -36,7 +29,7 @@ jobs:
     - name: Setup Node.js with caching
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version: ${{ env.NODE_VERSION }}
         cache: npm
         cache-dependency-path: '${{ env.CLIENTAPP_DIRECTORY }}/package-lock.json'
   
