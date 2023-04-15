@@ -60,32 +60,32 @@ resource "github_actions_environment_secret" "azure_tenant_id" {
   plaintext_value = data.azurerm_client_config.current.tenant_id
 }
 
-resource "github_actions_environment_secret" "cypress_auth0_domain" {
-  repository      = data.github_repository.bhs.name
-  environment     = github_repository_environment.this.environment
-  secret_name     = "CYPRESS_AUTH0_DOMAIN"
-  plaintext_value = data.auth0_tenant.bhs.domain
+resource "github_actions_environment_variable" "cypress_auth0_domain" {
+  repository    = data.github_repository.bhs.name
+  environment   = github_repository_environment.this.environment
+  variable_name = "CYPRESS_AUTH0_DOMAIN"
+  value         = data.auth0_tenant.bhs.domain
 }
 
-resource "github_actions_environment_secret" "cypress_auth0_client_id" {
-  repository      = data.github_repository.bhs.name
-  environment     = github_repository_environment.this.environment
-  secret_name     = "CYPRESS_AUTH0_CLIENT_ID"
-  plaintext_value = auth0_client.bhs_spa.client_id
+resource "github_actions_environment_variable" "cypress_auth0_client_id" {
+  repository    = data.github_repository.bhs.name
+  environment   = github_repository_environment.this.environment
+  variable_name = "CYPRESS_AUTH0_CLIENT_ID"
+  value         = auth0_client.bhs_spa.client_id
 }
 
-resource "github_actions_environment_secret" "cypress_auth0_audience" {
-  repository      = data.github_repository.bhs.name
-  environment     = github_repository_environment.this.environment
-  secret_name     = "CYPRESS_AUTH0_AUDIENCE"
-  plaintext_value = auth0_resource_server.bhs_api.identifier
+resource "github_actions_environment_variable" "cypress_auth0_audience" {
+  repository    = data.github_repository.bhs.name
+  environment   = github_repository_environment.this.environment
+  variable_name = "CYPRESS_AUTH0_AUDIENCE"
+  value         = auth0_resource_server.bhs_api.identifier
 }
 
-resource "github_actions_environment_secret" "cypress_auth0_test_username" {
-  repository      = data.github_repository.bhs.name
-  environment     = github_repository_environment.this.environment
-  secret_name     = "CYPRESS_AUTH0_TEST_USERNAME"
-  plaintext_value = auth0_user.noreply.email
+resource "github_actions_environment_variable" "cypress_auth0_test_username" {
+  repository    = data.github_repository.bhs.name
+  environment   = github_repository_environment.this.environment
+  variable_name = "CYPRESS_AUTH0_TEST_USERNAME"
+  value         = auth0_user.noreply.email
 }
 
 resource "github_actions_environment_secret" "cypress_auth0_test_password" {

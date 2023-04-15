@@ -17,14 +17,6 @@ on:
         required: true
         type: string
     secrets:
-      CYPRESS_AUTH0_DOMAIN:
-        required: true
-      CYPRESS_AUTH0_CLIENT_ID:
-        required: true
-      CYPRESS_AUTH0_AUDIENCE:
-        required: true
-      CYPRESS_AUTH0_TEST_USERNAME:
-        required: true
       CYPRESS_AUTH0_TEST_PASSWORD:
         required: true
 
@@ -55,10 +47,10 @@ jobs:
         working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
         config: baseUrl=${{ vars.CYPRESS_BASE_URL }}
       env:
-        CYPRESS_AUTH0_DOMAIN: ${{ secrets.CYPRESS_AUTH0_DOMAIN }}
-        CYPRESS_AUTH0_CLIENT_ID: ${{ secrets.CYPRESS_AUTH0_CLIENT_ID }}
-        CYPRESS_AUTH0_AUDIENCE: ${{ secrets.CYPRESS_AUTH0_AUDIENCE }}
-        CYPRESS_AUTH0_TEST_USERNAME: ${{ secrets.CYPRESS_AUTH0_TEST_USERNAME }}
+        CYPRESS_AUTH0_DOMAIN: ${{ vars.CYPRESS_AUTH0_DOMAIN }}
+        CYPRESS_AUTH0_CLIENT_ID: ${{ vars.CYPRESS_AUTH0_CLIENT_ID }}
+        CYPRESS_AUTH0_AUDIENCE: ${{ vars.CYPRESS_AUTH0_AUDIENCE }}
+        CYPRESS_AUTH0_TEST_USERNAME: ${{ vars.CYPRESS_AUTH0_TEST_USERNAME }}
         CYPRESS_AUTH0_TEST_PASSWORD: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
 
     - uses: actions/upload-artifact@v3
