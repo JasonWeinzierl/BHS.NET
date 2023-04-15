@@ -66,6 +66,7 @@ public static class BhsServiceCollectionExtensions
         services.AddSingleton<IAuthorRepository, AuthorRepository>();
         services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();
         services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
+        services.AddSingleton<ISequenceRepository, SequenceRepository>();
 
         return services;
     }
