@@ -3,16 +3,30 @@ name: Smoke Tests
 on:
   workflow_dispatch:
     inputs:
-      base-url:
+      environment:
+        description: The GitHub Actions environment of the subject under test.
         required: false
-        type: string
-        description: The base URL of the subject under test.
-        default: https://staging.beltonhistoricalsociety.org/
+        type: choice
+        options:
+        - staging
+        - production
+        default: staging
   workflow_call:
     inputs:
-      base-url:
+      environment:
         required: true
         type: string
+    secrets:
+      CYPRESS_AUTH0_DOMAIN:
+        required: true
+      CYPRESS_AUTH0_CLIENT_ID:
+        required: true
+      CYPRESS_AUTH0_AUDIENCE:
+        required: true
+      CYPRESS_AUTH0_TEST_USERNAME:
+        required: true
+      CYPRESS_AUTH0_TEST_PASSWORD:
+        required: true
 
 env:
   CLIENTAPP_DIRECTORY: ./src/BHS.Web/ClientApp
@@ -21,6 +35,7 @@ env:
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
 
     steps:
     
@@ -38,4 +53,10 @@ jobs:
       with:
         config-file: cypress/configFiles/cypress.config.smoke.ts
         working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
-        config: baseUrl=${{ inputs.base-url }}
+        config: baseUrl=${{ vars.CYPRESS_BASE_URL }}
+      env:
+        CYPRESS_AUTH0_DOMAIN: ${{ secrets.CYPRESS_AUTH0_DOMAIN }}
+        CYPRESS_AUTH0_CLIENT_ID: ${{ secrets.CYPRESS_AUTH0_CLIENT_ID }}
+        CYPRESS_AUTH0_AUDIENCE: ${{ secrets.CYPRESS_AUTH0_AUDIENCE }}
+        CYPRESS_AUTH0_TEST_USERNAME: ${{ secrets.CYPRESS_AUTH0_TEST_USERNAME }}
+        CYPRESS_AUTH0_TEST_PASSWORD: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}

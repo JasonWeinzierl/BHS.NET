@@ -46,7 +46,7 @@ The GitHub repo, the Azure subscription, the domain purchased through namecheap,
 Auth0 Tenants cannot be created via terraform and must be created in their UI first.
 
 1. Create an Auth0 tenant for the desired environment.
-2. Create a Machine to Machine Application for terraform to use.
+2. Create a Machine to Machine Application for terraform to use named "Terraform Provider Auth0" (name must be exact so we can reference it).
 3. Authorize the new application to call the Auth0 Management API with all scopes.
 4. Use the resulting credentials to populate the required environment variables above.
 

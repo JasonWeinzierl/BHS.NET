@@ -1,4 +1,10 @@
 
+locals {
+  subdomain_hostname = "https://${var.subdomain}.beltonhistoricalsociety.org"
+  hostnames          = var.enable_root_binding ? ["https://beltonhistoricalsociety.org", local.subdomain_hostname] : [local.subdomain_hostname]
+}
+
+
 data "github_user" "me" {
   username = "JasonWeinzierl"
 }
@@ -52,6 +58,48 @@ resource "github_actions_environment_secret" "azure_tenant_id" {
   environment     = github_repository_environment.this.environment
   secret_name     = "AZURE_TENANT_ID"
   plaintext_value = data.azurerm_client_config.current.tenant_id
+}
+
+resource "github_actions_environment_secret" "cypress_auth0_domain" {
+  repository      = data.github_repository.bhs.name
+  environment     = github_repository_environment.this.environment
+  secret_name     = "CYPRESS_AUTH0_DOMAIN"
+  plaintext_value = data.auth0_tenant.bhs.domain
+}
+
+resource "github_actions_environment_secret" "cypress_auth0_client_id" {
+  repository      = data.github_repository.bhs.name
+  environment     = github_repository_environment.this.environment
+  secret_name     = "CYPRESS_AUTH0_CLIENT_ID"
+  plaintext_value = auth0_client.bhs_spa.client_id
+}
+
+resource "github_actions_environment_secret" "cypress_auth0_audience" {
+  repository      = data.github_repository.bhs.name
+  environment     = github_repository_environment.this.environment
+  secret_name     = "CYPRESS_AUTH0_AUDIENCE"
+  plaintext_value = auth0_resource_server.bhs_api.identifier
+}
+
+resource "github_actions_environment_secret" "cypress_auth0_test_username" {
+  repository      = data.github_repository.bhs.name
+  environment     = github_repository_environment.this.environment
+  secret_name     = "CYPRESS_AUTH0_TEST_USERNAME"
+  plaintext_value = auth0_user.noreply.email
+}
+
+resource "github_actions_environment_secret" "cypress_auth0_test_password" {
+  repository      = data.github_repository.bhs.name
+  environment     = github_repository_environment.this.environment
+  secret_name     = "CYPRESS_AUTH0_TEST_PASSWORD"
+  plaintext_value = auth0_user.noreply.password
+}
+
+resource "github_actions_environment_variable" "cypress_base_url" {
+  repository    = data.github_repository.bhs.name
+  environment   = github_repository_environment.this.environment
+  variable_name = "CYPRESS_BASE_URL"
+  value         = local.hostnames[0]
 }
 
 
@@ -333,7 +381,7 @@ resource "azurerm_linux_web_app" "bhs_web" {
     ftps_state        = "Disabled"
     health_check_path = "/api/healthcheck/status"
     http2_enabled     = true
-    
+
     application_stack {
       dotnet_version = "7.0"
     }
@@ -411,10 +459,8 @@ module "bhs_hostname_subdomain" {
 
 
 data "auth0_tenant" "bhs" {}
-
-locals {
-  subdomain_hostname = "https://${var.subdomain}.beltonhistoricalsociety.org"
-  hostnames          = var.enable_root_binding ? ["https://beltonhistoricalsociety.org", local.subdomain_hostname] : [local.subdomain_hostname]
+data "auth0_client" "terraform" {
+  name = "Terraform Provider Auth0"
 }
 
 resource "auth0_client" "bhs_spa" {
@@ -427,9 +473,9 @@ resource "auth0_client" "bhs_spa" {
   web_origins         = local.hostnames
   logo_uri            = "https://beltonhistoricalsociety.org/assets/img/2019/icons/apple-touch-icon.png"
 
-  is_first_party       = true
-  oidc_conformant      = true
-  custom_login_page_on = true
+  is_first_party             = true
+  oidc_conformant            = true
+  custom_login_page_on       = true
   token_endpoint_auth_method = "none"
   jwt_configuration {
     alg                 = "RS256"
@@ -488,6 +534,28 @@ resource "auth0_connection" "bhs_userpassauth" {
 resource "auth0_connection_client" "bhs_userpassauth_spa_assoc" {
   connection_id = auth0_connection.bhs_userpassauth.id
   client_id     = auth0_client.bhs_spa.id
+}
+
+resource "auth0_connection_client" "bhs_userpassauth_terraform_assoc" {
+  connection_id = auth0_connection.bhs_userpassauth.id
+  client_id     = data.auth0_client.terraform.id
+}
+
+resource "random_password" "auth0_noreply_password" {
+  length  = 16
+  special = true
+}
+
+resource "auth0_user" "noreply" {
+  connection_name = auth0_connection.bhs_userpassauth.name
+
+  email          = "noreply@beltonhistoricalsociety.org"
+  email_verified = true
+  password       = random_password.auth0_noreply_password.result
+
+  depends_on = [
+    auth0_connection_client.bhs_userpassauth_terraform_assoc,
+  ]
 }
 
 

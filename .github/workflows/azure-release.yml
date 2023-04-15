@@ -131,7 +131,8 @@ jobs:
     needs: deploy-stage
     uses: ./.github/workflows/smoke.yml
     with:
-      base-url: https://staging.beltonhistoricalsociety.org/
+      environment: staging
+    secrets: inherit
 
 
   deploy-prod:
@@ -170,4 +171,5 @@ jobs:
     needs: deploy-prod
     uses: ./.github/workflows/smoke.yml
     with:
-      base-url: https://beltonhistoricalsociety.org/
+      environment: production
+    secrets: inherit
