@@ -7,7 +7,7 @@ export default defineConfig({
     baseUrl: 'https://localhost:5001/', // When running locally, requires the backend api and mongo database to be running.
     specPattern: 'cypress/smokeTests/**/*.cy.ts',
     env: {
-      // These will be overridden by CYPRESS_{name} environment variables, where the {name} is converted to camelCase.
+      // These will be overridden by environment variables starting with CYPRESS_, minus the prefix.
       auth0Domain: 'dev-wz656qr7u8q11d84.us.auth0.com',
       auth0ClientId: 'MEQJ4p2Y10CLMRebfZAEV2o2zxJVNFk7',
       auth0Audience: 'https://beltonhistoricalsociety.org/api/swagger/index.html',
