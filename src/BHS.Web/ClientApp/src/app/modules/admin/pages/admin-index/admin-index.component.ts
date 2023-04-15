@@ -14,6 +14,10 @@ export class AdminIndexComponent {
   ) { }
 
   handleLogout(): void {
-    this.auth.logout();
+    this.auth.logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
   }
 }
