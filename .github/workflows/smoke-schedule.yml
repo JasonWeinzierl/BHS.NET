@@ -2,7 +2,7 @@ name: Scheduled Smoke Tests
 
 on:
   schedule:
-  - cron: '49 11 * * *' # 11:49 UTC
+  - cron: '49 11 * * 6' # 11:49 UTC on Saturdays
   
 jobs:
   smoke-test-stage:
