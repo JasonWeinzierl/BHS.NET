@@ -8,11 +8,6 @@ variable "location" {
   type        = string
 }
 
-variable "auto_deploy" {
-  description = "True if the environment should deploy without a reviewer."
-  type        = bool
-}
-
 variable "subdomain" {
   description = "The subdomain binding to be created for the web app."
   type        = string

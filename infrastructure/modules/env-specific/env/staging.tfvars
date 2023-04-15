@@ -1,6 +1,5 @@
 environment = "staging"
 location    = "centralus"
-auto_deploy = true
 subdomain   = "staging"
 
 storage_account_name = "stagebhsstorage"

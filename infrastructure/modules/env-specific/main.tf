@@ -5,10 +5,6 @@ locals {
 }
 
 
-data "github_user" "me" {
-  username = "JasonWeinzierl"
-}
-
 data "github_repository" "bhs" {
   full_name = "JasonWeinzierl/BHS.NET"
 }
@@ -17,15 +13,6 @@ resource "github_repository_environment" "this" {
   environment = var.environment
   repository  = data.github_repository.bhs.name
 
-  dynamic "reviewers" {
-    for_each = var.auto_deploy ? [] : [1]
-
-    content {
-      users = [
-        data.github_user.me.id,
-      ]
-    }
-  }
   deployment_branch_policy {
     protected_branches     = true
     custom_branch_policies = false
