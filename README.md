@@ -19,7 +19,8 @@ built on ASP.NET Core, Angular, and MongoDB.
 
 1. You must have access to an instance of MongoDB.
     - Either use a free cloud offering or set up a local instance.
-2. Put your connection string in `ConnectionStrings:bhsMongo`.
+2. Add a connection string named `ConnectionStrings:bhsMongo`.
+    - See the below section on Configuration for other required settings.
 
 #### Frontend
 
@@ -46,27 +47,43 @@ Test the frontend application through the launched browser window.
 Navigate to `/api/swagger` to use the Swagger UI.
 This does not require the frontend development server to be running.
 
+#### Infrastructure
+
+See the README in `infrastructure/` for further documentation.
+
 #### Auth
 
 This application uses Auth0;
 you must set up an Auth0 tenant with RBAC permissions matching those set up in `Startup.cs`.
+You must also add the configuration settings as mentioned below.
 
+#### Configuration
 
-Set up the API's configuration with the following:
+The required configuration settings are listed in the `env-specific` infrastructure files.
+These settings include authentication settings, database connection strings, API keys, etc.
+Without these settings, various features may fail to work locally.
 
-```json
-{
-  "Authentication:Schemes:Bearer:Authority": "https://AUTH0_DOMAIN/",
-  "Authentication:Schemes:Bearer:ValidAudiences:0": "AUTH0_AUDIENCE",
-  "Authentication:Schemes:Bearer:ValidIssuer": "AUTH0_DOMAIN"
+##### Example
+
+The infrastructure lists the following resource, which is a required setting you need to run this application locally.
+
+```hcl
+resource "azurerm_app_configuration_key" "auth0_domain" {
+  configuration_store_id = data.azurerm_app_configuration.bhs.id
+
+  label = var.environment
+  key   = "AUTH0_DOMAIN"
+  value = ...
 }
 ```
 
-If using environment variables, remember to use `__` instead of `:` for separating sections.
+Based on this resource, create a setting named `AUTH0_DOMAIN` with a value of your Auth0 tenant's domain.
 
+You may add this setting either to your local appsettings.Development.json,
+user secrets, machine environment variables, command line arguments,
+or else create an instance of Azure App Configuration with these.
 
-To set up the frontend's configuration, set environment variables before running `transform-environment.ts`:
+Repeat this step for every other resource of type `azurerm_app_configuration_key`.
 
-- `AUTH0_DOMAIN`
-- `AUTH0_CLIENT_ID`
-- `AUTH0_AUDIENCE`
+If using Azure App Configuration locally, each key must be labeled with nothing or else `development`.
+Add the App Configuration's connection string to a setting named `ConnectionStrings:AppConfig`.
