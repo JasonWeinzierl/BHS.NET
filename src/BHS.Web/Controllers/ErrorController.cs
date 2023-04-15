@@ -2,6 +2,7 @@
 using BHS.Domain.Photos;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace BHS.Web.Controllers;
 
@@ -32,6 +33,8 @@ public class ErrorController : ControllerBase
         {
             InvalidContactRequestException => StatusCodes.Status400BadRequest,
             InvalidPhotoIdException => StatusCodes.Status400BadRequest,
+
+            MongoWriteException ex when ex.WriteError.Category == ServerErrorCategory.DuplicateKey => StatusCodes.Status409Conflict,
 
             NotImplementedException => StatusCodes.Status501NotImplemented,
 
