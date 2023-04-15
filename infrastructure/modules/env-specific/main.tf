@@ -430,6 +430,7 @@ resource "auth0_client" "bhs_spa" {
   is_first_party       = true
   oidc_conformant      = true
   custom_login_page_on = true
+  token_endpoint_auth_method = "none"
   jwt_configuration {
     alg                 = "RS256"
     lifetime_in_seconds = 36000
