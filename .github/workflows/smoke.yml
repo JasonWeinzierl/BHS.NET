@@ -60,3 +60,15 @@ jobs:
         CYPRESS_AUTH0_AUDIENCE: ${{ secrets.CYPRESS_AUTH0_AUDIENCE }}
         CYPRESS_AUTH0_TEST_USERNAME: ${{ secrets.CYPRESS_AUTH0_TEST_USERNAME }}
         CYPRESS_AUTH0_TEST_PASSWORD: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
+
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: cypress-screenshots
+        path: ${{ env.CLIENTAPP_DIRECTORY }}/cypress/screenshots
+
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: cypress-videos
+        path: ${{ env.CLIENTAPP_DIRECTORY }}/cypress/videos
