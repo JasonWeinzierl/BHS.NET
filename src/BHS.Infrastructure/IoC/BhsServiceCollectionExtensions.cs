@@ -40,9 +40,11 @@ public static class BhsServiceCollectionExtensions
         return services;
     }
 
+    private static readonly DateTimeOffsetSerializer _dateTimeOffsetSerializer = new(BsonType.DateTime);
+
     private static IServiceCollection AddMongoRepositories(this IServiceCollection services)
     {
-        BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.DateTime));
+        BsonSerializer.TryRegisterSerializer(_dateTimeOffsetSerializer);
 
         services.TryAddSingleton<IMongoClient>(provider =>
         {
