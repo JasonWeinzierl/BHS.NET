@@ -486,6 +486,21 @@ resource "auth0_resource_server" "bhs_api" {
   enforce_policies                                = true
   token_dialect                                   = "access_token_authz"
   skip_consent_for_verifiable_first_party_clients = true
+
+  scopes {
+    value       = "write:blog"
+    description = "Author blog resources"
+  }
+}
+
+resource "auth0_role" "owner" {
+  name        = "Owner"
+  description = "Full access to all resources"
+
+  permissions {
+    name                       = "write:blog"
+    resource_server_identifier = auth0_resource_server.bhs_api.identifier
+  }
 }
 
 resource "auth0_connection" "bhs_userpassauth" {
