@@ -44,6 +44,6 @@ public class QueryTests : IClassFixture<MongoDbWebApplicationFactory<Program>>
                 repo.GetNextValue(name));
         }
 
-        Assert.Equal(new long[] { 2, 3, 4 }, values);
+        Assert.Equal(new long[] { 2, 3, 4 }, values.Order());
     }
 }
