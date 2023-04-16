@@ -24,8 +24,8 @@ public class Startup
         // Set up claim-based authorization.
         services.AddAuthorization(opt =>
         {
-            // TODO: add policies as routes needing authorization are implemented.
-            //opt.AddPolicy("WriteAccess", policy => policy.RequireClaim(claimType: "permissions", "blog:write"));
+            const string permissions = "permissions";
+            opt.AddPolicy("BlogWriteAccess", policy => policy.RequireClaim(permissions, "write:blog"));
         });
 
         services.AddControllers()
