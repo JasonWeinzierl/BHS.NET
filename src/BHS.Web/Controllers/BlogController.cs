@@ -57,6 +57,18 @@ public class BlogController : ControllerBase
     }
 
     /// <summary>
+    /// Update a post.
+    /// </summary>
+    [HttpPut("posts/{slug}")]
+    [Authorize("BlogWriteAccess")]
+    public async Task<ActionResult<Post>> UpdatePost(string slug, PostRequest request, CancellationToken cancellationToken)
+    {
+        var post = await _postRepo.Update(slug, request, cancellationToken);
+        if (post is null) return NotFound();
+        else return Ok(post);
+    }
+
+    /// <summary>
     /// Get all categories.
     /// </summary>
     [HttpGet("categories")]
