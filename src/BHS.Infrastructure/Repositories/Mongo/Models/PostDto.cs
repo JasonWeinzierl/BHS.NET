@@ -25,21 +25,14 @@ internal sealed record PostDto(
             Slug: slug,
             Revisions: new[]
             {
-                new PostRevisionDto(
-                    ObjectId.GenerateNewId(now.UtcDateTime),
+                PostRevisionDto.New(
                     now,
                     title,
                     contentMarkdown,
-                    filePath?.ToString(),
+                    filePath,
                     photosAlbumSlug,
-                    AuthorDto.FromAuthor(author),
-                    new[]
-                    {
-                        new PostRevisionPublicationDto(
-                            ObjectId.GenerateNewId(now.UtcDateTime),
-                            datePublished,
-                            now),
-                    }),
+                    author,
+                    datePublished),
             },
             Deletions: Array.Empty<PostDeletionDto>(),
             Categories: categories?.Select(category => PostCategoryHistoryDto.New(now, category)).ToArray() ?? Array.Empty<PostCategoryHistoryDto>());
@@ -53,16 +46,48 @@ internal sealed record PostRevisionDto(
     string? FilePath,
     string? PhotosAlbumSlug,
     AuthorDto? Author,
-    IReadOnlyCollection<PostRevisionPublicationDto> Publications);
+    IReadOnlyCollection<PostRevisionPublicationDto> Publications)
+{
+    public static PostRevisionDto New(
+        DateTimeOffset now,
+        string title,
+        string contentMarkdown,
+        Uri? filePath,
+        string? photosAlbumSlug,
+        Author? author,
+        DateTimeOffset datePublished)
+        => new(
+            ObjectId.GenerateNewId(now.UtcDateTime),
+            now,
+            title,
+            contentMarkdown,
+            filePath?.ToString(),
+            photosAlbumSlug,
+            AuthorDto.FromAuthor(author),
+            new[]
+            {
+                PostRevisionPublicationDto.New(
+                    datePublished,
+                    now),
+            });
+}
 
 internal sealed record PostRevisionPublicationDto(
     ObjectId Id,
     DateTimeOffset DatePublished, // User-set value. Determines final visibility of the post.
-    DateTimeOffset DateCommitted); // Server-set value. Determines which publication is latest, if past latest deletion.
+    DateTimeOffset DateCommitted) // Server-set value. Determines which publication is latest, if past latest deletion.
+{
+    public static PostRevisionPublicationDto New(DateTimeOffset datePublished, DateTimeOffset now)
+        => new(ObjectId.GenerateNewId(now.UtcDateTime), datePublished, now);
+}
 
 internal sealed record PostDeletionDto(
     ObjectId Id,
-    DateTimeOffset DateDeleted); // Server-set value. Determines the cutoff for which publication commit dates will not be evaluated.
+    DateTimeOffset DateDeleted) // Server-set value. Determines the cutoff for which publication commit dates will not be evaluated.
+{
+    public static PostDeletionDto New(DateTimeOffset now)
+        => new(ObjectId.GenerateNewId(now.UtcDateTime), now);
+}
 
 internal record PostCategoryDto(
     [property: BsonId] string Slug,
@@ -93,7 +118,11 @@ internal sealed record PostCategoryHistoryDto(
 internal sealed record PostCategoryChangeDto(
     ObjectId Id,
     DateTimeOffset DateChanged, // Server-set value. Determines which category change is latest.
-    bool IsEnabled);
+    bool IsEnabled)
+{
+    public static PostCategoryChangeDto New(DateTimeOffset now, bool IsEnabled)
+        => new(ObjectId.GenerateNewId(now.UtcDateTime), now, IsEnabled);
+}
 
 
 internal sealed record PostUnwoundCategoryDto(
