@@ -19,15 +19,15 @@ internal static class AggregateFluentExtensions
     /// </remarks>
     public static IAggregateFluent<PostCurrentSnapshotDto> GetCurrentPostSnapshotDtos(this IAggregateFluent<PostDto> aggregateFluent, DateTimeOffset now)
         => aggregateFluent
-            // Get LatestRevision and DateFirstPublished
+            // Get LatestRevision via DateCommitted
             .Unwind<PostDto, PostUnwoundRevisionDto>(x => x.Revisions)
             .Unwind<PostUnwoundRevisionDto, PostUnwoundRevisionUnwoundPublicationDto>(x => x.Revisions.Publications)
-            .Match(x => x.Revisions.Publications.DatePublished <= now)
-            .SortBy(x => x.Revisions.Publications.DatePublished)
+            .Match(x => x.Revisions.Publications.DateCommitted <= now)
+            .SortBy(x => x.Revisions.Publications.DateCommitted)
             .Group(x => x.Slug, x => new PostLatestRevisionDto(
                 x.Key,
                 x.Last().Revisions,
-                x.First().Revisions.Publications.DatePublished,
+                x.Last().Revisions.Publications,
                 x.Last().Deletions,
                 x.Last().Categories)
             )
@@ -38,11 +38,11 @@ internal static class AggregateFluentExtensions
             .Group(x => x.Slug, x => new PostLatestRevisionUnwoundDeletionDto(
                 x.Key,
                 x.Last().LatestRevision,
-                x.Last().DateFirstPublished,
+                x.Last().LatestPublication,
                 x.Last().Deletions,
                 x.Last().Categories)
             )
-            // Filter out any documents where DatePublished < DateDeleted.
+            // Filter out any documents with DateCommitted < DateDeleted.
             // We must use BsonDocument here because LINQ translation doesn't work.
             .Match(new BsonDocumentFilterDefinition<PostLatestRevisionUnwoundDeletionDto>(
                 new BsonDocument(
@@ -51,7 +51,7 @@ internal static class AggregateFluentExtensions
                         "$gt",
                         new BsonArray(2)
                         {
-                            $"${nameof(PostLatestRevisionUnwoundDeletionDto.LatestRevision)}.{nameof(PostRevisionUnwoundPublicationDto.Publications)}.{nameof(PostRevisionPublicationDto.DatePublished)}",
+                            $"${nameof(PostLatestRevisionUnwoundDeletionDto.LatestRevision)}.{nameof(PostRevisionUnwoundPublicationDto.Publications)}.{nameof(PostRevisionPublicationDto.DateCommitted)}",
                             $"${nameof(PostLatestRevisionUnwoundDeletionDto.Deletions)}.{nameof(PostDeletionDto.DateDeleted)}",
                         }
                     )
@@ -65,7 +65,7 @@ internal static class AggregateFluentExtensions
             .Group(x => new PostFlattenedGroupedCategorySlugIdDto(x.Slug, x.Categories!.Slug), x => new PostLatestRevisionFlattenedGroupedCategoryDto(
                 x.Key,
                 x.Last().LatestRevision,
-                x.Last().DateFirstPublished,
+                x.Last().LatestPublication,
                 x.Last().Categories))
             .Match(x => x.Categories == null || x.Categories.Changes.IsEnabled)
             // Re-combine unwound categories ONLY IF Category is not null (otherwise un-categorized posts get a null category).
@@ -75,7 +75,7 @@ internal static class AggregateFluentExtensions
                 {
                     { "_id", $"$_id.{nameof(PostFlattenedGroupedCategorySlugIdDto.PostSlug)}" },
                     { nameof(PostCurrentSnapshotDto.LatestRevision), new BsonDocument("$last", $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.LatestRevision)}") },
-                    { nameof(PostCurrentSnapshotDto.DateFirstPublished), new BsonDocument("$last", $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.DateFirstPublished)}") },
+                    { nameof(PostCurrentSnapshotDto.LatestPublication), new BsonDocument("$last", $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.LatestPublication)}") },
                     { nameof(PostCurrentSnapshotDto.Categories),
                         new BsonDocument(
                             "$push",
@@ -113,7 +113,7 @@ internal static class AggregateFluentExtensions
                         x.LatestRevision.Title,
                         x.LatestRevision.ContentMarkdown.Substring(0, 135) + "…",
                         x.LatestRevision.Author == null ? null : new Author(x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName),
-                        x.DateFirstPublished,
+                        x.LatestPublication.DatePublished,
                         x.Categories.Select(x => new Category(x.Slug, x.Name))),
                     DbConstants.TranslationOptions)
                 );
@@ -124,7 +124,7 @@ internal static class AggregateFluentExtensions
                     x => new PostCurrentSnapshotWithSearchTextIdxDto(
                         x.Slug,
                         x.LatestRevision,
-                        x.DateFirstPublished,
+                        x.LatestPublication,
                         x.Categories,
                         x.LatestRevision.ContentMarkdown.IndexOf(searchText) - 25),
                     DbConstants.TranslationOptions)
@@ -135,7 +135,7 @@ internal static class AggregateFluentExtensions
                         x.LatestRevision.Title,
                         "…" + x.LatestRevision.ContentMarkdown.Substring(x.SearchTextHighlightStart, 135) + "…",
                         x.LatestRevision.Author == null ? null : new Author(x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName),
-                        x.DateFirstPublished,
+                        x.LatestPublication.DatePublished,
                         x.Categories.Select(x => new Category(x.Slug, x.Name))),
                     DbConstants.TranslationOptions)
                 );

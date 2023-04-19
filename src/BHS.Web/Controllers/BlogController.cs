@@ -24,7 +24,7 @@ public class BlogController : ControllerBase
     }
 
     /// <summary>
-    /// Get all posts, with optional search criteria
+    /// Get all posts, with optional search criteria.
     /// </summary>
     [HttpGet("posts")]
     public async Task<ActionResult<IEnumerable<PostPreview>>> SearchPosts(string? q, DateTime? from, DateTime? to, CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ public class BlogController : ControllerBase
     [HttpPost("posts")]
     [Authorize("BlogWriteAccess")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult> CreatePost(PostRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<Post>> CreatePost(PostRequest request, CancellationToken cancellationToken)
     {
         string slug = await _postRepo.Insert(request, cancellationToken);
         var post = await _postRepo.GetBySlug(slug, cancellationToken);
@@ -44,7 +44,7 @@ public class BlogController : ControllerBase
     }
 
     /// <summary>
-    /// Get a post
+    /// Get a post.
     /// </summary>
     [HttpGet("posts/{slug}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

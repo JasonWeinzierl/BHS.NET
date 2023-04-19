@@ -33,7 +33,13 @@ internal sealed record PostDto(
                     filePath?.ToString(),
                     photosAlbumSlug,
                     AuthorDto.FromAuthor(author),
-                    new[] { new PostRevisionPublicationDto(datePublished) }),
+                    new[]
+                    {
+                        new PostRevisionPublicationDto(
+                            ObjectId.GenerateNewId(now.UtcDateTime),
+                            datePublished,
+                            now),
+                    }),
             },
             Deletions: Array.Empty<PostDeletionDto>(),
             Categories: categories?.Select(category => PostCategoryHistoryDto.New(now, category)).ToArray() ?? Array.Empty<PostCategoryHistoryDto>());
@@ -41,7 +47,7 @@ internal sealed record PostDto(
 
 internal sealed record PostRevisionDto(
     ObjectId Id,
-    DateTimeOffset DateRevised,
+    DateTimeOffset DateRevised, // Server-set value. Decorative.
     string Title,
     string ContentMarkdown,
     string? FilePath,
@@ -50,10 +56,13 @@ internal sealed record PostRevisionDto(
     IReadOnlyCollection<PostRevisionPublicationDto> Publications);
 
 internal sealed record PostRevisionPublicationDto(
-    DateTimeOffset DatePublished);
+    ObjectId Id,
+    DateTimeOffset DatePublished, // User-set value. Decorative. Displyed as DatePublished to end users.
+    DateTimeOffset DateCommitted); // Server-set value. Determines which publication is latest.
 
 internal sealed record PostDeletionDto(
-    DateTimeOffset DateDeleted);
+    ObjectId Id,
+    DateTimeOffset DateDeleted); // Server-set value. Determines the cutoff for publication commit dates will not be evaluated.
 
 internal record PostCategoryDto(
     [property: BsonId] string Slug,
@@ -69,11 +78,21 @@ internal sealed record PostCategoryHistoryDto(
     IReadOnlyCollection<PostCategoryChangeDto> Changes) : PostCategoryDto(Slug, Name)
 {
     public static PostCategoryHistoryDto New(DateTimeOffset now, Category category)
-        => new(category.Slug, category.Name, new[] { new PostCategoryChangeDto(now, true) });
+        => new(
+            category.Slug,
+            category.Name,
+            new[]
+            {
+                new PostCategoryChangeDto(
+                    ObjectId.GenerateNewId(now.UtcDateTime),
+                    now,
+                    true),
+            });
 }
 
 internal sealed record PostCategoryChangeDto(
-    DateTimeOffset DateChanged,
+    ObjectId Id,
+    DateTimeOffset DateChanged, // Server-set value. Determines which category change is latest.
     bool IsEnabled);
 
 
@@ -109,27 +128,27 @@ internal sealed record PostRevisionUnwoundPublicationDto(
 internal sealed record PostLatestRevisionDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
-    DateTimeOffset DateFirstPublished,
+    PostRevisionPublicationDto LatestPublication,
     IReadOnlyCollection<PostDeletionDto> Deletions,
     IReadOnlyCollection<PostCategoryHistoryDto> Categories);
 
 internal sealed record PostLatestRevisionUnwoundDeletionDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
-    DateTimeOffset DateFirstPublished,
+    PostRevisionPublicationDto LatestPublication,
     PostDeletionDto? Deletions,
     IReadOnlyCollection<PostCategoryHistoryDto> Categories);
 
 internal sealed record PostLatestRevisionNotDeletedUnwoundCategoryDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
-    DateTimeOffset DateFirstPublished,
+    PostRevisionPublicationDto LatestPublication,
     PostCategoryHistoryDto? Categories);
 
 internal sealed record PostLatestRevisionNotDeletedUnwoundCategoryUnwoundChangeDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
-    DateTimeOffset DateFirstPublished,
+    PostRevisionPublicationDto LatestPublication,
     PostCategoryUnwoundChangeDto? Categories);
 
 internal sealed record PostCategoryUnwoundChangeDto(
@@ -140,7 +159,7 @@ internal sealed record PostCategoryUnwoundChangeDto(
 internal sealed record PostLatestRevisionFlattenedGroupedCategoryDto(
     [property: BsonId] PostFlattenedGroupedCategorySlugIdDto Id,
     PostRevisionUnwoundPublicationDto LatestRevision,
-    DateTimeOffset DateFirstPublished,
+    PostRevisionPublicationDto LatestPublication,
     PostCategoryUnwoundChangeDto? Categories);
 
 internal sealed record PostFlattenedGroupedCategorySlugIdDto(
@@ -150,7 +169,7 @@ internal sealed record PostFlattenedGroupedCategorySlugIdDto(
 internal sealed record PostCurrentSnapshotDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
-    DateTimeOffset DateFirstPublished,
+    PostRevisionPublicationDto LatestPublication,
     IEnumerable<PostCategoryDto> Categories)
 {
     public Post ToPost()
@@ -161,14 +180,14 @@ internal sealed record PostCurrentSnapshotDto(
             LatestRevision.FilePath is null ? null : new Uri(LatestRevision.FilePath),
             LatestRevision.PhotosAlbumSlug,
             LatestRevision.Author?.ToAuthor(),
-            DateFirstPublished,
-            LatestRevision.Publications.DatePublished,
+            LatestPublication.DatePublished,
+            LatestPublication.DateCommitted,
             Categories.Select(x => x.ToCategory()).ToList());
 }
 
 internal sealed record PostCurrentSnapshotWithSearchTextIdxDto(
     [property: BsonId] string Slug,
     PostRevisionUnwoundPublicationDto LatestRevision,
-    DateTimeOffset DateFirstPublished,
+    PostRevisionPublicationDto LatestPublication,
     IEnumerable<PostCategoryDto> Categories,
     int SearchTextHighlightStart);

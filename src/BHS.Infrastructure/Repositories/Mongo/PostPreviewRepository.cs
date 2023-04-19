@@ -43,7 +43,7 @@ public class PostPreviewRepository : IPostPreviewRepository
         => await _mongoClient.GetBhsCollection<PostDto>("posts")
             .Aggregate()
             .GetCurrentPostSnapshotDtos(_dateTimeOffsetProvider.Now())
-            .Match(x => (from == null || x.DateFirstPublished >= from) && (to == null || x.DateFirstPublished < to))
+            .Match(x => (from == null || x.LatestPublication.DatePublished >= from) && (to == null || x.LatestPublication.DatePublished < to))
             .GetPreviews(text)
             .ToListAsync(cancellationToken);
 }
