@@ -57,12 +57,12 @@ internal sealed record PostRevisionDto(
 
 internal sealed record PostRevisionPublicationDto(
     ObjectId Id,
-    DateTimeOffset DatePublished, // User-set value. Decorative. Displyed as DatePublished to end users.
-    DateTimeOffset DateCommitted); // Server-set value. Determines which publication is latest.
+    DateTimeOffset DatePublished, // User-set value. Determines final visibility of the post.
+    DateTimeOffset DateCommitted); // Server-set value. Determines which publication is latest, if past latest deletion.
 
 internal sealed record PostDeletionDto(
     ObjectId Id,
-    DateTimeOffset DateDeleted); // Server-set value. Determines the cutoff for publication commit dates will not be evaluated.
+    DateTimeOffset DateDeleted); // Server-set value. Determines the cutoff for which publication commit dates will not be evaluated.
 
 internal record PostCategoryDto(
     [property: BsonId] string Slug,

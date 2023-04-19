@@ -31,6 +31,8 @@ internal static class AggregateFluentExtensions
                 x.Last().Deletions,
                 x.Last().Categories)
             )
+            // Filter out unpublished documents
+            .Match(x => x.LatestPublication.DatePublished <= now)
             // Get latest Deletion
             .Unwind(x => x.Deletions, new AggregateUnwindOptions<PostLatestRevisionUnwoundDeletionDto>() { PreserveNullAndEmptyArrays = true })
             .Match(x => x.Deletions == null || x.Deletions.DateDeleted <= now)
