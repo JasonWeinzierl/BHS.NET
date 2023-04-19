@@ -59,7 +59,7 @@ internal static class AggregateFluentExtensions
                     )
                 )
             ))
-            // Get enabled Categories
+            // Get latest Categories
             .Unwind(x => x.Categories, new AggregateUnwindOptions<PostLatestRevisionNotDeletedUnwoundCategoryDto> { PreserveNullAndEmptyArrays = true })
             .Unwind(x => x.Categories!.Changes, new AggregateUnwindOptions<PostLatestRevisionNotDeletedUnwoundCategoryUnwoundChangeDto> { PreserveNullAndEmptyArrays = true })
             .Match(x => x.Categories == null || x.Categories.Changes.DateChanged <= now)
@@ -69,8 +69,7 @@ internal static class AggregateFluentExtensions
                 x.Last().LatestRevision,
                 x.Last().LatestPublication,
                 x.Last().Categories))
-            .Match(x => x.Categories == null || x.Categories.Changes.IsEnabled)
-            // Re-combine unwound categories ONLY IF Category is not null (otherwise un-categorized posts get a null category).
+            // Re-combine unwound categories ONLY IF Categories.Changes.IsEnabled is true (otherwise un-categorized posts get a null category).
             // We must use BsonDocument here because we need the $$REMOVE System Variable.
             .Group(new BsonDocumentProjectionDefinition<PostLatestRevisionFlattenedGroupedCategoryDto, PostCurrentSnapshotDto>(
                 new BsonDocument
@@ -86,19 +85,19 @@ internal static class AggregateFluentExtensions
                                 new BsonArray
                                 {
                                     new BsonDocument(
-                                        "$ne",
+                                        "$eq",
                                         new BsonArray
                                         {
-                                            $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.Categories)}",
-                                            BsonNull.Value
+                                            $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.Categories)}.{nameof(PostCategoryUnwoundChangeDto.Changes)}.{nameof(PostCategoryChangeDto.IsEnabled)}",
+                                            true,
                                         }),
                                     new BsonDocument
                                     {
                                         { "_id", $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.Categories)}._id" },
-                                        { nameof(PostCategoryDto.Name), $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.Categories)}.{nameof(PostCategoryUnwoundChangeDto.Name)}" }
+                                        { nameof(PostCategoryDto.Name), $"${nameof(PostLatestRevisionFlattenedGroupedCategoryDto.Categories)}.{nameof(PostCategoryUnwoundChangeDto.Name)}" },
                                     },
-                                    "$$REMOVE"
-                                })) }
+                                    "$$REMOVE",
+                                })) },
                 })
             );
 
