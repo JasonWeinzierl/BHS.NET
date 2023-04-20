@@ -125,7 +125,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Blog_UpdatePost()
     {
-        var request1 = new PostRequest(
+        var createRequest = new PostRequest(
             "A post!",
             "# First revision",
             null,
@@ -133,28 +133,51 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             new Author("me", "me :)"),
             DateTimeOffset.Now,
             Array.Empty<Category>());
-        var request2 = request1 with
+        var updateRequest = createRequest with
         {
             ContentMarkdown = "# Second revision",
             DatePublished = new DateTimeOffset(2000, 01, 01, 00, 00, 00, 000, TimeSpan.FromHours(0)),
         };
 
-        using var response1 = await _httpClient.PostAsJsonAsync("/api/blog/posts", request1);
+        using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest);
 
-        Assert.Equal(HttpStatusCode.Created, response1.StatusCode);
-        var initialPost = await response1.Content.ReadFromJsonAsync<Post>();
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        var initialPost = await createResponse.Content.ReadFromJsonAsync<Post>();
         Assert.NotNull(initialPost?.Slug);
 
-        using var response2 = await _httpClient.PutAsJsonAsync($"/api/blog/posts/{initialPost.Slug}", request2);
+        using var response2 = await _httpClient.PutAsJsonAsync($"/api/blog/posts/{initialPost.Slug}", updateRequest);
 
         Assert.Equal(HttpStatusCode.OK, response2.StatusCode);
         var updatedPost = await response2.Content.ReadFromJsonAsync<Post>();
 
         Assert.NotNull(updatedPost);
         Assert.Equal(initialPost.Slug, updatedPost.Slug);
-        Assert.Equal(request2.ContentMarkdown, updatedPost.ContentMarkdown);
-        Assert.Equal(request2.DatePublished, updatedPost.DatePublished);
+        Assert.Equal(updateRequest.ContentMarkdown, updatedPost.ContentMarkdown);
+        Assert.Equal(updateRequest.DatePublished, updatedPost.DatePublished);
         Assert.NotEqual(initialPost.DateLastModified, updatedPost.DateLastModified);
+    }
+
+    [Fact]
+    public async Task Blog_DeletePost()
+    {
+        var createRequest = new PostRequest(
+            "Doomed",
+            "# Title",
+            null,
+            null,
+            null,
+            DateTimeOffset.Now,
+            Array.Empty<Category>());
+
+        using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest);
+
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        var post = await createResponse.Content.ReadFromJsonAsync<Post>();
+        Assert.NotNull(post);
+
+        using var deleteResponse = await _httpClient.DeleteAsync($"/api/blog/posts/{post.Slug}");
+
+        Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
     }
 
     [Fact]
