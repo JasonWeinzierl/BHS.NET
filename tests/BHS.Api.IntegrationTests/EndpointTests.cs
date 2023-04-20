@@ -4,7 +4,6 @@ using BHS.Contracts.Blog;
 using BHS.Contracts.Leadership;
 using BHS.Contracts.Photos;
 using BHS.Web;
-using Microsoft.AspNetCore.Mvc.Testing;
 using MongoDB.Bson;
 using System.Net;
 using System.Net.Http.Json;
@@ -17,12 +16,10 @@ namespace BHS.Api.IntegrationTests;
 [Collection("Sequential")]
 public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Program> _factory;
     private readonly HttpClient _httpClient;
 
     public EndpointTests(BhsWebApplicationFactory<Program> factory)
     {
-        _factory = factory;
         _httpClient = factory.CreateClient();
     }
 
