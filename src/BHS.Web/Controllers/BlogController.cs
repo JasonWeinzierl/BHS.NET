@@ -71,6 +71,20 @@ public class BlogController : ControllerBase
     }
 
     /// <summary>
+    /// Delete a post.
+    /// </summary>
+    [HttpDelete("posts/{slug}")]
+    [Authorize("BlogWriteAccess")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> DeletePost(string slug, CancellationToken cancellationToken)
+    {
+        bool exists = await _postRepo.Delete(slug, cancellationToken);
+        if (!exists) return NotFound();
+        else return NoContent();
+    }
+
+    /// <summary>
     /// Get all categories.
     /// </summary>
     [HttpGet("categories")]

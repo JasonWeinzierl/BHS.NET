@@ -161,4 +161,22 @@ public partial class PostRepository : IPostRepository
 
         return await GetBySlug(slug, cancellationToken);
     }
+
+    public async Task<bool> Delete(string slug, CancellationToken cancellationToken = default)
+    {
+        var collection = _mongoClient.GetBhsCollection<PostDto>("posts");
+
+        var dtoCursor = await collection.FindAsync(p => p.Slug == slug, cancellationToken: cancellationToken);
+        var postDto = await dtoCursor.SingleOrDefaultAsync(cancellationToken); // Get the complete post history.
+        var post = await GetBySlug(slug, cancellationToken); // Get the externally visible snapshot.
+        if (postDto is null || post is null) return false; // Currently not allowing updates to deleted/unpublished posts.
+
+        var now = DateTimeOffset.Now;
+
+        var updateDefinition = Builders<PostDto>.Update.Push(post => post.Deletions, PostDeletionDto.New(now));
+
+        _ = await collection.UpdateOneAsync(p => p.Slug == slug, updateDefinition, cancellationToken: cancellationToken);
+
+        return true;
+    }
 }
