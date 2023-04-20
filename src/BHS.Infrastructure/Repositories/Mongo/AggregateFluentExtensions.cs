@@ -127,7 +127,7 @@ internal static class AggregateFluentExtensions
                         x.LatestRevision,
                         x.LatestPublication,
                         x.Categories,
-                        x.LatestRevision.ContentMarkdown.IndexOf(searchText) - 25),
+                        x.LatestRevision.ContentMarkdown.IndexOf(searchText) - 25), // TODO: bug, index could be negative, causes substrCP to error.
                     DbConstants.TranslationOptions)
                 )
                 .AppendStage(PipelineStageDefinitionBuilder.Project<PostCurrentSnapshotWithSearchTextIdxDto, PostPreview>(
