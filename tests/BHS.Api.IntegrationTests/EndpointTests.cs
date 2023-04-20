@@ -15,12 +15,12 @@ namespace BHS.Api.IntegrationTests;
 
 [Trait("Category", "Integration")]
 [Collection("Sequential")]
-public class EndpointTests : IClassFixture<MongoDbWebApplicationFactory<Program>>
+public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly HttpClient _httpClient;
 
-    public EndpointTests(MongoDbWebApplicationFactory<Program> factory)
+    public EndpointTests(BhsWebApplicationFactory<Program> factory)
     {
         _factory = factory;
         _httpClient = factory.CreateClient();
@@ -88,6 +88,73 @@ public class EndpointTests : IClassFixture<MongoDbWebApplicationFactory<Program>
 
         Assert.NotNull(posts);
         Assert.Empty(posts);
+    }
+
+    [Fact]
+    public async Task Blog_CreatePost()
+    {
+        var datePublished = new DateTimeOffset(2023, 04, 19, 20, 20, 00, 999, TimeSpan.FromHours(-5));
+        var request = new PostRequest(
+            "Hello, world!",
+            "# Title",
+            null,
+            null,
+            new Author("me", "me :)"),
+            datePublished,
+            new[] { new Category("newsletters", "Newsletters") });
+
+        using var response = await _httpClient.PostAsJsonAsync("/api/blog/posts", request);
+
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        var post = await response.Content.ReadFromJsonAsync<Post>();
+
+        Assert.NotNull(post);
+        Assert.Contains("-hello-world", post.Slug);
+        Assert.Equal(request.Title, post.Title);
+        Assert.Equal(request.ContentMarkdown, post.ContentMarkdown);
+        Assert.Null(post.FilePath);
+        Assert.Null(post.PhotosAlbumSlug);
+        Assert.Equal(request.Author, post.Author);
+        Assert.Equal(datePublished, post.DatePublished);
+        Assert.NotEqual(default, post.DateLastModified);
+        var category = Assert.Single(post.Categories);
+        Assert.Equal(request.Categories.Single().Slug, category.Slug);
+        Assert.Equal(request.Categories.Single().Name, category.Name);
+    }
+
+    [Fact]
+    public async Task Blog_UpdatePost()
+    {
+        var request1 = new PostRequest(
+            "A post!",
+            "# First revision",
+            null,
+            null,
+            new Author("me", "me :)"),
+            DateTimeOffset.Now,
+            Array.Empty<Category>());
+        var request2 = request1 with
+        {
+            ContentMarkdown = "# Second revision",
+            DatePublished = new DateTimeOffset(2000, 01, 01, 00, 00, 00, 000, TimeSpan.FromHours(0)),
+        };
+
+        using var response1 = await _httpClient.PostAsJsonAsync("/api/blog/posts", request1);
+
+        Assert.Equal(HttpStatusCode.Created, response1.StatusCode);
+        var initialPost = await response1.Content.ReadFromJsonAsync<Post>();
+        Assert.NotNull(initialPost?.Slug);
+
+        using var response2 = await _httpClient.PutAsJsonAsync($"/api/blog/posts/{initialPost.Slug}", request2);
+
+        Assert.Equal(HttpStatusCode.OK, response2.StatusCode);
+        var updatedPost = await response2.Content.ReadFromJsonAsync<Post>();
+
+        Assert.NotNull(updatedPost);
+        Assert.Equal(initialPost.Slug, updatedPost.Slug);
+        Assert.Equal(request2.ContentMarkdown, updatedPost.ContentMarkdown);
+        Assert.Equal(request2.DatePublished, updatedPost.DatePublished);
+        Assert.NotEqual(initialPost.DateLastModified, updatedPost.DateLastModified);
     }
 
     [Fact]

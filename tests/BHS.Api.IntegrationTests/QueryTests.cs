@@ -8,11 +8,11 @@ namespace BHS.Api.IntegrationTests;
 
 [Trait("Category", "Integration")]
 [Collection("Sequential")]
-public class QueryTests : IClassFixture<MongoDbWebApplicationFactory<Program>>
+public class QueryTests : IClassFixture<BhsWebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
 
-    public QueryTests(MongoDbWebApplicationFactory<Program> factory)
+    public QueryTests(BhsWebApplicationFactory<Program> factory)
     {
         _factory = factory;
     }

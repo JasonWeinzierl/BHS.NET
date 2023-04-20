@@ -1,36 +1,41 @@
 ﻿using EphemeralMongo;
+using Microsoft.AspNetCore.Authorization.Policy;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 
 namespace BHS.Api.IntegrationTests;
 
-/// <remarks>
-/// Spins up an isolated MongoDB instance alongside the test server.
-/// </remarks>
-/// <inheritdoc />
-public sealed class MongoDbWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
+public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
-    private const int PORT = 27018;
-    private const string DATABASE = "bhs";
-
     private readonly IMongoRunner _mongoRunner;
+    private readonly MongoUrl _mongoUrl;
     private bool _disposedValue;
 
-    public MongoDbWebApplicationFactory()
+    public BhsWebApplicationFactory()
     {
         _mongoRunner = MongoRunner.Run(new MongoRunnerOptions
         {
-            MongoPort = PORT,
+            MongoPort = 27018,
             StandardOuputLogger = null,
 
             KillMongoProcessesWhenCurrentProcessExits = true,
         });
 
+        // Add the database to the URL (Serilog requires it).
+        var builder = new MongoUrlBuilder(_mongoRunner.ConnectionString)
+        {
+            DatabaseName = "bhs"
+        };
+        _mongoUrl = builder.ToMongoUrl();
+
         // Ensure the database exists.
-        var client = new MongoClient($"mongodb://localhost:{PORT}/{DATABASE}");
-        client.GetDatabase(DATABASE).CreateCollection("logs");
+        var client = new MongoClient(_mongoUrl);
+        client.GetDatabase(_mongoUrl.DatabaseName).CreateCollection("logs");
     }
 
     protected override IHost CreateHost(IHostBuilder builder)
@@ -40,9 +45,16 @@ public sealed class MongoDbWebApplicationFactory<TProgram> : WebApplicationFacto
             config.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 // Replace any occurrence of the MongoDB connection string.
-                { "ConnectionStrings:bhsMongo", $"mongodb://localhost:{PORT}/{DATABASE}" },
-                { "Serilog:WriteTo:0:Args:databaseUrl", $"mongodb://localhost:{PORT}/{DATABASE}" },
+                { "ConnectionStrings:bhsMongo", _mongoUrl.ToString() },
+                { "Serilog:WriteTo:0:Args:databaseUrl", _mongoUrl.ToString() },
             });
+        });
+
+        builder.ConfigureServices(services =>
+        {
+            // Disable auth for testing.
+            services.RemoveAll<IPolicyEvaluator>();
+            services.AddSingleton<IPolicyEvaluator, NoAuthEvaluator>();
         });
 
         return base.CreateHost(builder);
