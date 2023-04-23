@@ -153,8 +153,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
         Assert.Equal(updateRequest.ContentMarkdown, updatedPost.ContentMarkdown);
         Assert.Equal(updateRequest.DatePublished, updatedPost.DatePublished);
         Assert.NotEqual(initialPost.DateLastModified, updatedPost.DateLastModified);
-        Assert.Equal(2, initialPost.Categories.Count);
-        //Assert.Collection(updatedPost.Categories, item1 => Assert.Equal("cat1", item1.Slug), item2 => Assert.Equal("cat2", item2.Slug)); // TODO: out of order
+        Assert.Collection(updatedPost.Categories, item1 => Assert.Equal("cat1", item1.Slug), item2 => Assert.Equal("cat3", item2.Slug));
     }
 
     [Fact]

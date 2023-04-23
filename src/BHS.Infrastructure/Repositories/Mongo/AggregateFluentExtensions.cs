@@ -69,6 +69,7 @@ internal static class AggregateFluentExtensions
                 x.Last().LatestRevision,
                 x.Last().LatestPublication,
                 x.Last().Categories))
+            .SortBy(x => x.Categories!.Changes.DateChanged) // $group does not preserve order.
             // Re-combine unwound categories ONLY IF Categories.Changes.IsEnabled is true (otherwise un-categorized posts get a null category).
             // We must use BsonDocument here because we need the $$REMOVE System Variable.
             .Group(new BsonDocumentProjectionDefinition<PostLatestRevisionFlattenedGroupedCategoryDto, PostCurrentSnapshotDto>(
