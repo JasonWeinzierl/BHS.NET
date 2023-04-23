@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 
@@ -55,6 +56,13 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
             // Disable auth for testing.
             services.RemoveAll<IPolicyEvaluator>();
             services.AddSingleton<IPolicyEvaluator, NoAuthEvaluator>();
+
+            // SendGrid healthcheck is more appropriate for smoke tests, not integration tests.
+            services.PostConfigure<HealthCheckServiceOptions>(opt =>
+            {
+                var sendGridHealthCheck = opt.Registrations.Single(x => x.Name == "sendgrid");
+                opt.Registrations.Remove(sendGridHealthCheck);
+            });
         });
 
         return base.CreateHost(builder);
