@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, FactoryProvider } from '@angular/core';
+import { AuthClientConfig, HttpMethod } from '@auth0/auth0-angular';
 import { AppEnvironment } from 'src/environments';
-import { AuthClientConfig } from '@auth0/auth0-angular';
 
 const auth0ConfigFactory = (env: AppEnvironment, cfg: AuthClientConfig): () => void => {
   return () => {
@@ -27,8 +27,16 @@ const auth0ConfigFactory = (env: AppEnvironment, cfg: AuthClientConfig): () => v
       httpInterceptor: {
         allowedList: [
           {
-            uri: '/api/admin/*', // TODO: For now, no routes will match this. Revisit when authenticated routes are implemented.
-            allowAnonymous: true,
+            uri: '/api/blog/posts',
+            httpMethod: HttpMethod.Post,
+          },
+          {
+            uri: '/api/blog/posts/*',
+            httpMethod: HttpMethod.Put,
+          },
+          {
+            uri: '/api/blog/posts/*',
+            httpMethod: HttpMethod.Delete,
           },
         ],
       },

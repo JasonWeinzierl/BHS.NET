@@ -1,10 +1,7 @@
+import { CategoryPosts, CategorySummary, Post, PostPreview, PostRequest } from '../models';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { CategoryPosts } from '@data/blog/models/category-posts';
-import { CategorySummary } from '@data/blog/models/category-summary';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Post } from '@data/blog/models/post';
-import { PostPreview } from '@data/blog/models/post-preview';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +28,20 @@ export class BlogService {
     return this.http.get<PostPreview[]>(this.baseUrl + '/posts', { params });
   }
 
+  createPost(request: PostRequest): Observable<Post> {
+    return this.http.post<Post>(this.baseUrl + '/posts', request); // TODO: investigate withCredentials option. does Auth0 honor it?
+  }
+
   getPost(slug: string): Observable<Post> {
     return this.http.get<Post>(this.baseUrl + '/posts/' + slug);
+  }
+
+  updatePost(slug: string, request: PostRequest): Observable<Post> {
+    return this.http.put<Post>(this.baseUrl + '/posts/' + slug, request);
+  }
+
+  deletePost(slug: string): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + '/posts/' + slug);
   }
 
   getCategories(): Observable<CategorySummary[]> {

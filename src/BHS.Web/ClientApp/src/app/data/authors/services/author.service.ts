@@ -2,7 +2,7 @@ import { Author } from '@data/authors/models/author';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PostPreview } from '@data/blog/models/post-preview';
+import { PostPreview } from '@data/blog';
 
 @Injectable({
   providedIn: 'root',

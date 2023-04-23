@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateComponent } from '@shared/components/date/date.component';
 import { PostCardComponent } from './post-card.component';
-import { PostPreview } from '@data/blog/models/post-preview';
+import { PostPreview } from '@data/blog';
 import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
 
 describe('PostCardComponent', () => {
