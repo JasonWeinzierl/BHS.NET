@@ -129,11 +129,12 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             null,
             new Author("me", "me :)"),
             DateTimeOffset.Now,
-            Array.Empty<Category>());
+            new[] { new Category("cat1", "Cat1"), new Category("cat2", "Cat2") });
         var updateRequest = createRequest with
         {
             ContentMarkdown = "# Second revision",
             DatePublished = new DateTimeOffset(2000, 01, 01, 00, 00, 00, 000, TimeSpan.FromHours(0)),
+            Categories = new[] { new Category("cat1", "Cat1"), new Category("cat3", "Cat3") },
         };
 
         using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest);
@@ -152,6 +153,8 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
         Assert.Equal(updateRequest.ContentMarkdown, updatedPost.ContentMarkdown);
         Assert.Equal(updateRequest.DatePublished, updatedPost.DatePublished);
         Assert.NotEqual(initialPost.DateLastModified, updatedPost.DateLastModified);
+        Assert.Equal(2, initialPost.Categories.Count);
+        //Assert.Collection(updatedPost.Categories, item1 => Assert.Equal("cat1", item1.Slug), item2 => Assert.Equal("cat2", item2.Slug)); // TODO: out of order
     }
 
     [Fact]
@@ -191,7 +194,6 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
         var categories = await _httpClient.GetFromJsonAsync<IEnumerable<CategorySummary>>("/api/blog/categories");
 
         Assert.NotNull(categories);
-        Assert.Empty(categories);
     }
 
     [Fact]

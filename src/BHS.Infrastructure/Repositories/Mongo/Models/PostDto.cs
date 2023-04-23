@@ -66,7 +66,7 @@ internal sealed record PostRevisionDto(
             AuthorDto.FromAuthor(author),
             new[]
             {
-                PostRevisionPublicationDto.New(
+                PostRevisionPublicationDto.New( // TODO: consider not immediately publishing a new revision?
                     datePublished,
                     now),
             });
