@@ -1,6 +1,6 @@
-<ng-container *ngIf="album">
+<div *ngIf="album">
   <p class="text-muted">This post contains photos:</p>
   <a *ngFor="let photo of album.photos" [routerLink]="['/apps/photos/album', album.slug, 'photo', photo.id]">
     <img [src]="photo.imagePath" class="img-fluid" [alt]="photo.name">
   </a>
-</ng-container>
+</div>
