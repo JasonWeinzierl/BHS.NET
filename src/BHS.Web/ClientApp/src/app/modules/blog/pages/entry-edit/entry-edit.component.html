@@ -1,0 +1,46 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <div class="card">
+
+    <div class="card-body">
+      <h1 class="card-title">Edit Entry</h1>
+
+      <alert *ngIf="vm.error" type="danger">{{vm.error}}</alert>
+
+      <div *ngIf="vm.isLoading" class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"
+          area-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+
+      <form *ngIf="!vm.isLoading && !vm.error && vm.initialPost && vm.publishForm" (submit)="onPublish(vm.publishForm.value)" [formGroup]="vm.publishForm">
+
+        <div class="mb-3">
+          <label for="inputTitle" class="form-label">Title</label>
+          <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title" formControlName="title">
+        </div>
+
+        <div class="mb-3">
+          <label for="inputCategories" class="form-label">Categories</label>
+          <select multiple class="form-select" id="inputCategories" name="categories" formControlName="categories">
+            <option *ngFor="let c of vm.categories" [ngValue]="c.slug">{{c.name}}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="inputPublishDate" class="form-label">Time</label>
+          <input bsDatepicker [bsConfig]="{dateInputFormat: 'YYYY-MM-DD HH:mm:ss.SSS', withTimepicker: true, keepDatepickerOpened: true}" type="text" class="form-control" id="inputPublishDate" name="publishDate" formControlName="publishDate">
+        </div>
+
+        <textarea class="form-control" placeholder="Content Markdown" formControlName="contentMarkdown"></textarea>
+
+        <button type="submit" class="btn btn-primary">Publish</button>
+        <a class="btn btn-danger" class="btn btn-danger" role="link" [routerLink]="['/apps/blog/entry', vm.initialPost.slug]">Cancel</a>
+
+      </form>
+    </div>
+
+    <div *ngIf="vm.initialPost" class="card-footer">
+      Last Modified: <app-date [datetime]="vm.initialPost.dateLastModified"></app-date>
+    </div>
+
+  </div>
+</ng-container>
