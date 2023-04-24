@@ -3,6 +3,7 @@ import { BlogService, Post } from '@data/blog';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -12,12 +13,13 @@ import { HttpErrorResponse } from '@angular/common/http';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogEntryComponent {
-  vm$: Observable<{ post?: Post, postAlbum: AlbumPhotos | null, isLoading: boolean, error?: string }>;
+  vm$: Observable<{ post?: Post, postAlbum: AlbumPhotos | null, isLoading: boolean, error?: string, showEdit?: boolean }>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private blogService: BlogService,
     private photosService: PhotosService,
+    private auth: AuthService,
   ) {
     this.vm$ = this.activatedRoute.paramMap.pipe(
       map(params => {
@@ -37,6 +39,9 @@ export class BlogEntryComponent {
           return of({ post, postAlbum: null, isLoading: false });
         }
       }),
+      switchMap(vm => this.auth.isAuthenticated$.pipe(
+        map(isAuthenticated => ({ ...vm, showEdit: isAuthenticated })),
+      )),
       startWith({ postAlbum: null, isLoading: true }),
       catchError((err: unknown) => {
         let msg = 'An error occurred.';

@@ -1,5 +1,6 @@
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthService } from '@auth0/auth0-angular';
 import { BlogEntryComponent } from './blog-entry.component';
 import { BlogService } from '@data/blog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -10,6 +11,8 @@ describe('BlogEntryComponent', () => {
   let fixture: ComponentFixture<BlogEntryComponent>;
 
   beforeEach(async () => {
+    const auth = jasmine.createSpyObj<AuthService>('auth', {}, {'isAuthenticated$': of(false)});
+
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -26,6 +29,10 @@ describe('BlogEntryComponent', () => {
               slug: '123',
             })),
           },
+        },
+        {
+          provide: AuthService,
+          useValue: auth,
         },
       ],
     })
