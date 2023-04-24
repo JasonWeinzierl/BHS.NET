@@ -7,6 +7,7 @@ import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applica
 import { auth0ConfigProvider } from './providers/auth0-config.provider';
 import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-options.provider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -52,6 +53,7 @@ import { ToastrModule } from 'ngx-toastr';
 
     // ngx-bootstrap
     AlertModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
     CollapseModule.forRoot(),

@@ -1,5 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -35,6 +36,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     AlertModule, // ngx-bootstrap
+    BsDatepickerModule, // ngx-bootstrap
     BsDropdownModule, // ngx-bootstrap
     CarouselModule, // ngx-bootstrap
     CollapseModule, // ngx-bootstrap
