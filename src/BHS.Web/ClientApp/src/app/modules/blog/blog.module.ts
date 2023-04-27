@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { PostsSearchComponent } from './components/posts-search/posts-search.component';
 import { SharedModule } from '@shared/shared.module';
+import { EditBlogEntryFormComponent } from './components/edit-blog-entry-form/edit-blog-entry-form.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SharedModule } from '@shared/shared.module';
     EntryAlbumComponent,
     PostsSearchComponent,
     EntryEditComponent,
+    EditBlogEntryFormComponent,
   ],
   imports: [
     SharedModule,

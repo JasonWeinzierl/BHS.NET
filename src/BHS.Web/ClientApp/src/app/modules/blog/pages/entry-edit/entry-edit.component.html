@@ -11,31 +11,8 @@
           area-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
 
-      <form *ngIf="!vm.isLoading && !vm.error && vm.initialPost && vm.publishForm" (submit)="onPublish(vm.publishForm.value)" [formGroup]="vm.publishForm">
-
-        <div class="mb-3">
-          <label for="inputTitle" class="form-label">Title</label>
-          <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title" formControlName="title">
-        </div>
-
-        <div class="mb-3">
-          <label for="inputCategories" class="form-label">Categories</label>
-          <select multiple class="form-select" id="inputCategories" name="categories" formControlName="categories">
-            <option *ngFor="let c of vm.categories" [ngValue]="c.slug">{{c.name}}</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label for="inputPublishDate" class="form-label">Time</label>
-          <input bsDatepicker [bsConfig]="{dateInputFormat: 'YYYY-MM-DD HH:mm:ss.SSS', withTimepicker: true, keepDatepickerOpened: true}" type="text" class="form-control" id="inputPublishDate" name="publishDate" formControlName="publishDate">
-        </div>
-
-        <textarea class="form-control" placeholder="Content Markdown" formControlName="contentMarkdown"></textarea>
-
-        <button type="submit" class="btn btn-primary">Publish</button>
-        <a class="btn btn-danger" class="btn btn-danger" role="link" [routerLink]="['/apps/blog/entry', vm.initialPost.slug]">Cancel</a>
-
-      </form>
+      <app-edit-blog-entry-form *ngIf="!vm.isLoading && !vm.error && vm.initialPost" (publish)="onPublish($event)"
+        [initialPost]="vm.initialPost" [allCategories]="vm.categories"></app-edit-blog-entry-form>
     </div>
 
     <div *ngIf="vm.initialPost" class="card-footer">

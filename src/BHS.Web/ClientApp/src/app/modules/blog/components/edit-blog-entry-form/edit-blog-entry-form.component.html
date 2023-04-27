@@ -1,0 +1,26 @@
+<form *ngIf="editFormGroup" [formGroup]="editFormGroup" (submit)="onSubmit()">
+
+  <div class="mb-3">
+    <label for="inputTitle" class="form-label">Title</label>
+    <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title" formControlName="title">
+  </div>
+
+  <div class="mb-3">
+    <label for="inputCategories" class="form-label">Categories</label>
+    <select multiple class="form-select" id="inputCategories" name="categories" formControlName="categories">
+      <option *ngFor="let c of allCategories" [ngValue]="c.slug">{{c.name}}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="inputPublishDate" class="form-label">Time</label>
+    <input bsDatepicker [bsConfig]="{dateInputFormat: 'YYYY-MM-DD HH:mm:ss.SSS', withTimepicker: true, keepDatepickerOpened: true}"
+      type="text" class="form-control" id="inputPublishDate" name="publishDate" formControlName="publishDate">
+  </div>
+
+  <textarea class="form-control" placeholder="Content Markdown" formControlName="contentMarkdown"></textarea>
+
+  <button type="submit" class="btn btn-primary">Publish</button>
+  <a class="btn btn-danger" class="btn btn-danger" role="link" [routerLink]="['/apps/blog/entry', initialPost.slug]">Cancel</a>
+
+</form>

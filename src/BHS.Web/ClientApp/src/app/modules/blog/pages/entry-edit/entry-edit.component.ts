@@ -1,16 +1,10 @@
 import { BehaviorSubject, catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
-import { BlogService, Category, Post } from '@data/blog';
+import { BlogService, Category, Post, PostRequest } from '@data/blog';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-type PublishFormGroup = FormGroup<{
-  title: FormControl<string>;
-  categories: FormControl<Array<string>>;
-  publishDate: FormControl<Date>;
-  contentMarkdown: FormControl<string>;
-}>;
+type EntryEditVm = { initialPost?: Post, categories: Array<Category>, isLoading: boolean, error?: string };
 
 @Component({
   selector: 'app-entry-edit',
@@ -19,14 +13,12 @@ type PublishFormGroup = FormGroup<{
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntryEditComponent {
-  // TODO: split this into separate component with form etc. so the view model isn't so crazy
-  vm$: Observable<{ initialPost?: Post, publishForm?: PublishFormGroup, categories: Array<Category>, isLoading: boolean, error?: string }>;
+  vm$: Observable<EntryEditVm>;
   private isSubmittingSubject = new BehaviorSubject(false);
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private blogService: BlogService,
-    private formBuilder: FormBuilder,
   ) {
     this.vm$ = this.activatedRoute.paramMap.pipe(
       map(params => {
@@ -45,14 +37,7 @@ export class EntryEditComponent {
         post.dateLastModified = new Date(post.dateLastModified);
         post.datePublished = new Date(post.datePublished);
 
-        const group = this.formBuilder.nonNullable.group({
-          title: [post.title, [Validators.required]],
-          categories: [post.categories.map(x => x.slug)],
-          publishDate: [post.datePublished],
-          contentMarkdown: [post.contentMarkdown],
-        });
-
-        return { initialPost: post, publishForm: group, categories: allCategories, isLoading: false };
+        return { initialPost: post, categories: allCategories, isLoading: false };
       }),
       switchMap(vm => this.isSubmittingSubject.pipe(
         map(isSubmitting => ({ ...vm, isLoading: vm.isLoading || isSubmitting })),
@@ -70,8 +55,8 @@ export class EntryEditComponent {
     );
   }
 
-  onPublish(v: PublishFormGroup['value']): void {
-    console.log(JSON.stringify(v));
+  onPublish(request: PostRequest): void {
+    console.log(JSON.stringify(request));
     this.isSubmittingSubject.next(true);
     // TODO: build request using initialPost and updated values, send request to backend.
     return;
