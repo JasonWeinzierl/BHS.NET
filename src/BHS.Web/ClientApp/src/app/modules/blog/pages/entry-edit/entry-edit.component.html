@@ -11,12 +11,12 @@
           area-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
 
-      <app-edit-blog-entry-form *ngIf="!vm.isLoading && !vm.error && vm.initialPost" (publish)="onPublish($event)"
-        [initialPost]="vm.initialPost" [allCategories]="vm.categories"></app-edit-blog-entry-form>
+      <app-edit-blog-entry-form *ngIf="!vm.isLoading && !vm.error && vm.post" (publish)="onPublish(vm.post.slug, $event)"
+        [initialPost]="vm.post" [allCategories]="vm.categories"></app-edit-blog-entry-form>
     </div>
 
-    <div *ngIf="vm.initialPost" class="card-footer">
-      Last Modified: <app-date [datetime]="vm.initialPost.dateLastModified"></app-date>
+    <div *ngIf="vm.post" class="card-footer">
+      Last Modified: <app-date [datetime]="vm.post.dateLastModified"></app-date>
     </div>
 
   </div>
