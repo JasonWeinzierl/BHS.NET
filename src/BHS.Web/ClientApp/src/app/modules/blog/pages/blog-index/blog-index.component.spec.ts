@@ -1,7 +1,7 @@
+import { BlogService, CategorySummary } from '@data/blog';
+import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BlogIndexComponent } from './blog-index.component';
-import { BlogService } from '@data/blog';
-import { Component } from '@angular/core';
 import { of } from 'rxjs';
 
 @Component({
@@ -9,6 +9,16 @@ import { of } from 'rxjs';
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 class PostsSearchComponentStub { }
+
+@Component({
+  selector: 'app-categories-list-view',
+})
+// eslint-disable-next-line @angular-eslint/component-class-suffix
+class CategoriesListViewComponentStub {
+  @Input() isLoading = false;
+  @Input() error?: string;
+  @Input() categories: Array<CategorySummary> = [];
+}
 
 describe('BlogIndexComponent', () => {
   let component: BlogIndexComponent;
@@ -20,6 +30,7 @@ describe('BlogIndexComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         BlogIndexComponent,
+        CategoriesListViewComponentStub,
         PostsSearchComponentStub,
       ],
       providers: [

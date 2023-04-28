@@ -19,33 +19,14 @@
       <div class="card-body">
         <h2 class="card-title">Categories</h2>
       </div>
-      <ng-container *ngIf="categoriesVm$ | async as categoriesVm">
 
-        <div class="list-group list-group-flush" *ngIf="!categoriesVm.isLoading">
-          <span *ngIf="categoriesVm.error" class="list-group-item list-group-item-danger">
-            {{categoriesVm.error}}
-          </span>
+      <app-categories-list-view
+        *ngIf="categoriesVm$ | async as categoriesVm"
+        [isLoading]="categoriesVm.isLoading"
+        [error]="categoriesVm.error"
+        [categories]="categoriesVm.categories"
+        ></app-categories-list-view>
 
-          <a *ngFor="let category of categoriesVm.categories" [routerLink]="['/apps/blog/category', category.slug]"
-            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-            {{category.name}}
-            <span class="badge bg-primary rounded-pill">{{category.postsCount}}</span>
-          </a>
-        </div>
-
-        <div *ngIf="categoriesVm.isLoading" class="list-group list-group-flush">
-          <span class="list-group-item placeholder-glow">
-            <span class="placeholder col-7"></span>
-          </span>
-          <span class="list-group-item placeholder-glow">
-            <span class="placeholder col-4"></span>
-          </span>
-          <span class="list-group-item placeholder-glow">
-            <span class="placeholder col-5"></span>
-          </span>
-        </div>
-
-      </ng-container>
     </div>
   </div>
 
