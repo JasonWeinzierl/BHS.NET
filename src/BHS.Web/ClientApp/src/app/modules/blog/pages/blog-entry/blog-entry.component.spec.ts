@@ -1,27 +1,63 @@
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of, throwError } from 'rxjs';
 import { AuthService } from '@auth0/auth0-angular';
 import { BlogEntryComponent } from './blog-entry.component';
 import { BlogService } from '@data/blog';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { DateComponent } from '@shared/components/date/date.component';
+import { Directive } from '@angular/core';
+import { EntryAlbumComponent } from '@modules/blog/components/entry-album/entry-album.component';
+import { Input } from '@angular/core';
+import { PhotosService } from '@data/photos';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ToastrService } from 'ngx-toastr';
+
+@Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: 'markdown',
+})
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
+class MarkdownDirectiveStub {
+  @Input() data = '';
+}
 
 describe('BlogEntryComponent', () => {
   let component: BlogEntryComponent;
   let fixture: ComponentFixture<BlogEntryComponent>;
 
+  let blogService: jasmine.SpyObj<BlogService>;
+  let photosService: jasmine.SpyObj<PhotosService>;
+
   beforeEach(async () => {
+    blogService = jasmine.createSpyObj<BlogService>('blogService', {
+      'getPost': of({
+        slug: '1-test',
+        title: 'Hello!',
+        contentMarkdown: '## Foo',
+        photosAlbumSlug: 'does-not-exist',
+        filePath: null,
+        datePublished: new Date(),
+        dateLastModified: new Date(),
+        categories: [{ slug: 'newsletters', name: 'Newsletters' }],
+      }),
+    });
+    photosService = jasmine.createSpyObj<PhotosService>('photosService', {
+      'getAlbum': throwError(() => new Error('test 404 not found')),
+    });
     const auth = jasmine.createSpyObj<AuthService>('auth', {}, {'isAuthenticated$': of(false)});
+    const toastr = jasmine.createSpyObj<ToastrService>('toastr', ['error']);
 
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
+        RouterTestingModule,
       ],
       declarations: [
+        DateComponent,
         BlogEntryComponent,
+        EntryAlbumComponent,
+        MarkdownDirectiveStub,
       ],
       providers: [
-        BlogService,
         {
           provide: ActivatedRoute,
           useValue: {
@@ -31,15 +67,25 @@ describe('BlogEntryComponent', () => {
           },
         },
         {
+          provide: BlogService,
+          useValue: blogService,
+        },
+        {
+          provide: PhotosService,
+          useValue: photosService,
+        },
+        {
           provide: AuthService,
           useValue: auth,
+        },
+        {
+          provide: ToastrService,
+          useValue: toastr,
         },
       ],
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(BlogEntryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -47,5 +93,13 @@ describe('BlogEntryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not error if album load fails', () => {
+    const element = fixture.nativeElement as HTMLElement;
+
+    expect(element.querySelector('h1')?.textContent)
+      .withContext('shows post title')
+      .toBe('Hello!');
   });
 });
