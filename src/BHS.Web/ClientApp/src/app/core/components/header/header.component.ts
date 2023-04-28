@@ -1,10 +1,8 @@
+import { AlertTheme, SiteBanner, SiteBannerService } from '@data/banners';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AlertTheme } from '@data/banners/models/alert-theme';
 import { AuthService } from '@auth0/auth0-angular';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SiteBanner } from '@data/banners/models/site-banner';
-import { SiteBannerService } from '@data/banners/services/site-banner.service';
 import { ToastrService } from 'ngx-toastr';
 
 class SiteBannerStyled implements SiteBanner {

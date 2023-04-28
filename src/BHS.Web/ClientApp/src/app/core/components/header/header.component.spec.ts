@@ -4,7 +4,7 @@ import { RouterLinkActiveDirectiveStub, RouterLinkDirectiveStub } from '@app/moc
 import { AuthService } from '@auth0/auth0-angular';
 import { HeaderComponent } from './header.component';
 import { of } from 'rxjs';
-import { SiteBannerService } from '@data/banners/services/site-banner.service';
+import { SiteBannerService } from '@data/banners';
 import { ToastrService } from 'ngx-toastr';
 
 @Directive({
