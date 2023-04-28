@@ -35,5 +35,8 @@ module.exports = function (config) {
       }
     },
     restartOnFileChange: true,
+    browserConsoleLogOptions: {
+      level: 'error',
+    },
   });
 };

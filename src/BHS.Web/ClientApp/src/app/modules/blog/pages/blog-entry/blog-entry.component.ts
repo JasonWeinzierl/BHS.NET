@@ -41,7 +41,7 @@ export class BlogEntryComponent {
                 ? err.message
                 : 'An error occurred';
               this.toastr.error(msg, 'Failed to load photos.');
-              console.error(msg, err);
+              console.warn(msg, err);
               return of(null);
             }),
             map(album => ({ post, postAlbum: album, isLoading: false })),
