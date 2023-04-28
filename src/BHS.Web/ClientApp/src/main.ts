@@ -30,7 +30,7 @@ fetch('/api/client-app-environment')
     if (loadingElement) {
       const message = err && typeof err === 'object' && Object.hasOwn(err, 'message') ? (err as Error).message : null;
 
-      loadingElement.innerText = 'Website failed to load: ' + message ?? JSON.stringify(err);
+      loadingElement.innerText = 'Website failed to load: ' + (message ?? JSON.stringify(err));
       loadingElement.classList.add('bg-danger', 'text-white', 'fs-1');
     }
   });
