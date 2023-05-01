@@ -18,9 +18,15 @@
       type="text" class="form-control" id="inputPublishDate" name="publishDate" formControlName="publishDate">
   </div>
 
-  <textarea class="form-control" placeholder="Content Markdown" formControlName="contentMarkdown"></textarea>
+  <textarea class="form-control mb-3" rows="10" placeholder="Content Markdown" formControlName="contentMarkdown"></textarea>
 
-  <button type="submit" class="btn btn-primary">Publish</button>
-  <a class="btn btn-danger" class="btn btn-danger" role="link" [routerLink]="['/apps/blog/entry', initialPost.slug]">Cancel</a>
+  <div>
+    <button type="submit" class="btn btn-primary">Publish</button>
+    <a class="btn btn-danger ms-2" role="link" [routerLink]="cancelRoute">Cancel</a>
+  </div>
+
+  <div *ngIf="authorWarning" class="form-text text-danger">
+    {{authorWarning}}
+  </div>
 
 </form>

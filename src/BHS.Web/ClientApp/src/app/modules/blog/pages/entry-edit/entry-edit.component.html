@@ -12,7 +12,7 @@
       </div>
 
       <app-edit-blog-entry-form *ngIf="!vm.isLoading && !vm.error && vm.post" (publish)="onPublish(vm.post.slug, $event)"
-        [initialPost]="vm.post" [allCategories]="vm.categories"></app-edit-blog-entry-form>
+        [initialPost]="vm.post" [allCategories]="vm.categories" [currentAuthor]="vm.currentAuthor"></app-edit-blog-entry-form>
     </div>
 
     <div *ngIf="vm.post" class="card-footer">

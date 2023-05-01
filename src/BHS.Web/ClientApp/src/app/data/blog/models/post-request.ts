@@ -6,7 +6,7 @@ export interface PostRequest {
   contentMarkdown: string;
   filePath: string | null;
   photosAlbumSlug: string | null;
-  author?: Author;
+  author: Author | null;
   datePublished: Date;
   categories: Array<Category>;
 }
