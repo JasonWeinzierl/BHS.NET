@@ -41,9 +41,9 @@ internal sealed record AlbumPhotosDto(
             albumPhotos.Photos.Select(x => PhotoDto.FromPhoto(x)).ToList());
 }
 
+[BsonIgnoreExtraElements] // TODO: remove this once LegacyId is cleaned up in database.
 internal sealed record PhotoDto(
     ObjectId Id,
-    int LegacyId,
     string? Name,
     string ImagePath,
     DateTimeOffset DatePosted,
@@ -51,11 +51,11 @@ internal sealed record PhotoDto(
     string? Description)
 {
     public Photo ToPhoto()
-        => new(Id.ToString(), LegacyId, Name, new Uri(ImagePath), DatePosted, AuthorUsername, Description);
+        => new(Id.ToString(), Name, new Uri(ImagePath), DatePosted, AuthorUsername, Description);
 
     [return: NotNullIfNotNull(nameof(photo))]
     public static PhotoDto? FromPhoto(Photo? photo)
-        => photo is null ? null : new PhotoDto(ObjectId.Parse(photo.Id), photo.LegacyId, photo.Name, photo.ImagePath.ToString(), photo.DatePosted, photo.AuthorUsername, photo.Description);
+        => photo is null ? null : new PhotoDto(ObjectId.Parse(photo.Id), photo.Name, photo.ImagePath.ToString(), photo.DatePosted, photo.AuthorUsername, photo.Description);
 }
 
 internal sealed record UnwoundPhotosDto(IReadOnlyCollection<PhotoDto> Photos);

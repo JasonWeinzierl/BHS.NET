@@ -14,17 +14,14 @@ const createAlbum = (): AlbumPhotos => ({
   blogPostSlug: '1-post',
   photos: [{
     id: 'photo-four',
-    legacyId: 1,
     imagePath: '/assets/img/2017/oldcityhall.jpg',
     datePosted: new Date(),
   }, {
     id: 'photo-five',
-    legacyId: 2,
     imagePath: '/assets/img/2017/oldcityhall.jpg',
     datePosted: new Date(),
   }, {
     id: 'photo-six',
-    legacyId: 3,
     imagePath: '/assets/img/2017/oldcityhall.jpg',
     datePosted: new Date(),
   }],
