@@ -1,5 +1,5 @@
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from './not-found.component';
 import { of } from 'rxjs';
 import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
@@ -18,17 +18,15 @@ describe('NotFoundComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            'data': of(convertToParamMap({
-              path: '123/456',
-            })),
+            'data': of({
+              closestPath: '123/456',
+            }),
           },
         },
       ],
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(NotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -36,5 +34,11 @@ describe('NotFoundComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should suggest a path', () => {
+    const element = fixture.nativeElement as HTMLElement;
+
+    expect(element.textContent).toContain('Were you looking for the "123/456" page?');
   });
 });

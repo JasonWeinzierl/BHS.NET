@@ -50,8 +50,9 @@ export class AppComponent implements OnInit {
           while (child?.firstChild) {
             child = child.firstChild;
           }
-          if (child?.snapshot.data['title']) {
-            return child.snapshot.data['title'];
+          const routeTitle: unknown = child?.snapshot.data['title'];
+          if (routeTitle && typeof routeTitle === 'string') {
+            return routeTitle;
           }
           return appTitle;
         }),

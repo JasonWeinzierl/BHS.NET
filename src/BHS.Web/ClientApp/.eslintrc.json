@@ -10,9 +10,9 @@
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.json"
-        ],
-        "createDefaultProgram": true
+          "tsconfig.(app|spec).json",
+          "cypress/tsconfig.json"
+        ]
       },
       "plugins": [
         "rxjs",
@@ -24,6 +24,7 @@
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:rxjs/recommended",
@@ -96,6 +97,12 @@
           "error",
           {
             "allowExpressions": true
+          }
+        ],
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
           }
         ],
         "rxjs/finnish": [

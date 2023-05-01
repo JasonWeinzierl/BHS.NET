@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DateComponent } from './date.component';
 
 describe('DateComponent', () => {
@@ -22,8 +21,10 @@ describe('DateComponent', () => {
   });
 
   it('should set title', () => {
-    const timeElement: HTMLElement = fixture.nativeElement.querySelector('time');
-    const titleAttr = timeElement.getAttribute('title');
+    const element = fixture.nativeElement as HTMLElement;
+
+    const timeElement = element.querySelector('time');
+    const titleAttr = timeElement?.getAttribute('title');
 
     expect(titleAttr).toContain(component.datetime.getFullYear());
   });

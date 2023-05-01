@@ -4,19 +4,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 fetch('/api/client-app-environment')
   .then(async response => {
-
-    // Try to parse.
-    let appEnv = new AppEnvironment();
-    try {
-      if (response.ok) {
-        const json = await response.json();
-        appEnv = new AppEnvironment(json?.appInsights, json?.auth0);
-      } else {
-        console.error('Failed to fetch environment configuration: ' + response.statusText);
-      }
-    } catch (err) {
-      console.error('Failed to read environment configuration as JSON.', err);
-    }
+    const appEnv = await parseAppEnvironment(response) ?? new AppEnvironment();
 
     // Angular startup.
     await platformBrowserDynamic([{ provide: AppEnvironment, useValue: appEnv }]).bootstrapModule(AppModule);
@@ -34,3 +22,23 @@ fetch('/api/client-app-environment')
       loadingElement.classList.add('bg-danger', 'text-white', 'fs-1');
     }
   });
+
+async function parseAppEnvironment(response: Response): Promise<AppEnvironment | null> {
+  try {
+    if (!response.ok) {
+      console.error(`Failed to fetch environment configuration: ${response.statusText}`);
+      return null;
+    }
+
+    // TODO: Once ajv includes an ESM distribution, introduce JSON validation here.
+    // This is risky to disable the linter.
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const json: AppEnvironment = await response.json();
+
+    return new AppEnvironment(json.appInsights, json.auth0);
+  } catch (e) {
+    console.error('Failed to read environment configuration as JSON.', e);
+    return null;
+  }
+}

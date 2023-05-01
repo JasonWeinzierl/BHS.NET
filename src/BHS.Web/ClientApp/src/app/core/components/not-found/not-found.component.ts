@@ -1,22 +1,25 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotFoundComponent implements OnInit {
-  closestPath?: string;
+export class NotFoundComponent {
+  closestPath$: Observable<string | null>;
 
-  constructor(private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    this.route.data.pipe(take(1))
-      .subscribe(data => {
-        this.closestPath = data['closestPath'];
-      });
+  constructor(
+    private route: ActivatedRoute,
+  ) {
+    this.closestPath$ = this.route.data.pipe(
+      map(data => {
+        const closestPath: unknown = data['closestPath'];
+        return typeof closestPath === 'string' ? closestPath : null;
+      }),
+    );
   }
 }

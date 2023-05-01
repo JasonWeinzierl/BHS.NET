@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Directive, Input } from '@angular/core';
 import { RouterLinkActiveDirectiveStub, RouterLinkDirectiveStub } from '@app/mock-testing-objects';
 import { AuthService } from '@auth0/auth0-angular';
@@ -21,12 +21,12 @@ describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const bannerService = jasmine.createSpyObj<SiteBannerService>('bannerService', {'getEnabled': of()});
     const toastr = jasmine.createSpyObj<ToastrService>('toastr', ['error']);
     const auth = jasmine.createSpyObj<AuthService>('auth', {}, {'isAuthenticated$': of()});
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [ HeaderComponent, RouterLinkDirectiveStub, RouterLinkActiveDirectiveStub, CollapseDirectiveStub ],
       providers: [
         {
@@ -44,9 +44,7 @@ describe('HeaderComponent', () => {
       ],
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

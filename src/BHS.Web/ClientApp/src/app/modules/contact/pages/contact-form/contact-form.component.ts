@@ -41,12 +41,14 @@ export class ContactFormComponent {
           this.isAccepted = true;
           this.contactForm.reset();
         },
-        error: (error: unknown) => {
-          if (error instanceof HttpErrorResponse) {
-            if (error.error?.title) {
-              this.errors.push(error.error.title);
+        error: (err: unknown) => {
+          if (err instanceof HttpErrorResponse) {
+            // TODO: merge with logic in edit-entry's TODO too.
+            const errorBody = err.error as unknown;
+            if (typeof errorBody === 'object' && errorBody && 'title' in errorBody && typeof errorBody.title === 'string') {
+              this.errors.push(errorBody.title);
             } else {
-              this.errors.push(error.message);
+              this.errors.push(err.message);
             }
           } else {
             this.errors.push('');
