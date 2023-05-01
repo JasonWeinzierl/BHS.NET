@@ -1,52 +1,56 @@
-<div *ngIf="isLoading" class="d-flex justify-content-center">
-  <div class="spinner-grow text-light" role="status">
-    <span class="visually-hidden">Loading photo...</span>
-  </div>
-</div>
+<ng-container *ngIf="vm$ | async as vm">
 
-<div class="card" *ngIf="album">
-  <div class="card-header">
-    <div class="text-center row">
-      <div class="col-2">
-        <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', previousPhotoId]">&laquo; Previous</a>
+  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
+    <div class="spinner-grow text-light" role="status">
+      <span class="visually-hidden">Loading photo...</span>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="vm.album">
+    <div class="card-header">
+      <div class="text-center row">
+        <div class="col-2">
+          <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.previousPhotoId]">&laquo; Previous</a>
+        </div>
+        <div class="col-8">
+          Album: <a [routerLink]="['/apps/photos/album', vm.album.slug]">{{vm.album.name}}</a>
+          <ng-container *ngIf="vm.album.blogPostSlug">
+            <br>
+            <a [routerLink]="['/apps/blog/entry', vm.album.blogPostSlug]">Blog Post</a>
+          </ng-container>
+        </div>
+        <div class="col-2">
+          <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.nextPhotoId]">Next &raquo;</a>
+        </div>
       </div>
-      <div class="col-8">
-        Album: <a [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
-        <ng-container *ngIf="album.blogPostSlug">
-          <br>
-          <a [routerLink]="['/apps/blog/entry', album.blogPostSlug]">Blog Post</a>
-        </ng-container>
-      </div>
-      <div class="col-2">
-        <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', nextPhotoId]">Next &raquo;</a>
+    </div>
+
+    <img *ngIf="vm.currentPhoto" src="{{vm.currentPhoto.imagePath}}" [title]="vm.currentPhoto.name" class="card-img-top" alt="image failed to load">
+
+    <div *ngIf="vm.currentPhoto" class="card-body">
+      <h2 class="card-title">
+        {{vm.currentPhoto.name}}
+      </h2>
+      <p *ngIf="vm.currentPhoto.description" class="card-text">{{vm.currentPhoto.description}}</p>
+    </div>
+
+    <div class="card-footer">
+      <div class="text-center row">
+        <div class="col-2">
+          <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.previousPhotoId]">&laquo; Previous</a>
+        </div>
+        <div class="col-8">
+          <a [routerLink]="['/apps/photos/album', vm.album.slug]">{{vm.album.name}}</a>
+        </div>
+        <div class="col-2">
+          <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.nextPhotoId]">Next &raquo;</a>
+        </div>
       </div>
     </div>
   </div>
 
-  <img *ngIf="currentPhoto" src="{{currentPhoto.imagePath}}" [title]="currentPhoto.name" class="card-img-top" alt="image failed to load">
+  <alert *ngIf="vm.error" type="danger">
+    {{vm.error}}
+  </alert>
 
-  <div *ngIf="currentPhoto" class="card-body">
-    <h2 class="card-title">
-      {{currentPhoto.name}}
-    </h2>
-    <p *ngIf="currentPhoto.description" class="card-text">{{currentPhoto.description}}</p>
-  </div>
-
-  <div class="card-footer">
-    <div class="text-center row">
-      <div class="col-2">
-        <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', previousPhotoId]">&laquo; Previous</a>
-      </div>
-      <div class="col-8">
-        <a [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
-      </div>
-      <div class="col-2">
-        <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', album.slug, 'photo', nextPhotoId]">Next &raquo;</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<alert *ngIf="error" type="danger">
-  {{error}}
-</alert>
+</ng-container>
