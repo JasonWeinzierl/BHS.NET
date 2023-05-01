@@ -36,6 +36,7 @@ describe('BlogEntryComponent', () => {
         contentMarkdown: '## Foo',
         photosAlbumSlug: 'does-not-exist',
         filePath: null,
+        author: null,
         datePublished: new Date(),
         dateLastModified: new Date(),
         categories: [{ slug: 'newsletters', name: 'Newsletters' }],

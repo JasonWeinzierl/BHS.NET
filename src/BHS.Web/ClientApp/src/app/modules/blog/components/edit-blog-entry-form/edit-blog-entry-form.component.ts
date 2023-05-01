@@ -23,7 +23,7 @@ export class EditBlogEntryFormComponent implements OnChanges {
 
   @Output() publish = new EventEmitter<PostRequest>();
 
-  cancelRoute: Array<string> = [];
+  cancelRoute: Array<string> = ['/apps/blog'];
   editFormGroup?: EditFormGroup;
   authorWarning?: string | null;
 
