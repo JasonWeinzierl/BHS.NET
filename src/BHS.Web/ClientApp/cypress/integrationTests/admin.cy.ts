@@ -5,10 +5,10 @@ describe('Admin', () => {
   beforeEach(() => {
     const appEnv: AppEnvironment = {
       auth0: {
-        domain: Cypress.env('auth0Domain'),
-        clientId: Cypress.env('auth0ClientId'),
+        domain: Cypress.env('auth0Domain') as string,
+        clientId: Cypress.env('auth0ClientId') as string,
         authorizationParams: {
-          audience: Cypress.env('auth0Audience'),
+          audience: Cypress.env('auth0Audience') as string,
         },
       },
     };

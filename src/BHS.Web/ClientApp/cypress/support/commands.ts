@@ -1,8 +1,8 @@
 const { auth0Domain, auth0ClientId, username, password } = {
   auth0Domain: Cypress.env('auth0Domain') as string,
   auth0ClientId: Cypress.env('auth0ClientId') as string,
-  username: Cypress.env('auth0TestUsername'),
-  password: Cypress.env('auth0TestPassword'),
+  username: Cypress.env('auth0TestUsername') as string,
+  password: Cypress.env('auth0TestPassword') as string,
 };
 
 Cypress.Commands.add('login', () => {
