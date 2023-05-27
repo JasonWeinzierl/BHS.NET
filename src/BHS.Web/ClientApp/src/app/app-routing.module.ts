@@ -3,8 +3,8 @@ import { AuthGuard } from '@auth0/auth0-angular';
 import { ContentLayoutComponent } from './core/components/content-layout/content-layout.component';
 import { NgModule } from '@angular/core';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
-import { PathResolveService } from './core/services/path-resolve.service';
 import { paths } from './app-paths';
+import { resolveClosestPath } from '@core/resolvers/closest-path.resolver';
 
 const routes: Routes = [
   {
@@ -72,7 +72,7 @@ const routes: Routes = [
         path: '',
         component: NotFoundComponent,
         resolve: {
-          closestPath: PathResolveService,
+          closestPath: resolveClosestPath,
         },
         data: { title: '404 Not Found' },
       },
