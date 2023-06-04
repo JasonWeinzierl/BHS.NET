@@ -160,7 +160,8 @@
       "@schematics/angular",
       "@cypress/schematic",
       "@angular-eslint/schematics"
-    ]
+    ],
+    "analytics": "cd767fbc-e2d6-4e59-802e-0f5840dd223d"
   },
   "schematics": {
     "@angular-eslint/schematics:application": {
