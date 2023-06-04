@@ -8,7 +8,6 @@ export class SortByPipe implements PipeTransform {
 
   /**
    * Sorts a collection.
-   *
    * @param value Array of any to be sorted.
    * @param order Sort order, `asc` by default.
    * @param column Property to sort by, array sorted with `.sort()` if empty.

@@ -1,13 +1,12 @@
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Directive , Input } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { AuthService } from '@auth0/auth0-angular';
 import { BlogEntryComponent } from './blog-entry.component';
 import { BlogService } from '@data/blog';
 import { DateComponent } from '@shared/components/date/date.component';
-import { Directive } from '@angular/core';
 import { EntryAlbumComponent } from '@modules/blog/components/entry-album/entry-album.component';
-import { Input } from '@angular/core';
 import { PhotosService } from '@data/photos';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ToastrService } from 'ngx-toastr';
