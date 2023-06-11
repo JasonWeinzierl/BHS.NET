@@ -6,7 +6,7 @@
     "build": "run-s lint build:app",
     "build:app": "ng build",
     "build:app:release": "ng build --configuration release",
-    "transform:app:release": "npx ts-node -O '{\"module\": \"commonjs\"}' ./scripts/transform-app-version.ts",
+    "transform:app:release": "npx ts-node ./scripts/transform-app-version.ts",
     "watch": "ng build --watch --configuration debug",
     "lint": "ng lint",
     "test": "ng test",
