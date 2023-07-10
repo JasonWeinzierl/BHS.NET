@@ -6,6 +6,7 @@ import { CategoryPostsComponent } from './pages/category-posts/category-posts.co
 import { EditBlogEntryFormComponent } from './components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { EntryAlbumComponent } from './components/entry-album/entry-album.component';
 import { EntryEditComponent } from './pages/entry-edit/entry-edit.component';
+import { EntryNewComponent } from './pages/entry-new/entry-new.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgModule } from '@angular/core';
 import { PostCardComponent } from './components/post-card/post-card.component';
@@ -23,6 +24,7 @@ import { SharedModule } from '@shared/shared.module';
     EntryEditComponent,
     EditBlogEntryFormComponent,
     CategoriesListViewComponent,
+    EntryNewComponent,
   ],
   imports: [
     SharedModule,

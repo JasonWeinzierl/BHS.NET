@@ -4,6 +4,7 @@ import { BlogEntryComponent } from './pages/blog-entry/blog-entry.component';
 import { BlogIndexComponent } from './pages/blog-index/blog-index.component';
 import { CategoryPostsComponent } from './pages/category-posts/category-posts.component';
 import { EntryEditComponent } from './pages/entry-edit/entry-edit.component';
+import { EntryNewComponent } from './pages/entry-new/entry-new.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
@@ -27,6 +28,12 @@ const routes: Routes = [
   {
     path: 'category/:slug',
     component: CategoryPostsComponent,
+  },
+  {
+    path: 'new',
+    component: EntryNewComponent,
+    data: { title: 'New Entry' },
+    canActivate: [AuthGuard],
   },
 ];
 
