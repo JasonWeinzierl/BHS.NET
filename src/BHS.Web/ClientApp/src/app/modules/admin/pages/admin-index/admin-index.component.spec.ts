@@ -1,22 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdminIndexComponent } from './admin-index.component';
 import { AuthService } from '@auth0/auth0-angular';
-import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
+import { MockProvider } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AdminIndexComponent', () => {
   let component: AdminIndexComponent;
   let fixture: ComponentFixture<AdminIndexComponent>;
 
-  beforeEach(async () => { // TODO: investigate.  older tests use waitForAsync instead.
-    const auth = jasmine.createSpyObj<AuthService>('auth', ['logout']);
-
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminIndexComponent, RouterLinkDirectiveStub ],
+      imports: [ RouterTestingModule ],
+      declarations: [ AdminIndexComponent ],
       providers: [
-        {
-          provide: AuthService,
-          useValue: auth,
-        },
+        MockProvider(AuthService),
       ],
     })
     .compileComponents();

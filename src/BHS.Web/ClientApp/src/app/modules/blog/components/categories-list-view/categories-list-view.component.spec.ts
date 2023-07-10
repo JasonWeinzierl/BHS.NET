@@ -29,25 +29,19 @@ describe('CategoriesListViewComponent', () => {
   });
 
   it('should show loading', () => {
-    expect(component.isLoading)
-      .withContext('off at first')
-      .toBeFalse();
+    expect(component.isLoading).toBe(false); // off at first
 
     fixture.componentRef.setInput('isLoading', true);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(component.isLoading).toBeTrue();
-    expect(element.querySelector('.list-group .placeholder-glow'))
-      .withContext('should show placeholder')
-      .toBeTruthy();
+    expect(component.isLoading).toBe(true);
+    expect(element.querySelector('.list-group .placeholder-glow')).toBeTruthy(); // should show placeholder
   });
 
   it('should show error', () => {
-    expect(component.error)
-      .withContext('no error at first')
-      .toBeUndefined();
+    expect(component.error).toBeUndefined(); // no error at first
 
       fixture.componentRef.setInput('error', 'An error occurred.');
       fixture.detectChanges();
@@ -55,15 +49,11 @@ describe('CategoriesListViewComponent', () => {
       const element = fixture.nativeElement as HTMLElement;
 
       expect(component.error).toBeDefined();
-      expect(element.querySelector('.list-group .list-group-item-danger'))
-        .withContext('should show danger banner')
-        .toBeTruthy();
+      expect(element.querySelector('.list-group .list-group-item-danger')).toBeTruthy(); // should show danger banner
   });
 
   it('should show each category', () => {
-    expect(component.categories)
-      .withContext('empty at first')
-      .toHaveSize(0);
+    expect(component.categories).toHaveLength(0); // empty at first
 
     fixture.componentRef.setInput('categories', [{
       slug: 'newsletters',
@@ -78,15 +68,13 @@ describe('CategoriesListViewComponent', () => {
 
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(component.categories).toHaveSize(2);
-    expect(element.querySelector('.list-group')?.children)
-      .withContext('should list each category')
-      .toHaveSize(2);
+    expect(component.categories).toHaveLength(2);
+    expect(element.querySelector('.list-group')?.children).toHaveLength(2);
 
     const linkDebugElements = fixture.debugElement.queryAll(By.directive(RouterLink));
     const routerLinks = linkDebugElements.map(de => de.injector.get(RouterLink));
 
-    expect(routerLinks).toHaveSize(2);
+    expect(routerLinks).toHaveLength(2);
     expect(routerLinks[0].href).toBe('/apps/blog/category/newsletters');
     expect(routerLinks[1].href).toBe('/apps/blog/category/stories');
   });

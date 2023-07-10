@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TermsOfServiceComponent } from './terms-of-service.component';
 
 describe('TermsOfServiceComponent', () => {
@@ -8,7 +8,8 @@ describe('TermsOfServiceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TermsOfServiceComponent, RouterLinkDirectiveStub ],
+      imports: [ RouterTestingModule ],
+      declarations: [ TermsOfServiceComponent ],
     })
     .compileComponents();
 

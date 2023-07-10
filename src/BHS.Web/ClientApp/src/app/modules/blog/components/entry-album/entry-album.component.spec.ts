@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EntryAlbumComponent } from './entry-album.component';
 
 describe('EntryAlbumComponent', () => {

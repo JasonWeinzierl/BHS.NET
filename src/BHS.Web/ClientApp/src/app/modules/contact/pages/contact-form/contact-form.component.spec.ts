@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MockModule, MockProvider } from 'ng-mocks';
 import { ContactFormComponent } from './contact-form.component';
 import { ContactService } from '@data/contact-us';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -11,15 +11,13 @@ describe('ContactFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        ReactiveFormsModule,
+        MockModule(ReactiveFormsModule),
       ],
       declarations: [
         ContactFormComponent,
       ],
       providers: [
-        FormBuilder,
-        ContactService,
+        MockProvider(ContactService),
       ],
     })
     .compileComponents();

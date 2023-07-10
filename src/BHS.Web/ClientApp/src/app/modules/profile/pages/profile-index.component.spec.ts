@@ -1,8 +1,8 @@
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EMPTY, of } from 'rxjs';
 import { AuthorService } from '@data/authors';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
 import { ProfileIndexComponent } from './profile-index.component';
 
 describe('ProfileIndexComponent', () => {
@@ -11,28 +11,23 @@ describe('ProfileIndexComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
       declarations: [
         ProfileIndexComponent,
       ],
       providers: [
-        AuthorService,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            'paramMap': of(convertToParamMap({
-              username: 'abc',
-            })),
-          },
-        },
+        MockProvider(AuthorService, {
+          getAuthor: () => EMPTY,
+          getAuthorPosts: () => EMPTY,
+        }),
+        MockProvider(ActivatedRoute, {
+          'paramMap': of(convertToParamMap({
+            username: 'abc',
+          })),
+        }),
       ],
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ProfileIndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,8 +1,8 @@
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EMPTY, of } from 'rxjs';
 import { AlbumComponent } from './album.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
 import { PhotosService } from '@data/photos/services/photos.service';
 
 describe('AlbumComponent', () => {
@@ -11,28 +11,22 @@ describe('AlbumComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
       declarations: [
         AlbumComponent,
       ],
       providers: [
-        PhotosService,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            'paramMap': of(convertToParamMap({
-              slug: '3',
-            })),
-          },
-        },
+        MockProvider(PhotosService, {
+          getAlbum: () => EMPTY,
+        }),
+        MockProvider(ActivatedRoute, {
+          'paramMap': of(convertToParamMap({
+            slug: '3',
+          })),
+        }),
       ],
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(AlbumComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

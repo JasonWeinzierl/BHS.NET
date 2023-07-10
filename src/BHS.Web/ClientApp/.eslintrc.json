@@ -22,7 +22,7 @@
       },
       "plugins": [
         "import",
-        "jasmine",
+        "jest",
         "jsdoc",
         "rxjs"
       ],
@@ -37,7 +37,8 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:import/recommended",
         "plugin:import/typescript",
-        "plugin:jasmine/recommended",
+        "plugin:jest/recommended",
+        "plugin:jest/style",
         "plugin:jsdoc/recommended-typescript",
         "plugin:rxjs/recommended"
       ],

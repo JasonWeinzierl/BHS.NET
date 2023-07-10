@@ -45,9 +45,7 @@ describe('EditBlogEntryFormComponent', () => {
   });
 
   it('should populate cancelRoute with post url', () => {
-    expect(component.cancelRoute)
-      .withContext('default at first')
-      .toEqual(['/apps/blog']);
+    expect(component.cancelRoute).toEqual(['/apps/blog']); // default at first
 
     const post = createPost();
 
@@ -59,9 +57,7 @@ describe('EditBlogEntryFormComponent', () => {
   });
 
   it('should show warning when author is changing', () => {
-    expect(component.authorWarning)
-      .withContext('undefined at first')
-      .toBeUndefined();
+    expect(component.authorWarning).toBeUndefined(); // undefined at first
 
     const author: Author = {
       username: 'me',

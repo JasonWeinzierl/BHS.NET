@@ -20,6 +20,6 @@ describe('resolveClosestPath', () => {
   it('should resolve', () => {
     state.url = 'hone';
 
-    expect(resolveClosestPath(route, state)).toEqual('/home');
+    expect(resolveClosestPath(route, state)).toBe('/home');
   });
 });

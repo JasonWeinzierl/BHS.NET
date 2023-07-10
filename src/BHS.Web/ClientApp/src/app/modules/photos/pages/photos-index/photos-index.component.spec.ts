@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EMPTY } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
 import { PhotosIndexComponent } from './photos-index.component';
+import { PhotosService } from '@data/photos';
 
 describe('PhotosIndexComponent', () => {
   let component: PhotosIndexComponent;
@@ -8,17 +10,17 @@ describe('PhotosIndexComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
       declarations: [
         PhotosIndexComponent,
       ],
+      providers: [
+        MockProvider(PhotosService, {
+          getAlbums: () => EMPTY,
+        }),
+      ],
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(PhotosIndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { WhoWeAreComponent } from './who-we-are.component';
 
 describe('WhoWeAreComponent', () => {

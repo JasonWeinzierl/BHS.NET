@@ -26,6 +26,6 @@ describe('DateComponent', () => {
     const timeElement = element.querySelector('time');
     const titleAttr = timeElement?.getAttribute('title');
 
-    expect(titleAttr).toContain(component.datetime.getFullYear());
+    expect(titleAttr).toContain(component.datetime.getFullYear().toString());
   });
 });

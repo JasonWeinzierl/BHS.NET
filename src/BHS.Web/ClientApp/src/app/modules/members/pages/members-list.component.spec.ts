@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthorService } from '@data/authors';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EMPTY } from 'rxjs';
 import { MembersListComponent } from './members-list.component';
+import { MockProvider } from 'ng-mocks';
 
 describe('MembersListComponent', () => {
   let component: MembersListComponent;
@@ -9,20 +10,17 @@ describe('MembersListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
       declarations: [
         MembersListComponent,
       ],
       providers: [
-        AuthorService,
+        MockProvider(AuthorService, {
+          getAuthors: () => EMPTY,
+        }),
       ],
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(MembersListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

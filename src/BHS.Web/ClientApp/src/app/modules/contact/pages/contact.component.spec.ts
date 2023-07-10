@@ -1,12 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
 import { ContactComponent } from './contact.component';
-
-@Component({
-  selector: 'app-contact-form',
-})
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-class ContactFormComponentStub { }
+import { ContactFormComponent } from './contact-form/contact-form.component';
+import { MockComponent } from 'ng-mocks';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -14,7 +9,10 @@ describe('ContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContactComponent, ContactFormComponentStub ],
+      declarations: [
+        ContactComponent,
+        MockComponent(ContactFormComponent),
+      ],
     })
     .compileComponents();
 

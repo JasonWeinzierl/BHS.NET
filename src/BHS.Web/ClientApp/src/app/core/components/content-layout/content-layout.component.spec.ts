@@ -1,19 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
 import { ContentLayoutComponent } from './content-layout.component';
-import { RouterOutletDirectiveStub } from '@app/mock-testing-objects';
-
-@Component({
-  selector: 'app-header',
-})
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-class HeaderComponentStub { }
-
-@Component({
-  selector: 'app-footer',
-})
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-class FooterComponentStub { }
+import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
+import { MockComponent } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ContentLayoutComponent', () => {
   let component: ContentLayoutComponent;
@@ -21,7 +11,14 @@ describe('ContentLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContentLayoutComponent, HeaderComponentStub, FooterComponentStub, RouterOutletDirectiveStub ],
+      imports: [
+        RouterTestingModule,
+      ],
+      declarations: [
+        ContentLayoutComponent,
+        MockComponent(HeaderComponent),
+        MockComponent(FooterComponent),
+      ],
     })
     .compileComponents();
 

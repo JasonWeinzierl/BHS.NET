@@ -1,9 +1,10 @@
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EMPTY, of } from 'rxjs';
+import { MockComponent, MockProvider } from 'ng-mocks';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 import { BlogService } from '@data/blog';
 import { CategoryPostsComponent } from './category-posts.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
 
 describe('CategoryPostsComponent', () => {
   let component: CategoryPostsComponent;
@@ -11,28 +12,23 @@ describe('CategoryPostsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
       declarations: [
         CategoryPostsComponent,
+        MockComponent(AlertComponent),
       ],
       providers: [
-        BlogService,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            'paramMap': of(convertToParamMap({
-              slug: '123',
-            })),
-          },
-        },
+        MockProvider(BlogService, {
+          getCategory: () => EMPTY,
+        }),
+        MockProvider(ActivatedRoute, {
+          'paramMap': of(convertToParamMap({
+            slug: '123',
+          })),
+        }),
       ],
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CategoryPostsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

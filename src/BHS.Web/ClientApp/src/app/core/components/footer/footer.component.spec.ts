@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FooterComponent } from './footer.component';
-import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -8,7 +8,12 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FooterComponent, RouterLinkDirectiveStub ],
+      imports: [
+        RouterTestingModule,
+      ],
+      declarations: [
+        FooterComponent,
+      ],
     })
     .compileComponents();
 

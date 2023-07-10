@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
+import { MockProvider } from 'ng-mocks';
 import { NotFoundComponent } from './not-found.component';
 import { of } from 'rxjs';
-import { RouterLinkDirectiveStub } from '@app/mock-testing-objects';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
@@ -10,19 +11,18 @@ describe('NotFoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+      ],
       declarations: [
         NotFoundComponent,
-        RouterLinkDirectiveStub,
       ],
       providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            'data': of({
-              closestPath: '123/456',
-            }),
-          },
-        },
+        MockProvider(ActivatedRoute, {
+          'data': of({
+            closestPath: '123/456',
+          }),
+        }),
       ],
     })
     .compileComponents();

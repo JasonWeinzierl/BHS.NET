@@ -1,43 +1,26 @@
-import { BlogService, CategorySummary } from '@data/blog';
-import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent, MockProvider } from 'ng-mocks';
 import { BlogIndexComponent } from './blog-index.component';
-import { of } from 'rxjs';
-
-@Component({
-  selector: 'app-posts-search',
-})
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-class PostsSearchComponentStub { }
-
-@Component({
-  selector: 'app-categories-list-view',
-})
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-class CategoriesListViewComponentStub {
-  @Input() isLoading = false;
-  @Input() error?: string;
-  @Input() categories: Array<CategorySummary> = [];
-}
+import { BlogService } from '@data/blog';
+import { CategoriesListViewComponent } from '@modules/blog/components/categories-list-view/categories-list-view.component';
+import { EMPTY } from 'rxjs';
+import { PostsSearchComponent } from '@modules/blog/components/posts-search/posts-search.component';
 
 describe('BlogIndexComponent', () => {
   let component: BlogIndexComponent;
   let fixture: ComponentFixture<BlogIndexComponent>;
 
   beforeEach(async () => {
-    const blogService = jasmine.createSpyObj<BlogService>('blogService', { 'getCategories': of() });
-
     await TestBed.configureTestingModule({
       declarations: [
         BlogIndexComponent,
-        CategoriesListViewComponentStub,
-        PostsSearchComponentStub,
+        MockComponent(CategoriesListViewComponent),
+        MockComponent(PostsSearchComponent),
       ],
       providers: [
-        {
-          provide: BlogService,
-          useValue: blogService,
-        },
+        MockProvider(BlogService, {
+          getCategories: () => EMPTY,
+        }),
       ],
     })
     .compileComponents();

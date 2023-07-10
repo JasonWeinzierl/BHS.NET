@@ -4,6 +4,7 @@ import { AlbumPageComponent } from './album-page.component';
 import { AlbumPhotos } from '@data/photos';
 import { AlertComponent } from 'ngx-bootstrap/alert';
 import { By } from '@angular/platform-browser';
+import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 import { PhotosService } from '@data/photos/services/photos.service';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -32,8 +33,6 @@ describe('AlbumPageComponent', () => {
   let fixture: ComponentFixture<AlbumPageComponent>;
 
   beforeEach(async () => {
-    const photosService = jasmine.createSpyObj<PhotosService>('photosService', {'getAlbum': of(createAlbum())});
-
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -43,19 +42,15 @@ describe('AlbumPageComponent', () => {
         AlbumPageComponent,
       ],
       providers: [
-        {
-          provide: PhotosService,
-          useValue: photosService,
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            'paramMap': of(convertToParamMap({
-              slug: 'album-three',
-              id: 'photo-four',
-            })),
-          },
-        },
+        MockProvider(PhotosService, {
+          getAlbum: () => of(createAlbum()),
+        }),
+        MockProvider(ActivatedRoute, {
+          'paramMap': of(convertToParamMap({
+            slug: 'album-three',
+            id: 'photo-four',
+          })),
+        }),
       ],
     })
     .compileComponents();
@@ -72,24 +67,19 @@ describe('AlbumPageComponent', () => {
   it('should finish loading', () => {
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(element.querySelector('.spinner-grow'))
-      .withContext('no loading')
-      .toBeNull();
+    expect(element.querySelector('.spinner-grow')).toBeNull();
   });
 
   it('should not show error', () => {
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(element.querySelector('.alert-danger')?.textContent)
-      .withContext('no error message')
-      .toBeUndefined();
+    expect(element.querySelector('.alert-danger')?.textContent).toBeUndefined();
   });
 
   it('should show album name', () => {
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(element.textContent)
-      .toContain('Album Three');
+    expect(element.textContent).toContain('Album Three');
   });
 
   it('should render router links', () => {

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EMPTY } from 'rxjs';
 import { LeadershipService } from '@data/leadership/services/leadership.service';
+import { MockProvider } from 'ng-mocks';
 import { OrganizationComponent } from './organization.component';
 
 describe('OrganizationComponent', () => {
@@ -9,14 +10,14 @@ describe('OrganizationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
       declarations: [
         OrganizationComponent,
       ],
       providers: [
-        LeadershipService,
+        MockProvider(LeadershipService, {
+          getDirectors: () => EMPTY,
+          getOfficers: () => EMPTY,
+        }),
       ],
     })
     .compileComponents();
