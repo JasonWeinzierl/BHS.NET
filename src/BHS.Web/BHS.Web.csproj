@@ -44,13 +44,13 @@
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- Ensure the JS resources are already built -->
-    <Error Condition=" !Exists('$(SpaRoot)dist\index.html') " Text="dist/index.html is required to publish this project. To continue, please build the JS resources." />
+    <Error Condition=" !Exists('$(SpaRoot)dist\bhs-web-client-app\index.html') " Text="dist/bhs-web-client-app/index.html is required to publish this project. To continue, please build the JS resources." />
 
     <!-- Include the JS resources in the publish output -->
     <ItemGroup>
-      <DistFiles Include="$(SpaRoot)dist\**" />
+      <DistFiles Include="$(SpaRoot)dist\bhs-web-client-app\**" />
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <RelativePath>ClientApp\dist\bhs-web-client-app\%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </ResolvedFileToPublish>
