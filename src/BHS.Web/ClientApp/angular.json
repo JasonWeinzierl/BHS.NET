@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "BHS.Web.ClientApp": {
+    "bhs-web-client-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "ci": {
-              "browserTarget": "BHS.Web.ClientApp:build:ci"
+              "browserTarget": "bhs-web-client-app:build:ci"
             },
             "debug": {
-              "browserTarget": "BHS.Web.ClientApp:build:debug"
+              "browserTarget": "bhs-web-client-app:build:debug"
             }
           },
           "defaultConfiguration": "debug"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "BHS.Web.ClientApp:build"
+            "browserTarget": "bhs-web-client-app:build"
           }
         },
         "test": {
@@ -134,11 +134,11 @@
           },
           "configurations": {
             "ci": {
-              "devServerTarget": "BHS.Web.ClientApp:serve:ci",
+              "devServerTarget": "bhs-web-client-app:serve:ci",
               "headless": true
             },
             "debug": {
-              "devServerTarget": "BHS.Web.ClientApp:serve",
+              "devServerTarget": "bhs-web-client-app:serve",
               "watch": true
             }
           },
@@ -148,7 +148,7 @@
           "builder": "@cypress/schematic:cypress",
           "options": {
             "configFile": "cypress/configFiles/cypress.config.smoke.ts",
-            "devServerTarget": "BHS.Web.ClientApp:serve",
+            "devServerTarget": "bhs-web-client-app:serve",
             "watch": true
           }
         }

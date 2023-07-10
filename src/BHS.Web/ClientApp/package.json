@@ -1,5 +1,5 @@
 {
-  "name": "bhs.web.clientapp",
+  "name": "bhs-web-client-app",
   "version": "0.0.0",
   "scripts": {
     "start": "ng serve --open",
@@ -13,7 +13,7 @@
     "test:ci": "ng test --configuration ci",
     "integration": "ng e2e",
     "integration:ci": "ng e2e --configuration ci",
-    "smoke": "ng run BHS.Web.ClientApp:smoke"
+    "smoke": "ng run bhs-web-client-app:smoke"
   },
   "private": true,
   "dependencies": {

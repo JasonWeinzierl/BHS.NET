@@ -19,7 +19,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/bhs.web.clientapp'),
+      dir: require('path').join(__dirname, './coverage/bhs-web-client-app'),
       subdir: '.',
       reporters: [
         { type: 'html' },
