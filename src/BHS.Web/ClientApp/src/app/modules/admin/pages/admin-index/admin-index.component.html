@@ -4,6 +4,8 @@
 
       <h1>Admin</h1>
 
+      <pre *ngIf="user$ | async as user">{{user | json}}</pre>
+
       <a [routerLink]="['/home']">Home</a>
 
       <button type="button" class="btn btn-secondary" (click)="handleLogout()">Log out</button>
