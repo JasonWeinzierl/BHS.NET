@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { PostPreview } from '@data/blog';
 
 @Component({
-  selector: 'app-post-card[post]',
+  selector: 'app-post-card',
   templateUrl: './post-card.component.html',
   styleUrls: ['./post-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostCardComponent {
-  @Input() post!: PostPreview;
+  @Input({ required: true }) post!: PostPreview;
 }
