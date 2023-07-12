@@ -1,0 +1,68 @@
+{
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.(app|spec).json"
+        ]
+      },
+      "plugins": [
+        "jest",
+        "rxjs"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:rxjs/recommended"
+      ],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "rxjs/finnish": [
+          "warn",
+          {
+            "methods": false,
+            "strict": true,
+            "types": {
+              "^(EventEmitter|BehaviorSubject|ReplaySubject|AsyncSubject|Subject)$": false
+            }
+          }
+        ],
+        "rxjs/suffix-subjects": "warn",
+        "rxjs/no-exposed-subjects": "error",
+        "rxjs/no-explicit-generics": "warn",
+        "rxjs/no-ignored-subscribe": "warn",
+        "rxjs/no-implicit-any-catch": "error"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:@angular-eslint/template/accessibility"
+      ],
+      "rules": {}
+    }
+  ]
+}

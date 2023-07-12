@@ -14,51 +14,19 @@
       "files": [
         "*.ts"
       ],
-      "parserOptions": {
-        "project": [
-          "tsconfig.(app|spec).json",
-          "cypress/tsconfig.json"
-        ]
-      },
       "plugins": [
         "import",
-        "jest",
-        "jsdoc",
-        "rxjs"
+        "jsdoc"
       ],
-      "env": {
-        "jasmine": true
-      },
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:import/recommended",
         "plugin:import/typescript",
-        "plugin:jest/recommended",
-        "plugin:jest/style",
-        "plugin:jsdoc/recommended-typescript",
-        "plugin:rxjs/recommended"
+        "plugin:jsdoc/recommended-typescript"
       ],
       "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "app",
-            "style": "kebab-case"
-          }
-        ],
         "no-restricted-syntax": [
           "error",
           {
@@ -101,21 +69,6 @@
             "ignoreStatic": true
           }
         ],
-        "rxjs/finnish": [
-          "warn",
-          {
-            "methods": false,
-            "strict": true,
-            "types": {
-              "^(EventEmitter|BehaviorSubject|ReplaySubject|AsyncSubject|Subject)$": false
-            }
-          }
-        ],
-        "rxjs/suffix-subjects": "warn",
-        "rxjs/no-exposed-subjects": "error",
-        "rxjs/no-explicit-generics": "warn",
-        "rxjs/no-ignored-subscribe": "warn",
-        "rxjs/no-implicit-any-catch": "error",
 
         "valid-jsdoc": "off",
         "require-jsdoc": "off",
@@ -132,15 +85,6 @@
         "jsdoc/require-returns-type": "off",
         "jsdoc/require-yields": "off"
       }
-    },
-    {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "rules": {}
     }
   ]
 }
