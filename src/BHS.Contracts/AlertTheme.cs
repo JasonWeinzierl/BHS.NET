@@ -1,8 +1,11 @@
-﻿namespace BHS.Contracts;
+﻿using System.Text.Json.Serialization;
+
+namespace BHS.Contracts;
 
 /// <summary>
 /// The visual style of any notification, banner, or alert.
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum AlertTheme : byte
 {
     None = 0,

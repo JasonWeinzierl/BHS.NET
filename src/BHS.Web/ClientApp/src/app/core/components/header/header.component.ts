@@ -1,17 +1,14 @@
-import { AlertTheme, SiteBanner, SiteBannerService } from '@data/banners';
+import { ALERT_THEMES, AlertTheme, SiteBanner, SiteBannerService } from '@data/banners';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
-class SiteBannerStyled implements SiteBanner {
- constructor(
-   public theme: AlertTheme,
-   public alertType: string,
-   public lead?: string,
-   public body?: string,
- ) { }
+interface SiteBannerStyled {
+  alertType: string,
+  lead: string | null,
+  body: string | null,
 }
 
 @Component({
@@ -49,32 +46,19 @@ export class HeaderComponent {
   }
 
   private createStyledBanners(banners: Array<SiteBanner>): Array<SiteBannerStyled> {
-    return banners.map(b => {
-      let alertType = 'light';
+    return banners.map(b => ({
+      lead: b.lead,
+      body: b.body,
+      alertType: this.getBootstrapAlertType(b.theme),
+    }));
+  }
 
-      switch (b.theme) {
-        case AlertTheme.Primary:
-          alertType = 'primary';
-          break;
-        case AlertTheme.Secondary:
-          alertType = 'secondary';
-          break;
-        case AlertTheme.Success:
-          alertType = 'success';
-          break;
-        case AlertTheme.Danger:
-          alertType = 'danger';
-          break;
-        case AlertTheme.Warning:
-          alertType = 'warning';
-          break;
-        case AlertTheme.Info:
-          alertType = 'info';
-          break;
-      }
-
-      return new SiteBannerStyled(b.theme, alertType, b.lead, b.body);
-    });
+  private getBootstrapAlertType(theme: AlertTheme): string {
+    if (ALERT_THEMES.includes(theme) && theme !== 'None') {
+      return theme.toLowerCase();
+    } else {
+      return 'light';
+    }
   }
 
 }
