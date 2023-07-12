@@ -59,36 +59,11 @@
             "style": "kebab-case"
           }
         ],
-        "@typescript-eslint/naming-convention": [
+        "no-restricted-syntax": [
           "error",
           {
-            "selector": "default",
-            "format": [
-              "camelCase"
-            ],
-            "leadingUnderscore": "allow",
-            "trailingUnderscore": "allow"
-          },
-          {
-            "selector": "variable",
-            "format": [
-              "camelCase",
-              "UPPER_CASE"
-            ],
-            "leadingUnderscore": "allow",
-            "trailingUnderscore": "allow"
-          },
-          {
-            "selector": "typeLike",
-            "format": [
-              "PascalCase"
-            ]
-          },
-          {
-            "selector": "enumMember",
-            "format": [
-              "PascalCase"
-            ]
+            "selector": "TSEnumDeclaration",
+            "message": "Use a type or object as const instead of a TypeScript enum."
           }
         ],
         "semi": [
