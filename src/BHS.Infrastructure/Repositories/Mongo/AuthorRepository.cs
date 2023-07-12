@@ -45,7 +45,7 @@ public class AuthorRepository : IAuthorRepository
     public async Task<Author> Upsert(Author author, CancellationToken cancellationToken = default)
     {
         var collection = _mongoClient.GetBhsCollection<AuthorDto>("authors");
-        
+
         var dto = AuthorDto.FromAuthor(author);
         var replaceOptions = new ReplaceOptions { IsUpsert = true };
 

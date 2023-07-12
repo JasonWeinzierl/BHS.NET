@@ -3,7 +3,6 @@ using BHS.Contracts.Banners;
 using BHS.Domain;
 using BHS.Domain.Banners;
 using BHS.Infrastructure.Repositories.Mongo.Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;

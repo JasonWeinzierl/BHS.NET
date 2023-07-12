@@ -2,7 +2,6 @@
 using BHS.Domain;
 using BHS.Domain.Leadership;
 using BHS.Infrastructure.Repositories.Mongo.Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace BHS.Infrastructure.Repositories.Mongo;

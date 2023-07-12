@@ -1,5 +1,4 @@
-﻿using BHS.Contracts;
-using BHS.Contracts.Photos;
+﻿using BHS.Contracts.Photos;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Repositories.Mongo.Models;
 using MongoDB.Bson;

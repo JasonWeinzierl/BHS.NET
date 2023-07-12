@@ -4,7 +4,6 @@ using BHS.Web;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace BHS.Api.IntegrationTests;
 

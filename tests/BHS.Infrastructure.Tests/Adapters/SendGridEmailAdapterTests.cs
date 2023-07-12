@@ -25,7 +25,7 @@ public class SendGridEmailAdapterTests
         var request = new EmailMessageRequest(new[] { "test2@test.com" }, "test subject", "<p>Hi</p>", "Hi");
 
         var httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
-        
+
         SendGridMessage? sent = null;
         _mockSgClient
             .Setup(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
