@@ -1,16 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Pipe, PipeTransform } from '@angular/core';
+import { MockPipe, MockProvider } from 'ng-mocks';
 import { BlogService } from '@data/blog';
 import { FormsModule } from '@angular/forms';
-import { MockProvider } from 'ng-mocks';
 import { PostsSearchComponent } from './posts-search.component';
-
-@Pipe({name: 'sortBy'})
-class MockSortByPipe implements PipeTransform {
-  transform(value: unknown): unknown {
-    return value;
-  }
-}
+import { SortByPipe } from '@shared/pipes/sort-by.pipe';
 
 describe('PostsSearchComponent', () => {
   let component: PostsSearchComponent;
@@ -23,7 +16,7 @@ describe('PostsSearchComponent', () => {
       ],
       declarations: [
         PostsSearchComponent,
-        MockSortByPipe,
+        MockPipe(SortByPipe),
       ],
       providers: [
         MockProvider(BlogService),
