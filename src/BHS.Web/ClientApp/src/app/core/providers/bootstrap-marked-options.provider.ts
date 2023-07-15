@@ -4,13 +4,17 @@ import { FactoryProvider } from '@angular/core';
 const markedOptionsFactory = (): MarkedOptions => {
   const renderer = new MarkedRenderer();
 
-  renderer.image = (href: string, title: string, text: string): string => {
-    href = encodeURI(href).replace(/%25/g, '%');
-    if (href === null) {
+  renderer.image = (href: string | null, title: string | null, text: string): string => {
+    if (!href) {
       return text;
     }
 
-    let out = '<img src="' + href + '" alt="' + text + '"';
+    const encodedSrc = encodeURI(href).replace(/%25/g, '%');
+    if (!encodedSrc) {
+      return text;
+    }
+
+    let out = '<img src="' + encodedSrc + '" alt="' + text + '"';
     if (title) {
       out += ' title="' + title + '"';
     }
