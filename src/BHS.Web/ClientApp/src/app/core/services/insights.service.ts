@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class InsightsService {
-  private angularPlugin = new AngularPlugin();
-  private appInsights = new ApplicationInsights({
+  private readonly angularPlugin = new AngularPlugin();
+  private readonly appInsights = new ApplicationInsights({
     config: {
       connectionString: this.env.appInsights?.connectionString,
 
@@ -28,8 +28,8 @@ export class InsightsService {
   });
 
   constructor(
-    private router: Router,
-    private env: AppEnvironment,
+    private readonly router: Router,
+    private readonly env: AppEnvironment,
   ) { }
 
   init(): void {

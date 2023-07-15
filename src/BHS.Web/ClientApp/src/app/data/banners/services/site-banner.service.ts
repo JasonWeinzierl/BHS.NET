@@ -7,13 +7,13 @@ import { SiteBanner } from '@data/banners/models/site-banner';
   providedIn: 'root',
 })
 export class SiteBannerService {
-  private baseUrl = '/api/banners';
+  private readonly baseUrl = '/api/banners';
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient,
   ) { }
 
-  getEnabled(): Observable<SiteBanner[]> {
-    return this.http.get<SiteBanner[]>(this.baseUrl + '/current');
+  getEnabled(): Observable<Array<SiteBanner>> {
+    return this.http.get<Array<SiteBanner>>(this.baseUrl + '/current');
   }
 }

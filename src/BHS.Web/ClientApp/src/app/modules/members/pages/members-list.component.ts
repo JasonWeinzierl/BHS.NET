@@ -13,7 +13,7 @@ export class MembersListComponent {
   vm$: Observable<{ authors: Array<Author>, isLoading: boolean, error?: string }>;
 
   constructor(
-    private authorService: AuthorService,
+    private readonly authorService: AuthorService,
   ) {
     this.vm$ = this.authorService.getAuthors()
       .pipe(

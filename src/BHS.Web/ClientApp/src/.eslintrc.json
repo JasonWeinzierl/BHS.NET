@@ -10,7 +10,6 @@
         ]
       },
       "plugins": [
-        "jest",
         "rxjs"
       ],
       "extends": [
@@ -21,6 +20,7 @@
         "plugin:rxjs/recommended"
       ],
       "rules": {
+        // angular
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -37,6 +37,8 @@
             "style": "kebab-case"
           }
         ],
+
+        // rxjs
         "rxjs/finnish": [
           "warn",
           {
@@ -51,7 +53,15 @@
         "rxjs/no-exposed-subjects": "error",
         "rxjs/no-explicit-generics": "warn",
         "rxjs/no-ignored-subscribe": "warn",
-        "rxjs/no-implicit-any-catch": "error"
+        "rxjs/no-implicit-any-catch": "error",
+
+        // typescript + angular
+        "@typescript-eslint/no-extraneous-class": [
+          "warn",
+          {
+            "allowWithDecorator": true
+          }
+        ]
       }
     },
     {

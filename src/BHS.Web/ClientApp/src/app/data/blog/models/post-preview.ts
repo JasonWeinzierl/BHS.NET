@@ -7,5 +7,5 @@ export interface PostPreview {
   contentPreview: string;
   author?: Author;
   datePublished: Date;
-  categories: Category[];
+  categories: Array<Category>;
 }

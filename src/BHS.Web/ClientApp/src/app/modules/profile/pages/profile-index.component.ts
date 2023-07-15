@@ -15,8 +15,8 @@ export class ProfileIndexComponent {
   vm$: Observable<{ author?: Author, posts: Array<PostPreview>, isLoading: boolean, error?: string }>;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private authorService: AuthorService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly authorService: AuthorService,
   ) {
     this.vm$ = this.activatedRoute.paramMap
       .pipe(

@@ -18,11 +18,11 @@ export class ContactFormComponent {
   });
   isSubmitted = false;
   isAccepted = false;
-  errors: string[] = [];
+  errors: Array<string> = [];
 
   constructor(
-    private formBuilder: FormBuilder,
-    private contactService: ContactService,
+    private readonly formBuilder: FormBuilder,
+    private readonly contactService: ContactService,
   ) { }
 
   onSubmit(): void {

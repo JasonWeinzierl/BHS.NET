@@ -14,8 +14,8 @@ export class AlbumComponent {
   vm$: Observable<{ album?: AlbumPhotos, isLoading: boolean, error?: string }>;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private photosService: PhotosService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly photosService: PhotosService,
     ) {
       this.vm$ = this.activatedRoute.paramMap.pipe(
         map(params => {

@@ -9,14 +9,14 @@ import { Photo } from '@data/photos/models/photo';
   providedIn: 'root',
 })
 export class PhotosService {
-  private baseUrl = '/api/photos';
+  private readonly baseUrl = '/api/photos';
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient,
   ) { }
 
-  getAlbums(): Observable<Album[]> {
-    return this.http.get<Album[]>(this.baseUrl + '/albums');
+  getAlbums(): Observable<Array<Album>> {
+    return this.http.get<Array<Album>>(this.baseUrl + '/albums');
   }
 
   getAlbum(slug: string): Observable<AlbumPhotos> {

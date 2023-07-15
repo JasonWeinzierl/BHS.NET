@@ -12,7 +12,7 @@ export class AdminIndexComponent {
   user$: Observable<User | null | undefined>;
 
   constructor(
-    private auth: AuthService,
+    private readonly auth: AuthService,
   ) {
     this.user$ = this.auth.user$;
   }

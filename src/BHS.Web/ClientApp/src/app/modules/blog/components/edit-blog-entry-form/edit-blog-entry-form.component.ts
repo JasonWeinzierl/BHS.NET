@@ -28,7 +28,7 @@ export class EditBlogEntryFormComponent implements OnChanges {
   authorWarning?: string | null;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private readonly formBuilder: FormBuilder,
   ) { }
 
   ngOnChanges(): void {

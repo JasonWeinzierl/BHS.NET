@@ -14,8 +14,8 @@ export class CategoryPostsComponent {
   vm$: Observable<{ category?: CategoryPosts, isLoading: boolean, error?: string }>;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private blogService: BlogService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly blogService: BlogService,
   ) {
     this.vm$ = this.activatedRoute.paramMap.pipe(
       map(params => {

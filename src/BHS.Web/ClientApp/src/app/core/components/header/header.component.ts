@@ -24,9 +24,9 @@ export class HeaderComponent {
   isAuthenticated$ = this.auth.isAuthenticated$;
 
   constructor(
-    private bannerService: SiteBannerService,
-    private toastr: ToastrService,
-    private auth: AuthService,
+    private readonly bannerService: SiteBannerService,
+    private readonly toastr: ToastrService,
+    private readonly auth: AuthService,
   ) {
     this.banners$ = this.bannerService.getEnabled()
       .pipe(

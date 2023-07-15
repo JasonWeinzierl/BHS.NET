@@ -8,21 +8,21 @@ import { PostPreview } from '@data/blog';
   providedIn: 'root',
 })
 export class AuthorService {
-  private baseUrl = '/api/author';
+  private readonly baseUrl = '/api/author';
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient,
   ) { }
 
-  getAuthors(): Observable<Author[]> {
-    return this.http.get<Author[]>(this.baseUrl);
+  getAuthors(): Observable<Array<Author>> {
+    return this.http.get<Array<Author>>(this.baseUrl);
   }
 
   getAuthor(username: string): Observable<Author> {
     return this.http.get<Author>(this.baseUrl + '/' + username);
   }
 
-  getAuthorPosts(username: string): Observable<PostPreview[]> {
-    return this.http.get<PostPreview[]>(this.baseUrl + '/' + username + '/posts');
+  getAuthorPosts(username: string): Observable<Array<PostPreview>> {
+    return this.http.get<Array<PostPreview>>(this.baseUrl + '/' + username + '/posts');
   }
 }

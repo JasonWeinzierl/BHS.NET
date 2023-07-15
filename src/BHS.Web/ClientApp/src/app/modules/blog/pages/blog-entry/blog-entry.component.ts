@@ -17,11 +17,11 @@ export class BlogEntryComponent {
   vm$: Observable<{ post?: Post, postAlbum: AlbumPhotos | null, isLoading: boolean, error?: string, showEdit?: boolean }>;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private blogService: BlogService,
-    private photosService: PhotosService,
-    private auth: AuthService,
-    private toastr: ToastrService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly blogService: BlogService,
+    private readonly photosService: PhotosService,
+    private readonly auth: AuthService,
+    private readonly toastr: ToastrService,
   ) {
     this.vm$ = this.activatedRoute.paramMap.pipe(
       map(params => {

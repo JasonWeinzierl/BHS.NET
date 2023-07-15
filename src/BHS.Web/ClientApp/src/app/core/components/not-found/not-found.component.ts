@@ -13,7 +13,7 @@ export class NotFoundComponent {
   closestPath$: Observable<string | null>;
 
   constructor(
-    private route: ActivatedRoute,
+    private readonly route: ActivatedRoute,
   ) {
     this.closestPath$ = this.route.data.pipe(
       map(data => {

@@ -8,17 +8,17 @@ import { Officer } from '@data/leadership/models/officer';
   providedIn: 'root',
 })
 export class LeadershipService {
-  private baseUrl = '/api/leadership';
+  private readonly baseUrl = '/api/leadership';
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient,
   ) { }
 
-  getOfficers(): Observable<Officer[]> {
-    return this.http.get<Officer[]>(this.baseUrl + '/officers');
+  getOfficers(): Observable<Array<Officer>> {
+    return this.http.get<Array<Officer>>(this.baseUrl + '/officers');
   }
 
-  getDirectors(): Observable<Director[]> {
-    return this.http.get<Director[]>(this.baseUrl + '/directors');
+  getDirectors(): Observable<Array<Director>> {
+    return this.http.get<Array<Director>>(this.baseUrl + '/directors');
   }
 }

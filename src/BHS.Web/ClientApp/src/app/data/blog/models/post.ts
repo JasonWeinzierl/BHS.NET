@@ -10,5 +10,5 @@ export interface Post {
   author: Author | null;
   datePublished: Date; // TODO: all dates need to be parsed from string when deserialized in the data layer.
   dateLastModified: Date;
-  categories: Category[];
+  categories: Array<Category>;
 }

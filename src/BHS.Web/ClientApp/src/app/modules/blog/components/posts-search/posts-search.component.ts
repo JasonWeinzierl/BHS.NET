@@ -12,14 +12,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class PostsSearchComponent {
   postsVm$: Observable<{ posts: Array<PostPreview>, error?: string }>;
 
-  private isLoadingSubject = new BehaviorSubject(true);
+  private readonly isLoadingSubject = new BehaviorSubject(true);
   public isLoading$: Observable<boolean> = this.isLoadingSubject;
 
   searchText = '';
-  private searchTextSubject = new BehaviorSubject('');
+  private readonly searchTextSubject = new BehaviorSubject('');
 
   constructor(
-    private blogService: BlogService,
+    private readonly blogService: BlogService,
   ) {
     this.postsVm$ = this.searchTextSubject.pipe(
       switchMap(searchText => this.blogService.searchPosts(searchText).pipe(

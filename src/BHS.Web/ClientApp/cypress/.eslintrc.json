@@ -9,9 +9,6 @@
           "cypress/tsconfig.json"
         ]
       },
-      "plugins": [
-        "cypress"
-      ],
       "extends": [
         "plugin:cypress/recommended"
       ]

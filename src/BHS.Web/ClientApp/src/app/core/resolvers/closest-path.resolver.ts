@@ -23,8 +23,8 @@ function getThreshold(path: string): number {
   return path.length < 5 ? 3 : 5;
 }
 
-function sortByDistance(typoPath: string, dictionary: string[]): void {
-  const pathsDistance = {} as { [name: string]: number };
+function sortByDistance(typoPath: string, dictionary: Array<string>): void {
+  const pathsDistance = {} as Record<string, number>;
 
   dictionary.sort((a, b) => {
     if (!(a in pathsDistance)) {

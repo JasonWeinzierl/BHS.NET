@@ -14,7 +14,7 @@ export class BlogIndexComponent {
   categoriesVm$: Observable<{ categories: Array<CategorySummary>, isLoading: boolean, error?: string }>;
 
   constructor(
-    private blogService: BlogService,
+    private readonly blogService: BlogService,
   ) {
     this.categoriesVm$ = this.blogService.getCategories().pipe(
       map(categories => ({ categories, isLoading: false })),

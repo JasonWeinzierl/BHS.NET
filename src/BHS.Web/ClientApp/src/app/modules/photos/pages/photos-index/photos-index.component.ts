@@ -13,7 +13,7 @@ export class PhotosIndexComponent {
   vm$: Observable<{ albums: Array<Album>, isLoading: boolean, error?: string }>;
 
   constructor(
-    private photosService: PhotosService,
+    private readonly photosService: PhotosService,
   ) {
     this.vm$ = this.photosService.getAlbums()
       .pipe(

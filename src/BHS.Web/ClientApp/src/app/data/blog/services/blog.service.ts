@@ -7,13 +7,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BlogService {
-  private baseUrl = '/api/blog';
+  private readonly baseUrl = '/api/blog';
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient,
   ) { }
 
-  searchPosts(q?: string, from?: Date, to?: Date): Observable<PostPreview[]> {
+  searchPosts(q?: string, from?: Date, to?: Date): Observable<Array<PostPreview>> {
     let params = new HttpParams();
     if (q) {
       params = params.set('q', q);
@@ -25,7 +25,7 @@ export class BlogService {
       params = params.set('to', to.toISOString());
     }
 
-    return this.http.get<PostPreview[]>(this.baseUrl + '/posts', { params });
+    return this.http.get<Array<PostPreview>>(this.baseUrl + '/posts', { params });
   }
 
   createPost(request: PostRequest): Observable<Post> {
@@ -41,11 +41,11 @@ export class BlogService {
   }
 
   deletePost(slug: string): Observable<void> {
-    return this.http.delete<void>(this.baseUrl + '/posts/' + slug);
+    return this.http.delete<undefined>(this.baseUrl + '/posts/' + slug);
   }
 
-  getCategories(): Observable<CategorySummary[]> {
-    return this.http.get<CategorySummary[]>(this.baseUrl + '/categories');
+  getCategories(): Observable<Array<CategorySummary>> {
+    return this.http.get<Array<CategorySummary>>(this.baseUrl + '/categories');
   }
 
   getCategory(slug: string): Observable<CategoryPosts> {

@@ -5,7 +5,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Author } from '@data/authors';
 
-type EntryEditVm = { post?: Post, categories: Array<Category>, isLoading: boolean, error?: string, currentAuthor: Author | null };
+interface EntryEditVm {
+  post?: Post;
+  categories: Array<Category>;
+  isLoading: boolean;
+  error?: string;
+  currentAuthor: Author | null;
+}
 
 @Component({
   selector: 'app-entry-edit',
@@ -15,12 +21,12 @@ type EntryEditVm = { post?: Post, categories: Array<Category>, isLoading: boolea
 })
 export class EntryEditComponent {
   vm$: Observable<EntryEditVm>;
-  private submittedRequestSubject = new Subject<{slug: string, body: PostRequest}>();
+  private readonly submittedRequestSubject = new Subject<{slug: string, body: PostRequest}>();
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private blogService: BlogService,
-    private auth: AuthService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly blogService: BlogService,
+    private readonly auth: AuthService,
   ) {
     // Emit a merged combination of the initial post loaded from the URL, and the updated post after a submission.
     this.vm$ = merge(this.getInitialPost$(), this.getUpdatedPost$()).pipe(
@@ -111,7 +117,7 @@ export class EntryEditComponent {
   }
 
   private getAuthor(user?: User | null): Author | null {
-    return user && user.sub && user.name ? {
+    return user?.sub && user.name ? {
       username: user.sub,
       name: user.name,
     } : null;

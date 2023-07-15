@@ -16,9 +16,9 @@ export class AlbumPageComponent {
   vm$: AlbumPageVm;
 
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private photosService: PhotosService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly photosService: PhotosService,
   ) {
     this.vm$ = this.activatedRoute.paramMap.pipe(
       map(params => {

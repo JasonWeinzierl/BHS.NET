@@ -20,14 +20,14 @@ interface EntryNewVm {
 })
 export class EntryNewComponent {
   vm$: Observable<EntryNewVm>;
-  private submittedRequestSubject = new Subject<PostRequest>();
-  private routeErrorSubject = new Subject<{ newPost?: Post, error: unknown }>();
+  private readonly submittedRequestSubject = new Subject<PostRequest>();
+  private readonly routeErrorSubject = new Subject<{ newPost?: Post, error: unknown }>();
 
   constructor(
-    private blogService: BlogService,
-    private auth: AuthService,
-    private router: Router,
-    private route: ActivatedRoute,
+    private readonly blogService: BlogService,
+    private readonly auth: AuthService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) {
     this.vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
       startWith({ allCategories: [], isLoading: true, currentAuthor: null }),
@@ -63,7 +63,7 @@ export class EntryNewComponent {
 
   // TODO: reuse, entry-edit dupe
   private getAuthor(user?: User | null): Author | null {
-    return user && user.sub && user.name ? {
+    return user?.sub && user.name ? {
       username: user.sub,
       name: user.name,
     } : null;

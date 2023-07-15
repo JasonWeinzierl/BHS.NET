@@ -16,11 +16,11 @@ export class AppComponent implements OnInit {
   public loading$: Observable<boolean>;
 
   public constructor(
-    private router: Router,
-    private titleService: Title,
-    private activatedRoute: ActivatedRoute,
-    private insightsService: InsightsService,
-    private auth: AuthService,
+    private readonly router: Router,
+    private readonly titleService: Title,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly insightsService: InsightsService,
+    private readonly auth: AuthService,
   ) {
     this.insightsService.init();
     this.loading$ = merge(

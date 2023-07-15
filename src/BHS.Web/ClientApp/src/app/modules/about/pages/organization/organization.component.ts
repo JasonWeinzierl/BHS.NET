@@ -13,7 +13,7 @@ export class OrganizationComponent {
   vm$: Observable<{ officers: Array<Officer>, directors: Array<Director>, isLoading: boolean, error?: string }>;
 
   constructor(
-    private leadershipService: LeadershipService,
+    private readonly leadershipService: LeadershipService,
   ) {
     this.vm$ = combineLatest([this.leadershipService.getOfficers(), this.leadershipService.getDirectors()])
       .pipe(
