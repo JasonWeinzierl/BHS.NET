@@ -76,7 +76,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule | null) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 }
