@@ -35,7 +35,7 @@ export class PostsSearchComponent {
           return of({ posts: [], error: msg });
         }),
       )),
-      tap(() => this.isLoadingSubject.next(false)),
+      tap(() => { this.isLoadingSubject.next(false); }),
     );
   }
 

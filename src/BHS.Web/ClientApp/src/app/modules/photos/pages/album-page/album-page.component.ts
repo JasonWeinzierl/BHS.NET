@@ -40,7 +40,7 @@ export class AlbumPageComponent {
 
           if (currentIndex < 0) {
             this.router.navigate(['not-found'], { replaceUrl: true })
-              .catch((err: unknown) => console.error(err));
+              .catch((err: unknown) => { console.error(err); });
             return { previousPhotoId: '', nextPhotoId: '', error: 'Not found.', isLoading: false };
           } else {
             const currentPhoto = album.photos[currentIndex];

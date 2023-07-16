@@ -74,7 +74,7 @@ export class EntryNewComponent {
       exhaustMap(request => this.blogService.createPost(request)),
       map(newPost => {
         this.router.navigate(['../entry', newPost.slug], { relativeTo: this.route })
-          .catch((error: unknown) => this.routeErrorSubject.next({ error, newPost }));
+          .catch((error: unknown) => { this.routeErrorSubject.next({ error, newPost }); });
 
         // Instead of mapping the post into the VM, just keep loading until the route changes.
         return { isLoading: true, allCategories: [], currentAuthor: null };
