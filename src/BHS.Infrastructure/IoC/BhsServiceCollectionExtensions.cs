@@ -1,5 +1,4 @@
 ﻿using BHS.Domain;
-using BHS.Domain.Authors;
 using BHS.Domain.Banners;
 using BHS.Domain.Blog;
 using BHS.Domain.ContactUs;
@@ -65,7 +64,6 @@ public static class BhsServiceCollectionExtensions
         services.AddSingleton<ICategoryRepository, CategoryRepository>();
         services.AddSingleton<ILeadershipRepository, LeadershipRepository>();
         services.AddSingleton<IAlbumRepository, AlbumRepository>();
-        services.AddSingleton<IAuthorRepository, AuthorRepository>();
         services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();
         services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
         services.AddSingleton<ISequenceRepository, SequenceRepository>();
