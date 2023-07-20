@@ -5,5 +5,6 @@ public record Photo(
     string? Name,
     Uri ImagePath,
     DateTimeOffset DatePosted,
-    string? AuthorUsername,
+    [property: Obsolete("Will be removed in a future release")] string? AuthorUsername,
+    Author? Author,
     string? Description);

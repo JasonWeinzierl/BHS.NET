@@ -1,8 +1,10 @@
+import { Author } from '@data/authors';
+
 export interface Photo {
   id: string;
   name?: string;
   imagePath: string;
   datePosted: Date;
-  authorUsername?: string;
+  author?: Author;
   description?: string;
 }

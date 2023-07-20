@@ -19,7 +19,7 @@ public class AlbumRepository : IAlbumRepository
     {
         var results = await _mongoClient.GetBhsCollection<AlbumPhotosDto>("albums")
             .Aggregate()
-            .Project(x => new AlbumDto(x.Slug, x.Name, x.Description, x.BannerPhoto, x.BlogPostSlug, x.AuthorUsername))
+            .Project(x => new AlbumDto(x.Slug, x.Name, x.Description, x.BannerPhoto, x.BlogPostSlug, x.AuthorUsername, x.Author ?? null))
             .ToListAsync(cancellationToken);
 
         return results.Select(x => x.ToAlbum()).ToList();
@@ -31,7 +31,7 @@ public class AlbumRepository : IAlbumRepository
             .FindAsync(x => x.Slug == slug, cancellationToken: cancellationToken);
         var result = await cursor.SingleOrDefaultAsync(cancellationToken);
 
-        return result?.ToAlbumPhotos(null);
+        return result?.ToAlbumPhotos();
     }
 
     public async Task<Photo?> GetPhoto(string albumSlug, string photoId, CancellationToken cancellationToken = default)
@@ -58,6 +58,6 @@ public class AlbumRepository : IAlbumRepository
 
         _ = await collection.ReplaceOneAsync(x => x.Slug == dto.Slug, dto, replaceOptions, cancellationToken);
 
-        return dto.ToAlbumPhotos(albumPhotos.Author?.Name);
+        return dto.ToAlbumPhotos();
     }
 }
