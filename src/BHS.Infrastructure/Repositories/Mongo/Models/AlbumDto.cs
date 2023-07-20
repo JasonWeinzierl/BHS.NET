@@ -54,11 +54,11 @@ internal sealed record PhotoDto(
     string? Description)
 {
     public Photo ToPhoto()
-        => new(Id.ToString(), Name, new Uri(ImagePath), DatePosted, AuthorUsername, Author?.ToAuthor(), Description);
+        => new(Id.ToString(), Name, new Uri(ImagePath), DatePosted, Author?.ToAuthor(), Description);
 
     [return: NotNullIfNotNull(nameof(photo))]
     public static PhotoDto? FromPhoto(Photo? photo)
-        => photo is null ? null : new PhotoDto(ObjectId.Parse(photo.Id), photo.Name, photo.ImagePath.ToString(), photo.DatePosted, photo.AuthorUsername, AuthorDto.FromAuthor(photo.Author), photo.Description);
+        => photo is null ? null : new PhotoDto(ObjectId.Parse(photo.Id), photo.Name, photo.ImagePath.ToString(), photo.DatePosted, photo.Author?.Username, AuthorDto.FromAuthor(photo.Author), photo.Description);
 }
 
 internal sealed record UnwoundPhotosDto(IReadOnlyCollection<PhotoDto> Photos);
