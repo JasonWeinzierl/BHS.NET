@@ -4,7 +4,6 @@ export const paths = {
   contact: 'contact',
   blog: 'apps/blog',
   location: 'apps/location',
-  members: 'apps/members',
   profile: 'apps/profile',
   photos: 'apps/photos',
 };

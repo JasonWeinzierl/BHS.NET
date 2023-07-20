@@ -14,10 +14,6 @@ export class AuthorService {
     private readonly http: HttpClient,
   ) { }
 
-  getAuthors(): Observable<Array<Author>> {
-    return this.http.get<Array<Author>>(this.baseUrl);
-  }
-
   getAuthor(username: string): Observable<Author> {
     return this.http.get<Author>(this.baseUrl + '/' + username);
   }
