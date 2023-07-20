@@ -1,5 +1,5 @@
 import { Author, AuthorService } from '@data/authors';
-import { catchError, combineLatest, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -27,11 +27,8 @@ export class ProfileIndexComponent {
           }
           return username;
         }),
-        switchMap(username => combineLatest([
-          this.authorService.getAuthor(username),
-          this.authorService.getAuthorPosts(username),
-        ])),
-        map(value => ({ author: value[0], posts: value[1], isLoading: false }) ),
+        switchMap(username => this.authorService.getAuthorPosts(username)),
+        map(posts => ({ author: posts[0].author, posts, isLoading: false }) ),
         startWith({ posts: [], isLoading: true }),
         catchError((error: unknown) => {
           let msg = 'An error occurred.';
