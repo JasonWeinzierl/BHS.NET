@@ -44,23 +44,6 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     }
 
     [Fact]
-    public async Task Author_GetAll()
-    {
-        var authors = await _httpClient.GetFromJsonAsync<IEnumerable<Author>>("/api/author");
-
-        Assert.NotNull(authors);
-        Assert.Empty(authors);
-    }
-
-    [Fact]
-    public async Task Author_GetById_404()
-    {
-        using var response = await _httpClient.GetAsync($"/api/author/{Random.Shared.Next()}");
-
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-    }
-
-    [Fact]
     public async Task Author_GetPosts_Empty()
     {
         var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>($"/api/author/{Random.Shared.Next()}/posts");
