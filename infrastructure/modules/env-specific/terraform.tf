@@ -1,25 +1,25 @@
 terraform {
-  required_version = "~>1.3.9"
+  required_version = "~>1.5.3"
 
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~>3.49.0"
+      version = "~>3.65.0"
     }
 
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~>2.36.0"
+      version = "~>2.40.0"
     }
 
     github = {
       source  = "integrations/github"
-      version = "~>5.18.0"
+      version = "~>5.31.0"
     }
 
     auth0 = {
       source  = "auth0/auth0"
-      version = "~>0.45.0"
+      version = "~>0.50.0"
     }
 
     sendgrid = {

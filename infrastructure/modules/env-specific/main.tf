@@ -463,7 +463,6 @@ resource "auth0_client" "bhs_spa" {
   is_first_party             = true
   oidc_conformant            = true
   custom_login_page_on       = true
-  token_endpoint_auth_method = "none"
   jwt_configuration {
     alg                 = "RS256"
     lifetime_in_seconds = 36000
@@ -478,6 +477,12 @@ resource "auth0_client" "bhs_spa" {
   }
 }
 
+resource "auth0_client_credentials" "bhs_spa" {
+  client_id = auth0_client.bhs_spa.id
+
+  authentication_method = "none"
+}
+
 resource "auth0_resource_server" "bhs_api" {
   name        = "bhsapi"
   identifier  = "https://beltonhistoricalsociety.org/api/swagger/index.html"
@@ -486,9 +491,13 @@ resource "auth0_resource_server" "bhs_api" {
   enforce_policies                                = true
   token_dialect                                   = "access_token_authz"
   skip_consent_for_verifiable_first_party_clients = true
+}
+
+resource "auth0_resource_server_scopes" "bhs_api_scopes" {
+  resource_server_identifier = auth0_resource_server.bhs_api.identifier
 
   scopes {
-    value       = "write:blog"
+    name        = "write:blog"
     description = "Author blog resources"
   }
 }
@@ -496,10 +505,14 @@ resource "auth0_resource_server" "bhs_api" {
 resource "auth0_role" "owner" {
   name        = "Owner"
   description = "Full access to all resources"
+}
+
+resource "auth0_role_permissions" "owner_permissions" {
+  role_id = auth0_role.owner.id
 
   permissions {
-    name                       = "write:blog"
     resource_server_identifier = auth0_resource_server.bhs_api.identifier
+    name                       = "write:blog"
   }
 }
 

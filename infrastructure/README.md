@@ -9,7 +9,7 @@ cd modules/shared
 terraform init
 terraform apply
 
-cd modules/env-specific
+cd ../env-specific
 terraform init
 
 ../../LoadDotEnv.ps1 staging
