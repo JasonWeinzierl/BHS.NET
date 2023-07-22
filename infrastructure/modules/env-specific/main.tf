@@ -228,6 +228,17 @@ resource "azurerm_key_vault_secret" "bhs_db_connstr" {
   ]
 }
 
+resource "azurerm_key_vault_secret" "auth0_management_client_secret" {
+  key_vault_id = azurerm_key_vault.bhs.id
+
+  name  = "auth0-management-client-secret"
+  value = auth0_client_credentials.bhs_api.client_secret
+
+  depends_on = [
+    azurerm_role_assignment.me_admin,
+  ]
+}
+
 data "azurerm_app_configuration" "bhs" {
   name                = "bhs-shared-web-appcs"
   resource_group_name = data.azurerm_resource_group.bhs_shared.name
@@ -309,6 +320,32 @@ resource "azurerm_app_configuration_key" "auth0_domain" {
   label = var.environment
   key   = "AUTH0_DOMAIN"
   value = data.auth0_tenant.bhs.domain
+}
+
+resource "azurerm_app_configuration_key" "auth0_management_domain" {
+  configuration_store_id = data.azurerm_app_configuration.bhs.id
+
+  label = var.environment
+  key   = "Auth0ManagementApiOptions:Domain"
+  value = data.auth0_tenant.bhs.domain
+}
+
+resource "azurerm_app_configuration_key" "auth0_management_client_id" {
+  configuration_store_id = data.azurerm_app_configuration.bhs.id
+
+  label = var.environment
+  key   = "Auth0ManagementApiOptions:ClientId"
+  value = auth0_client_credentials.bhs_api.client_id
+}
+
+resource "azurerm_app_configuration_key" "auth0_management_client_secret" {
+  configuration_store_id = data.azurerm_app_configuration.bhs.id
+
+  label = var.environment
+  key   = "Auth0ManagementApiOptions:ClientSecret"
+
+  type                = "vault"
+  vault_key_reference = azurerm_key_vault_secret.auth0_management_client_secret.versionless_id
 }
 
 
@@ -451,7 +488,7 @@ data "auth0_client" "terraform" {
 }
 
 resource "auth0_client" "bhs_spa" {
-  name        = "BHS"
+  name        = "BHS Angular Client"
   description = ""
   app_type    = "spa"
 
@@ -460,14 +497,16 @@ resource "auth0_client" "bhs_spa" {
   web_origins         = local.hostnames
   logo_uri            = "https://beltonhistoricalsociety.org/assets/img/2019/icons/apple-touch-icon.png"
 
-  is_first_party             = true
-  oidc_conformant            = true
-  custom_login_page_on       = true
+  is_first_party       = true
+  oidc_conformant      = true
+  custom_login_page_on = true
+
   jwt_configuration {
     alg                 = "RS256"
     lifetime_in_seconds = 36000
     secret_encoded      = false
   }
+
   refresh_token {
     expiration_type              = "non-expiring"
     rotation_type                = "non-rotating"
@@ -483,8 +522,51 @@ resource "auth0_client_credentials" "bhs_spa" {
   authentication_method = "none"
 }
 
+resource "auth0_client" "bhs_api" {
+  name        = "BHS .NET Client"
+  description = ""
+  app_type    = "non_interactive"
+
+  is_first_party       = true
+  oidc_conformant      = true
+  custom_login_page_on = true
+
+  jwt_configuration {
+    alg                 = "RS256"
+    lifetime_in_seconds = 36000
+    secret_encoded      = false
+  }
+
+  refresh_token {
+    expiration_type              = "non-expiring"
+    rotation_type                = "non-rotating"
+    leeway                       = 0
+    infinite_token_lifetime      = true
+    infinite_idle_token_lifetime = true
+  }
+
+  grant_types = [
+    "client_credentials",
+  ]
+}
+
+resource "auth0_client_credentials" "bhs_api" {
+  client_id = auth0_client.bhs_api.id
+
+  authentication_method = "client_secret_post"
+}
+
+resource "auth0_client_grant" "bhs_api_auth0_management" {
+  client_id = auth0_client.bhs_api.id
+  audience  = data.auth0_tenant.bhs.management_api_identifier
+
+  scope = [
+    "read:users",
+  ]
+}
+
 resource "auth0_resource_server" "bhs_api" {
-  name        = "bhsapi"
+  name        = "BHS .NET API"
   identifier  = "https://beltonhistoricalsociety.org/api/swagger/index.html"
   signing_alg = "RS256"
 
@@ -514,6 +596,10 @@ resource "auth0_role_permissions" "owner_permissions" {
     resource_server_identifier = auth0_resource_server.bhs_api.identifier
     name                       = "write:blog"
   }
+
+  depends_on = [
+    auth0_resource_server_scopes.bhs_api_scopes
+  ]
 }
 
 resource "auth0_connection" "bhs_userpassauth" {
