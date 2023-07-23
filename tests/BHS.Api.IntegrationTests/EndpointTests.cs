@@ -44,6 +44,14 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     }
 
     [Fact]
+    public async Task Author_GetByAuthUserId_InvalidFormat_400()
+    {
+        using var response = await _httpClient.GetAsync("/api/author?authUserId=12345");
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task Author_GetPosts_Empty()
     {
         var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>($"/api/author/{Random.Shared.Next()}/posts");
