@@ -20,7 +20,7 @@ public class LeadershipRepository : ILeadershipRepository
     public async Task<IReadOnlyCollection<Director>> GetCurrentDirectors(CancellationToken cancellationToken = default)
         => await _mongoClient.GetBhsCollection<DirectorDto>("directors")
             .Aggregate()
-            .Match(x => x.Year > _dateTimeOffsetProvider.CurrentYear())
+            .Match(x => x.Year >= _dateTimeOffsetProvider.CurrentYear())
             .Project(x => new Director(x.Name, x.Year.ToString()))
             .ToListAsync(cancellationToken);
 
