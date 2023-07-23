@@ -1,4 +1,5 @@
-﻿using EphemeralMongo;
+﻿using Auth0.ManagementApi;
+using EphemeralMongo;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using Moq;
 
 namespace BHS.Api.IntegrationTests;
 
@@ -16,6 +18,8 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
     private readonly IMongoRunner _mongoRunner;
     private readonly MongoUrl _mongoUrl;
     private bool _disposedValue;
+
+    public Mock<IManagementConnection> MockManagementConnection { get; } = new(MockBehavior.Strict);
 
     public BhsWebApplicationFactory()
     {
@@ -48,6 +52,10 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
                 // Replace any occurrence of the MongoDB connection string.
                 { "ConnectionStrings:bhsMongo", _mongoUrl.ToString() },
                 { "Serilog:WriteTo:0:Args:databaseUrl", _mongoUrl.ToString() },
+
+                { "Auth0ManagementApiOptions:Domain", "test.com" },
+                { "Auth0ManagementApiOptions:ClientId", "foo" },
+                { "Auth0ManagementApiOptions:ClientSecret", "bar" },
             });
         });
 
@@ -56,6 +64,10 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
             // Disable auth for testing.
             services.RemoveAll<IPolicyEvaluator>();
             services.AddSingleton<IPolicyEvaluator, NoAuthEvaluator>();
+
+            // Mock Auth0 management api.
+            services.RemoveAll<IManagementConnection>();
+            services.AddSingleton(provider => MockManagementConnection.Object);
 
             // SendGrid healthcheck is more appropriate for smoke tests, not integration tests.
             services.PostConfigure<HealthCheckServiceOptions>(opt =>
