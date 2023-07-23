@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthorService } from '@data/authors';
 import { AuthService } from '@auth0/auth0-angular';
 import { BlogService } from '@data/blog';
 import { EMPTY } from 'rxjs';
@@ -20,6 +21,9 @@ describe('EntryNewComponent', () => {
         }),
         MockProvider(AuthService, {
           user$: EMPTY,
+        }),
+        MockProvider(AuthorService, {
+          getAuthors: () => EMPTY,
         }),
       ],
     });

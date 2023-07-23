@@ -1,9 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, User } from '@auth0/auth0-angular';
+import { Author, AuthorService } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
 import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Author } from '@data/authors';
+import { AuthService } from '@auth0/auth0-angular';
 
 interface EntryNewVm {
   currentAuthor: Author | null;
@@ -28,6 +28,7 @@ export class EntryNewComponent {
     private readonly auth: AuthService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
+    private readonly authorService: AuthorService,
   ) {
     this.vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
       startWith({ allCategories: [], isLoading: true, currentAuthor: null }),
@@ -48,8 +49,11 @@ export class EntryNewComponent {
   private getInitialVm$(): Observable<EntryNewVm> {
     // TODO: entry-edit can be simplified to use combineLatest too?
     return combineLatest([this.blogService.getCategories(), this.auth.user$]).pipe(
-      map(([ allCategories, user ]) => {
-        const currentAuthor = this.getAuthor(user);
+      switchMap(([ allCategories, user ]) => (user?.sub ? this.authorService.getAuthors(user.sub) : of([])).pipe(
+        map(authors => ({ allCategories, authors })),
+      )),
+      map(({ allCategories, authors }) => {
+        const currentAuthor = authors.length ? authors[0] : null; // TODO: support user picking from multiple authors.
 
         return { currentAuthor, allCategories, isLoading: false };
       }),
@@ -59,14 +63,6 @@ export class EntryNewComponent {
         map(isSubmitting => ({ ...vm, isLoading: isSubmitting })),
       )),
     );
-  }
-
-  // TODO: reuse, entry-edit dupe
-  private getAuthor(user?: User | null): Author | null {
-    return user?.sub && user.name ? {
-      username: user.sub,
-      name: user.name,
-    } : null;
   }
 
   private getCreatedPost$(): Observable<EntryNewVm> {
