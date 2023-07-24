@@ -4,8 +4,13 @@
 
       <h1>Admin</h1>
 
+      <h2>User</h2>
       <pre *ngIf="user$ | async as user">{{user | json}}</pre>
 
+      <h2>Access Token</h2>
+      <pre *ngIf="accessToken$ | async as accessToken">{{accessToken | json}}</pre>
+
+      <h2>Actions</h2>
       <a [routerLink]="['/home']">Home</a>
 
       <button type="button" class="btn btn-secondary" (click)="handleLogout()">Log out</button>
