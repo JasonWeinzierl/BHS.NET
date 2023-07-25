@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdminIndexComponent } from './admin-index.component';
 import { AuthService } from '@auth0/auth0-angular';
+import { EMPTY } from 'rxjs';
 import { MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -13,7 +14,10 @@ describe('AdminIndexComponent', () => {
       imports: [ RouterTestingModule ],
       declarations: [ AdminIndexComponent ],
       providers: [
-        MockProvider(AuthService),
+        MockProvider(AuthService, {
+          user$: EMPTY,
+          getAccessTokenSilently: () => EMPTY,
+        }),
       ],
     })
     .compileComponents();
