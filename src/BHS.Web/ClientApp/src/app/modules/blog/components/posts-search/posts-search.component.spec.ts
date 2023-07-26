@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockPipe, MockProvider } from 'ng-mocks';
-import { BlogService } from '@data/blog';
 import { FormsModule } from '@angular/forms';
+import { MockPipe, MockProvider } from 'ng-mocks';
 import { PostsSearchComponent } from './posts-search.component';
+import { BlogService } from '@data/blog';
 import { SortByPipe } from '@shared/pipes/sort-by.pipe';
 
 describe('PostsSearchComponent', () => {

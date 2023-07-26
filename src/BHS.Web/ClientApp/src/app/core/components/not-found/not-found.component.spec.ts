@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { MockProvider } from 'ng-mocks';
-import { NotFoundComponent } from './not-found.component';
-import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockProvider } from 'ng-mocks';
+import { of } from 'rxjs';
+import { NotFoundComponent } from './not-found.component';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;

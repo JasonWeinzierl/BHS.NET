@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AdminIndexComponent } from './admin-index.component';
-import { AuthService } from '@auth0/auth0-angular';
-import { EMPTY } from 'rxjs';
-import { MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '@auth0/auth0-angular';
+import { MockProvider } from 'ng-mocks';
+import { EMPTY } from 'rxjs';
+import { AdminIndexComponent } from './admin-index.component';
 
 describe('AdminIndexComponent', () => {
   let component: AdminIndexComponent;

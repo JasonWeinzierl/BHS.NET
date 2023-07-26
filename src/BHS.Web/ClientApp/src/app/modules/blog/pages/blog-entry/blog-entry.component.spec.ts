@@ -1,16 +1,16 @@
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockProvider } from 'ng-mocks';
-import { of, throwError } from 'rxjs';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '@auth0/auth0-angular';
+import { MockComponent, MockProvider } from 'ng-mocks';
+import { MarkdownComponent } from 'ngx-markdown';
+import { ToastrService } from 'ngx-toastr';
+import { of, throwError } from 'rxjs';
 import { BlogEntryComponent } from './blog-entry.component';
 import { BlogService } from '@data/blog';
-import { DateComponent } from '@shared/components/date/date.component';
-import { EntryAlbumComponent } from '@modules/blog/components/entry-album/entry-album.component';
-import { MarkdownComponent } from 'ngx-markdown';
 import { PhotosService } from '@data/photos';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ToastrService } from 'ngx-toastr';
+import { EntryAlbumComponent } from '@modules/blog/components/entry-album/entry-album.component';
+import { DateComponent } from '@shared/components/date/date.component';
 
 describe('BlogEntryComponent', () => {
   let component: BlogEntryComponent;

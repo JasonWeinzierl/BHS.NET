@@ -64,10 +64,23 @@
           "error",
           "always"
         ],
-        "sort-imports": [
+        "sort-imports": [ // For sorting members.
           "warn",
           {
-            "ignoreCase": true
+            "ignoreCase": true,
+            "ignoreDeclarationSort": true // Handled by import/order.
+          }
+        ],
+
+        // import
+        "import/order": [ // For sorting declarations.
+          "warn",
+          {
+            "alphabetize": {
+              "order": "asc",
+              "orderImportKind": "asc",
+              "caseInsensitive": true
+            }
           }
         ],
 

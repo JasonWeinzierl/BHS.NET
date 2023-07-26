@@ -1,24 +1,24 @@
-import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
-import { BrowserModule, Title } from '@angular/platform-browser';
-import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AlertModule } from 'ngx-bootstrap/alert';
-import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
-import { auth0ConfigProvider } from './providers/auth0-config.provider';
-import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-options.provider';
+import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { RouterModule } from '@angular/router';
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { MarkdownModule } from 'ngx-markdown';
+import { ToastrModule } from 'ngx-toastr';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { MarkdownModule } from 'ngx-markdown';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { RouterModule } from '@angular/router';
 import { throwIfAlreadyLoaded } from './guards/module-import.guard';
-import { ToastrModule } from 'ngx-toastr';
+import { auth0ConfigProvider } from './providers/auth0-config.provider';
+import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-options.provider';
 
 /**
  * Resources used by AppModule which are always and only loaded once.

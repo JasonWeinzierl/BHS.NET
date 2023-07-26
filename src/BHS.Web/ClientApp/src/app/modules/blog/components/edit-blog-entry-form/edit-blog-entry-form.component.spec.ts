@@ -1,10 +1,10 @@
-import { Category, Post } from '@data/blog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Author } from '@data/authors';
-import { BsDatepickerDirective } from 'ngx-bootstrap/datepicker';
-import { EditBlogEntryFormComponent } from './edit-blog-entry-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BsDatepickerDirective } from 'ngx-bootstrap/datepicker';
+import { EditBlogEntryFormComponent } from './edit-blog-entry-form.component';
+import { Author } from '@data/authors';
+import { Category, Post } from '@data/blog';
 
 const createPost = (): Post => ({
   slug: '1-post',

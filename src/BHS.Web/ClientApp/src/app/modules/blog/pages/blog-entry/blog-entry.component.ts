@@ -1,11 +1,11 @@
-import { AlbumPhotos, PhotosService } from '@data/photos';
-import { BlogService, Post } from '@data/blog';
-import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { BlogService, Post } from '@data/blog';
+import { AlbumPhotos, PhotosService } from '@data/photos';
 
 @Component({
   selector: 'app-blog-entry',

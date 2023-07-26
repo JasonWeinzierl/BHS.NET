@@ -1,7 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, TrackByFunction } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { BlogService, PostPreview } from '@data/blog';
-import { ChangeDetectionStrategy, Component, TrackByFunction } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-posts-search',

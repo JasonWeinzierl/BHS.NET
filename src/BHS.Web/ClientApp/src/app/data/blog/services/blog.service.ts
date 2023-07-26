@@ -1,7 +1,7 @@
-import { CategoryPosts, CategorySummary, Post, PostPreview, PostRequest } from '../models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CategoryPosts, CategorySummary, Post, PostPreview, PostRequest } from '../models';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,7 @@
-import { Album, PhotosService } from '@data/photos';
-import { catchError, map, Observable, of, startWith } from 'rxjs';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { catchError, map, Observable, of, startWith } from 'rxjs';
+import { Album, PhotosService } from '@data/photos';
 
 @Component({
   selector: 'app-photos-index',

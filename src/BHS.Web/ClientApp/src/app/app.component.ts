@@ -1,10 +1,10 @@
-import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { filter, map } from 'rxjs/operators';
-import { merge, Observable } from 'rxjs';
-import { AuthService } from '@auth0/auth0-angular';
-import { InsightsService } from '@core/services/insights.service';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
+import { merge, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { InsightsService } from '@core/services/insights.service';
 
 @Component({
   selector: 'app-root',

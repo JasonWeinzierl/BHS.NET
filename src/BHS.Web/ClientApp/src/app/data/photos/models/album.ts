@@ -1,5 +1,5 @@
-import { Author } from '@data/authors';
 import { Photo } from './photo';
+import { Author } from '@data/authors';
 
 export interface Album {
   slug: string;

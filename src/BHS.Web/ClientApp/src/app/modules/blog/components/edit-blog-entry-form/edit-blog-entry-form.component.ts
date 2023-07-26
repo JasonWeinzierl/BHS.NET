@@ -1,7 +1,7 @@
-import { Category, Post, PostRequest } from '@data/blog';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Author } from '@data/authors';
+import { Category, Post, PostRequest } from '@data/blog';
 
 type EditFormGroup = FormGroup<{
   title: FormControl<string>;

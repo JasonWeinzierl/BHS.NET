@@ -1,5 +1,5 @@
-import { MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import { FactoryProvider } from '@angular/core';
+import { MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 
 const markedOptionsFactory = (): MarkedOptions => {
   const renderer = new MarkedRenderer();

@@ -1,5 +1,5 @@
-import { Author } from '@data/authors';
 import { Category } from './category';
+import { Author } from '@data/authors';
 
 export interface Post {
   slug: string;

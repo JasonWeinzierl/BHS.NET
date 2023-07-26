@@ -1,10 +1,10 @@
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EMPTY, of } from 'rxjs';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { AlertComponent } from 'ngx-bootstrap/alert';
-import { BlogService } from '@data/blog';
+import { EMPTY, of } from 'rxjs';
 import { CategoryPostsComponent } from './category-posts.component';
+import { BlogService } from '@data/blog';
 
 describe('CategoryPostsComponent', () => {
   let component: CategoryPostsComponent;

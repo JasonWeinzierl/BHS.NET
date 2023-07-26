@@ -1,7 +1,7 @@
-import { Director } from '@data/leadership/models/director';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Director } from '@data/leadership/models/director';
 import { Officer } from '@data/leadership/models/officer';
 
 @Injectable({

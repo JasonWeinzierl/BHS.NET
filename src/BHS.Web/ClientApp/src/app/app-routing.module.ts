@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@auth0/auth0-angular';
-import { ContentLayoutComponent } from './core/components/content-layout/content-layout.component';
-import { NgModule } from '@angular/core';
-import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { paths } from './app-paths';
+import { ContentLayoutComponent } from './core/components/content-layout/content-layout.component';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { resolveClosestPath } from '@core/resolvers/closest-path.resolver';
 
 const routes: Routes = [

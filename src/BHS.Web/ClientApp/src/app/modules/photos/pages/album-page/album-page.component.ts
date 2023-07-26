@@ -1,8 +1,8 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
-import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
 
 type AlbumPageVm = Observable<{ album?: AlbumPhotos, currentPhoto?: Photo, previousPhotoId: string, nextPhotoId: string, isLoading: boolean, error?: string }>;
 

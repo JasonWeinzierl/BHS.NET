@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthorService } from '@data/authors';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '@auth0/auth0-angular';
-import { BlogService } from '@data/blog';
+import { MockProvider } from 'ng-mocks';
 import { EMPTY } from 'rxjs';
 import { EntryNewComponent } from './entry-new.component';
-import { MockProvider } from 'ng-mocks';
-import { RouterTestingModule } from '@angular/router/testing';
+import { AuthorService } from '@data/authors';
+import { BlogService } from '@data/blog';
 
 describe('EntryNewComponent', () => {
   let component: EntryNewComponent;

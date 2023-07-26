@@ -1,8 +1,8 @@
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { MockProvider } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
 import { AlbumComponent } from './album.component';
-import { MockProvider } from 'ng-mocks';
 import { PhotosService } from '@data/photos/services/photos.service';
 
 describe('AlbumComponent', () => {

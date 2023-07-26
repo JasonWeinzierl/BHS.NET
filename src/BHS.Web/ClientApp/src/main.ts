@@ -1,6 +1,6 @@
-import { AppEnvironment } from './environments';
-import { AppModule } from './app/app.module';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+import { AppEnvironment } from './environments';
 
 fetch('/api/client-app-environment')
   .then(async response => {

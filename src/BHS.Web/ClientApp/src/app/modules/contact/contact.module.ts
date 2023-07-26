@@ -1,7 +1,7 @@
-import { ContactComponent } from './pages/contact.component';
-import { ContactFormComponent } from './pages/contact-form/contact-form.component';
-import { ContactRoutingModule } from './contact-routing.module';
 import { NgModule } from '@angular/core';
+import { ContactRoutingModule } from './contact-routing.module';
+import { ContactFormComponent } from './pages/contact-form/contact-form.component';
+import { ContactComponent } from './pages/contact.component';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({

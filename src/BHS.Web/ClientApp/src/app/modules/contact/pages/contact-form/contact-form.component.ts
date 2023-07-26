@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ContactAlertRequest, ContactService } from '@data/contact-us';
-import { FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ContactAlertRequest, ContactService } from '@data/contact-us';
 
 @Component({
   selector: 'app-contact-form',

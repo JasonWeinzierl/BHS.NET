@@ -1,13 +1,13 @@
-import { ActivatedRoute, convertToParamMap, RouterLink } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute, convertToParamMap, RouterLink } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockProvider } from 'ng-mocks';
+import { AlertComponent } from 'ngx-bootstrap/alert';
+import { of } from 'rxjs';
 import { AlbumPageComponent } from './album-page.component';
 import { AlbumPhotos } from '@data/photos';
-import { AlertComponent } from 'ngx-bootstrap/alert';
-import { By } from '@angular/platform-browser';
-import { MockProvider } from 'ng-mocks';
-import { of } from 'rxjs';
 import { PhotosService } from '@data/photos/services/photos.service';
-import { RouterTestingModule } from '@angular/router/testing';
 
 const createAlbum = (): AlbumPhotos => ({
   slug: 'album-three',

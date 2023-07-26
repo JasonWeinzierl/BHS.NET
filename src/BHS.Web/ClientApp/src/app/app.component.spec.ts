@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppComponent } from '@app/app.component';
-import { AuthService } from '@auth0/auth0-angular';
-import { InsightsService } from '@core/services/insights.service';
-import { MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '@auth0/auth0-angular';
+import { MockProvider } from 'ng-mocks';
+import { AppComponent } from '@app/app.component';
+import { InsightsService } from '@core/services/insights.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;

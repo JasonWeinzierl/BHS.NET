@@ -1,8 +1,8 @@
-import { Author, AuthorService } from '@data/authors';
-import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
+import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { Author, AuthorService } from '@data/authors';
 import { PostPreview } from '@data/blog';
 
 @Component({

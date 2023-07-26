@@ -1,11 +1,11 @@
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EMPTY, of } from 'rxjs';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { AlertComponent } from 'ngx-bootstrap/alert';
-import { AuthService } from '@auth0/auth0-angular';
-import { BlogService } from '@data/blog';
+import { EMPTY, of } from 'rxjs';
 import { EntryEditComponent } from './entry-edit.component';
+import { BlogService } from '@data/blog';
 
 describe('EntryEditComponent', () => {
   let component: EntryEditComponent;

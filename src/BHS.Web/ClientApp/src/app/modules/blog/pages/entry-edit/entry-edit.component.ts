@@ -1,9 +1,9 @@
-import { AuthService, User } from '@auth0/auth0-angular';
-import { BlogService, Category, Post, PostRequest } from '@data/blog';
-import { catchError, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService, User } from '@auth0/auth0-angular';
+import { catchError, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
 import { Author } from '@data/authors';
+import { BlogService, Category, Post, PostRequest } from '@data/blog';
 
 interface EntryEditVm {
   post?: Post;

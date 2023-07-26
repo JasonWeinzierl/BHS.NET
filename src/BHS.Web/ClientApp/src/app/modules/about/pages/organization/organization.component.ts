@@ -1,7 +1,7 @@
-import { catchError, combineLatest, map, Observable, of, startWith } from 'rxjs';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Director, LeadershipService, Officer } from '@data/leadership';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { catchError, combineLatest, map, Observable, of, startWith } from 'rxjs';
+import { Director, LeadershipService, Officer } from '@data/leadership';
 
 @Component({
   selector: 'app-organization',

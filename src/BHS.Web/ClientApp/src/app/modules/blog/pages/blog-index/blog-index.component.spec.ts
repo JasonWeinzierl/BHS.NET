@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockProvider } from 'ng-mocks';
+import { EMPTY } from 'rxjs';
 import { BlogIndexComponent } from './blog-index.component';
 import { BlogService } from '@data/blog';
 import { CategoriesListViewComponent } from '@modules/blog/components/categories-list-view/categories-list-view.component';
-import { EMPTY } from 'rxjs';
 import { PostsSearchComponent } from '@modules/blog/components/posts-search/posts-search.component';
 
 describe('BlogIndexComponent', () => {

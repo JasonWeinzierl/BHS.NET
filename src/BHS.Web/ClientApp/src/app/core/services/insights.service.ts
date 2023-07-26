@@ -1,8 +1,8 @@
 import { ErrorHandler, Injectable } from '@angular/core';
-import { AngularPlugin } from '@microsoft/applicationinsights-angularplugin-js';
-import { AppEnvironment } from 'src/environments';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { Router } from '@angular/router';
+import { AngularPlugin } from '@microsoft/applicationinsights-angularplugin-js';
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { AppEnvironment } from 'src/environments';
 
 @Injectable({
   providedIn: 'root',

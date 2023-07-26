@@ -1,7 +1,7 @@
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './pages/about/about.component';
 import { DonationsComponent } from './pages/donations/donations.component';
-import { NgModule } from '@angular/core';
 import { OrganizationComponent } from './pages/organization/organization.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './pages/terms-of-service/terms-of-service.component';

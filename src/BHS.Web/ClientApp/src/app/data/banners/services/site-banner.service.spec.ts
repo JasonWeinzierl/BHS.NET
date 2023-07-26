@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SiteBannerService } from './site-banner.service';
 import { TestBed } from '@angular/core/testing';
+import { SiteBannerService } from './site-banner.service';
 
 describe('SiteBannerService', () => {
   let service: SiteBannerService;

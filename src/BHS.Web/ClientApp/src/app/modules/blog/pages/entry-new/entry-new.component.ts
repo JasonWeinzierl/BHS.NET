@@ -1,9 +1,9 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
+import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
 import { Author, AuthorService } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
-import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 
 interface EntryNewVm {
   currentAuthor: Author | null;
