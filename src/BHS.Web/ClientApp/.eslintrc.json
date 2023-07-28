@@ -16,13 +16,13 @@
         "*.ts"
       ],
       "plugins": [
-        "deprecation",
         "jsdoc"
       ],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/strict-type-checked",
         "plugin:@typescript-eslint/stylistic-type-checked",
+        "plugin:deprecation/recommended",
         "plugin:import/recommended",
         "plugin:import/typescript",
         "plugin:jsdoc/recommended-typescript"
@@ -113,9 +113,6 @@
             "ignoreStatic": true
           }
         ],
-
-        // deprecation
-        "deprecation/deprecation": "error",
 
         // jsdoc
         "valid-jsdoc": "off",
