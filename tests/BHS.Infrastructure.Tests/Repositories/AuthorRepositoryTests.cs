@@ -2,8 +2,8 @@
 using Auth0.ManagementApi.Clients;
 using Auth0.ManagementApi.Models;
 using BHS.Infrastructure.Repositories.Auth0;
-using Moq;
 using Newtonsoft.Json.Linq;
+using NSubstitute;
 using System.Text.Json;
 using Xunit;
 
@@ -11,14 +11,14 @@ namespace BHS.Infrastructure.Tests.Repositories;
 
 public class AuthorRepositoryTests
 {
-    private readonly Mock<IUsersClient> _mockUsersClient = new(MockBehavior.Strict);
-    private readonly Mock<IManagementApiClient> _mockManagementApiClient = new(MockBehavior.Strict);
+    private readonly IUsersClient _usersClient = Substitute.For<IUsersClient>();
+    private readonly IManagementApiClient _managementApiClient = Substitute.For<IManagementApiClient>();
 
-    private AuthorRepository Subject => new(_mockManagementApiClient.Object);
+    private AuthorRepository Subject => new(_managementApiClient);
 
     public AuthorRepositoryTests()
     {
-        _mockManagementApiClient.SetupGet(c => c.Users).Returns(_mockUsersClient.Object);
+        _managementApiClient.Users.Returns(_usersClient);
     }
 
     [Fact]
@@ -37,9 +37,9 @@ public class AuthorRepositoryTests
                 },
             }),
         };
-        _mockUsersClient
-            .Setup(c => c.GetAsync(userId, null, true, default))
-            .ReturnsAsync(user);
+        _usersClient
+            .GetAsync(userId, null, true, default)
+            .Returns(user);
 
         // Act
         var authors = await Subject.GetByAuthUserId(userId);
@@ -66,9 +66,9 @@ public class AuthorRepositoryTests
                 },
             }),
         };
-        _mockUsersClient
-            .Setup(c => c.GetAsync(userId, null, true, default))
-            .ReturnsAsync(user);
+        _usersClient
+            .GetAsync(userId, null, true, default)
+            .Returns(user);
 
         // Act
         var authors = await Subject.GetByAuthUserId(userId);

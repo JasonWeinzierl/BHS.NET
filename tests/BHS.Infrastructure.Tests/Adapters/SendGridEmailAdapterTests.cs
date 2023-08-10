@@ -1,7 +1,7 @@
 ﻿using BHS.Domain.Notifications;
 using BHS.Infrastructure.Adapters;
 using Microsoft.Extensions.Options;
-using Moq;
+using NSubstitute;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Net;
@@ -12,9 +12,9 @@ namespace BHS.Infrastructure.Tests.Adapters;
 public class SendGridEmailAdapterTests
 {
     private readonly NotificationOptions _options = new();
-    private readonly Mock<ISendGridClient> _mockSgClient = new(MockBehavior.Strict);
+    private readonly ISendGridClient _sgClient = Substitute.For<ISendGridClient>();
 
-    private SendGridEmailAdapter Subject => new(Options.Create(_options), _mockSgClient.Object);
+    private SendGridEmailAdapter Subject => new(Options.Create(_options), _sgClient);
 
     [Fact]
     public async Task SendsMessage()
@@ -27,17 +27,15 @@ public class SendGridEmailAdapterTests
         var httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
 
         SendGridMessage? sent = null;
-        _mockSgClient
-            .Setup(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new Response(httpResponse.StatusCode, httpResponse.Content, httpResponse.Headers))
-            .Callback((SendGridMessage m, CancellationToken ct) => sent = m);
+        _sgClient
+            .SendEmailAsync(Arg.Do<SendGridMessage>(m => sent = m), Arg.Any<CancellationToken>())
+            .Returns(new Response(httpResponse.StatusCode, httpResponse.Content, httpResponse.Headers));
 
         // Act
         var response = await Subject.Send(request);
 
         // Assert
-        _mockSgClient.Verify(c => c.SendEmailAsync(It.IsAny<SendGridMessage>(), default), Times.Once);
-        _mockSgClient.VerifyNoOtherCalls();
+        await _sgClient.Received(1).SendEmailAsync(Arg.Any<SendGridMessage>(), default);
 
         Assert.NotNull(sent);
         Assert.Equal("test@test.com", sent.From.Email);
