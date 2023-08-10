@@ -4,6 +4,7 @@ using BHS.Web.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using NSubstitute;
 using Xunit;
 
 namespace BHS.Web.Tests.Controllers;
@@ -31,8 +32,8 @@ public sealed class ControllerTestsClassFixture
         Services = new ServiceCollection();
 
         // Mock any services which shouldn't be instantiated.
-        Services.AddSingleton(Moq.Mock.Of<IMongoClient>());
-        Services.AddSingleton(Moq.Mock.Of<IManagementConnection>());
+        Services.AddSingleton(Substitute.For<IMongoClient>());
+        Services.AddSingleton(Substitute.For<IManagementConnection>());
 
         // Subject under test.
         Services.AddBhsServices();
