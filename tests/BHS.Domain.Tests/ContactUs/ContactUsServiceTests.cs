@@ -3,7 +3,7 @@ using BHS.Domain.ContactUs;
 using BHS.Domain.Notifications;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace BHS.Domain.Tests.ContactUs;
@@ -11,13 +11,11 @@ namespace BHS.Domain.Tests.ContactUs;
 public class ContactUsServiceTests
 {
     private readonly ContactUsOptions _settings = new();
-    private readonly Mock<IContactAlertRepository> _mockRepo = new(MockBehavior.Strict);
-    private readonly Mock<IEmailAdapter> _mockEmailAdapter = new(MockBehavior.Strict);
-    private readonly Mock<ILogger<ContactUsService>> _mockLogger = new();
+    private readonly IContactAlertRepository _repo = Substitute.For<IContactAlertRepository>();
+    private readonly IEmailAdapter _emailAdapter = Substitute.For<IEmailAdapter>();
+    private readonly ILogger<ContactUsService> _logger = Substitute.For<ILogger<ContactUsService>>();
 
-    private ContactUsService Subject => new(Options.Create(_settings), _mockRepo.Object, _mockEmailAdapter.Object, _mockLogger.Object);
-
-    private void VerifyAll() => Mock.VerifyAll(_mockRepo, _mockEmailAdapter, _mockLogger);
+    private ContactUsService Subject => new(Options.Create(_settings), _repo, _emailAdapter, _logger);
 
     public class AddRequest : ContactUsServiceTests
     {
@@ -26,19 +24,24 @@ public class ContactUsServiceTests
         {
             // Arrange
             var request = new ContactAlertRequest(default, "x", default, default, null);
-            _mockRepo
-                .Setup(r => r.Insert(request, default))
-                .ReturnsAsync(() => new ContactAlert("1", default, string.Empty, default, default, default));
-            _mockEmailAdapter
-                .Setup(c => c.Send(It.IsAny<EmailMessageRequest>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => new EmailMessageResponse(System.Net.HttpStatusCode.OK, new StringContent("")));
+            _repo
+                .Insert(request, default)
+                .Returns(new ContactAlert("1", default, string.Empty, default, default, default));
+            _emailAdapter
+                .Send(Arg.Any<EmailMessageRequest>(), Arg.Any<CancellationToken>())
+                .Returns(new EmailMessageResponse(System.Net.HttpStatusCode.OK, new StringContent("")));
 
             // Act
             var result = await Subject.AddRequest(request);
 
             // Assert
             Assert.NotNull(result);
-            VerifyAll();
+            await _repo
+                .Received(1)
+                .Insert(request, default);
+            await _emailAdapter
+                .Received(1)
+                .Send(Arg.Any<EmailMessageRequest>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -52,8 +55,12 @@ public class ContactUsServiceTests
 
             // Assert
             Assert.Null(result);
-            _mockRepo.Verify(r => r.Insert(It.IsAny<ContactAlertRequest>(), default), Times.Never, "Expected insert to never be called if body (honeypot) has value.");
-            _mockEmailAdapter.Verify(c => c.Send(It.IsAny<EmailMessageRequest>(), It.IsAny<CancellationToken>()), Times.Never, "Expected message to never be sent if body (honeypot) has value.");
+            await _repo
+                .DidNotReceiveWithAnyArgs()
+                .Insert(Arg.Any<ContactAlertRequest>(), default);
+            await _emailAdapter
+                .DidNotReceiveWithAnyArgs()
+                .Send(Arg.Any<EmailMessageRequest>(), default);
         }
 
         [Fact]
@@ -69,8 +76,12 @@ public class ContactUsServiceTests
             });
 
             // Assert
-            _mockRepo.Verify(r => r.Insert(It.IsAny<ContactAlertRequest>(), default), Times.Never, "Expected insert to never be called if email is empty.");
-            _mockEmailAdapter.Verify(c => c.Send(It.IsAny<EmailMessageRequest>(), It.IsAny<CancellationToken>()), Times.Never, "Expected message to never be sent if email is empty.");
+            await _repo
+                .DidNotReceiveWithAnyArgs()
+                .Insert(Arg.Any<ContactAlertRequest>(), default);
+            await _emailAdapter
+                .DidNotReceiveWithAnyArgs()
+                .Send(Arg.Any<EmailMessageRequest>());
         }
     }
 }
