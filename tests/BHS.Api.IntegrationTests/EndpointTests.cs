@@ -8,7 +8,8 @@ using BHS.Contracts.Leadership;
 using BHS.Contracts.Photos;
 using BHS.Web;
 using MongoDB.Bson;
-using Moq;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using System.Net;
 using System.Net.Http.Json;
 using System.Net.Mime;
@@ -21,12 +22,12 @@ namespace BHS.Api.IntegrationTests;
 public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
 {
     private readonly HttpClient _httpClient;
-    private readonly Mock<IManagementConnection> _mockManagementConnection;
+    private readonly IManagementConnection _managementConnection;
 
     public EndpointTests(BhsWebApplicationFactory<Program> factory)
     {
         _httpClient = factory.CreateClient();
-        _mockManagementConnection = factory.MockManagementConnection;
+        _managementConnection = factory.ManagementConnection;
     }
 
     [Fact]
@@ -52,9 +53,9 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Author_GetByAuthUserId_InvalidFormat_400()
     {
-        _mockManagementConnection
-            .Setup(c => c.GetAsync<User>(It.IsAny<Uri>(), It.IsAny<Dictionary<string, string>>(), null, It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new ErrorApiException(HttpStatusCode.BadRequest));
+        _managementConnection
+            .GetAsync<User>(Arg.Any<Uri>(), Arg.Any<Dictionary<string, string>>(), null, Arg.Any<CancellationToken>())
+            .Throws(new ErrorApiException(HttpStatusCode.BadRequest));
 
         using var response = await _httpClient.GetAsync("/api/author?authUserId=12345");
 

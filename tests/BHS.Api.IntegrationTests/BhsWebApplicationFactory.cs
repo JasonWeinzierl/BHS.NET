@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
-using Moq;
+using NSubstitute;
 
 namespace BHS.Api.IntegrationTests;
 
@@ -19,7 +19,7 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
     private readonly MongoUrl _mongoUrl;
     private bool _disposedValue;
 
-    public Mock<IManagementConnection> MockManagementConnection { get; } = new(MockBehavior.Strict);
+    public IManagementConnection ManagementConnection { get; } = Substitute.For<IManagementConnection>();
 
     public BhsWebApplicationFactory()
     {
@@ -67,7 +67,7 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
 
             // Mock Auth0 management api.
             services.RemoveAll<IManagementConnection>();
-            services.AddSingleton(provider => MockManagementConnection.Object);
+            services.AddSingleton(provider => ManagementConnection);
 
             // SendGrid healthcheck is more appropriate for smoke tests, not integration tests.
             services.PostConfigure<HealthCheckServiceOptions>(opt =>
