@@ -22,12 +22,12 @@ namespace BHS.Api.IntegrationTests;
 public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
 {
     private readonly HttpClient _httpClient;
-    private readonly IManagementConnection _managementConnection;
+    private readonly IManagementConnection _mockManagementConnection;
 
     public EndpointTests(BhsWebApplicationFactory<Program> factory)
     {
         _httpClient = factory.CreateClient();
-        _managementConnection = factory.ManagementConnection;
+        _mockManagementConnection = factory.MockManagementConnection;
     }
 
     [Fact]
@@ -53,7 +53,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Author_GetByAuthUserId_InvalidFormat_400()
     {
-        _managementConnection
+        _mockManagementConnection
             .GetAsync<User>(Arg.Any<Uri>(), Arg.Any<Dictionary<string, string>>(), null, Arg.Any<CancellationToken>())
             .Throws(new ErrorApiException(HttpStatusCode.BadRequest));
 
