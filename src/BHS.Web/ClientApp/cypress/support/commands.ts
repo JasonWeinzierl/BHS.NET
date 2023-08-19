@@ -21,9 +21,9 @@ Cypress.Commands.add('login', () => {
       cy.origin(
         `https://${auth0Domain}/`,
         { args: { username, password } },
-        ({ username, password }) => {
-          cy.get('input#username').type(username);
-          cy.get('input#password').type(password, { log: false });
+        args => {
+          cy.get('input#username').type(args.username);
+          cy.get('input#password').type(args.password, { log: false });
           cy.contains('button[value=default]:visible', 'Continue').click();
         },
       );
