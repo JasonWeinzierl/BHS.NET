@@ -1,13 +1,13 @@
-import { CategorySummary, PostPreview } from '@app/data/blog';
-import { mergePartially, NestedPartial } from 'merge-partially';
-import { Album } from '@app/data/photos';
 import { faker } from '@faker-js/faker';
-import { SiteBanner } from '@app/data/banners';
+import { mergePartially, NestedPartial } from 'merge-partially';
+import { AlertTheme, SiteBanner } from '@app/data/banners';
+import { CategorySummary, PostPreview } from '@app/data/blog';
+import { Album } from '@app/data/photos';
 
 export const createCategorySummary = (overrides?: NestedPartial<CategorySummary>): CategorySummary => {
   return mergePartially.deep(
     {
-      postsCount: faker.datatype.number(),
+      postsCount: faker.number.int(),
       slug: faker.lorem.slug(),
       name: faker.lorem.word(),
     },
@@ -24,7 +24,7 @@ export const createBlogPostPreview = (overrides?: NestedPartial<PostPreview>): P
       datePublished: faker.date.past(),
       author: {
         username: faker.internet.userName(),
-        name: faker.name.fullName(),
+        name: faker.person.fullName(),
       },
       categories: [
         {
@@ -38,9 +38,19 @@ export const createBlogPostPreview = (overrides?: NestedPartial<PostPreview>): P
 };
 
 export const createBanner = (overrides?: NestedPartial<SiteBanner>): SiteBanner => {
+  // Cannot import ALERT_THEMES (or any object) from our Angular app due to compilation issues.
+  const alertThemes: Array<AlertTheme> = [
+    'None',
+    'Primary',
+    'Secondary',
+    'Success',
+    'Danger',
+    'Warning',
+    'Info',
+  ];
   return mergePartially.deep(
     {
-      theme: faker.datatype.number({ max: 6 }),
+      theme: faker.helpers.arrayElement(alertThemes),
       lead: faker.lorem.sentence(),
       body: faker.lorem.sentence(),
     } as SiteBanner,
@@ -56,7 +66,7 @@ export const createPhotoAlbum = (overrides?: NestedPartial<Album>): Album=> {
       description: faker.lorem.sentence(),
       author: {
         username: faker.internet.userName(),
-        name: faker.name.fullName(),
+        name: faker.person.fullName(),
       },
     },
     overrides,
