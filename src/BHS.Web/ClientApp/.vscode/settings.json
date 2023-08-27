@@ -1,11 +1,12 @@
 {
-    "cSpell.words": [
-      "Belton",
-      "datetime",
-      "healthcheck",
-      "toastr"
-    ],
-    "editor.codeActionsOnSave": {
-      "source.fixAll": true
-    }
+  "cSpell.words": [
+    "Belton",
+    "datetime",
+    "healthcheck",
+    "testid",
+    "toastr"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
 }
