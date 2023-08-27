@@ -1,6 +1,6 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
-import { AppEnvironment } from './environments';
+import { APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './environments';
 
 fetch('/api/client-app-environment')
   .then(async response => {
@@ -30,11 +30,7 @@ async function parseAppEnvironment(response: Response): Promise<AppEnvironment |
       return null;
     }
 
-    // TODO: Once ajv includes an ESM distribution, introduce JSON validation here.
-    // This is risky to disable the linter.
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const json: AppEnvironment = await response.json();
+    const json = APP_ENVIRONMENT_VALIDATOR.parse(await response.json());
 
     return new AppEnvironment(json.appInsights, json.auth0);
   } catch (e) {

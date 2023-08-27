@@ -11,7 +11,7 @@ export class InsightsService {
   private readonly angularPlugin = new AngularPlugin();
   private readonly appInsights = new ApplicationInsights({
     config: {
-      connectionString: this.env.appInsights?.connectionString,
+      connectionString: this.env.appInsights?.connectionString ?? undefined,
 
       enableCorsCorrelation: true,
       enableRequestHeaderTracking: true,
