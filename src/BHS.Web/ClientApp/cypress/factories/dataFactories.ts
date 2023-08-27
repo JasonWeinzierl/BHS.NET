@@ -58,7 +58,7 @@ export const createBanner = (overrides?: NestedPartial<SiteBanner>): SiteBanner 
   );
 };
 
-export const createPhotoAlbum = (overrides?: NestedPartial<Album>): Album=> {
+export const createPhotoAlbum = (overrides?: NestedPartial<Album>): Album => {
   return mergePartially.deep(
     {
       slug: faker.internet.domainWord(),

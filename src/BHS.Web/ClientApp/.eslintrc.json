@@ -48,6 +48,7 @@
         ],
 
         // general formatting
+        "arrow-spacing": "warn",
         "comma-dangle": [
           "warn",
           "always-multiline"
