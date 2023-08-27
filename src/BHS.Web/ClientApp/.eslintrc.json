@@ -29,11 +29,7 @@
         "plugin:jsdoc/recommended-typescript"
       ],
       "rules": {
-        // general
-        "comma-dangle": [
-          "warn",
-          "always-multiline"
-        ],
+        // general linting
         "complexity": [
           "warn",
           15
@@ -42,15 +38,21 @@
           "error",
           "all"
         ],
-        "keyword-spacing": "warn",
         "no-param-reassign": "error",
         "no-restricted-syntax": [
           "error",
           {
             "selector": "TSEnumDeclaration",
-            "message": "Use a type or object as const instead of a TypeScript enum."
+            "message": "Use a type & array as const or object as const instead of a TypeScript enum."
           }
         ],
+
+        // general formatting
+        "comma-dangle": [
+          "warn",
+          "always-multiline"
+        ],
+        "keyword-spacing": "warn",
         "object-property-newline": [
           "warn",
           {
@@ -65,6 +67,8 @@
           "error",
           "always"
         ],
+
+        // import
         "sort-imports": [ // For sorting members.
           "warn",
           {
@@ -72,8 +76,6 @@
             "ignoreDeclarationSort": true // Handled by import/order.
           }
         ],
-
-        // import
         "import/order": [ // For sorting declarations.
           "warn",
           {
