@@ -59,4 +59,13 @@ describe('SortByPipe', () => {
 
     expect(result).toEqual([{ foo: 'c' }, { foo: 'b' }, { foo: 'a' }]);
   });
+
+  it('should not mutate the input', () => {
+    const pipe = new SortByPipe();
+    const input = ['b', 'a', 'c'];
+
+    pipe.transform(input);
+
+    expect(input).toEqual(['b', 'a', 'c']);
+  });
 });
