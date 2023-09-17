@@ -136,10 +136,19 @@
         "smoke": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "configFile": "cypress/configFiles/cypress.config.smoke.ts",
-            "devServerTarget": "bhs-web-client-app:serve",
-            "watch": true
-          }
+            "configFile": "cypress/configFiles/cypress.config.smoke.ts"
+          },
+          "configurations": {
+            "debug": {
+              "devServerTarget": "bhs-web-client-app:serve",
+              "watch": true
+            },
+            "local": {
+              "devServerTarget": "bhs-web-client-app:serve:ci",
+              "headless": true
+            }
+          },
+          "defaultConfiguration": "debug"
         }
       }
     }
