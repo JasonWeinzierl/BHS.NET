@@ -15,6 +15,7 @@ export default defineConfig({
       auth0TestUsername: 'noreply@beltonhistoricalsociety.org',
       auth0TestPassword: 'This password is fine to publish!',
     },
+    video: true,
   },
 
 });
