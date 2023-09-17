@@ -13,7 +13,7 @@ export class SortByPipe implements PipeTransform {
    * @param column Property to sort by, array sorted with `.sort()` if empty.
    * @returns The sorted array.
    */
-  transform<T>(value: Array<T> | null, order: 'asc'|'desc' = 'asc', column?: string): Array<T> | null {
+  transform<T>(value: Array<T> | null, order: 'asc'|'desc' = 'asc', column?: keyof T): Array<T> | null {
     if (!value) {
       return value;
     }
