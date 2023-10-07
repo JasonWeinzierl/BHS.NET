@@ -31,7 +31,7 @@ jobs:
 
     steps:
     
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
   
     - name: Setup Node.js with caching
       uses: actions/setup-node@v3
@@ -41,7 +41,7 @@ jobs:
         cache-dependency-path: '${{ env.CLIENTAPP_DIRECTORY }}/package-lock.json'
   
     - name: cypress run
-      uses: cypress-io/github-action@v5
+      uses: cypress-io/github-action@v6
       with:
         config-file: cypress/configFiles/cypress.config.smoke.ts
         working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
