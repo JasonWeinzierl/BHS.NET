@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthService, User } from '@auth0/auth0-angular';
-import jwt_decode, { JwtPayload } from 'jwt-decode';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
@@ -18,7 +18,7 @@ export class AdminIndexComponent {
   ) {
     this.user$ = this.auth.user$;
     this.accessToken$ = this.auth.getAccessTokenSilently({ cacheMode: 'cache-only' }).pipe(
-      map(token => jwt_decode<JwtPayload>(token)),
+      map(token => jwtDecode<JwtPayload>(token)),
       catchError((err: unknown) => {
         let message = 'An error occurred. ';
         if (typeof err === 'string') {
