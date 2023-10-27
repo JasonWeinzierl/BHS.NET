@@ -40,7 +40,7 @@ jobs:
         versionSpec: '5.x'
 
     - name: Setup Node.js with caching
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: npm
