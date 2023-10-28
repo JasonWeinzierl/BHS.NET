@@ -6,9 +6,8 @@
 
       <alert *ngIf="vm.error" type="danger">{{vm.error}}</alert>
 
-      <div *ngIf="vm.isLoading" class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"
-          aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      <div *ngIf="vm.isLoading" class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
       </div>
 
       <app-edit-blog-entry-form *ngIf="!vm.isLoading && !vm.error && vm.post" (publish)="onPublish(vm.post.slug, $event)"
