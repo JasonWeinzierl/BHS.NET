@@ -1,8 +1,9 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, convertToParamMap, RouterLink } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockProvider } from 'ng-mocks';
+import { MockComponent, MockDirective, MockProvider } from 'ng-mocks';
 import { AlertComponent } from 'ngx-bootstrap/alert';
 import { of } from 'rxjs';
 import { AlbumPageComponent } from './album-page.component';
@@ -38,8 +39,9 @@ describe('AlbumPageComponent', () => {
         RouterTestingModule,
       ],
       declarations: [
-        AlertComponent,
         AlbumPageComponent,
+        MockComponent(AlertComponent),
+        MockDirective(NgOptimizedImage),
       ],
       providers: [
         MockProvider(PhotosService, {

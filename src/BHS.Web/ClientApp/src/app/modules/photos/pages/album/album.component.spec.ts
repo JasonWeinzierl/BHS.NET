@@ -1,6 +1,7 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { MockProvider } from 'ng-mocks';
+import { MockDirective, MockProvider } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
 import { AlbumComponent } from './album.component';
 import { PhotosService } from '@data/photos/services/photos.service';
@@ -13,6 +14,7 @@ describe('AlbumComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         AlbumComponent,
+        MockDirective(NgOptimizedImage),
       ],
       providers: [
         MockProvider(PhotosService, {
