@@ -20,7 +20,7 @@
   <div *ngIf="!vm.error && !vm.isLoading" class="row">
     <div class="col-md-4" *ngFor="let album of vm.albums">
       <div class="card">
-        <img *ngIf="album.bannerPhoto" src="{{album.bannerPhoto.imagePath}}" class="card-img-top" alt="{{album.bannerPhoto.name}}">
+        <img *ngIf="album.bannerPhoto" [src]="album.bannerPhoto.imagePath" class="card-img-top" [alt]="album.bannerPhoto.name">
         <div class="card-body">
           <h2 class="card-title">
             <a class="stretched-link" [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
