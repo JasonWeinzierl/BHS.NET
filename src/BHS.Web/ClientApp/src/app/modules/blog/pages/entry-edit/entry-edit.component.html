@@ -12,11 +12,11 @@
       </div>
 
       <app-edit-blog-entry-form *ngIf="!vm.isLoading && !vm.error && vm.post" (publish)="onPublish(vm.post.slug, $event)"
-        [initialPost]="vm.post" [allCategories]="vm.categories" [currentAuthor]="vm.currentAuthor"></app-edit-blog-entry-form>
+        [initialPost]="vm.post" [allCategories]="vm.categories" [currentAuthor]="vm.currentAuthor" />
     </div>
 
     <div *ngIf="vm.post" class="card-footer">
-      Last Modified: <app-date [datetime]="vm.post.dateLastModified"></app-date>
+      Last Modified: <app-date [datetime]="vm.post.dateLastModified" />
     </div>
 
   </div>

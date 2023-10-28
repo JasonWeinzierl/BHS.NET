@@ -23,15 +23,15 @@
           <a [routerLink]="['/apps/profile', vm.post.author.username]">{{vm.post.author.name}}</a>
         </span>
         on
-        <app-date [datetime]="vm.post.datePublished"></app-date>
+        <app-date [datetime]="vm.post.datePublished" />
       </p>
     </div>
     <div class="card-body">
 
-      <markdown [data]="vm.post.contentMarkdown"></markdown>
+      <markdown [data]="vm.post.contentMarkdown" />
 
       <hr *ngIf="vm.postAlbum">
-      <app-entry-album [album]="vm.postAlbum"></app-entry-album>
+      <app-entry-album [album]="vm.postAlbum" />
 
       <hr *ngIf="vm.showEdit">
       <a *ngIf="vm.showEdit" class="card-link" [routerLink]="['/apps/blog/edit', vm.post.slug]">Edit this post</a>

@@ -18,6 +18,6 @@
     {{postsVm.error}}
   </alert>
 
-  <app-post-card *ngFor="let post of postsVm.posts | sortBy: 'desc' : 'datePublished'; trackBy: trackPostPreview" [post]="post" [attr.data-testid]="post.slug"></app-post-card>
+  <app-post-card *ngFor="let post of postsVm.posts | sortBy: 'desc' : 'datePublished'; trackBy: trackPostPreview" [post]="post" [attr.data-testid]="post.slug" />
 
 </ng-container>
