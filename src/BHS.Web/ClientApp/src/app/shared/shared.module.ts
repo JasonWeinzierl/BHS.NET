@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -15,11 +15,12 @@ import { SortByPipe } from './pipes/sort-by.pipe';
  * Resources used by more than one module.
  *
  * Includes exports of widely-used Angular-built modules (e.g. CommonModule) or 3rd-party modules (e.g. bootstrap).
- * Laxy-loading feature modules which import SharedModule can use these modules without separately importing them.
+ * Lazy-loading feature modules which import SharedModule can use these modules without separately importing them.
  */
 @NgModule({
   imports: [
     CommonModule,
+    NgOptimizedImage,
   ],
   declarations: [
     SortByPipe,
@@ -35,6 +36,7 @@ import { SortByPipe } from './pipes/sort-by.pipe';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgOptimizedImage,
     AlertModule, // ngx-bootstrap
     BsDatepickerModule, // ngx-bootstrap
     BsDropdownModule, // ngx-bootstrap
