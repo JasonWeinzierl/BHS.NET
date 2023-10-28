@@ -69,10 +69,20 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "plugin:@angular-eslint/template/accessibility"
+        "plugin:@angular-eslint/template/all"
       ],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/template/attributes-order": "off",
+        "@angular-eslint/template/cyclomatic-complexity": [
+          "warn",
+          {
+            "maxComplexity": 10
+          }
+        ],
+        "@angular-eslint/template/i18n": "off",
+        // TODO: revisit when Angular 17 releases the new control flow with 'track'
+        "@angular-eslint/template/use-track-by-function": "off"
+      }
     }
   ]
 }
