@@ -57,7 +57,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             .GetAsync<User>(Arg.Any<Uri>(), Arg.Any<Dictionary<string, string>>(), null, Arg.Any<CancellationToken>())
             .Throws(new ErrorApiException(HttpStatusCode.BadRequest));
 
-        using var response = await _httpClient.GetAsync("/api/author?authUserId=12345");
+        using var response = await _httpClient.GetAsync("/api/authors?authUserId=12345");
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
@@ -65,7 +65,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Author_GetPosts_Empty()
     {
-        var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>($"/api/author/{Random.Shared.Next()}/posts");
+        var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>($"/api/authors/{Random.Shared.Next()}/posts");
 
         Assert.NotNull(posts);
         Assert.Empty(posts);

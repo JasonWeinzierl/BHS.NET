@@ -9,7 +9,7 @@ import { PostPreview, postPreviewSchema } from '@data/blog';
   providedIn: 'root',
 })
 export class AuthorService {
-  private readonly baseUrl = '/api/author';
+  private readonly baseUrl = '/api/authors';
 
   constructor(
     private readonly http: HttpClient,

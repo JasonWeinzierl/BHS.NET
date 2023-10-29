@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BHS.Web.Controllers;
 
 [ApiController]
-[Route("api/author")] // TODO: should be plural
+[Route("api/authors")]
 public class AuthorController : ControllerBase
 {
     private readonly IPostPreviewRepository _postRepo;
