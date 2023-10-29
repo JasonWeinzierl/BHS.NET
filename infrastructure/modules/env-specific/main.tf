@@ -560,7 +560,7 @@ resource "auth0_client_grant" "bhs_api_auth0_management" {
   client_id = auth0_client.bhs_api.id
   audience  = data.auth0_tenant.bhs.management_api_identifier
 
-  scope = [
+  scopes = [
     "read:users",
   ]
 }
@@ -573,12 +573,6 @@ resource "auth0_resource_server" "bhs_api" {
   enforce_policies                                = true
   token_dialect                                   = "access_token_authz"
   skip_consent_for_verifiable_first_party_clients = true
-
-  lifecycle {
-    ignore_changes = [
-      scopes,
-    ]
-  }
 }
 
 resource "auth0_resource_server_scopes" "bhs_api_scopes" {
@@ -593,13 +587,6 @@ resource "auth0_resource_server_scopes" "bhs_api_scopes" {
 resource "auth0_role" "owner" {
   name        = "Owner"
   description = "Full access to all resources"
-
-  lifecycle {
-    ignore_changes = [
-      # Auth0 v1.0 provider is removing this.
-      permissions,
-    ]
-  }
 }
 
 resource "auth0_role_permissions" "owner_permissions" {
