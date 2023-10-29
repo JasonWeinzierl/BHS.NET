@@ -12,7 +12,7 @@ import { PostPreview } from '@data/blog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileIndexComponent {
-  vm$: Observable<{ author?: Author, posts: Array<PostPreview>, isLoading: boolean, error?: string }>;
+  vm$: Observable<{ author?: Author | null, posts: Array<PostPreview>, isLoading: boolean, error?: string }>;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,

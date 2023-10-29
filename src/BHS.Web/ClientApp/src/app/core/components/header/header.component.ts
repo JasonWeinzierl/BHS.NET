@@ -3,12 +3,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, map, Observable, of } from 'rxjs';
-import { ALERT_THEMES, AlertTheme, SiteBanner, SiteBannerService } from '@data/banners';
+import { AlertTheme, alertThemeScheme, SiteBanner, SiteBannerService } from '@data/banners';
 
 interface SiteBannerStyled {
   alertType: string,
-  lead: string | null,
-  body: string | null,
+  lead?: string | null,
+  body?: string | null,
 }
 
 @Component({
@@ -54,7 +54,7 @@ export class HeaderComponent {
   }
 
   private getBootstrapAlertType(theme: AlertTheme): string {
-    if (ALERT_THEMES.includes(theme) && theme !== 'None') {
+    if (alertThemeScheme.safeParse(theme).success && theme !== 'None') {
       return theme.toLowerCase();
     } else {
       return 'light';

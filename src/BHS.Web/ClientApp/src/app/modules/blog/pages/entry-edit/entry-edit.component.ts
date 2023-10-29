@@ -69,10 +69,6 @@ export class EntryEditComponent {
       )),
       // Parse the results into a successful view model.
       map(({ post, allCategories, user }) => {
-
-        post.dateLastModified = new Date(post.dateLastModified);
-        post.datePublished = new Date(post.datePublished);
-
         const currentAuthor = this.getAuthor(user);
 
         return { post, categories: allCategories, isLoading: false, currentAuthor };
@@ -104,11 +100,6 @@ export class EntryEditComponent {
       )),
       // Create the new view model.
       map(({ updatedPost, allCategories, user }) => {
-
-        // TODO: duplicate logic from above initial post logic.
-        updatedPost.dateLastModified = new Date(updatedPost.dateLastModified);
-        updatedPost.datePublished = new Date(updatedPost.datePublished);
-
         const currentAuthor = this.getAuthor(user);
 
         return { isLoading: false, post: updatedPost, categories: allCategories, currentAuthor };

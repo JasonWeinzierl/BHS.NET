@@ -1,6 +1,9 @@
-import { Album } from './album';
-import { Photo } from './photo';
+import { z } from 'zod';
+import { albumSchema } from './album';
+import { photoSchema } from './photo';
 
-export interface AlbumPhotos extends Album {
-  photos: Array<Photo>;
-}
+export const albumPhotosSchema = albumSchema.extend({
+  photos: photoSchema.array(),
+});
+
+export type AlbumPhotos = z.infer<typeof albumPhotosSchema>;

@@ -1,11 +1,14 @@
-import { Category } from './category';
-import { Author } from '@data/authors';
+import { z } from 'zod';
+import { categorySchema } from './category';
+import { authorSchema } from '@data/authors';
 
-export interface PostPreview {
-  slug: string;
-  title: string;
-  contentPreview: string;
-  author?: Author;
-  datePublished: Date;
-  categories: Array<Category>;
-}
+export const postPreviewSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  contentPreview: z.string(),
+  author: authorSchema.nullish(),
+  datePublished: z.coerce.date(),
+  categories: categorySchema.array(),
+});
+
+export type PostPreview = z.infer<typeof postPreviewSchema>;

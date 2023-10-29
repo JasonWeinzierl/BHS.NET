@@ -1,6 +1,9 @@
-import { Category } from './category';
-import { PostPreview } from './post-preview';
+import { z } from 'zod';
+import { categorySchema } from './category';
+import { postPreviewSchema } from './post-preview';
 
-export interface CategoryPosts extends Category {
-  posts: Array<PostPreview>;
-}
+export const categoryPostsSchema = categorySchema.extend({
+  posts: postPreviewSchema.array(),
+});
+
+export type CategoryPosts = z.infer<typeof categoryPostsSchema>;

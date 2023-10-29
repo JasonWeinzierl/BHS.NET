@@ -1,4 +1,6 @@
-export const ALERT_THEMES = [
+import { z } from 'zod';
+
+export const alertThemeScheme = z.enum([
   'None',
   'Primary',
   'Secondary',
@@ -6,6 +8,6 @@ export const ALERT_THEMES = [
   'Danger',
   'Warning',
   'Info',
-] as const;
+]);
 
-export type AlertTheme = typeof ALERT_THEMES[number];
+export type AlertTheme = z.infer<typeof alertThemeScheme>;

@@ -1,14 +1,17 @@
-import { Category } from './category';
-import { Author } from '@data/authors';
+import { z } from 'zod';
+import { categorySchema } from './category';
+import { authorSchema } from '@data/authors';
 
-export interface Post {
-  slug: string;
-  title: string;
-  contentMarkdown: string;
-  filePath: string | null;
-  photosAlbumSlug: string | null;
-  author: Author | null;
-  datePublished: Date; // TODO: all dates need to be parsed from string when deserialized in the data layer.
-  dateLastModified: Date;
-  categories: Array<Category>;
-}
+export const postSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  contentMarkdown: z.string(),
+  filePath: z.string().nullish(),
+  photosAlbumSlug: z.string().nullish(),
+  author: authorSchema.nullish(),
+  datePublished: z.coerce.date(),
+  dateLastModified: z.coerce.date(),
+  categories: categorySchema.array(),
+});
+
+export type Post = z.infer<typeof postSchema>;

@@ -1,7 +1,10 @@
-import { AlertTheme } from './alert-theme';
+import { z } from 'zod';
+import { alertThemeScheme } from './alert-theme';
 
-export interface SiteBanner {
-  theme: AlertTheme;
-  lead: string | null;
-  body: string | null;
-}
+export const siteBannerSchema = z.object({
+  theme: alertThemeScheme,
+  lead: z.string().nullish(),
+  body: z.string().nullish(),
+});
+
+export type SiteBanner = z.infer<typeof siteBannerSchema>;

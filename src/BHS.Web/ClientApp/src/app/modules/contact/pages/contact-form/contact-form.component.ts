@@ -28,12 +28,13 @@ export class ContactFormComponent {
   onSubmit(): void {
     this.isSubmitted = true;
 
-    const request = new ContactAlertRequest(
-      this.contactForm.value.name,
-      this.contactForm.value.emailAddress,
-      this.contactForm.value.message,
-      new Date(),
-      this.contactForm.value.body);
+    const request: ContactAlertRequest = {
+      name: this.contactForm.value.name,
+      emailAddress: this.contactForm.value.emailAddress,
+      message: this.contactForm.value.message,
+      dateRequested: new Date(),
+      body: this.contactForm.value.body,
+    };
 
     this.contactService.sendMessage(request)
       .subscribe({

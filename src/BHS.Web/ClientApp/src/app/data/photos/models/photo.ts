@@ -1,10 +1,13 @@
-import { Author } from '@data/authors';
+import { z } from 'zod';
+import { authorSchema } from '@data/authors';
 
-export interface Photo {
-  id: string;
-  name?: string;
-  imagePath: string;
-  datePosted: Date;
-  author?: Author;
-  description?: string;
-}
+export const photoSchema = z.object({
+  id: z.string(),
+  name: z.string().nullish(),
+  imagePath: z.string(),
+  datePosted: z.coerce.date(),
+  author: authorSchema.nullish(),
+  description: z.string().nullish(),
+});
+
+export type Photo = z.infer<typeof photoSchema>;

@@ -1,5 +1,8 @@
-import { Category } from './category';
+import { z } from 'zod';
+import { categorySchema } from './category';
 
-export interface CategorySummary extends Category {
-  postsCount: number;
-}
+export const categorySummarySchema = categorySchema.extend({
+  postsCount: z.number(),
+});
+
+export type CategorySummary = z.infer<typeof categorySummarySchema>;

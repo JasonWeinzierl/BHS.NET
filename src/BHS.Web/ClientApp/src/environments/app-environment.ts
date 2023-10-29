@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export const APP_ENVIRONMENT_VALIDATOR = z.object({
   appInsights: z.object({
-    connectionString: z.string().nullable(),
+    connectionString: z.string().nullish(),
   }).optional(),
   auth0: z.object({
     domain: z.string(),

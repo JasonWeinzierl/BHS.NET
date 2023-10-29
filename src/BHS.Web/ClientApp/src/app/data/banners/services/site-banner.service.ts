@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SiteBanner } from '@data/banners/models/site-banner';
+import { parseSchemaArray } from '@core/operators/parse-schema.operator';
+import { SiteBanner, siteBannerSchema } from '@data/banners/models/site-banner';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class SiteBannerService {
   ) { }
 
   getEnabled(): Observable<Array<SiteBanner>> {
-    return this.http.get<Array<SiteBanner>>(this.baseUrl + '/current');
+    return this.http.get(this.baseUrl + '/current')
+      .pipe(parseSchemaArray(siteBannerSchema));
   }
 }
