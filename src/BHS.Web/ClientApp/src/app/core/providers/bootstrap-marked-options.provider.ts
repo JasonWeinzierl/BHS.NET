@@ -23,9 +23,9 @@ const markedOptionsFactory = (): MarkedOptions => {
     return out;
   };
 
-  return {
-    renderer,
-  };
+  const mo = new MarkedOptions();
+  mo.renderer = renderer;
+  return mo;
 };
 
 /**
