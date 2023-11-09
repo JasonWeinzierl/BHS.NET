@@ -5,10 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AlertTheme, alertThemeScheme, SiteBanner, SiteBannerService } from '@data/banners';
 
-interface SiteBannerStyled {
+interface SiteBannerStyled extends SiteBanner {
   alertType: string,
-  lead?: string | null,
-  body?: string | null,
 }
 
 @Component({
@@ -47,8 +45,7 @@ export class HeaderComponent {
 
   private createStyledBanners(banners: Array<SiteBanner>): Array<SiteBannerStyled> {
     return banners.map(b => ({
-      lead: b.lead,
-      body: b.body,
+      ...b,
       alertType: this.getBootstrapAlertType(b.theme),
     }));
   }
