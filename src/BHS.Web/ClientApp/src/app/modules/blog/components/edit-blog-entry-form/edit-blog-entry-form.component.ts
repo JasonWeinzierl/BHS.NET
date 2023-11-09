@@ -1,14 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Author } from '@data/authors';
-import { Category, Post, PostRequest } from '@data/blog';
-
-type EditFormGroup = FormGroup<{
-  title: FormControl<string>;
-  categories: FormControl<Array<string>>;
-  publishDate: FormControl<Date>;
-  contentMarkdown: FormControl<string>;
-}>;
+import { Category, categorySchema, Post, PostRequest } from '@data/blog';
 
 @Component({
   selector: 'app-edit-blog-entry-form',
@@ -24,7 +17,12 @@ export class EditBlogEntryFormComponent implements OnChanges {
   @Output() publish = new EventEmitter<PostRequest>();
 
   cancelRoute: Array<string> = ['/apps/blog'];
-  editFormGroup?: EditFormGroup;
+  editFormGroup = this.formBuilder.nonNullable.group({
+    title: ['', [Validators.required]],
+    categories: [[] as Array<string>],
+    publishDate: [new Date()],
+    contentMarkdown: [''],
+  });
   authorWarning?: string | null;
 
   constructor(
@@ -34,11 +32,11 @@ export class EditBlogEntryFormComponent implements OnChanges {
   ngOnChanges(): void {
     this.cancelRoute = this.initialPost ? ['/apps/blog/entry', this.initialPost.slug] : ['/apps/blog'];
 
-    this.editFormGroup = this.formBuilder.nonNullable.group({
-      title: [this.initialPost?.title ?? '', [Validators.required]],
-      categories: [this.initialPost?.categories.map(x => x.slug) ?? []],
-      publishDate: [this.initialPost?.datePublished ?? new Date()],
-      contentMarkdown: [this.initialPost?.contentMarkdown ?? ''],
+    this.editFormGroup.reset({
+      title: this.initialPost?.title ?? '',
+      categories: this.initialPost?.categories.map(x => x.slug) ?? [],
+      publishDate: this.initialPost?.datePublished ?? new Date(),
+      contentMarkdown: this.initialPost?.contentMarkdown ?? '',
     });
 
     this.authorWarning = this.isChangingAuthor()
@@ -51,10 +49,6 @@ export class EditBlogEntryFormComponent implements OnChanges {
   }
 
   onSubmit(): void {
-    if (!this.editFormGroup) {
-      return;
-    }
-
     const raw = this.editFormGroup.getRawValue();
 
     const request: PostRequest = {
