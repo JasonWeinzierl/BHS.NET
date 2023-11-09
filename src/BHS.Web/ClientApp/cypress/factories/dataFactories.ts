@@ -50,6 +50,7 @@ export const createBanner = (overrides?: NestedPartial<SiteBanner>): SiteBanner 
   ];
   return mergePartially.deep(
     {
+      id: faker.string.uuid(),
       theme: faker.helpers.arrayElement(alertThemes),
       lead: faker.lorem.sentence(),
       body: faker.lorem.sentence(),

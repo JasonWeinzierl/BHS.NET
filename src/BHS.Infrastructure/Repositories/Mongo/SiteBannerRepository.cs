@@ -26,12 +26,13 @@ public class SiteBannerRepository : ISiteBannerRepository
             .SortBy(x => x.StatusChanges.DateModified)
             .Group(x => x.Id, x => new
             {
+                x.Last().Id,
                 x.Last().StatusChanges.IsEnabled,
                 x.Last().ThemeId,
                 x.Last().Lead,
                 x.Last().Body,
             })
             .Match(x => x.IsEnabled)
-            .Project(x => new SiteBanner((AlertTheme)x.ThemeId, x.Lead, x.Body))
+            .Project(x => new SiteBanner(x.Id.ToString(), (AlertTheme)x.ThemeId, x.Lead, x.Body))
             .ToListAsync(cancellationToken);
 }
