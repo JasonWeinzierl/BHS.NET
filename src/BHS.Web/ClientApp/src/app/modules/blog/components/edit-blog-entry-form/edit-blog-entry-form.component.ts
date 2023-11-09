@@ -64,7 +64,7 @@ export class EditBlogEntryFormComponent implements OnChanges {
       photosAlbumSlug: this.initialPost?.photosAlbumSlug ?? null,
       author: this.isChangingAuthor() ? this.currentAuthor : this.initialPost?.author ?? null, // TODO: support multiple authors.
       datePublished: raw.publishDate,
-      categories: this.allCategories.filter(c => raw.categories.includes(c.slug)),
+      categories: this.allCategories.filter(c => raw.categories.includes(c.slug)).map(c => categorySchema.parse(c)),
     };
 
     this.publish.emit(request);
