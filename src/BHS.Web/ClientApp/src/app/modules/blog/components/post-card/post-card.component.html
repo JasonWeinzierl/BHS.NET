@@ -7,10 +7,10 @@
     </h2>
     <p class="card-subtitle">
       Posted
-      <span *ngIf="post.author">
+      @if (post.author) {
         by
         <a [routerLink]="['/apps/profile', post.author.username]">{{post.author.name}}</a>
-      </span>
+      }
       on
       <app-date [datetime]="post.datePublished" />
     </p>
@@ -24,6 +24,8 @@
     </p>
   </div>
   <div class="card-footer">
-    <span class="me-2" *ngFor="let cat of post.categories">{{cat.name}}</span>
+    @for (cat of post.categories; track cat.slug) {
+      <span class="me-2">{{cat.name}}</span>
+    }
   </div>
 </div>

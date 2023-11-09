@@ -7,10 +7,14 @@
   </div>
 
   <div class="container">
-    <alert *ngFor="let b of banners$ | async" [type]="b.alertType" [dismissible]="true">
-      <strong *ngIf="b.lead">{{b.lead}}</strong>
-      {{b.body}}
-    </alert>
+    @for (b of banners$ | async; track b.id) {
+      <alert [type]="b.alertType" [dismissible]="true">
+        @if (b.lead) {
+          <strong>{{b.lead}}</strong>
+        }
+        {{b.body}}
+      </alert>
+    }
   </div>
 
   <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -44,9 +48,11 @@
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/contact']" [routerLinkActive]="['active']">Contact Us</a>
         </li>
-        <li *ngIf="isAuthenticated$ | async" class="nav-item">
-          <a class="nav-link" [routerLink]="['/admin']" [routerLinkActive]="['active']">Admin</a>
-        </li>
+        @if (isAuthenticated$ | async) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin']" [routerLinkActive]="['active']">Admin</a>
+          </li>
+        }
         <li class="nav-item dropdown" dropdown>
           <a class="nav-link dropdown-toggle" dropdownToggle role="button" aria-haspopup="true">
             About

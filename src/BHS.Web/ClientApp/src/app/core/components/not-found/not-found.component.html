@@ -3,7 +3,9 @@
     <h1 class="card-title">404 Not Found</h1>
     <p>&lsaquo; <a [routerLink]="['/']">Home</a></p>
     <p>The page you requested was not found.</p>
-    <p *ngIf="closestPath$ | async as closestPath">Were you looking for the <a [routerLink]="closestPath">"{{closestPath}}" page</a>?</p>
+    @if (closestPath$ | async; as closestPath) {
+      <p>Were you looking for the <a [routerLink]="closestPath">"{{closestPath}}" page</a>?</p>
+    }
     <p>If this keeps happening, please <a [routerLink]="['/contact']">contact us</a>.</p>
   </div>
 </div>

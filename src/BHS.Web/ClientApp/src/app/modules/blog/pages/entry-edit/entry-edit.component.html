@@ -1,22 +1,30 @@
-<ng-container *ngIf="vm$ | async as vm">
+@if (vm$ | async; as vm) {
   <div class="card">
 
     <div class="card-body">
       <h1 class="card-title">Edit Entry</h1>
 
-      <alert *ngIf="vm.error" type="danger">{{vm.error}}</alert>
+      @if (vm.error) {
+        <alert type="danger">{{vm.error}}</alert>
+      }
 
-      <div *ngIf="vm.isLoading" class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
+      @if (vm.isLoading) {
+        <div class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
+        </div>
+      }
+
+      @if (!vm.isLoading && !vm.error && vm.post) {
+        <app-edit-blog-entry-form (publish)="onPublish(vm.post.slug, $event)"
+          [initialPost]="vm.post" [allCategories]="vm.categories" [currentAuthor]="vm.currentAuthor" />
+      }
+    </div>
+
+    @if (vm.post) {
+      <div class="card-footer">
+        Last Modified: <app-date [datetime]="vm.post.dateLastModified" />
       </div>
-
-      <app-edit-blog-entry-form *ngIf="!vm.isLoading && !vm.error && vm.post" (publish)="onPublish(vm.post.slug, $event)"
-        [initialPost]="vm.post" [allCategories]="vm.categories" [currentAuthor]="vm.currentAuthor" />
-    </div>
-
-    <div *ngIf="vm.post" class="card-footer">
-      Last Modified: <app-date [datetime]="vm.post.dateLastModified" />
-    </div>
+    }
 
   </div>
-</ng-container>
+}

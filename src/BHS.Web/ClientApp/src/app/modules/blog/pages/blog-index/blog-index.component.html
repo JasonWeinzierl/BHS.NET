@@ -20,12 +20,13 @@
         <h2 class="card-title">Categories</h2>
       </div>
 
-      <app-categories-list-view
-        *ngIf="categoriesVm$ | async as categoriesVm"
-        [isLoading]="categoriesVm.isLoading"
-        [error]="categoriesVm.error"
-        [categories]="categoriesVm.categories"
-      />
+      @if (categoriesVm$ | async; as categoriesVm) {
+        <app-categories-list-view
+          [isLoading]="categoriesVm.isLoading"
+          [error]="categoriesVm.error"
+          [categories]="categoriesVm.categories"
+        />
+      }
     </div>
   </div>
 </div>

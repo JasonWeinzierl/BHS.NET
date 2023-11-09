@@ -1,44 +1,54 @@
-<ng-container *ngIf="vm$ | async as vm">
-
-  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
-    <div class="spinner-grow text-light" role="status">
-      <span class="visually-hidden">Loading album...</span>
+@if (vm$ | async; as vm) {
+  @if (vm.isLoading) {
+    <div class="d-flex justify-content-center">
+      <div class="spinner-grow text-light" role="status">
+        <span class="visually-hidden">Loading album...</span>
+      </div>
     </div>
-  </div>
+  }
 
-  <alert *ngIf="vm.error" type="danger">
-    {{vm.error}}
-  </alert>
+  @if (vm.error) {
+    <alert type="danger">
+      {{vm.error}}
+    </alert>
+  }
 
-  <ng-container *ngIf="vm.album">
+  @if (vm.album) {
     <div class="card">
       <div class="card-body">
         <h1 class="card-title">
           {{vm.album.name}}
         </h1>
-        <p class="card-subtitle text-muted" *ngIf="vm.album.author?.name">Provided by {{vm.album.author?.name}}</p>
+        @if (vm.album.author?.name) {
+          <p class="card-subtitle text-muted">Provided by {{vm.album.author?.name}}</p>
+        }
         <p>{{vm.album.description}}</p>
-        <p *ngIf="vm.album.blogPostSlug">
-          <a [routerLink]="['/apps/blog/entry', vm.album.blogPostSlug]">This album has a linked blog post.</a>
-        </p>
+        @if (vm.album.blogPostSlug) {
+          <p>
+            <a [routerLink]="['/apps/blog/entry', vm.album.blogPostSlug]">This album has a linked blog post.</a>
+          </p>
+        }
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-6 col-lg-3" *ngFor="let photo of vm.album.photos">
-        <div class="card">
-          <img [ngSrc]="photo.imagePath" class="card-img-top img-fluid" alt="image could not load" width="100" height="100">
-          <div class="card-body">
-            <h2 class="card-title">
-              <a [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', photo.id]" class="stretched-link">
-                {{photo.name}}
-              </a>
-            </h2>
-            <p class="card-subtitle text-muted" *ngIf="photo.description">{{photo.description | snippet}}</p>
+      @for (photo of vm.album.photos; track photo.id) {
+        <div class="col-md-6 col-lg-3">
+          <div class="card">
+            <img [ngSrc]="photo.imagePath" class="card-img-top img-fluid" alt="image could not load" width="100" height="100">
+            <div class="card-body">
+              <h2 class="card-title">
+                <a [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', photo.id]" class="stretched-link">
+                  {{photo.name}}
+                </a>
+              </h2>
+              @if (photo.description) {
+                <p class="card-subtitle text-muted">{{photo.description | snippet}}</p>
+              }
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
-  </ng-container>
-
-</ng-container>
+  }
+}

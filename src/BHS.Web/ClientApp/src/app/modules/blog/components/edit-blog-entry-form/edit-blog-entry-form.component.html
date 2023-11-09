@@ -8,7 +8,9 @@
   <div class="mb-3">
     <label for="inputCategories" class="form-label">Categories</label>
     <select multiple class="form-select" id="inputCategories" name="categories" formControlName="categories">
-      <option *ngFor="let c of allCategories" [ngValue]="c.slug">{{c.name}}</option>
+      @for (c of allCategories; track c.slug) {
+        <option [ngValue]="c.slug">{{c.name}}</option>
+      }
     </select>
   </div>
 
@@ -25,8 +27,10 @@
     <a class="btn btn-danger ms-2" role="link" [routerLink]="cancelRoute">Cancel</a>
   </div>
 
-  <div *ngIf="authorWarning" class="form-text text-danger">
-    {{authorWarning}}
-  </div>
+  @if (authorWarning) {
+    <div class="form-text text-danger">
+      {{authorWarning}}
+    </div>
+  }
 
 </form>

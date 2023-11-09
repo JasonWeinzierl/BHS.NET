@@ -1,51 +1,63 @@
-<ng-container *ngIf="vm$ | async as vm">
-
-  <div *ngIf="vm.error" class="card bg-warning">
-    <div class="card-body">
-      <h1 class="card-title">An error occurred</h1>
-      {{vm.error}}
+@if (vm$ | async; as vm) {
+  @if (vm.error) {
+    <div class="card bg-warning">
+      <div class="card-body">
+        <h1 class="card-title">An error occurred</h1>
+        {{vm.error}}
+      </div>
     </div>
-  </div>
+  }
 
-  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
-    <div class="spinner-grow text-light" role="status">
-      <span class="visually-hidden">Loading post...</span>
+  @if (vm.isLoading) {
+    <div class="d-flex justify-content-center">
+      <div class="spinner-grow text-light" role="status">
+        <span class="visually-hidden">Loading post...</span>
+      </div>
     </div>
-  </div>
+  }
 
-  <div *ngIf="vm.post" class="card">
-    <div class="card-header">
-      <h1 class="card-title">{{vm.post.title}}</h1>
-      <p class="card-subtitle text-muted">
-        Posted
-        <span *ngIf="vm.post.author">
-          by
-          <a [routerLink]="['/apps/profile', vm.post.author.username]">{{vm.post.author.name}}</a>
-        </span>
-        on
-        <app-date [datetime]="vm.post.datePublished" />
-      </p>
+  @if (vm.post) {
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title">{{vm.post.title}}</h1>
+        <p class="card-subtitle text-muted">
+          Posted
+          @if (vm.post.author) {
+            <span>
+              by
+              <a [routerLink]="['/apps/profile', vm.post.author.username]">{{vm.post.author.name}}</a>
+            </span>
+          }
+          on
+          <app-date [datetime]="vm.post.datePublished" />
+        </p>
+      </div>
+      <div class="card-body">
+
+        <markdown [data]="vm.post.contentMarkdown" />
+
+        @if (vm.postAlbum) {
+          <hr>
+          <app-entry-album [album]="vm.postAlbum" />
+        }
+
+        @if (vm.showEdit) {
+          <hr>
+          <a class="card-link" [routerLink]="['/apps/blog/edit', vm.post.slug]">Edit this post</a>
+        }
+
+      </div>
+      <div class="card-footer">
+        <p>
+          Categories:
+          @for (cat of vm.post.categories; track cat.slug) {
+            <a [routerLink]="['/apps/blog/category', cat.slug]"
+              class="btn btn-outline-secondary btn-sm me-sm-2">
+              {{cat.name}}
+            </a>
+          }
+        </p>
+      </div>
     </div>
-    <div class="card-body">
-
-      <markdown [data]="vm.post.contentMarkdown" />
-
-      <hr *ngIf="vm.postAlbum">
-      <app-entry-album *ngIf="vm.postAlbum" [album]="vm.postAlbum" />
-
-      <hr *ngIf="vm.showEdit">
-      <a *ngIf="vm.showEdit" class="card-link" [routerLink]="['/apps/blog/edit', vm.post.slug]">Edit this post</a>
-
-    </div>
-    <div class="card-footer">
-      <p>
-        Categories:
-        <a [routerLink]="['/apps/blog/category', cat.slug]" *ngFor="let cat of vm.post.categories"
-          class="btn btn-outline-secondary btn-sm me-sm-2">
-          {{cat.name}}
-        </a>
-      </p>
-    </div>
-  </div>
-
-</ng-container>
+  }
+}

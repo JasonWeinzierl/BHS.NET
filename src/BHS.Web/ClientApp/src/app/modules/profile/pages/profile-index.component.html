@@ -1,24 +1,30 @@
-<ng-container *ngIf="vm$ | async as vm">
+@if (vm$ | async; as vm) {
+    @if (vm.isLoading) {
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow text-light" role="status">
+          <span class="visually-hidden">Loading profile...</span>
+        </div>
+      </div>
+    }
 
-  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
-    <div class="spinner-grow text-light" role="status">
-      <span class="visually-hidden">Loading profile...</span>
-    </div>
-  </div>
+    @if (vm.error) {
+      <alert type="danger">
+        {{vm.error}}
+      </alert>
+    }
 
-  <alert *ngIf="vm.error" type="danger">
-    {{vm.error}}
-  </alert>
+    @if (vm.author) {
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title">
+            {{vm.author.username}}
+          </h1>
+          <h2>Blog posts by this user</h2>
+        </div>
+      </div>
+    }
 
-  <div class="card" *ngIf="vm.author">
-    <div class="card-body">
-      <h1 class="card-title">
-        {{vm.author.username}}
-      </h1>
-      <h2>Blog posts by this user</h2>
-    </div>
-  </div>
-
-  <app-post-card *ngFor="let post of vm.posts" [post]="post" />
-
-</ng-container>
+    @for (post of vm.posts; track post.slug) {
+      <app-post-card [post]="post" />
+    }
+}

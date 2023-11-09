@@ -1,18 +1,24 @@
-<ng-container *ngIf="vm$ | async as vm">
+@if (vm$ | async; as vm) {
   <div class="card">
 
     <div class="card-body">
       <h1 class="card-title">New Entry</h1>
 
-      <alert *ngIf="vm.error" type="danger">{{vm.error}}</alert>
+      @if (vm.error) {
+        <alert type="danger">{{vm.error}}</alert>
+      }
 
-      <div *ngIf="vm.isLoading" class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
-      </div>
+      @if (vm.isLoading) {
+        <div class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
+        </div>
+      }
 
-      <app-edit-blog-entry-form *ngIf="!vm.isLoading && !vm.error" (publish)="onPublish($event)"
-        [allCategories]="vm.allCategories" [currentAuthor]="vm.currentAuthor" />
+      @if (!vm.isLoading && !vm.error) {
+        <app-edit-blog-entry-form (publish)="onPublish($event)"
+          [allCategories]="vm.allCategories" [currentAuthor]="vm.currentAuthor" />
+      }
     </div>
 
   </div>
-</ng-container>
+}

@@ -1,16 +1,19 @@
-<ng-container *ngIf="vm$ | async as vm">
-
-  <div *ngIf="vm.isLoading" class="d-flex justify-content-center">
-    <div class="spinner-grow text-light" role="status">
-      <span class="visually-hidden">Loading category...</span>
+@if (vm$ | async; as vm) {
+  @if (vm.isLoading) {
+    <div class="d-flex justify-content-center">
+      <div class="spinner-grow text-light" role="status">
+        <span class="visually-hidden">Loading category...</span>
+      </div>
     </div>
-  </div>
+  }
 
-  <alert *ngIf="vm.error" type="danger">
-    {{vm.error}}
-  </alert>
+  @if (vm.error) {
+    <alert type="danger">
+      {{vm.error}}
+    </alert>
+  }
 
-  <ng-container *ngIf="vm.category">
+  @if (vm.category) {
     <div class="card">
       <div class="card-body">
         <h1 class="card-title">{{vm.category.name}}</h1>
@@ -18,8 +21,9 @@
     </div>
 
     <div>
-      <app-post-card [post]="post" *ngFor="let post of vm.category.posts" />
+      @for (post of vm.category.posts; track post.slug) {
+        <app-post-card [post]="post" />
+      }
     </div>
-  </ng-container>
-
-</ng-container>
+  }
+}

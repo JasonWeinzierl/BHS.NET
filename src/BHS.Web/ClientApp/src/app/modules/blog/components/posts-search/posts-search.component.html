@@ -4,7 +4,9 @@
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search Posts" aria-label="Search Posts" name="search" [(ngModel)]="searchText">
         <button type="submit" class="btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
-          <span *ngIf="isLoading$ | async" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          @if (isLoading$ | async) {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          }
           Search
         </button>
       </div>
@@ -12,12 +14,14 @@
   </div>
 </div>
 
-<ng-container *ngIf="postsVm$ | async as postsVm">
+@if (postsVm$ | async; as postsVm) {
+  @if (postsVm.error) {
+    <alert type="danger">
+      {{postsVm.error}}
+    </alert>
+  }
 
-  <alert *ngIf="postsVm.error" type="danger">
-    {{postsVm.error}}
-  </alert>
-
-  <app-post-card *ngFor="let post of postsVm.posts | sortBy: 'desc' : 'datePublished'; trackBy: trackPostPreview" [post]="post" [attr.data-testid]="post.slug" />
-
-</ng-container>
+  @for (post of postsVm.posts | sortBy: 'desc' : 'datePublished'; track post.slug) {
+    <app-post-card [post]="post" [attr.data-testid]="post.slug" />
+  }
+}
