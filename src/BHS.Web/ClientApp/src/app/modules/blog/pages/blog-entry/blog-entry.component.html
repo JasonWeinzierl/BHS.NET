@@ -31,7 +31,7 @@
       <markdown [data]="vm.post.contentMarkdown" />
 
       <hr *ngIf="vm.postAlbum">
-      <app-entry-album [album]="vm.postAlbum" />
+      <app-entry-album *ngIf="vm.postAlbum" [album]="vm.postAlbum" />
 
       <hr *ngIf="vm.showEdit">
       <a *ngIf="vm.showEdit" class="card-link" [routerLink]="['/apps/blog/edit', vm.post.slug]">Edit this post</a>

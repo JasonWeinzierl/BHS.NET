@@ -1,6 +1,8 @@
-<div *ngIf="album">
+<div>
   <p class="text-muted">This post contains photos:</p>
-  <a *ngFor="let photo of album.photos" [routerLink]="['/apps/photos/album', album.slug, 'photo', photo.id]" class="d-inline-block m-1">
-    <img [ngSrc]="photo.imagePath" class="img-fluid" [alt]="photo.name" width="200" height="200">
-  </a>
+  @for (photo of album.photos; track photo.id) {
+    <a [routerLink]="['/apps/photos/album', album.slug, 'photo', photo.id]" class="d-inline-block m-1">
+      <img [ngSrc]="photo.imagePath" class="img-fluid" [alt]="photo.name" width="200" height="200">
+    </a>
+  }
 </div>

@@ -8,5 +8,5 @@ import { AlbumPhotos } from '@data/photos';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntryAlbumComponent {
-  @Input() album: AlbumPhotos | null = null;
+  @Input({ required: true }) album!: AlbumPhotos;
 }
