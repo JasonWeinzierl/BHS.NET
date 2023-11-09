@@ -22,7 +22,7 @@ on:
 
 env:
   CLIENTAPP_DIRECTORY: ./src/BHS.Web/ClientApp
-  NODE_VERSION: '18'
+  NODE_VERSION: '20'
 
 jobs:
   smoke:

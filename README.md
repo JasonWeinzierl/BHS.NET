@@ -10,7 +10,7 @@ built on ASP.NET Core, Angular, and MongoDB.
 ### Prerequisites
 
 - .NET 7 SDK and Visual Studio 2022
-- Node.JS 18 and Angular CLI latest
+- Node.JS 20 and Angular CLI latest
   - `npm install @angular/cli@latest -g`
 - MongoDB
 
