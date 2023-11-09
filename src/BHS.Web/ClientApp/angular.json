@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "ci": {
-              "browserTarget": "bhs-web-client-app:build:ci"
+              "buildTarget": "bhs-web-client-app:build:ci"
             },
             "debug": {
-              "browserTarget": "bhs-web-client-app:build:debug"
+              "buildTarget": "bhs-web-client-app:build:debug"
             }
           },
           "defaultConfiguration": "debug"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bhs-web-client-app:build"
+            "buildTarget": "bhs-web-client-app:build"
           }
         },
         "test": {
