@@ -8,6 +8,12 @@ updates:
     ignore:
       - dependency-name: "@angular*"
 
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: saturday
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
