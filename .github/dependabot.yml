@@ -7,6 +7,10 @@ updates:
       day: saturday
     ignore:
       - dependency-name: "@angular*"
+      - dependency-name: "rxjs"
+      - dependency-name: "zone.js"
+      - dependency-name: "typescript"
+      - dependency-name: "tslib"
 
   - package-ecosystem: nuget
     directory: "/"
