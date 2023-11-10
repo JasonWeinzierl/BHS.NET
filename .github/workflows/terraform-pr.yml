@@ -1,0 +1,29 @@
+name: TF PR
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    branches:
+    - main
+    paths:
+    - 'infrastructure/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.5.3"
+        
+    - run: terraform init -backend=false
+      working-directory: ./infrastructure/modules/env-specific
+    - run: terraform validate
+      working-directory: ./infrastructure/modules/env-specific
+      
+    - run: terraform init -backend=false
+      working-directory: ./infrastructure/modules/shared
+    - run: terraform validate
+      working-directory: ./infrastructure/modules/shared
