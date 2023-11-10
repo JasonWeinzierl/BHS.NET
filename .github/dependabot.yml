@@ -1,5 +1,13 @@
 version: 2
 updates:
+  - package-ecosystem: npm
+    directory: "/src/BHS.Web/ClientApp"
+    schedule:
+      interval: weekly
+      day: saturday
+    ignore:
+      - dependency-name: "@angular*"
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
