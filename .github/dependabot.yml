@@ -19,14 +19,3 @@ updates:
     schedule:
       interval: weekly
       day: saturday
-
-  - package-ecosystem: terraform
-    directory: "/infrastructure/modules/env-specific"
-    schedule:
-      interval: weekly
-      day: saturday
-  - package-ecosystem: terraform
-    directory: "/infrastructure/modules/shared"
-    schedule:
-      interval: weekly
-      day: saturday
