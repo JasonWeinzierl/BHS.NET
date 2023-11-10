@@ -20,11 +20,6 @@ updates:
       interval: weekly
       day: saturday
   - package-ecosystem: terraform
-    directory: "/infrastructure/modules/custom-hostname"
-    schedule:
-      interval: weekly
-      day: saturday
-  - package-ecosystem: terraform
     directory: "/infrastructure/modules/shared"
     schedule:
       interval: weekly
