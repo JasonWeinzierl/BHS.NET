@@ -1,5 +1,5 @@
 import { FactoryProvider } from '@angular/core';
-import { MarkedOptions, MarkedRenderer } from 'ngx-markdown';
+import { MARKED_OPTIONS, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 
 const markedOptionsFactory = (): MarkedOptions => {
   const renderer = new MarkedRenderer();
@@ -23,15 +23,15 @@ const markedOptionsFactory = (): MarkedOptions => {
     return out;
   };
 
-  const mo = new MarkedOptions();
-  mo.renderer = renderer;
-  return mo;
+  return {
+    renderer,
+  };
 };
 
 /**
  * Provider for marked.js options with bootstrap styles added.
  */
 export const bootstrapMarkedOptionsProvider: FactoryProvider = {
-  provide: MarkedOptions,
+  provide: MARKED_OPTIONS,
   useFactory: markedOptionsFactory,
 };
