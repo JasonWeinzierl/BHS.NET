@@ -16,7 +16,7 @@ updates:
         patterns:
           - "lodash"
           - "@types/lodash"
-      linting:
+      lint:
         patterns:
           - "@typescript-eslint/*"
           - "eslint*"
@@ -34,6 +34,10 @@ updates:
     schedule:
       interval: weekly
       day: saturday
+    groups:
+      microsoft:
+        patterns:
+          - "Microsoft.*"
 
   - package-ecosystem: github-actions
     directory: "/"
