@@ -11,6 +11,23 @@ updates:
       - dependency-name: "zone.js"
       - dependency-name: "typescript"
       - dependency-name: "tslib"
+    groups:
+      lodash:
+        patterns:
+          - "lodash"
+          - "@types/lodash"
+      linting:
+        patterns:
+          - "@typescript-eslint/*"
+          - "eslint*"
+      jest:
+        patterns:
+          - "jest*"
+          - "@types/jest"
+      cypress:
+        patterns:
+          - "cypress*"
+          - "@cypress/schematic"
 
   - package-ecosystem: nuget
     directory: "/"
