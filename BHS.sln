@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31410.414
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Web.Tests", "tests\BHS.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Domain.Tests", "tests\BHS.Domain.Tests\BHS.Domain.Tests.csproj", "{7F5C1621-8FF8-4EA9-93D6-4D1EBCC7322D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHS.Api.IntegrationTests", "tests\BHS.Api.IntegrationTests\BHS.Api.IntegrationTests.csproj", "{FAF7FB2D-C7E2-4BE9-89D6-E958FD77E469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Api.IntegrationTests", "tests\BHS.Api.IntegrationTests\BHS.Api.IntegrationTests.csproj", "{FAF7FB2D-C7E2-4BE9-89D6-E958FD77E469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

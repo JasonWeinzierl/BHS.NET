@@ -407,7 +407,7 @@ resource "azurerm_linux_web_app" "bhs_web" {
     http2_enabled     = true
 
     application_stack {
-      dotnet_version = "7.0"
+      dotnet_version = "8.0"
     }
   }
 
