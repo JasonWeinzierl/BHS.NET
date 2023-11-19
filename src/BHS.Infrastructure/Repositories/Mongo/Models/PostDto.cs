@@ -23,8 +23,8 @@ internal sealed record PostDto(
         IEnumerable<Category>? categories)
         => new(
             Slug: slug,
-            Revisions: new[]
-            {
+            Revisions:
+            [
                 PostRevisionDto.New(
                     now,
                     title,
@@ -33,9 +33,9 @@ internal sealed record PostDto(
                     photosAlbumSlug,
                     author,
                     datePublished),
-            },
-            Deletions: Array.Empty<PostDeletionDto>(),
-            Categories: categories?.Select(category => PostCategoryHistoryDto.New(now, category)).ToArray() ?? Array.Empty<PostCategoryHistoryDto>());
+            ],
+            Deletions: [],
+            Categories: categories?.Select(category => PostCategoryHistoryDto.New(now, category)).ToArray() ?? []);
 }
 
 internal sealed record PostRevisionDto(
@@ -64,12 +64,11 @@ internal sealed record PostRevisionDto(
             filePath?.ToString(),
             photosAlbumSlug,
             AuthorDto.FromAuthor(author),
-            new[]
-            {
+            [
                 PostRevisionPublicationDto.New( // TODO: consider not immediately publishing a new revision?
                     datePublished,
                     now),
-            });
+            ]);
 }
 
 internal sealed record PostRevisionPublicationDto(
@@ -106,13 +105,12 @@ internal sealed record PostCategoryHistoryDto(
         => new(
             category.Slug,
             category.Name,
-            new[]
-            {
+            [
                 new PostCategoryChangeDto(
                     ObjectId.GenerateNewId(now.UtcDateTime),
                     now,
                     true),
-            });
+            ]);
 }
 
 internal sealed record PostCategoryChangeDto(

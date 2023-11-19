@@ -199,7 +199,7 @@ public partial class PostRepository : IPostRepository
         {
             var updateOptions = new UpdateOptions();
             if (arrayFilters.TryGetValue(update.Key, out var f))
-                updateOptions.ArrayFilters = new[] { f };
+                updateOptions.ArrayFilters = [f];
             _ = await collection.UpdateOneAsync(post => post.Slug == slug, update.Value, updateOptions, cancellationToken);
         }
 

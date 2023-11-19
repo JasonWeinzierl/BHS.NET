@@ -55,7 +55,7 @@ public class AuthorRepository : IAuthorRepository
     {
         if (user.AppMetadata is null)
         {
-            return Array.Empty<Auth0Author>();
+            return [];
         }
         else if (user.AppMetadata is JObject jobject)
         {
@@ -75,7 +75,7 @@ public class AuthorRepository : IAuthorRepository
     {
         if (!appMetadata.ContainsKey("authors"))
         {
-            return Array.Empty<Auth0Author>();
+            return [];
         }
         if (appMetadata["authors"] is not JArray arr)
         {
@@ -90,7 +90,7 @@ public class AuthorRepository : IAuthorRepository
     {
         if (!appMetadata.TryGetProperty("authors", out var arr))
         {
-            return Array.Empty<Auth0Author>();
+            return [];
         }
 
         return arr.Deserialize<Auth0Author[]>(_stjWebOptions);

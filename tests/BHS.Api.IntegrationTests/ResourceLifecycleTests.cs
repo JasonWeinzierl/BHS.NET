@@ -24,7 +24,7 @@ public class ResourceLifecycleTests : IClassFixture<BhsWebApplicationFactory<Pro
         string slug;
 
         // CREATE
-        var createRequest = new PostRequest("Hello, world!", "# H1 title\n\nThis is a markdown blog post. What's up? 12345", null, null, null, DateTimeOffset.Now, Array.Empty<Category>());
+        var createRequest = new PostRequest("Hello, world!", "# H1 title\n\nThis is a markdown blog post. What's up? 12345", null, null, null, DateTimeOffset.Now, []);
         using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest);
         var newPost = await createResponse.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<Post>();
 
@@ -38,7 +38,7 @@ public class ResourceLifecycleTests : IClassFixture<BhsWebApplicationFactory<Pro
         Assert.Contains(slug, searchResults.Select(x => x.Slug));
 
         // UPDATE
-        var updateRequest = new PostRequest("Hello again!", "# title", null, null, new Author("user1", "A User"), createRequest.DatePublished, new[] { new Category("stories", "Stories") });
+        var updateRequest = new PostRequest("Hello again!", "# title", null, null, new Author("user1", "A User"), createRequest.DatePublished, [new Category("stories", "Stories")]);
         using var updateResponse = await _httpClient.PutAsJsonAsync($"/api/blog/posts/{slug}", updateRequest);
         var updatedPost = await updateResponse.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<Post>();
 

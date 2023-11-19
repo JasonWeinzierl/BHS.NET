@@ -100,7 +100,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             null,
             new Author("me", "me :)"),
             datePublished,
-            new[] { new Category("newsletters", "Newsletters") });
+            [new Category("newsletters", "Newsletters")]);
 
         using var response = await _httpClient.PostAsJsonAsync("/api/blog/posts", request);
 
@@ -131,12 +131,12 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             null,
             new Author("me", "me :)"),
             DateTimeOffset.Now,
-            new[] { new Category("cat1", "Cat1"), new Category("cat2", "Cat2") });
+            [new Category("cat1", "Cat1"), new Category("cat2", "Cat2")]);
         var updateRequest = createRequest with
         {
             ContentMarkdown = "# Second revision",
             DatePublished = new DateTimeOffset(2000, 01, 01, 00, 00, 00, 000, TimeSpan.FromHours(0)),
-            Categories = new[] { new Category("cat1", "Cat1"), new Category("cat3", "Cat3") },
+            Categories = [new Category("cat1", "Cat1"), new Category("cat3", "Cat3")],
         };
 
         using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest);
@@ -168,7 +168,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             null,
             null,
             DateTimeOffset.Now,
-            Array.Empty<Category>());
+            []);
 
         using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest);
 

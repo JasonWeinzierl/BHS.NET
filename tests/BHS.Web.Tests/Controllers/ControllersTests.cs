@@ -57,17 +57,17 @@ public class ControllersTests : IClassFixture<ControllerTestsClassFixture>
         _fixture = fixture;
     }
 
-    public static IEnumerable<object[]> Controllers => new[]
-    {
-        new[] { typeof(AuthorController) },
-        new[] { typeof(BannersController) },
-        new[] { typeof(BlogController) },
-        new[] { typeof(ContactUsController) },
-        new[] { typeof(ErrorController) },
-        new[] { typeof(HealthCheckController) },
-        new[] { typeof(LeadershipController) },
-        new[] { typeof(PhotosController) },
-    };
+    public static IEnumerable<object[]> Controllers =>
+    [
+        [typeof(AuthorController)],
+        [typeof(BannersController)],
+        [typeof(BlogController)],
+        [typeof(ContactUsController)],
+        [typeof(ErrorController)],
+        [typeof(HealthCheckController)],
+        [typeof(LeadershipController)],
+        [typeof(PhotosController)],
+    ];
 
     [Theory]
     [MemberData(nameof(Controllers))]

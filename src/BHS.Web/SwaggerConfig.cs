@@ -65,13 +65,13 @@ internal static class SwaggerConfig
             };
 
             // Add the scheme as a security requirement.
-            operation.Security = new[]
-            {
+            operation.Security =
+            [
                 new OpenApiSecurityRequirement
                 {
-                    [schemeReference] = Array.Empty<string>(), // Empty because the array is only used for OAuth2 scopes.
+                    [schemeReference] = [], // Empty because the array is only used for OAuth2 scopes.
                 }
-            };
+            ];
         }
     }
 
