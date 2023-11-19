@@ -5,7 +5,7 @@ namespace BHS.Contracts;
 /// <summary>
 /// The visual style of any notification, banner, or alert.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<AlertTheme>))]
 public enum AlertTheme : byte
 {
     None = 0,

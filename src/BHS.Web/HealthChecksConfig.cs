@@ -50,7 +50,7 @@ internal sealed class SendGridHealthCheck : IHealthCheck
 
     private sealed record SendGridStatus(SendGridStatusIndicator Indicator, string Description);
 
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<SendGridStatusIndicator>))]
     private enum SendGridStatusIndicator
     {
         None,
