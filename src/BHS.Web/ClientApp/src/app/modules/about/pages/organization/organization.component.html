@@ -14,10 +14,10 @@
           }
 
           <dl>
-            <ng-template ngFor let-officer [ngForOf]="vm.officers">
+            @for (officer of vm.officers; track officer) {
               <dt>{{officer.title}}</dt>
               <dd [title]="officer.dateStarted | date:'\'since\' yyyy'">{{officer.name}}</dd>
-            </ng-template>
+            }
           </dl>
         </div>
 
