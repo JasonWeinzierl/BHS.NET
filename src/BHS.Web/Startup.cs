@@ -32,7 +32,7 @@ public class Startup
                 .AddBhs400Logging();
         services.AddSpaStaticFiles(opt =>
         {
-            opt.RootPath = "ClientApp/dist/bhs-web-client-app";
+            opt.RootPath = "ClientApp/dist/bhs-web-client-app/browser";
         });
 
         services.AddBhsHealthChecks(Configuration);

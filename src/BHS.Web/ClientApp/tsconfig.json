@@ -43,6 +43,7 @@
       ]
     },
     "useDefineForClassFields": false,
+    "esModuleInterop": true,
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
