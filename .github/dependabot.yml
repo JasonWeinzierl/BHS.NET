@@ -38,6 +38,9 @@ updates:
       microsoft:
         patterns:
           - "Microsoft.*"
+      xunit:
+        patterns:
+          - "xunit*"
 
   - package-ecosystem: github-actions
     directory: "/"
