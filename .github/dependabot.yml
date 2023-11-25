@@ -38,6 +38,9 @@ updates:
       microsoft:
         patterns:
           - "Microsoft.*"
+        update-types:
+          - "minor"
+          - "patch"
       xunit:
         patterns:
           - "xunit*"
