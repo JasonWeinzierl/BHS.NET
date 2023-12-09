@@ -79,7 +79,7 @@
     "merge-partially": "^2.0.2",
     "ng-mocks": "^14.12.1",
     "npm-run-all2": "^6.1.1",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "~5.2.2"
   }
 }
