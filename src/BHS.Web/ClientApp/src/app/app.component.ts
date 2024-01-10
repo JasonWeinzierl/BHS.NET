@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { merge, Observable } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { InsightsService } from '@core/services/insights.service';
 
@@ -12,8 +12,9 @@ import { InsightsService } from '@core/services/insights.service';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   public loading$: Observable<boolean>;
+  private titleSub?: Subscription;
 
   public constructor(
     private readonly router: Router,
@@ -40,7 +41,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const appTitle = this.titleService.getTitle();
 
-    this.router.events
+    this.titleSub = this.router.events
       .pipe(
         filter(
           event => event instanceof NavigationEnd,
@@ -57,9 +58,18 @@ export class AppComponent implements OnInit {
           return appTitle;
         }),
       )
-      .subscribe((newTitle: string) => {
-        this.setTitle(newTitle);
+      .subscribe({
+        next: (newTitle: string) => {
+          this.setTitle(newTitle);
+        },
+        error: (err: unknown) => {
+          console.error(err);
+        },
       });
+  }
+
+  ngOnDestroy(): void {
+    this.titleSub?.unsubscribe();
   }
 
   private setTitle(newTitle: string): void {

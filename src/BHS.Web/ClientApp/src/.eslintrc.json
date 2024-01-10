@@ -52,8 +52,14 @@
         "rxjs/suffix-subjects": "warn",
         "rxjs/no-exposed-subjects": "error",
         "rxjs/no-explicit-generics": "warn",
+        "rxjs/no-ignored-error": "warn",
         "rxjs/no-ignored-subscribe": "warn",
+        "rxjs/no-ignored-subscription": "warn",
         "rxjs/no-implicit-any-catch": "error",
+        "rxjs/no-unsafe-catch": "warn",
+        "rxjs/no-unsafe-first": "warn",
+        "rxjs/no-unsafe-switchmap": "warn",
+        "rxjs/throw-error": "warn",
 
         // typescript + angular
         "@typescript-eslint/no-extraneous-class": [
@@ -79,9 +85,7 @@
             "maxComplexity": 10
           }
         ],
-        "@angular-eslint/template/i18n": "off",
-        // TODO: revisit when Angular 17 releases the new control flow with 'track'
-        "@angular-eslint/template/use-track-by-function": "off"
+        "@angular-eslint/template/i18n": "off"
       }
     }
   ]
