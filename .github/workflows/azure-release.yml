@@ -53,6 +53,14 @@ jobs:
       with:
         useConfigFile: true
 
+    - name: Add gitversion to summary
+      run: |
+        echo "### GitVersion" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- SEMANTIC_VERSION: ${{ steps.gitversion.outputs.fullSemVer }}" >> $GITHUB_STEP_SUMMARY
+        echo "- INFORMATIONAL_VERSION: ${{ steps.gitversion.outputs.informationalVersion }}" >> $GITHUB_STEP_SUMMARY
+        echo "- COMMIT_DATE: ${{ steps.gitversion.outputs.commitDate }}" >> $GITHUB_STEP_SUMMARY
+
 
     - name: Run dotnet restore
       run: dotnet restore
