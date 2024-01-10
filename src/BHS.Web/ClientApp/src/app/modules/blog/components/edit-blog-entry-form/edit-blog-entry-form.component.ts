@@ -14,7 +14,7 @@ export class EditBlogEntryFormComponent implements OnChanges {
   @Input() currentAuthor: Author | null = null;
   @Input() allCategories: Array<Category> = [];
 
-  @Output() publish = new EventEmitter<PostRequest>();
+  @Output() readonly publish = new EventEmitter<PostRequest>();
 
   cancelRoute: Array<string> = ['/apps/blog'];
   editFormGroup = this.formBuilder.nonNullable.group({
