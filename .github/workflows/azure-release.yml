@@ -11,12 +11,12 @@ on:
     - tests/**
 
 env:
-  AZURE_WEBAPP_PACKAGE_PATH: src/BHS.Web/publish
-  CONFIGURATION: Release
+  WEB_SRC_PATH: src/BHS.Web
+  WEB_PUBLISH_PATH: artifacts/publish/BHS.Web/release
+  CLIENTAPP_PATH: ./src/BHS.Web/ClientApp
+  DOTNET_BUILD_CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
   NODE_VERSION: '20'
-  ENTRYPOINT_DIRECTORY: src/BHS.Web
-  CLIENTAPP_DIRECTORY: ./src/BHS.Web/ClientApp
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: npm
-        cache-dependency-path: '${{ env.CLIENTAPP_DIRECTORY }}/package-lock.json'
+        cache-dependency-path: '${{ env.CLIENTAPP_PATH }}/package-lock.json'
 
 
     - name: Run gitversion
@@ -66,43 +66,43 @@ jobs:
       run: dotnet restore
 
     - name: Run dotnet build
-      run: dotnet build --no-restore --configuration ${{ env.CONFIGURATION }} -p:Version="${{ steps.gitversion.outputs.fullSemVer }}" -p:InformationalVersion="${{ steps.gitversion.outputs.informationalVersion }}"
+      run: dotnet build --no-restore --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} -p:Version="${{ steps.gitversion.outputs.fullSemVer }}" -p:InformationalVersion="${{ steps.gitversion.outputs.informationalVersion }}"
 
     - name: Run dotnet test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} --verbosity normal
 
 
     - run: npm ci
-      working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
+      working-directory: ${{ env.CLIENTAPP_PATH }}
 
     - run: npm run lint
-      working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
+      working-directory: ${{ env.CLIENTAPP_PATH }}
 
     - run: npm run transform:app:release
-      working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
+      working-directory: ${{ env.CLIENTAPP_PATH }}
       env:
         SEMANTIC_VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
         INFORMATIONAL_VERSION: ${{ steps.gitversion.outputs.informationalVersion }}
         COMMIT_DATE: ${{ steps.gitversion.outputs.commitDate }}
 
     - run: npm run build:app:release
-      working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
+      working-directory: ${{ env.CLIENTAPP_PATH }}
 
     - run: npm run test:ci
-      working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
+      working-directory: ${{ env.CLIENTAPP_PATH }}
 
     - run: npm run integration:ci
-      working-directory: ${{ env.CLIENTAPP_DIRECTORY }}
+      working-directory: ${{ env.CLIENTAPP_PATH }}
 
 
     - name: Run dotnet publish
-      run: dotnet publish "${{ env.ENTRYPOINT_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      run: dotnet publish "${{ env.WEB_SRC_PATH }}" --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} --no-build
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        path: ${{ env.WEB_PUBLISH_PATH }}
 
 
   deploy-stage:
@@ -121,7 +121,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        path: ${{ env.WEB_PUBLISH_PATH }}
 
     - name: Azure Login
       uses: azure/login@v1
@@ -132,7 +132,7 @@ jobs:
       uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: ${{ env.WEB_PUBLISH_PATH }}
 
 
   smoke-test-stage:
@@ -161,7 +161,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        path: ${{ env.WEB_PUBLISH_PATH }}
 
     - name: Azure Login
       uses: azure/login@v1
@@ -172,7 +172,7 @@ jobs:
       uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: ${{ env.WEB_PUBLISH_PATH }}
 
 
   smoke-test-prod:
