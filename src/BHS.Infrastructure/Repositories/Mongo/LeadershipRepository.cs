@@ -21,6 +21,7 @@ public class LeadershipRepository : ILeadershipRepository
         => await _mongoClient.GetBhsCollection<DirectorDto>("directors")
             .Aggregate()
             .Match(x => x.Year >= _dateTimeOffsetProvider.CurrentYear())
+            .SortBy(x => x.Year)
             .Project(x => new Director(x.Name, x.Year.ToString()))
             .ToListAsync(cancellationToken);
 
