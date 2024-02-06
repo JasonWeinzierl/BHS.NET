@@ -1,6 +1,5 @@
 ﻿using Auth0Net.DependencyInjection;
 using Auth0Net.DependencyInjection.Cache;
-using BHS.Domain;
 using BHS.Domain.Authors;
 using BHS.Domain.Banners;
 using BHS.Domain.Blog;
@@ -9,7 +8,6 @@ using BHS.Domain.Leadership;
 using BHS.Domain.Notifications;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Adapters;
-using BHS.Infrastructure.Providers;
 using BHS.Infrastructure.Repositories.Auth0;
 using BHS.Infrastructure.Repositories.Mongo;
 using Microsoft.Extensions.Configuration;
@@ -36,7 +34,7 @@ public static class BhsServiceCollectionExtensions
         services.AddScoped<IContactUsService, ContactUsService>();
         services.TryAddScoped<IEmailAdapter, SendGridEmailAdapter>();
 
-        services.AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
+        services.AddSingleton(TimeProvider.System);
 
         services.AddMongoRepositories();
         services.AddTransient<IAuthorRepository, AuthorRepository>();

@@ -1,5 +1,4 @@
 ﻿using BHS.Contracts.Blog;
-using BHS.Domain;
 using BHS.Domain.Blog;
 using BHS.Infrastructure.Repositories.Mongo.Models;
 using Humanizer;
@@ -12,16 +11,16 @@ namespace BHS.Infrastructure.Repositories.Mongo;
 public partial class PostRepository : IPostRepository
 {
     private readonly IMongoClient _mongoClient;
-    private readonly IDateTimeOffsetProvider _dateTimeOffsetProvider;
+    private readonly TimeProvider _timeProvider;
     private readonly ISequenceRepository _sequenceRepository;
 
     public PostRepository(
         IMongoClient mongoClient,
-        IDateTimeOffsetProvider dateTimeOffsetProvider,
+        TimeProvider timeProvider,
         ISequenceRepository sequenceRepository)
     {
         _mongoClient = mongoClient;
-        _dateTimeOffsetProvider = dateTimeOffsetProvider;
+        _timeProvider = timeProvider;
         _sequenceRepository = sequenceRepository;
     }
 
@@ -30,7 +29,7 @@ public partial class PostRepository : IPostRepository
         var result = await _mongoClient.GetBhsCollection<PostDto>("posts")
             .Aggregate()
             .Match(x => x.Slug == slug) // TODO: should be case insensitive & elsewhere!
-            .GetCurrentPostSnapshotDtos(_dateTimeOffsetProvider.Now())
+            .GetCurrentPostSnapshotDtos(_timeProvider.GetUtcNow())
             .SingleOrDefaultAsync(cancellationToken);
         return result?.ToPost();
     }
