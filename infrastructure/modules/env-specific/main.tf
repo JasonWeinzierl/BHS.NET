@@ -23,7 +23,7 @@ resource "github_actions_environment_secret" "azure_client_id" {
   repository      = data.github_repository.bhs.name
   environment     = github_repository_environment.this.environment
   secret_name     = "AZURE_CLIENT_ID"
-  plaintext_value = azuread_application.bhs_github_actions.application_id
+  plaintext_value = azuread_application.bhs_github_actions.client_id
 }
 
 resource "github_actions_environment_secret" "azure_client_secret" {
@@ -109,7 +109,7 @@ resource "azuread_application" "bhs_github_actions" {
 }
 
 resource "azuread_service_principal" "bhs_github_actions" {
-  application_id               = azuread_application.bhs_github_actions.application_id
+  client_id                    = azuread_application.bhs_github_actions.client_id
   app_role_assignment_required = false
   owners = [
     data.azuread_client_config.current.object_id,
