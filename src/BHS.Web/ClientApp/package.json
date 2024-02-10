@@ -28,7 +28,7 @@
     "@angular/router": "17.1.2",
     "@auth0/auth0-angular": "^2.2.3",
     "@microsoft/applicationinsights-angularplugin-js": "^15.0.1",
-    "@microsoft/applicationinsights-web": "^3.0.7",
+    "@microsoft/applicationinsights-web": "^3.0.8",
     "bootstrap": "5.3.2",
     "bootstrap-icons": "1.11.3",
     "jwt-decode": "^4.0.0",
