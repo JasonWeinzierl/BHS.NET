@@ -55,8 +55,6 @@
     "@faker-js/faker": "^8.4.1",
     "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
     "cypress": "~13.6.5",
     "eslint": "^8.56.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -72,6 +70,7 @@
     "ng-mocks": "^14.12.1",
     "npm-run-all2": "^6.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "~5.3.3"
+    "typescript": "~5.3.3",
+    "typescript-eslint": "^7.0.2"
   }
 }
