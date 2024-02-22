@@ -13,7 +13,7 @@ on:
 env:
   WEB_SRC_PATH: src/BHS.Web
   WEB_PUBLISH_PATH: artifacts/publish/BHS.Web/release
-  CLIENTAPP_PATH: ./src/BHS.Web/ClientApp
+  CLIENTAPP_PATH: ./src/bhs-web-angular-app
   DOTNET_BUILD_CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
   NODE_VERSION: '20'

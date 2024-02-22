@@ -6,11 +6,11 @@ on:
     branches:
     - main
     paths:
-    - 'src/BHS.Web/ClientApp/**'
+    - 'src/bhs-web-angular-app/**'
 
 defaults:
   run:
-    working-directory: ./src/BHS.Web/ClientApp
+    working-directory: ./src/bhs-web-angular-app
 
 jobs:
   build-and-test:

@@ -32,7 +32,7 @@ public class Startup
                 .AddBhs400Logging();
         services.AddSpaStaticFiles(opt =>
         {
-            opt.RootPath = "ClientApp/dist/bhs-web-client-app/browser";
+            opt.RootPath = "ClientApp/angular";
         });
 
         services.AddBhsHealthChecks(Configuration);
@@ -87,7 +87,7 @@ public class Startup
             // In development, you must start the front end with `npm run start`.
             if (env.IsDevelopment())
             {
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "../bhs-web-angular-app";
                 spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/");
             }
         });

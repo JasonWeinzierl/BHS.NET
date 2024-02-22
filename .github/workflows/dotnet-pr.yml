@@ -8,7 +8,7 @@ on:
     paths:
     - BHS.sln
     - src/**
-    - '!src/BHS.Web/ClientApp/**'
+    - '!src/bhs-web-angular-app/**'
     - tests/**
 
 jobs:

@@ -21,7 +21,7 @@ on:
         required: true
 
 env:
-  CLIENTAPP_DIRECTORY: ./src/BHS.Web/ClientApp
+  CLIENTAPP_DIRECTORY: ./src/bhs-web-angular-app
   NODE_VERSION: '20'
 
 jobs:
@@ -30,16 +30,16 @@ jobs:
     environment: ${{ inputs.environment }}
 
     steps:
-    
+
     - uses: actions/checkout@v4
-  
+
     - name: Setup Node.js with caching
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: npm
         cache-dependency-path: '${{ env.CLIENTAPP_DIRECTORY }}/package-lock.json'
-  
+
     - name: cypress run
       uses: cypress-io/github-action@v6
       with:

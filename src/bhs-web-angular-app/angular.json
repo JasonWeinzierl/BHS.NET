@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bhs-web-client-app": {
+    "bhs-web-angular-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -21,7 +21,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/bhs-web-client-app",
+            "outputPath": "dist/bhs-web-angular-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "ci": {
-              "buildTarget": "bhs-web-client-app:build:ci"
+              "buildTarget": "bhs-web-angular-app:build:ci"
             },
             "debug": {
-              "buildTarget": "bhs-web-client-app:build:debug"
+              "buildTarget": "bhs-web-angular-app:build:debug"
             }
           },
           "defaultConfiguration": "debug"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "bhs-web-client-app:build"
+            "buildTarget": "bhs-web-angular-app:build"
           }
         },
         "test": {
@@ -118,11 +118,11 @@
           },
           "configurations": {
             "ci": {
-              "devServerTarget": "bhs-web-client-app:serve:ci",
+              "devServerTarget": "bhs-web-angular-app:serve:ci",
               "headless": true
             },
             "debug": {
-              "devServerTarget": "bhs-web-client-app:serve",
+              "devServerTarget": "bhs-web-angular-app:serve",
               "watch": true
             }
           },
@@ -135,11 +135,11 @@
           },
           "configurations": {
             "debug": {
-              "devServerTarget": "bhs-web-client-app:serve",
+              "devServerTarget": "bhs-web-angular-app:serve",
               "watch": true
             },
             "local": {
-              "devServerTarget": "bhs-web-client-app:serve:ci",
+              "devServerTarget": "bhs-web-angular-app:serve:ci",
               "headless": true
             }
           },

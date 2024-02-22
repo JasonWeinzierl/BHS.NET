@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: "/src/BHS.Web/ClientApp"
+    directory: "/src/bhs-web-angular-app"
     schedule:
       interval: weekly
       day: saturday
