@@ -1,2 +1,2 @@
 export * from './app-environment';
-export * from './app-version';
+export { default as appVersion } from './app-version.json';

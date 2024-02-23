@@ -78,14 +78,21 @@ jobs:
     - run: npm run lint
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
-    - run: npm run transform:app:release
+    - name: Create release app version file
       working-directory: ${{ env.CLIENTAPP_PATH }}
       env:
         SEMANTIC_VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
         INFORMATIONAL_VERSION: ${{ steps.gitversion.outputs.informationalVersion }}
         COMMIT_DATE: ${{ steps.gitversion.outputs.commitDate }}
+      run: |
+        jq -n \
+          --arg semantic_version $SEMANTIC_VERSION \
+          --arg informational_version $INFORMATIONAL_VERSION \
+          --arg commit_date $COMMIT_DATE \
+          '{ "semver": $semantic_version, "info": $informational_version, "commitDate": $commit_date }' \
+          > src/environments/app-version.release.json
 
-    - run: npm run build:app:release
+    - run: npm run build:release
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
     - run: npm run test:ci
