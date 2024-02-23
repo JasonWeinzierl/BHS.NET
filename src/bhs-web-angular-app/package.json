@@ -12,7 +12,8 @@
     "integration": "ng e2e",
     "integration:ci": "ng e2e --configuration ci",
     "smoke": "ng run bhs-web-angular-app:smoke",
-    "smoke:local": "ng run bhs-web-angular-app:smoke:local"
+    "smoke:local": "ng run bhs-web-angular-app:smoke:local",
+    "clean": "ng cache clean"
   },
   "private": true,
   "dependencies": {
