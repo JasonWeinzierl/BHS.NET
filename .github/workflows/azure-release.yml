@@ -39,6 +39,7 @@ jobs:
       with:
         versionSpec: '5.x'
 
+    - run: corepack enable
     - name: Setup Node.js with caching
       uses: actions/setup-node@v4
       with:
