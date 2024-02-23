@@ -23,8 +23,8 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20'
-    - run: npm ci
-    - run: npm run lint
-    - run: npm run build
-    - run: npm run test:ci
-    - run: npm run integration:ci
+    - run: yarn workspaces focus bhs-web-angular-app
+    - run: yarn lint
+    - run: yarn build
+    - run: yarn test:ci
+    - run: yarn integration:ci

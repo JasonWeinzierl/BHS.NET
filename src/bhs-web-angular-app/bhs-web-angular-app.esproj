@@ -3,18 +3,18 @@
   <PropertyGroup>
     <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
 
-    <BuildCommand>npm run build</BuildCommand>
+    <BuildCommand>yarn build</BuildCommand>
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
 
-    <StartupCommand>npm start</StartupCommand>
+    <StartupCommand>yarn start</StartupCommand>
 
-    <TestCommand>npm test</TestCommand>
+    <TestCommand>yarn test</TestCommand>
     <JavaScriptTestRoot></JavaScriptTestRoot>
     <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
 
-    <CleanCommand>npm run clean</CleanCommand>
+    <CleanCommand>yarn clean</CleanCommand>
 
-    <PublishCommand>npm run build:release</PublishCommand>
+    <PublishCommand>yarn build:release</PublishCommand>
   </PropertyGroup>
 
 </Project>

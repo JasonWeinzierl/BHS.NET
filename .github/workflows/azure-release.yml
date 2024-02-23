@@ -43,8 +43,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
-        cache: npm
-        cache-dependency-path: '${{ env.CLIENTAPP_PATH }}/package-lock.json'
+        cache: yarn
 
 
     - name: Run gitversion
@@ -72,10 +71,10 @@ jobs:
       run: dotnet test --no-build --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} --verbosity normal
 
 
-    - run: npm ci
+    - run: yarn workspaces focus bhs-web-angular-app
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
-    - run: npm run lint
+    - run: yarn lint
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
     - name: Create release app version file
@@ -92,13 +91,13 @@ jobs:
           '{ "semver": $semantic_version, "info": $informational_version, "commitDate": $commit_date }' \
           > src/environments/app-version.release.json
 
-    - run: npm run build:release
+    - run: yarn build:release
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
-    - run: npm run test:ci
+    - run: yarn test:ci
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
-    - run: npm run integration:ci
+    - run: yarn integration:ci
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
 

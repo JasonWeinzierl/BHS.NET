@@ -10,8 +10,9 @@ built on ASP.NET Core, Angular, and MongoDB.
 ### Prerequisites
 
 - .NET 8 SDK and Visual Studio 2022
-- Node.JS 20 and Angular CLI latest
-  - `npm install @angular/cli@latest -g`
+  - `dotnet tool restore`
+- Node.JS 20 and yarn
+  - `corepack enable`
 - MongoDB
 
 ### Build and Debug
@@ -25,9 +26,9 @@ built on ASP.NET Core, Angular, and MongoDB.
 
 #### Frontend
 
-1. Open the BHS.Web/ClentApp directory in VS Code or other editor.
-2. `npm install`
-3. `npm run start`
+1. Open the `src/bhs-web-angular-app` directory in VS Code or other editor.
+2. `yarn`
+3. `yarn start`
     - Use the included VS Code launch profiles to attach the debugger.
 
 This starts the angular development server on `localhost:4200`, but backend requests will not succeed.

@@ -84,7 +84,7 @@ public class Startup
 
         app.UseSpa(spa =>
         {
-            // In development, you must start the front end with `npm run start`.
+            // In development, you must start the front end with `yarn start`.
             if (env.IsDevelopment())
             {
                 spa.Options.SourcePath = "../bhs-web-angular-app";

@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -154,6 +154,7 @@
       "@cypress/schematic",
       "@angular-eslint/schematics"
     ],
+    "packageManager": "yarn",
     "analytics": "cd767fbc-e2d6-4e59-802e-0f5840dd223d"
   },
   "schematics": {
