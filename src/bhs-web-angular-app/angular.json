@@ -52,8 +52,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/environments/app-version.json",
-                  "with": "src/environments/app-version.release.json"
+                  "replace": "src/environments/app-version.ts",
+                  "with": "src/environments/app-version.release.ts"
                 }
               ],
               "outputHashing": "all",

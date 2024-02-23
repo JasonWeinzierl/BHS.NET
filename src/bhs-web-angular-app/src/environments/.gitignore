@@ -1,2 +1,2 @@
 # Ignore transformed version files created at build time.
-app-version.*.json
+app-version.*.ts

@@ -43,8 +43,7 @@
       ]
     },
     "useDefineForClassFields": false,
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+    "esModuleInterop": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

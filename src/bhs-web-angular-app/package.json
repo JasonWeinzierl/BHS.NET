@@ -5,8 +5,8 @@
   "scripts": {
     "start": "ng serve --open",
     "build": "ng build",
-    "transform:release": "./transform-release.sh",
     "build:release": "ng build --configuration release",
+    "transform:release": "./transform-release.sh",
     "watch": "ng build --watch --configuration debug",
     "lint": "ng lint",
     "test": "ng test",
