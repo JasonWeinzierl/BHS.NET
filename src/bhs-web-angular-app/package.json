@@ -59,7 +59,7 @@
     "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",
     "cypress": "~13.6.6",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-deprecation": "^2.0.0",
@@ -72,6 +72,6 @@
     "merge-partially": "^2.0.2",
     "ng-mocks": "^14.12.1",
     "typescript": "~5.3.3",
-    "typescript-eslint": "^7.0.2"
+    "typescript-eslint": "^7.1.0"
   }
 }
