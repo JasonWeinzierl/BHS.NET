@@ -14,6 +14,8 @@ set -euo pipefail
 # Value must match angular.json's `fileReplacements.with`.
 filePath="src/environments/app-version.release.ts"
 
+echo "WRITE: $filePath"
+
 echo -n "export default " > $filePath
 
 # Schema must match `app-version.ts`.
