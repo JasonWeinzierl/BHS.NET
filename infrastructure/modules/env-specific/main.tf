@@ -175,12 +175,46 @@ resource "azurerm_cosmosdb_account" "bhs_db" {
     failover_priority = 0
     location          = azurerm_resource_group.bhs.location
   }
+
+  capabilities {
+    name = "EnableMongo"
+  }
+
+  dynamic "capabilities" {
+    for_each = var.enable_free_cosmos ? [] : [1]
+    content {
+      name = "EnableServerless"
+    }
+  }
+
+  dynamic "capabilities" {
+    for_each = var.enable_free_cosmos ? [] : [1]
+    content {
+      name = "DisableRateLimitingResponses"
+    }
+  }
+
+  dynamic "capacity" {
+    for_each = var.enable_free_cosmos ? [] : [1]
+    content {
+      total_throughput_limit = 4000
+    }
+  }
 }
 
 resource "azurerm_cosmosdb_mongo_database" "bhs_db" {
   name                = "bhs"
   resource_group_name = azurerm_resource_group.bhs.name
   account_name        = azurerm_cosmosdb_account.bhs_db.name
+
+  # Free accounts get 1000 RU/s of provisioned throughput.
+  # Otherwise, we're using serverless.
+  dynamic "autoscale_settings" {
+    for_each = var.enable_free_cosmos ? [1] : []
+    content {
+      max_throughput = 1000
+    }
+  }
 }
 
 
