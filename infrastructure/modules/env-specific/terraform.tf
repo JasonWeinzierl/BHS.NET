@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~>3.88.0"
+      version = "~>3.94.0"
     }
 
     azuread = {
@@ -14,12 +14,12 @@ terraform {
 
     github = {
       source  = "integrations/github"
-      version = "~>5.45.0"
+      version = "~>6.0.1"
     }
 
     auth0 = {
       source  = "auth0/auth0"
-      version = "~>1.1.2"
+      version = "~>1.2.0"
     }
 
     sendgrid = {
@@ -29,7 +29,7 @@ terraform {
 
     namecheap = {
       source  = "namecheap/namecheap"
-      version = "~>2.1.1"
+      version = "~>2.1.2"
     }
   }
 
