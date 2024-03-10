@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Slab:400,600');
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
-@import 'ngx-toastr/toastr-bs5-alert';
-@import 'ngx-bootstrap/datepicker/bs-datepicker';
+@import 'bootstrap/scss/bootstrap.scss';
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+@import 'bootstrap-icons/font/bootstrap-icons.scss';
+@import 'ngx-toastr/toastr-bs5-alert.scss';
+@import 'ngx-bootstrap/datepicker/bs-datepicker.scss';
 
 html {
   position: relative;
