@@ -18,14 +18,14 @@
     "clean": "ng cache clean"
   },
   "dependencies": {
-    "@angular/animations": "17.2.4",
-    "@angular/common": "17.2.4",
-    "@angular/compiler": "17.2.4",
-    "@angular/core": "17.2.4",
-    "@angular/forms": "17.2.4",
-    "@angular/platform-browser": "17.2.4",
-    "@angular/platform-browser-dynamic": "17.2.4",
-    "@angular/router": "17.2.4",
+    "@angular/animations": "17.3.0",
+    "@angular/common": "17.3.0",
+    "@angular/compiler": "17.3.0",
+    "@angular/core": "17.3.0",
+    "@angular/forms": "17.3.0",
+    "@angular/platform-browser": "17.3.0",
+    "@angular/platform-browser-dynamic": "17.3.0",
+    "@angular/router": "17.3.0",
     "@auth0/auth0-angular": "^2.2.3",
     "@microsoft/applicationinsights-analytics-js": "3.1.0",
     "@microsoft/applicationinsights-angularplugin-js": "^15.1.0",
@@ -45,15 +45,15 @@
     "zone.js": "~0.14.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "17.2.3",
+    "@angular-devkit/build-angular": "17.3.0",
     "@angular-eslint/builder": "17.2.1",
     "@angular-eslint/eslint-plugin": "17.2.1",
     "@angular-eslint/eslint-plugin-template": "17.2.1",
     "@angular-eslint/schematics": "17.2.1",
     "@angular-eslint/template-parser": "17.2.1",
-    "@angular/cli": "17.2.3",
-    "@angular/compiler-cli": "17.2.4",
-    "@angular/language-service": "17.2.4",
+    "@angular/cli": "17.3.0",
+    "@angular/compiler-cli": "17.3.0",
+    "@angular/language-service": "17.3.0",
     "@cypress/schematic": "^2.5.1",
     "@faker-js/faker": "^8.4.1",
     "@types/jest": "^29.5.12",
@@ -71,7 +71,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "merge-partially": "^2.0.2",
     "ng-mocks": "^14.12.1",
-    "typescript": "~5.3.3",
+    "typescript": "~5.4.2",
     "typescript-eslint": "^7.1.1"
   }
 }
