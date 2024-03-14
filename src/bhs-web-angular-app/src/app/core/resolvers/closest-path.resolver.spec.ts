@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterModule , RouterStateSnapshot } from '@angular/router';
 import { resolveClosestPath } from './closest-path.resolver';
 
 describe('resolveClosestPath', () => {
@@ -10,7 +9,7 @@ describe('resolveClosestPath', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes([]),
+        RouterModule.forRoot([]),
       ],
     });
     route = TestBed.inject(ActivatedRoute).snapshot;

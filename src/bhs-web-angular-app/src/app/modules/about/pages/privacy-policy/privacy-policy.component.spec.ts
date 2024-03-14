@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 import { PrivacyPolicyComponent } from './privacy-policy.component';
 
 describe('PrivacyPolicyComponent', () => {
@@ -8,7 +8,9 @@ describe('PrivacyPolicyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [
+        RouterModule.forRoot([]),
+      ],
       declarations: [ PrivacyPolicyComponent ],
     })
     .compileComponents();

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 import { BsDatepickerDirective } from 'ngx-bootstrap/datepicker';
 import { EditBlogEntryFormComponent } from './edit-blog-entry-form.component';
 import { Author } from '@data/authors';
@@ -26,7 +26,7 @@ describe('EditBlogEntryFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule,
+        RouterModule.forRoot([]),
       ],
       declarations: [
         BsDatepickerDirective,

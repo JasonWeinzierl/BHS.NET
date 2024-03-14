@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterLink , RouterModule } from '@angular/router';
 import { CategoriesListViewComponent } from './categories-list-view.component';
 
 describe('CategoriesListViewComponent', () => {
@@ -11,7 +10,7 @@ describe('CategoriesListViewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+        RouterModule.forRoot([]),
       ],
       declarations: [
         CategoriesListViewComponent,
