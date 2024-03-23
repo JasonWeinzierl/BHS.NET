@@ -15,7 +15,7 @@ interface EntryNewVm {
 @Component({
   selector: 'app-entry-new',
   templateUrl: './entry-new.component.html',
-  styleUrls: ['./entry-new.component.scss'],
+  styleUrl: './entry-new.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntryNewComponent {

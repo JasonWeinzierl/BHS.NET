@@ -9,7 +9,7 @@ import { InsightsService } from '@core/services/insights.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AppComponent implements OnInit, OnDestroy {

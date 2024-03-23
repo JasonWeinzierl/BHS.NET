@@ -6,7 +6,7 @@ import { BlogService, PostPreview } from '@data/blog';
 @Component({
   selector: 'app-posts-search',
   templateUrl: './posts-search.component.html',
-  styleUrls: ['./posts-search.component.scss'],
+  styleUrl: './posts-search.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsSearchComponent {

@@ -7,7 +7,7 @@ import { BlogService, CategorySummary } from '@data/blog';
 @Component({
   selector: 'app-blog-index',
   templateUrl: './blog-index.component.html',
-  styleUrls: ['./blog-index.component.scss'],
+  styleUrl: './blog-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogIndexComponent {

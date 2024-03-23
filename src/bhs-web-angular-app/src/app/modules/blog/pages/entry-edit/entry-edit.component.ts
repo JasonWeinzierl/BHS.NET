@@ -16,7 +16,7 @@ interface EntryEditVm {
 @Component({
   selector: 'app-entry-edit',
   templateUrl: './entry-edit.component.html',
-  styleUrls: ['./entry-edit.component.scss'],
+  styleUrl: './entry-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntryEditComponent {

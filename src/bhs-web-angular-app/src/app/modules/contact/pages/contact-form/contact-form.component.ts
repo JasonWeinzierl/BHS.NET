@@ -6,7 +6,7 @@ import { ContactAlertRequest, ContactService } from '@data/contact-us';
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss'],
+  styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.Default, // TODO: Refactor to OnPush
 })
 export class ContactFormComponent {

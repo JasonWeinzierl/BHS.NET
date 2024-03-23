@@ -7,7 +7,7 @@ import { AlbumPhotos, PhotosService } from '@data/photos';
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
-  styleUrls: ['./album.component.scss'],
+  styleUrl: './album.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlbumComponent {

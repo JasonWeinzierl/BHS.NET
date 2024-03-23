@@ -6,7 +6,7 @@ import { Category, categorySchema, Post, PostRequest } from '@data/blog';
 @Component({
   selector: 'app-edit-blog-entry-form',
   templateUrl: './edit-blog-entry-form.component.html',
-  styleUrls: ['./edit-blog-entry-form.component.scss'],
+  styleUrl: './edit-blog-entry-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditBlogEntryFormComponent implements OnChanges {

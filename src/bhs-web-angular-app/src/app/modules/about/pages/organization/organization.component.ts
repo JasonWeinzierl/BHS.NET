@@ -6,7 +6,7 @@ import { Director, LeadershipService, Officer } from '@data/leadership';
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.scss'],
+  styleUrl: './organization.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganizationComponent {

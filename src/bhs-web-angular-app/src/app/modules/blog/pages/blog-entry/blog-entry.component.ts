@@ -10,7 +10,7 @@ import { AlbumPhotos, PhotosService } from '@data/photos';
 @Component({
   selector: 'app-blog-entry',
   templateUrl: './blog-entry.component.html',
-  styleUrls: ['./blog-entry.component.scss'],
+  styleUrl: './blog-entry.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogEntryComponent {

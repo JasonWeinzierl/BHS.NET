@@ -9,7 +9,7 @@ type AlbumPageVm = Observable<{ album?: AlbumPhotos, currentPhoto?: Photo, previ
 @Component({
   selector: 'app-album-page',
   templateUrl: './album-page.component.html',
-  styleUrls: ['./album-page.component.scss'],
+  styleUrl: './album-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlbumPageComponent {

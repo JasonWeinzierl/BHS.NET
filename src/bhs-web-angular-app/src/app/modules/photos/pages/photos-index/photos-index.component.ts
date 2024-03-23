@@ -6,7 +6,7 @@ import { Album, PhotosService } from '@data/photos';
 @Component({
   selector: 'app-photos-index',
   templateUrl: './photos-index.component.html',
-  styleUrls: ['./photos-index.component.scss'],
+  styleUrl: './photos-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhotosIndexComponent {

@@ -7,7 +7,7 @@ import { BlogService, CategoryPosts } from '@data/blog';
 @Component({
   selector: 'app-category-posts',
   templateUrl: './category-posts.component.html',
-  styleUrls: ['./category-posts.component.scss'],
+  styleUrl: './category-posts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryPostsComponent {

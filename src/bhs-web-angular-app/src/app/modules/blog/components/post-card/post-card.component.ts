@@ -4,7 +4,7 @@ import { PostPreview } from '@data/blog';
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
-  styleUrls: ['./post-card.component.scss'],
+  styleUrl: './post-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostCardComponent {
