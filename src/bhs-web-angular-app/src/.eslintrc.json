@@ -37,7 +37,9 @@
             "style": "kebab-case"
           }
         ],
+        "@angular-eslint/consistent-component-styles": "off", // TODO: convert styleUrls to styleUrl
         "@angular-eslint/prefer-on-push-component-change-detection": "warn", // TODO: convert remaining components to OnPush
+        "@angular-eslint/prefer-standalone": "off", // TODO: change to error after ng g @angular/core:standalone
         "@angular-eslint/prefer-standalone-component": "off", // TODO: change to error after ng g @angular/core:standalone
         "@angular-eslint/sort-ngmodule-metadata-arrays": "off", // TODO: irrelevant after standalone conversion
 
