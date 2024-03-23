@@ -9,6 +9,7 @@ on:
     - BHS.sln
     - src/**
     - tests/**
+    - yarn.lock
 
 env:
   WEB_SRC_PATH: src/BHS.Web
