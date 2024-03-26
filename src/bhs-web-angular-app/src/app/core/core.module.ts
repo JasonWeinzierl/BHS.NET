@@ -76,6 +76,7 @@ import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-opt
   ],
 })
 export class CoreModule {
+  // TODO: once we convert to Standalone components, this is the last decorator preventing us from disabling experimentalDecorators and turning on the lint rule `consistent-type-imports`.
   constructor(@Optional() @SkipSelf() parentModule: CoreModule | null) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
