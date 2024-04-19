@@ -4986,10 +4986,10 @@ __metadata:
     "@types/lodash-es": "npm:^4.17.12"
     bootstrap: "npm:5.3.3"
     bootstrap-icons: "npm:1.11.3"
-    cypress: "npm:~13.7.1"
+    cypress: "npm:~13.8.0"
     eslint: "npm:^8.57.0"
     eslint-import-resolver-typescript: "npm:^3.6.1"
-    eslint-plugin-cypress: "npm:^2.15.1"
+    eslint-plugin-cypress: "npm:^2.15.2"
     eslint-plugin-deprecation: "npm:^2.0.0"
     eslint-plugin-import: "npm:^2.29.1"
     eslint-plugin-jest: "npm:^27.9.0"
@@ -5888,9 +5888,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:~13.7.1":
-  version: 13.7.1
-  resolution: "cypress@npm:13.7.1"
+"cypress@npm:~13.8.0":
+  version: 13.8.0
+  resolution: "cypress@npm:13.8.0"
   dependencies:
     "@cypress/request": "npm:^3.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -5936,7 +5936,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10c0/d6e35e4aa083afd9e78611bbd6fffd71371e024229f758cd834fcaa7ce7a6ce47a1ac3f43c7659c71df02aa146cc9d228ac3aa1073c1c5893b8759b687b8e61c
+  checksum: 10c0/9aefeec1949cb20a22c02f3095f88574196f6a77e182e86578144e1ae1d990f6ffcd32a2f87dd53c827eeb0fc2a90fbaa8a155c717fe22d0a397428157ec7b4d
   languageName: node
   linkType: hard
 
@@ -7233,14 +7233,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-cypress@npm:^2.15.1":
-  version: 2.15.1
-  resolution: "eslint-plugin-cypress@npm:2.15.1"
+"eslint-plugin-cypress@npm:^2.15.2":
+  version: 2.15.2
+  resolution: "eslint-plugin-cypress@npm:2.15.2"
   dependencies:
     globals: "npm:^13.20.0"
   peerDependencies:
     eslint: ">= 3.2.1"
-  checksum: 10c0/f404adf415ef6b986d3480397a26eb73976a9156bbf786f2d22b8df28bbf0e50d4b3c699caefd230f0de9d6e8850596ab1bcc471b173aede05373d2a5ae3c624
+  checksum: 10c0/bcc521633251a852dc3c115455ddda931435bb61c0895e5ad1abe43acb3a15fc0b0e79bf73b7aa078794a2b1084232f1b74ffe39d631a3f312265f97941cd290
   languageName: node
   linkType: hard
 
