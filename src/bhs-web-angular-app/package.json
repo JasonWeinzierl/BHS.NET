@@ -71,7 +71,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "merge-partially": "^2.0.2",
     "ng-mocks": "^14.12.2",
-    "typescript": "~5.4.3",
+    "typescript": "~5.4.5",
     "typescript-eslint": "^7.4.0"
   }
 }
