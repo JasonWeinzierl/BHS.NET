@@ -399,6 +399,13 @@ resource "azurerm_storage_container" "bhs_photos" {
   container_access_type = "blob"
 }
 
+resource "azurerm_storage_container" "bhs_videos" {
+  name                 = "videos"
+  storage_account_name = azurerm_storage_account.bhs.name
+
+  container_access_type = "blob"
+}
+
 
 resource "azurerm_log_analytics_workspace" "bhs" {
   name                = "bhs-${var.environment}-web-log"
