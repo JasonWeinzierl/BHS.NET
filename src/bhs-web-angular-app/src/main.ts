@@ -1,14 +1,19 @@
+import { mergeApplicationConfig } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './environments';
-import { getAppConfig } from '@app/app.config';
+import { APP_CONFIG } from '@app/app.config';
 
 fetch('/api/client-app-environment')
   .then(async response => {
     const appEnv = await parseAppEnvironment(response) ?? new AppEnvironment();
 
     // Angular startup.
-    await bootstrapApplication(AppComponent, getAppConfig([{ provide: AppEnvironment, useValue: appEnv }]));
+    await bootstrapApplication(AppComponent, mergeApplicationConfig(
+      // TODO: Can we use APP_INITIALIZER instead?
+      { providers: [{ provide: AppEnvironment, useValue: appEnv }] },
+      APP_CONFIG,
+    ));
 
   })
   .catch((err: unknown) => {

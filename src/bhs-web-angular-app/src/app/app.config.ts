@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig , ErrorHandler, Provider, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig , ErrorHandler, importProvidersFrom } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
@@ -16,11 +16,8 @@ import { APP_ROUTES } from './app.routes';
 import { auth0ConfigProvider } from '@core/providers/auth0-config.provider';
 import { bootstrapMarkedOptionsProvider } from '@core/providers/bootstrap-marked-options.provider';
 
-// A function so that main.ts can dynamically add providers during startup.
-// TODO: Can we use APP_INITIALIZER instead?
-export const getAppConfig = (additionalProviders: Provider[]): ApplicationConfig => ({
+export const APP_CONFIG: ApplicationConfig = {
   providers: [
-    additionalProviders,
     importProvidersFrom(
       // ngx-bootstrap
       AlertModule.forRoot(),
@@ -49,4 +46,4 @@ export const getAppConfig = (additionalProviders: Provider[]): ApplicationConfig
     },
     auth0ConfigProvider,
   ],
-});
+};
