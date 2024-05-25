@@ -41,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const appTitle = this.titleService.getTitle();
 
+    // TODO: this is no longer necessary in Angular 14+. Just add `title` to each route.
     this.titleSub = this.router.events
       .pipe(
         filter(
