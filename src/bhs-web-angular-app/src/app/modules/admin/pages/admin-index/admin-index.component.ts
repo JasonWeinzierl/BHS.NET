@@ -26,7 +26,7 @@ export class AdminIndexComponent {
   ) {
     this.user$ = this.auth.user$;
     this.accessToken$ = this.auth.getAccessTokenSilently({ cacheMode: 'cache-only' }).pipe(
-      map(token => jwtDecode(token)),
+      map((token: string | undefined) => token ? jwtDecode(token) : { message: 'No token found in cache!' }),
       catchError((err: unknown) => {
         let message = 'An error occurred. ';
         if (typeof err === 'string') {
