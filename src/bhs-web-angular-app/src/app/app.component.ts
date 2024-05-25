@@ -1,6 +1,7 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { merge, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -11,6 +12,8 @@ import { InsightsService } from '@core/services/insights.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.Default,
+  standalone: true,
+  imports: [RouterOutlet, AsyncPipe],
 })
 export class AppComponent implements OnInit, OnDestroy {
   public loading$: Observable<boolean>;

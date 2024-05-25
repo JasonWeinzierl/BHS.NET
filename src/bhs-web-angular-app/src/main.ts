@@ -1,13 +1,14 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.module';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
 import { APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './environments';
+import { getAppConfig } from '@app/app.config';
 
 fetch('/api/client-app-environment')
   .then(async response => {
     const appEnv = await parseAppEnvironment(response) ?? new AppEnvironment();
 
     // Angular startup.
-    await platformBrowserDynamic([{ provide: AppEnvironment, useValue: appEnv }]).bootstrapModule(AppModule);
+    await bootstrapApplication(AppComponent, getAppConfig([{ provide: AppEnvironment, useValue: appEnv }]));
 
   })
   .catch((err: unknown) => {

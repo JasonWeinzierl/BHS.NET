@@ -13,8 +13,6 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
-      ],
-      declarations: [
         AppComponent,
       ],
       providers: [
@@ -30,9 +28,8 @@ describe('AppComponent', () => {
   });
 
   it('should create the app', () => {
-      expect(component).toBeTruthy();
-    },
-  );
+    expect(component).toBeTruthy();
+  });
 
   it('should not show loading indicator', () => {
     const element = fixture.nativeElement as HTMLElement;
