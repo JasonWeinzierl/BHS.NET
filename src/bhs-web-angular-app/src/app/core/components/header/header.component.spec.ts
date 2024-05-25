@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { MockDirective, MockProvider } from 'ng-mocks';
-import { CollapseDirective } from 'ngx-bootstrap/collapse';
+import { MockProvider } from 'ng-mocks';
 import { ToastrService } from 'ngx-toastr';
 import { EMPTY } from 'rxjs';
 import { HeaderComponent } from './header.component';
@@ -15,13 +15,11 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterModule.forRoot([]),
-      ],
-      declarations: [
         HeaderComponent,
-        MockDirective(CollapseDirective),
       ],
       providers: [
+        provideNoopAnimations(),
+        provideRouter([]),
         MockProvider(SiteBannerService, {
           getEnabled: () => EMPTY,
         }),

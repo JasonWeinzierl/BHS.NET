@@ -9,15 +9,14 @@ import { WhoWeAreComponent } from './pages/who-we-are/who-we-are.component';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [
+  imports: [
     AboutComponent,
     DonationsComponent,
     OrganizationComponent,
     PrivacyPolicyComponent,
     TermsOfServiceComponent,
     WhoWeAreComponent,
-  ],
-  imports: [
+
     SharedModule,
 
     AboutRoutingModule,

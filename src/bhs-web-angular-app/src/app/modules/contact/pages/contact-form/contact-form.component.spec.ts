@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MockModule, MockProvider } from 'ng-mocks';
+import { MockProvider } from 'ng-mocks';
 import { ContactFormComponent } from './contact-form.component';
 import { ContactService } from '@data/contact-us';
 
@@ -11,9 +10,6 @@ describe('ContactFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MockModule(ReactiveFormsModule),
-      ],
-      declarations: [
         ContactFormComponent,
       ],
       providers: [

@@ -11,9 +11,7 @@ describe('ProfileIndexComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ProfileIndexComponent,
-      ],
+      imports: [ProfileIndexComponent],
       providers: [
         MockProvider(AuthorService, {
           getAuthorPosts: () => EMPTY,

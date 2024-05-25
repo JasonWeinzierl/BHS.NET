@@ -13,8 +13,6 @@ describe('ContentLayoutComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule,
-      ],
-      declarations: [
         ContentLayoutComponent,
         MockComponent(HeaderComponent),
         MockComponent(FooterComponent),

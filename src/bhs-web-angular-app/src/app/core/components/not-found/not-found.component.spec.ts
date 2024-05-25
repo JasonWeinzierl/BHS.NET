@@ -12,8 +12,6 @@ describe('NotFoundComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule,
-      ],
-      declarations: [
         NotFoundComponent,
       ],
       providers: [

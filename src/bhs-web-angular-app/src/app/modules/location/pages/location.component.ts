@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
@@ -5,5 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgOptimizedImage],
 })
 export class LocationComponent { }

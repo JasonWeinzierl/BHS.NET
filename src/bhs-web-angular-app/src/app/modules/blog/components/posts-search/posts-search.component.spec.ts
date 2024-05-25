@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 import { MockPipe, MockProvider } from 'ng-mocks';
 import { PostsSearchComponent } from './posts-search.component';
 import { BlogService } from '@data/blog';
@@ -12,9 +11,6 @@ describe('PostsSearchComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FormsModule,
-      ],
-      declarations: [
         PostsSearchComponent,
         MockPipe(SortByPipe),
       ],

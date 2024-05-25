@@ -1,7 +1,11 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, User } from '@auth0/auth0-angular';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { catchError, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
+import { DateComponent } from '../../../../shared/components/date/date.component';
+import { EditBlogEntryFormComponent } from '../../components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { Author } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
 
@@ -18,6 +22,13 @@ interface EntryEditVm {
   templateUrl: './entry-edit.component.html',
   styleUrl: './entry-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    AlertModule,
+    EditBlogEntryFormComponent,
+    DateComponent,
+    AsyncPipe,
+  ],
 })
 export class EntryEditComponent {
   vm$: Observable<EntryEditVm>;

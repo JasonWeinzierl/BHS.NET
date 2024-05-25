@@ -4,8 +4,9 @@ import { LocationComponent } from './pages/location.component';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [LocationComponent],
   imports: [
+    LocationComponent,
+
     SharedModule,
     LocationRoutingModule,
   ],

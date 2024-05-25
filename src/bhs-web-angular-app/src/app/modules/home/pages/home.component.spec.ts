@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
-import { CarouselComponent, SlideComponent } from 'ngx-bootstrap/carousel';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
@@ -9,10 +7,8 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         HomeComponent,
-        MockComponent(CarouselComponent),
-        MockComponent(SlideComponent),
       ],
     })
     .compileComponents();

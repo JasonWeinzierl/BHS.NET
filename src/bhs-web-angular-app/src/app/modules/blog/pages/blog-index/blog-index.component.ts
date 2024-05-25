@@ -1,7 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, startWith } from 'rxjs/operators';
+import { CategoriesListViewComponent } from '../../components/categories-list-view/categories-list-view.component';
+import { PostsSearchComponent } from '../../components/posts-search/posts-search.component';
 import { BlogService, CategorySummary } from '@data/blog';
 
 @Component({
@@ -9,6 +12,12 @@ import { BlogService, CategorySummary } from '@data/blog';
   templateUrl: './blog-index.component.html',
   styleUrl: './blog-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    PostsSearchComponent,
+    CategoriesListViewComponent,
+    AsyncPipe,
+  ],
 })
 export class BlogIndexComponent {
   categoriesVm$: Observable<{ categories: Array<CategorySummary>, isLoading: boolean, error?: string }>;

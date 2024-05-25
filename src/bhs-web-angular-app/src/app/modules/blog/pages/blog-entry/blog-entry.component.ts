@@ -1,9 +1,13 @@
+import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { MarkdownComponent } from 'ngx-markdown';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { DateComponent } from '../../../../shared/components/date/date.component';
+import { EntryAlbumComponent } from '../../components/entry-album/entry-album.component';
 import { BlogService, Post } from '@data/blog';
 import { AlbumPhotos, PhotosService } from '@data/photos';
 
@@ -12,6 +16,14 @@ import { AlbumPhotos, PhotosService } from '@data/photos';
   templateUrl: './blog-entry.component.html',
   styleUrl: './blog-entry.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    RouterLink,
+    DateComponent,
+    MarkdownComponent,
+    EntryAlbumComponent,
+    AsyncPipe,
+  ],
 })
 export class BlogEntryComponent {
   vm$: Observable<{ post?: Post, postAlbum: AlbumPhotos | null, isLoading: boolean, error?: string, showEdit?: boolean }>;
@@ -38,8 +50,8 @@ export class BlogEntryComponent {
             // Alert but don't prevent the entire post from loading.
             catchError((err: unknown) => {
               const msg = err instanceof HttpErrorResponse
-                ? err.message
-                : 'An error occurred';
+              ? err.message
+              : 'An error occurred';
               this.toastr.error(msg, 'Failed to load photos.');
               console.warn(msg, err);
               return of(null);

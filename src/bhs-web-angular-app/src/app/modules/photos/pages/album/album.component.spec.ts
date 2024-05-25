@@ -12,7 +12,7 @@ describe('AlbumComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         AlbumComponent,
         MockDirective(NgOptimizedImage),
       ],

@@ -14,7 +14,7 @@ import { EntryNewComponent } from './pages/entry-new/entry-new.component';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [
+  imports: [
     BlogIndexComponent,
     PostCardComponent,
     BlogEntryComponent,
@@ -25,8 +25,7 @@ import { SharedModule } from '@shared/shared.module';
     EditBlogEntryFormComponent,
     CategoriesListViewComponent,
     EntryNewComponent,
-  ],
-  imports: [
+
     SharedModule,
 
     MarkdownModule.forChild(),

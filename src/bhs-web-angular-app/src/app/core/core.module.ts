@@ -30,13 +30,12 @@ import { bootstrapMarkedOptionsProvider } from './providers/bootstrap-marked-opt
  *  - Logging
  */
 @NgModule({
-  declarations: [
+  imports: [
     NotFoundComponent,
     ContentLayoutComponent,
     HeaderComponent,
     FooterComponent,
-  ],
-  imports: [
+
     // angular
     BrowserModule,
     BrowserAnimationsModule,

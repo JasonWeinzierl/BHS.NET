@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'snippet',
+  standalone: true,
 })
 export class SnippetPipe implements PipeTransform {
 

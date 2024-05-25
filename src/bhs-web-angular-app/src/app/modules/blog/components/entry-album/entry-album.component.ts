@@ -1,4 +1,6 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AlbumPhotos } from '@data/photos';
 
 @Component({
@@ -6,6 +8,8 @@ import { AlbumPhotos } from '@data/photos';
   templateUrl: './entry-album.component.html',
   styleUrl: './entry-album.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [RouterLink, NgOptimizedImage],
 })
 export class EntryAlbumComponent {
   @Input({ required: true }) album!: AlbumPhotos;

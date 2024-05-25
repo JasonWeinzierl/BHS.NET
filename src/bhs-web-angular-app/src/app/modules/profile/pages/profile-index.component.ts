@@ -1,7 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { PostCardComponent } from '../../blog/components/post-card/post-card.component';
 import { Author, AuthorService } from '@data/authors';
 import { PostPreview } from '@data/blog';
 
@@ -10,6 +13,12 @@ import { PostPreview } from '@data/blog';
   templateUrl: './profile-index.component.html',
   styleUrl: './profile-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    AlertModule,
+    PostCardComponent,
+    AsyncPipe,
+  ],
 })
 export class ProfileIndexComponent {
   vm$: Observable<{ author?: Author | null, posts: Array<PostPreview>, isLoading: boolean, error?: string }>;

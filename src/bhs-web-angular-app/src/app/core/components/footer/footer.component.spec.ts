@@ -10,8 +10,6 @@ describe('FooterComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
-      ],
-      declarations: [
         FooterComponent,
       ],
     })

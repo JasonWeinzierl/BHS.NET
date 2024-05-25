@@ -7,7 +7,7 @@ describe('WhoWeAreComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WhoWeAreComponent ],
+      imports: [WhoWeAreComponent],
     })
     .compileComponents();
 

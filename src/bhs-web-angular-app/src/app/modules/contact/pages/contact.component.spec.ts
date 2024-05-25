@@ -9,7 +9,7 @@ describe('ContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         ContactComponent,
         MockComponent(ContactFormComponent),
       ],

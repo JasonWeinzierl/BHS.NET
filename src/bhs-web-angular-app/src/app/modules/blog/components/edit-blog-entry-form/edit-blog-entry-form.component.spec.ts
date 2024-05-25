@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { BsDatepickerDirective } from 'ngx-bootstrap/datepicker';
 import { EditBlogEntryFormComponent } from './edit-blog-entry-form.component';
 import { Author } from '@data/authors';
 import { Category, Post } from '@data/blog';
@@ -25,11 +23,7 @@ describe('EditBlogEntryFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         RouterModule.forRoot([]),
-      ],
-      declarations: [
-        BsDatepickerDirective,
         EditBlogEntryFormComponent,
       ],
     })
@@ -53,7 +47,7 @@ describe('EditBlogEntryFormComponent', () => {
     fixture.detectChanges();
 
     expect(component.cancelRoute)
-      .toEqual(['/apps/blog/entry', post.slug]);
+    .toEqual(['/apps/blog/entry', post.slug]);
   });
 
   it('should show warning when author is changing', () => {

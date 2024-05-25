@@ -21,8 +21,7 @@ import { SortByPipe } from './pipes/sort-by.pipe';
   imports: [
     CommonModule,
     NgOptimizedImage,
-  ],
-  declarations: [
+
     SortByPipe,
     SnippetPipe,
     DateComponent,

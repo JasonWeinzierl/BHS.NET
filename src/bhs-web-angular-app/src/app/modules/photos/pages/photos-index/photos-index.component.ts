@@ -1,6 +1,10 @@
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { catchError, map, Observable, of, startWith } from 'rxjs';
+import { SnippetPipe } from '../../../../shared/pipes/snippet.pipe';
 import { Album, PhotosService } from '@data/photos';
 
 @Component({
@@ -8,6 +12,14 @@ import { Album, PhotosService } from '@data/photos';
   templateUrl: './photos-index.component.html',
   styleUrl: './photos-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    AlertModule,
+    NgOptimizedImage,
+    RouterLink,
+    SnippetPipe,
+    AsyncPipe,
+  ],
 })
 export class PhotosIndexComponent {
   vm$: Observable<{ albums: Array<Album>, isLoading: boolean, error?: string }>;

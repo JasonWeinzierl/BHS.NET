@@ -4,12 +4,10 @@ import { AdminIndexComponent } from './pages/admin-index/admin-index.component';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AdminIndexComponent,
-  ],
   imports: [
-    SharedModule,
+    AdminIndexComponent,
 
+    SharedModule,
     AdminRoutingModule,
   ],
 })

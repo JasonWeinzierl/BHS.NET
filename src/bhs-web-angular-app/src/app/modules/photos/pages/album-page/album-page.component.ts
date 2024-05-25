@@ -1,6 +1,8 @@
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
 
@@ -11,6 +13,13 @@ type AlbumPageVm = Observable<{ album?: AlbumPhotos, currentPhoto?: Photo, previ
   templateUrl: './album-page.component.html',
   styleUrl: './album-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgOptimizedImage,
+    AlertModule,
+    AsyncPipe,
+  ],
 })
 export class AlbumPageComponent {
   vm$: AlbumPageVm;

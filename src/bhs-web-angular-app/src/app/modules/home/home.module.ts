@@ -4,10 +4,9 @@ import { HomeComponent } from './pages/home.component';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-  ],
   imports: [
+    HomeComponent,
+
     SharedModule,
     HomeRoutingModule,
   ],

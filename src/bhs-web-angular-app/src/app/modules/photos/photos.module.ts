@@ -6,12 +6,11 @@ import { PhotosRoutingModule } from './photos-routing.module';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [
+  imports: [
     PhotosIndexComponent,
     AlbumComponent,
     AlbumPageComponent,
-  ],
-  imports: [
+
     SharedModule,
 
     PhotosRoutingModule,

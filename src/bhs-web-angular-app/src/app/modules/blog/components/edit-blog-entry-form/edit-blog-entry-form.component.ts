@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Author } from '@data/authors';
 import { Category, categorySchema, Post, PostRequest } from '@data/blog';
 
@@ -8,6 +10,13 @@ import { Category, categorySchema, Post, PostRequest } from '@data/blog';
   templateUrl: './edit-blog-entry-form.component.html',
   styleUrl: './edit-blog-entry-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    BsDatepickerModule,
+    RouterLink,
+  ],
 })
 export class EditBlogEntryFormComponent implements OnChanges {
   @Input() initialPost?: Post;
@@ -40,8 +49,8 @@ export class EditBlogEntryFormComponent implements OnChanges {
     });
 
     this.authorWarning = this.isChangingAuthor()
-      ? `Author is changing from '${this.initialPost?.author?.username ?? '(null)'}' to '${this.currentAuthor?.username ?? '(null)'}'.`
-      : null;
+    ? `Author is changing from '${this.initialPost?.author?.username ?? '(null)'}' to '${this.currentAuthor?.username ?? '(null)'}'.`
+    : null;
   }
 
   private isChangingAuthor(): boolean {

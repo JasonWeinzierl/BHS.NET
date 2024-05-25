@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
@@ -5,6 +6,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   templateUrl: './date.component.html',
   styleUrl: './date.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [DatePipe],
 })
 export class DateComponent {
   @Input() datetime = new Date();

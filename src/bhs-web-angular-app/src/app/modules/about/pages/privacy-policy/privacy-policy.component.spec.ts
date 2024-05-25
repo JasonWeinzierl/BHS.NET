@@ -10,8 +10,8 @@ describe('PrivacyPolicyComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
+        PrivacyPolicyComponent,
       ],
-      declarations: [ PrivacyPolicyComponent ],
     })
     .compileComponents();
 

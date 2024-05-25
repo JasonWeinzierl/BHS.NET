@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { MockComponent, MockProvider } from 'ng-mocks';
-import { AlertComponent } from 'ngx-bootstrap/alert';
+import { MockProvider } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
 import { EntryEditComponent } from './entry-edit.component';
 import { BlogService } from '@data/blog';
@@ -13,9 +12,8 @@ describe('EntryEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         EntryEditComponent,
-        MockComponent(AlertComponent),
       ],
       providers: [
         MockProvider(BlogService, {

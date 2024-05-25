@@ -1,7 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { PostCardComponent } from '../../components/post-card/post-card.component';
 import { BlogService, CategoryPosts } from '@data/blog';
 
 @Component({
@@ -9,6 +12,12 @@ import { BlogService, CategoryPosts } from '@data/blog';
   templateUrl: './category-posts.component.html',
   styleUrl: './category-posts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    AlertModule,
+    PostCardComponent,
+    AsyncPipe,
+  ],
 })
 export class CategoryPostsComponent {
   vm$: Observable<{ category?: CategoryPosts, isLoading: boolean, error?: string }>;

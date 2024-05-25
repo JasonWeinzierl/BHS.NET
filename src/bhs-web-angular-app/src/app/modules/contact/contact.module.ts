@@ -5,11 +5,10 @@ import { ContactComponent } from './pages/contact.component';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [
+  imports: [
     ContactComponent,
     ContactFormComponent,
-  ],
-  imports: [
+
     SharedModule,
     ContactRoutingModule,
   ],

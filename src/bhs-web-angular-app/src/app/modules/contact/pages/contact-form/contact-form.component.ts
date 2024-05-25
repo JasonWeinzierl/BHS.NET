@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
 
 @Component({
@@ -8,6 +10,13 @@ import { ContactAlertRequest, ContactService } from '@data/contact-us';
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.Default, // TODO: Refactor to OnPush
+  standalone: true,
+  imports: [
+    AlertModule,
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class ContactFormComponent {
   contactForm = this.formBuilder.nonNullable.group({
@@ -55,7 +64,8 @@ export class ContactFormComponent {
             this.errors.push('');
           }
           this.isSubmitted = false;
-        }});
+        },
+      });
   }
 
   removeError(index: number): void {

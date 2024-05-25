@@ -19,8 +19,6 @@ describe('BlogEntryComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule,
-      ],
-      declarations: [
         DateComponent,
         BlogEntryComponent,
         EntryAlbumComponent,

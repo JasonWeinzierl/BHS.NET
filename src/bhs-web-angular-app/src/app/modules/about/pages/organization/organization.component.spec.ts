@@ -10,9 +10,7 @@ describe('OrganizationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        OrganizationComponent,
-      ],
+      imports: [OrganizationComponent],
       providers: [
         MockProvider(LeadershipService, {
           getDirectors: () => EMPTY,

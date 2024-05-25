@@ -13,8 +13,8 @@ describe('AdminIndexComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
+        AdminIndexComponent,
       ],
-      declarations: [ AdminIndexComponent ],
       providers: [
         MockProvider(AuthService, {
           user$: EMPTY,

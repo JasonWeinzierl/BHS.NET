@@ -15,8 +15,8 @@ describe('EntryNewComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
+        EntryNewComponent,
       ],
-      declarations: [EntryNewComponent],
       providers: [
         MockProvider(BlogService, {
           getCategories: () => EMPTY,

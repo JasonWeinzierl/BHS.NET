@@ -10,8 +10,8 @@ describe('TermsOfServiceComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
+        TermsOfServiceComponent,
       ],
-      declarations: [ TermsOfServiceComponent ],
     })
     .compileComponents();
 

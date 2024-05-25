@@ -1,4 +1,6 @@
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { catchError, map, Observable, of } from 'rxjs';
@@ -8,6 +10,12 @@ import { catchError, map, Observable, of } from 'rxjs';
   templateUrl: './admin-index.component.html',
   styleUrl: './admin-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    RouterLink,
+    AsyncPipe,
+    JsonPipe,
+  ],
 })
 export class AdminIndexComponent {
   user$: Observable<User | null | undefined>;

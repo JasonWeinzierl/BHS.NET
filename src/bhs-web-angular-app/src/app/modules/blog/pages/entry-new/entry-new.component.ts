@@ -1,7 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
+import { EditBlogEntryFormComponent } from '../../components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { Author, AuthorService } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
 
@@ -17,6 +20,12 @@ interface EntryNewVm {
   templateUrl: './entry-new.component.html',
   styleUrl: './entry-new.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    AlertModule,
+    EditBlogEntryFormComponent,
+    AsyncPipe,
+  ],
 })
 export class EntryNewComponent {
   vm$: Observable<EntryNewVm>;
@@ -70,7 +79,7 @@ export class EntryNewComponent {
       exhaustMap(request => this.blogService.createPost(request)),
       map(newPost => {
         this.router.navigate(['../entry', newPost.slug], { relativeTo: this.route })
-          .catch((error: unknown) => { this.routeErrorSubject.next({ error, newPost }); });
+        .catch((error: unknown) => { this.routeErrorSubject.next({ error, newPost }); });
 
         // Instead of mapping the post into the VM, just keep loading until the route changes.
         return { isLoading: true, allCategories: [], currentAuthor: null };

@@ -1,6 +1,11 @@
+import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from 'rxjs';
+import { SortByPipe } from '../../../../shared/pipes/sort-by.pipe';
+import { PostCardComponent } from '../post-card/post-card.component';
 import { BlogService, PostPreview } from '@data/blog';
 
 @Component({
@@ -8,6 +13,14 @@ import { BlogService, PostPreview } from '@data/blog';
   templateUrl: './posts-search.component.html',
   styleUrl: './posts-search.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    FormsModule,
+    AlertModule,
+    PostCardComponent,
+    SortByPipe,
+    AsyncPipe,
+  ],
 })
 export class PostsSearchComponent {
   postsVm$: Observable<{ posts: Array<PostPreview>, error?: string }>;

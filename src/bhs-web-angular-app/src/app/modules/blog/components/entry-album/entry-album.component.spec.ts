@@ -11,12 +11,10 @@ describe('EntryAlbumComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        EntryAlbumComponent,
-        MockDirective(NgOptimizedImage),
-      ],
       imports: [
         RouterModule.forRoot([]),
+        EntryAlbumComponent,
+        MockDirective(NgOptimizedImage),
       ],
     })
     .compileComponents();

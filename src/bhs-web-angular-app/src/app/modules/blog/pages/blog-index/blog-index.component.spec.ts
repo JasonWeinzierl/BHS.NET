@@ -12,7 +12,7 @@ describe('BlogIndexComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         BlogIndexComponent,
         MockComponent(CategoriesListViewComponent),
         MockComponent(PostsSearchComponent),

@@ -11,8 +11,9 @@ describe('PostCardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
+        PostCardComponent,
+        DateComponent,
       ],
-      declarations: [ PostCardComponent, DateComponent ],
     })
     .compileComponents();
 

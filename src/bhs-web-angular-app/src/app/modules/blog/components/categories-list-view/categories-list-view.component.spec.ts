@@ -11,8 +11,6 @@ describe('CategoriesListViewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
-      ],
-      declarations: [
         CategoriesListViewComponent,
       ],
     })
@@ -42,13 +40,13 @@ describe('CategoriesListViewComponent', () => {
   it('should show error', () => {
     expect(component.error).toBeUndefined(); // no error at first
 
-      fixture.componentRef.setInput('error', 'An error occurred.');
-      fixture.detectChanges();
+    fixture.componentRef.setInput('error', 'An error occurred.');
+    fixture.detectChanges();
 
-      const element = fixture.nativeElement as HTMLElement;
+    const element = fixture.nativeElement as HTMLElement;
 
-      expect(component.error).toBeDefined();
-      expect(element.querySelector('.list-group .list-group-item-danger')).toBeTruthy(); // should show danger banner
+    expect(component.error).toBeDefined();
+    expect(element.querySelector('.list-group .list-group-item-danger')).toBeTruthy(); // should show danger banner
   });
 
   it('should show each category', () => {
