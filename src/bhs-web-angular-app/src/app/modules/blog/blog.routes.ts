@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AuthGuard } from '@auth0/auth0-angular';
 import { BlogEntryComponent } from './pages/blog-entry/blog-entry.component';
 import { BlogIndexComponent } from './pages/blog-index/blog-index.component';
@@ -7,7 +6,7 @@ import { CategoryPostsComponent } from './pages/category-posts/category-posts.co
 import { EntryEditComponent } from './pages/entry-edit/entry-edit.component';
 import { EntryNewComponent } from './pages/entry-new/entry-new.component';
 
-const routes: Routes = [
+export default [
   {
     path: '',
     component: BlogIndexComponent,
@@ -35,10 +34,4 @@ const routes: Routes = [
     data: { title: 'New Entry' },
     canActivate: [AuthGuard],
   },
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class BlogRoutingModule { }
+] satisfies Routes;

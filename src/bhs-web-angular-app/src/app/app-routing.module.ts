@@ -20,44 +20,44 @@ const routes: Routes = [
       {
         path: paths.home,
         loadChildren: () =>
-          import('@modules/home/home.module').then(m => m.HomeModule),
+          import('@modules/home/home.routes'),
       },
       {
         path: paths.blog,
         loadChildren: () =>
-          import('@modules/blog/blog.module').then(m => m.BlogModule),
+          import('@modules/blog/blog.routes'),
       },
       {
         path: paths.photos,
         loadChildren: () =>
-          import('@modules/photos/photos.module').then(m => m.PhotosModule),
+          import('@modules/photos/photos.routes'),
       },
       {
         path: paths.location,
         loadChildren: () =>
-          import('@modules/location/location.module').then(m => m.LocationModule),
+          import('@modules/location/location.routes'),
       },
       {
         path: paths.profile,
         loadChildren: () =>
-          import('@modules/profile/profile.module').then(m => m.ProfileModule),
+          import('@modules/profile/profile.routes'),
       },
       {
         path: paths.contact,
         loadChildren: () =>
-          import('@modules/contact/contact.module').then(m => m.ContactModule),
+          import('@modules/contact/contact.routes'),
       },
       {
         path: paths.about,
         loadChildren: () =>
-          import('@modules/about/about.module').then(m => m.AboutModule),
+          import('@modules/about/about.routes'),
       },
     ],
   },
   {
     path: 'admin',
     loadChildren: () =>
-      import('@modules/admin/admin.module').then(m => m.AdminModule),
+      import('@modules/admin/admin.routes'),
     canActivate: [AuthGuard], // Must use canActivate because canLoad and canMatch don't seem to redirect to login properly.
   },
   {
