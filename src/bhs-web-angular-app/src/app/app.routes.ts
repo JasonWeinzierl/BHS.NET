@@ -19,44 +19,44 @@ export const APP_ROUTES: Routes = [
       {
         path: paths.home,
         loadChildren: () =>
-          import('@modules/home/home.routes'),
+          import('@features/home/home.routes'),
       },
       {
         path: paths.blog,
         loadChildren: () =>
-          import('@modules/blog/blog.routes'),
+          import('@features/blog/blog.routes'),
       },
       {
         path: paths.photos,
         loadChildren: () =>
-          import('@modules/photos/photos.routes'),
+          import('@features/photos/photos.routes'),
       },
       {
         path: paths.location,
         loadChildren: () =>
-          import('@modules/location/location.routes'),
+          import('@features/location/location.routes'),
       },
       {
         path: paths.profile,
         loadChildren: () =>
-          import('@modules/profile/profile.routes'),
+          import('@features/profile/profile.routes'),
       },
       {
         path: paths.contact,
         loadChildren: () =>
-          import('@modules/contact/contact.routes'),
+          import('@features/contact/contact.routes'),
       },
       {
         path: paths.about,
         loadChildren: () =>
-          import('@modules/about/about.routes'),
+          import('@features/about/about.routes'),
       },
     ],
   },
   {
     path: 'admin',
     loadChildren: () =>
-      import('@modules/admin/admin.routes'),
+      import('@features/admin/admin.routes'),
     canActivate: [AuthGuard], // Must use canActivate because canLoad and canMatch don't seem to redirect to login properly.
   },
   {

@@ -3,8 +3,8 @@ import { MockComponent, MockProvider } from 'ng-mocks';
 import { EMPTY } from 'rxjs';
 import { BlogIndexComponent } from './blog-index.component';
 import { BlogService } from '@data/blog';
-import { CategoriesListViewComponent } from '@modules/blog/components/categories-list-view/categories-list-view.component';
-import { PostsSearchComponent } from '@modules/blog/components/posts-search/posts-search.component';
+import { CategoriesListViewComponent } from '@features/blog/components/categories-list-view/categories-list-view.component';
+import { PostsSearchComponent } from '@features/blog/components/posts-search/posts-search.component';
 
 describe('BlogIndexComponent', () => {
   let component: BlogIndexComponent;

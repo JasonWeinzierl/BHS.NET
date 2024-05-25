@@ -8,7 +8,7 @@ import { of, throwError } from 'rxjs';
 import { BlogEntryComponent } from './blog-entry.component';
 import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';
-import { EntryAlbumComponent } from '@modules/blog/components/entry-album/entry-album.component';
+import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry-album.component';
 import { DateComponent } from '@shared/components/date/date.component';
 
 describe('BlogEntryComponent', () => {
