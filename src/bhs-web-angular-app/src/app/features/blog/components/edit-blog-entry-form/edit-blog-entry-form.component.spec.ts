@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { provideRouter, RouterLink } from '@angular/router';
 import { EditBlogEntryFormComponent } from './edit-blog-entry-form.component';
 import { Author } from '@data/authors';
 import { Category, Post } from '@data/blog';
@@ -23,8 +24,10 @@ describe('EditBlogEntryFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterModule.forRoot([]),
         EditBlogEntryFormComponent,
+      ],
+      providers: [
+        provideRouter([]),
       ],
     })
     .compileComponents();
@@ -38,21 +41,32 @@ describe('EditBlogEntryFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should populate cancelRoute with post url', () => {
-    expect(component.cancelRoute).toEqual(['/apps/blog']); // default at first
+  it('should default cancelRoute to /apps/blog', () => {
+    const routerLinkDe = fixture.debugElement.query(By.directive(RouterLink));
+    const routerLink = routerLinkDe.injector.get(RouterLink);
 
+    expect(routerLink.href).toBe('/apps/blog');
+  });
+
+  it('should populate cancelRoute with post url', () => {
     const post = createPost();
 
     fixture.componentRef.setInput('initialPost', post);
     fixture.detectChanges();
 
-    expect(component.cancelRoute)
-    .toEqual(['/apps/blog/entry', post.slug]);
+    const routerLinkDe = fixture.debugElement.query(By.directive(RouterLink));
+    const routerLink = routerLinkDe.injector.get(RouterLink);
+
+    expect(routerLink.href).toBe(`/apps/blog/entry/${post.slug}`);
+  });
+
+  it('should not show warning if author is not changing', () => {
+    const dangerEl = (fixture.nativeElement as HTMLElement).querySelector('.form-text.text-danger');
+
+    expect(dangerEl).toBeFalsy();
   });
 
   it('should show warning when author is changing', () => {
-    expect(component.authorWarning).toBeUndefined(); // undefined at first
-
     const author: Author = {
       username: 'me',
       name: 'Me',
@@ -67,6 +81,8 @@ describe('EditBlogEntryFormComponent', () => {
     fixture.componentRef.setInput('allCategories', categories);
     fixture.detectChanges();
 
-    expect(component.authorWarning).toBeTruthy();
+    const dangerEl = (fixture.nativeElement as HTMLElement).querySelector('.form-text.text-danger');
+
+    expect(dangerEl?.textContent).toBeTruthy();
   });
 });
