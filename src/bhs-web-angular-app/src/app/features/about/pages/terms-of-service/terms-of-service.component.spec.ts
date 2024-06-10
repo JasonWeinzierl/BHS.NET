@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
-import { TermsOfServiceComponent } from './terms-of-service.component';
+import TermsOfServiceComponent from './terms-of-service.component';
 
 describe('TermsOfServiceComponent', () => {
   let component: TermsOfServiceComponent;

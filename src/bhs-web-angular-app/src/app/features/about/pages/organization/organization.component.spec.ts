@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockProvider } from 'ng-mocks';
 import { EMPTY } from 'rxjs';
-import { OrganizationComponent } from './organization.component';
+import OrganizationComponent from './organization.component';
 import { LeadershipService } from '@data/leadership/services/leadership.service';
 
 describe('OrganizationComponent', () => {
