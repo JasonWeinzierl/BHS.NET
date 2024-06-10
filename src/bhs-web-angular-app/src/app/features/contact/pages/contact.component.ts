@@ -5,7 +5,7 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [ContactFormComponent],
 })

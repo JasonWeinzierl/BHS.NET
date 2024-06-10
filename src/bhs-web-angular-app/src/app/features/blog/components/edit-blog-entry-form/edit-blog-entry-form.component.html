@@ -24,12 +24,12 @@
 
   <div>
     <button type="submit" class="btn btn-primary">Publish</button>
-    <a class="btn btn-danger ms-2" role="link" [routerLink]="cancelRoute">Cancel</a>
+    <a class="btn btn-danger ms-2" role="link" [routerLink]="cancelRoute()">Cancel</a>
   </div>
 
-  @if (authorWarning) {
+  @if (authorWarning()) {
     <div class="form-text text-danger">
-      {{authorWarning}}
+      {{authorWarning()}}
     </div>
   }
 

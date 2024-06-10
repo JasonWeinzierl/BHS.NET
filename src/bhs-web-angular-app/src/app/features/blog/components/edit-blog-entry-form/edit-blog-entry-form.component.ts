@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, Output, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -27,17 +27,17 @@ export class EditBlogEntryFormComponent implements OnChanges {
 
   @Output() readonly publish = new EventEmitter<PostRequest>();
 
-  cancelRoute: Array<string> = ['/apps/blog'];
+  cancelRoute = signal<Array<string>>(['/apps/blog']);
   editFormGroup = this.fb.nonNullable.group({
     title: ['', [Validators.required]],
     categories: [[] as Array<string>],
     publishDate: [new Date()],
     contentMarkdown: [''],
   });
-  authorWarning?: string | null;
+  authorWarning = signal<string | null>(null);
 
   ngOnChanges(): void {
-    this.cancelRoute = this.initialPost ? ['/apps/blog/entry', this.initialPost.slug] : ['/apps/blog'];
+    this.cancelRoute.set(this.initialPost ? ['/apps/blog/entry', this.initialPost.slug] : ['/apps/blog']);
 
     this.editFormGroup.reset({
       title: this.initialPost?.title ?? '',
@@ -46,9 +46,9 @@ export class EditBlogEntryFormComponent implements OnChanges {
       contentMarkdown: this.initialPost?.contentMarkdown ?? '',
     });
 
-    this.authorWarning = this.isChangingAuthor()
-    ? `Author is changing from '${this.initialPost?.author?.username ?? '(null)'}' to '${this.currentAuthor?.username ?? '(null)'}'.`
-    : null;
+    this.authorWarning.set(this.isChangingAuthor()
+      ? `Author is changing from '${this.initialPost?.author?.username ?? '(null)'}' to '${this.currentAuthor?.username ?? '(null)'}'.`
+      : null);
   }
 
   private isChangingAuthor(): boolean {

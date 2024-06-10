@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -9,7 +9,7 @@ import { ContactAlertRequest, ContactService } from '@data/contact-us';
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default, // TODO: Refactor to OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     AlertModule,
@@ -28,12 +28,12 @@ export class ContactFormComponent {
     message: [''],
     body: [''],
   });
-  isSubmitted = false;
-  isAccepted = false;
-  errors: Array<string> = [];
+  isSubmitted = signal(false);
+  isAccepted = signal(false);
+  errors = signal<Array<{ id: number, msg: string }>>([]);
 
   onSubmit(): void {
-    this.isSubmitted = true;
+    this.isSubmitted.set(true);
 
     const request: ContactAlertRequest = {
       name: this.contactForm.value.name,
@@ -46,7 +46,7 @@ export class ContactFormComponent {
     this.contactService.sendMessage(request)
       .subscribe({
         next: () => {
-          this.isAccepted = true;
+          this.isAccepted.set(true);
           this.contactForm.reset();
         },
         error: (err: unknown) => {
@@ -54,19 +54,20 @@ export class ContactFormComponent {
             // TODO: merge with logic in edit-entry's TODO too.
             const errorBody = err.error as unknown;
             if (typeof errorBody === 'object' && errorBody && 'title' in errorBody && typeof errorBody.title === 'string') {
-              this.errors.push(errorBody.title);
+              const errorBodyTitle = errorBody.title;
+              this.errors.update(errors => [...errors, { id: errors.length, msg: errorBodyTitle }]);
             } else {
-              this.errors.push(err.message);
+              this.errors.update(errors => [...errors, { id: errors.length, msg: err.message }]);
             }
           } else {
-            this.errors.push('');
+            this.errors.update(errors => [...errors, { id: errors.length, msg: '' }]);
           }
-          this.isSubmitted = false;
+          this.isSubmitted.set(false);
         },
       });
   }
 
-  removeError(index: number): void {
-    this.errors.splice(index, 1);
+  removeError(id: number): void {
+    this.errors.update(errors => errors.filter(e => e.id !== id));
   }
 }

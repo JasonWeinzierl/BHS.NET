@@ -37,7 +37,6 @@
             "style": "kebab-case"
           }
         ],
-        "@angular-eslint/prefer-on-push-component-change-detection": "warn", // TODO: convert remaining components to OnPush
 
         // rxjs
         "rxjs/finnish": [

@@ -7,7 +7,7 @@ import { HeaderComponent } from '../header/header.component';
   selector: 'app-content-layout',
   templateUrl: './content-layout.component.html',
   styleUrl: './content-layout.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     HeaderComponent,

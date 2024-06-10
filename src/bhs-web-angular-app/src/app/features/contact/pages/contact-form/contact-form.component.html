@@ -3,9 +3,9 @@
 
     <h1 class="card-title">Contact Us</h1>
 
-    @for (error of errors; track error) {
-      <alert type="danger" [dismissible]="true">
-        There was an error submitting your message. {{error}}
+    @for (error of errors(); track error) {
+      <alert type="danger" [dismissible]="true" (onClose)="removeError(error.id)">
+        There was an error submitting your message. {{error.msg}}
         <hr>
         <p class="small text-muted mb-0">
           Please <a [routerLink]="['/about/this-site']">email the webmaster</a> if this keeps happening.
@@ -13,13 +13,13 @@
       </alert>
     }
 
-    @if (isSubmitted && !isAccepted) {
+    @if (isSubmitted() && !isAccepted()) {
       <div class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
       </div>
     }
 
-    @if (!isSubmitted) {
+    @if (!isSubmitted()) {
       <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" ngNativeValidate>
 
         <div class="mb-3">
@@ -51,7 +51,7 @@
       </form>
     }
 
-    @if (isAccepted) {
+    @if (isAccepted()) {
       <div>
         <p class="card-subtitle">Thank you for your message.</p>
         <a [routerLink]="['/']" class="card-link">&laquo; Back Home</a>
