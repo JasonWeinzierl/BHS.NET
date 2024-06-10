@@ -2,14 +2,14 @@ import { ErrorHandler, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularPlugin } from '@microsoft/applicationinsights-angularplugin-js';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { AppEnvironment } from 'src/environments';
+import { APP_ENVIRONMENT } from 'src/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InsightsService {
   private readonly router = inject(Router);
-  private readonly env = inject(AppEnvironment);
+  private readonly env = inject(APP_ENVIRONMENT);
 
   private readonly angularPlugin = new AngularPlugin();
   private readonly appInsights = new ApplicationInsights({

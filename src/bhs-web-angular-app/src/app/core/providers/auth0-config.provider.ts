@@ -1,14 +1,17 @@
-import { APP_INITIALIZER, FactoryProvider } from '@angular/core';
-import { AuthClientConfig, HttpMethod } from '@auth0/auth0-angular';
-import { AppEnvironment } from 'src/environments';
+import { APP_INITIALIZER, FactoryProvider, inject } from '@angular/core';
+import { AuthClientConfig, AuthConfig , HttpMethod } from '@auth0/auth0-angular';
+import { APP_ENVIRONMENT } from 'src/environments';
 
-const auth0ConfigFactory = (env: AppEnvironment, cfg: AuthClientConfig): () => void => {
+const auth0ConfigFactory = () => {
+  const env = inject(APP_ENVIRONMENT);
+  const cfg = inject(AuthClientConfig);
+
   return () => {
     if (!env.auth0) {
       console.error('Auth0 config not provided via app environment. Authentication will not work.');
     }
 
-    const baseConfig = env.auth0 ?? {
+    const baseConfig: AuthConfig = env.auth0 ?? {
       domain: '',
       clientId: '',
     };
@@ -50,6 +53,6 @@ const auth0ConfigFactory = (env: AppEnvironment, cfg: AuthClientConfig): () => v
 export const auth0ConfigProvider: FactoryProvider = {
   provide: APP_INITIALIZER,
   useFactory: auth0ConfigFactory,
-  deps: [AppEnvironment, AuthClientConfig],
+  deps: [APP_ENVIRONMENT, AuthClientConfig],
   multi: true,
 };

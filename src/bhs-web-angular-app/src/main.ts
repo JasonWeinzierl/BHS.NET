@@ -1,17 +1,17 @@
 import { mergeApplicationConfig } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './environments';
+import { APP_ENVIRONMENT, APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './environments';
 import { APP_CONFIG } from '@app/app.config';
 
+// TODO: Can we use APP_INITIALIZER instead of doing this before Angular bootstrap?
 fetch('/api/client-app-environment')
   .then(async response => {
-    const appEnv = await parseAppEnvironment(response) ?? new AppEnvironment();
+    const appEnv: AppEnvironment = await parseAppEnvironment(response) ?? {};
 
     // Angular startup.
     await bootstrapApplication(AppComponent, mergeApplicationConfig(
-      // TODO: Can we use APP_INITIALIZER instead?
-      { providers: [{ provide: AppEnvironment, useValue: appEnv }] },
+      { providers: [{ provide: APP_ENVIRONMENT, useValue: appEnv }] },
       APP_CONFIG,
     ));
 
@@ -36,9 +36,7 @@ async function parseAppEnvironment(response: Response): Promise<AppEnvironment |
       return null;
     }
 
-    const json = APP_ENVIRONMENT_VALIDATOR.parse(await response.json());
-
-    return new AppEnvironment(json.appInsights, json.auth0);
+    return APP_ENVIRONMENT_VALIDATOR.parse(await response.json());
   } catch (e) {
     console.error('Failed to read environment configuration as JSON.', e);
     return null;

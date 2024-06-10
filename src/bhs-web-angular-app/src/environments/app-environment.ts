@@ -1,4 +1,4 @@
-import { AuthConfig } from '@auth0/auth0-angular';
+import { InjectionToken } from '@angular/core';
 import { z } from 'zod';
 
 export const APP_ENVIRONMENT_VALIDATOR = z.object({
@@ -14,10 +14,5 @@ export const APP_ENVIRONMENT_VALIDATOR = z.object({
   }).optional(),
 });
 
-// TODO: this can be converted to an injection token.
-export class AppEnvironment {
-  constructor(
-    public readonly appInsights?: { connectionString?: string | null },
-    public readonly auth0?: AuthConfig,
-  ) { }
-}
+export type AppEnvironment = z.infer<typeof APP_ENVIRONMENT_VALIDATOR>;
+export const APP_ENVIRONMENT = new InjectionToken<AppEnvironment>('AppEnvironment');
