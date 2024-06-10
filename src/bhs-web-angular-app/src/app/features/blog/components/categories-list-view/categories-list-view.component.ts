@@ -12,6 +12,6 @@ import { CategorySummary } from '@data/blog';
 })
 export class CategoriesListViewComponent {
   @Input() isLoading = false;
-  @Input() error?: string;
+  @Input() error?: string | null;
   @Input() categories: Array<CategorySummary> = [];
 }

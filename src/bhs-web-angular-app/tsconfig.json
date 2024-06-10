@@ -40,7 +40,6 @@
         "src/app/*"
       ]
     },
-    "useDefineForClassFields": false,
     "esModuleInterop": true
   },
   "angularCompilerOptions": {

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { parseSchema, parseSchemaArray } from '@core/operators/parse-schema.operator';
 import { Album, albumSchema } from '@data/photos/models/album';
@@ -10,11 +10,8 @@ import { Photo, photoSchema } from '@data/photos/models/photo';
   providedIn: 'root',
 })
 export class PhotosService {
+  private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/photos';
-
-  constructor(
-    private readonly http: HttpClient,
-  ) { }
 
   getAlbums(): Observable<Array<Album>> {
     return this.http.get(this.baseUrl + '/albums')

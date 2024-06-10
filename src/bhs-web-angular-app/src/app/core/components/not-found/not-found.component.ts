@@ -1,7 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -16,16 +15,12 @@ import { map } from 'rxjs/operators';
   ],
 })
 export class NotFoundComponent {
-  closestPath$: Observable<string | null>;
+  private readonly route = inject(ActivatedRoute);
 
-  constructor(
-    private readonly route: ActivatedRoute,
-  ) {
-    this.closestPath$ = this.route.data.pipe(
-      map(data => {
-        const closestPath: unknown = data['closestPath'];
-        return typeof closestPath === 'string' ? closestPath : null;
-      }),
-    );
-  }
+  closestPath$ = this.route.data.pipe(
+    map(data => {
+      const closestPath: unknown = data['closestPath'];
+      return typeof closestPath === 'string' ? closestPath : null;
+    }),
+  );
 }

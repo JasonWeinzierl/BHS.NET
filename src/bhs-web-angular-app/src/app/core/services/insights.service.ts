@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable } from '@angular/core';
+import { ErrorHandler, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularPlugin } from '@microsoft/applicationinsights-angularplugin-js';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
@@ -8,6 +8,9 @@ import { AppEnvironment } from 'src/environments';
   providedIn: 'root',
 })
 export class InsightsService {
+  private readonly router = inject(Router);
+  private readonly env = inject(AppEnvironment);
+
   private readonly angularPlugin = new AngularPlugin();
   private readonly appInsights = new ApplicationInsights({
     config: {
@@ -26,11 +29,6 @@ export class InsightsService {
       },
     },
   });
-
-  constructor(
-    private readonly router: Router,
-    private readonly env: AppEnvironment,
-  ) { }
 
   init(): void {
     if (this.appInsights.config.connectionString) {

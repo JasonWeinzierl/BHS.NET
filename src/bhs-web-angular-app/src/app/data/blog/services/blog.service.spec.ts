@@ -1,7 +1,7 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { BlogService } from './blog.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('BlogService', () => {
   let service: BlogService;

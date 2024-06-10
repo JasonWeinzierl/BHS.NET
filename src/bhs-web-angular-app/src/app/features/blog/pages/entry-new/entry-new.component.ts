@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -9,7 +9,7 @@ import { Author, AuthorService } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
 
 interface EntryNewVm {
-  currentAuthor: Author | null;
+  currentAuthor?: Author | null;
   allCategories: Array<Category>;
   isLoading: boolean;
   error?: string;
@@ -28,28 +28,25 @@ interface EntryNewVm {
   ],
 })
 export class EntryNewComponent {
-  vm$: Observable<EntryNewVm>;
+  private readonly blogService = inject(BlogService);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly authorService = inject(AuthorService);
+
   private readonly submittedRequestSubject = new Subject<PostRequest>();
   private readonly routeErrorSubject = new Subject<{ newPost?: Post, error: unknown }>();
 
-  constructor(
-    private readonly blogService: BlogService,
-    private readonly auth: AuthService,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly authorService: AuthorService,
-  ) {
-    this.vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
-      startWith({ allCategories: [], isLoading: true, currentAuthor: null }),
-      catchError((err: unknown) => {
-        let msg = 'An error occurred.';
-        if (typeof err === 'object' && err && 'message' in err && typeof err.message === 'string') {
-          msg = err.message;
-        }
-        return of({ currentAuthor: null, allCategories: [], isLoading: false, error: msg });
-      }),
-    );
-  }
+  vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
+    startWith({ allCategories: [], isLoading: true } as EntryNewVm),
+    catchError((err: unknown) => {
+      let msg = 'An error occurred.';
+      if (typeof err === 'object' && err && 'message' in err && typeof err.message === 'string') {
+        msg = err.message;
+      }
+      return of({ allCategories: [], isLoading: false, error: msg } as EntryNewVm);
+    }),
+  );
 
   onPublish(request: PostRequest): void {
     this.submittedRequestSubject.next(request);

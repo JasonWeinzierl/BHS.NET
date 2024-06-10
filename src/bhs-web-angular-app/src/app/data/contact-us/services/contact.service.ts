@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ContactAlertRequest } from '@data/contact-us';
 
@@ -7,11 +7,8 @@ import { ContactAlertRequest } from '@data/contact-us';
   providedIn: 'root',
 })
 export class ContactService {
+  private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/contact-us';
-
-  constructor(
-    private readonly http: HttpClient,
-  ) { }
 
   /**
    * @returns No Content

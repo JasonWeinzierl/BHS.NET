@@ -1,13 +1,13 @@
 import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { AlertTheme, alertThemeScheme, SiteBanner, SiteBannerService } from '@data/banners';
 
 interface SiteBannerStyled extends SiteBanner {
@@ -30,32 +30,27 @@ interface SiteBannerStyled extends SiteBanner {
   ],
 })
 export class HeaderComponent {
+  private readonly bannerService = inject(SiteBannerService);
+  private readonly toastr = inject(ToastrService);
+  private readonly auth = inject(AuthService);
+
   isCollapsed = true;
 
-  banners$: Observable<Array<SiteBannerStyled>>;
+  banners$ = this.bannerService.getEnabled().pipe(
+    map(banners => this.createStyledBanners(banners)),
+    catchError((err: unknown) => {
+      const title = 'Site banners could not be loaded.';
+      let msg = 'An error occurred.';
+      if (err instanceof HttpErrorResponse) {
+        msg = err.message;
+      } else {
+        console.error(err);
+      }
+      this.toastr.error(msg, title);
+      return of();
+    }),
+  );
   isAuthenticated$ = this.auth.isAuthenticated$;
-
-  constructor(
-    private readonly bannerService: SiteBannerService,
-    private readonly toastr: ToastrService,
-    private readonly auth: AuthService,
-  ) {
-    this.banners$ = this.bannerService.getEnabled()
-    .pipe(
-      map(banners => this.createStyledBanners(banners)),
-      catchError((err: unknown) => {
-        const title = 'Site banners could not be loaded.';
-        let msg = 'An error occurred.';
-        if (err instanceof HttpErrorResponse) {
-          msg = err.message;
-        } else {
-          console.error(err);
-        }
-        this.toastr.error(msg, title);
-        return of();
-      }),
-    );
-  }
 
   private createStyledBanners(banners: Array<SiteBanner>): Array<SiteBannerStyled> {
     return banners.map(b => ({

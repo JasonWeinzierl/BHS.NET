@@ -1,12 +1,11 @@
 import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { PostCardComponent } from '../../blog/components/post-card/post-card.component';
-import { Author, AuthorService } from '@data/authors';
-import { PostPreview } from '@data/blog';
+import { AuthorService } from '@data/authors';
 
 @Component({
   selector: 'app-profile-index',
@@ -21,33 +20,28 @@ import { PostPreview } from '@data/blog';
   ],
 })
 export class ProfileIndexComponent {
-  vm$: Observable<{ author?: Author | null, posts: Array<PostPreview>, isLoading: boolean, error?: string }>;
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly authorService = inject(AuthorService);
 
-  constructor(
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly authorService: AuthorService,
-  ) {
-    this.vm$ = this.activatedRoute.paramMap
-      .pipe(
-        map(params => {
-          const username = params.get('username');
-          if (!username) {
-            throw new Error('Failed to get username from URL.');
-          }
-          return username;
-        }),
-        switchMap(username => this.authorService.getAuthorPosts(username)),
-        map(posts => ({ author: posts[0].author, posts, isLoading: false }) ),
-        startWith({ posts: [], isLoading: true }),
-        catchError((error: unknown) => {
-          let msg = 'An error occurred.';
-          if (error instanceof HttpErrorResponse) {
-            msg = error.message;
-          } else {
-            console.error(error);
-          }
-          return of({ posts: [], isLoading: false, error: msg });
-        }),
-      );
-  }
+  vm$ = this.activatedRoute.paramMap.pipe(
+    map(params => {
+      const username = params.get('username');
+      if (!username) {
+        throw new Error('Failed to get username from URL.');
+      }
+      return username;
+    }),
+    switchMap(username => this.authorService.getAuthorPosts(username)),
+    map(posts => ({ author: posts[0].author, posts, isLoading: false, error: null }) ),
+    startWith({ author: null, posts: [], isLoading: true, error: null }),
+    catchError((error: unknown) => {
+      let msg = 'An error occurred.';
+      if (error instanceof HttpErrorResponse) {
+        msg = error.message;
+      } else {
+        console.error(error);
+      }
+      return of({ author: null, posts: [], isLoading: false, error: msg });
+    }),
+  );
 }

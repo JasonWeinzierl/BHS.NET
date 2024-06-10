@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -19,7 +19,10 @@ import { ContactAlertRequest, ContactService } from '@data/contact-us';
   ],
 })
 export class ContactFormComponent {
-  contactForm = this.formBuilder.nonNullable.group({
+  private readonly fb = inject(FormBuilder);
+  private readonly contactService = inject(ContactService);
+
+  contactForm = this.fb.nonNullable.group({
     name: [''],
     emailAddress: ['', [Validators.required, Validators.email]],
     message: [''],
@@ -28,11 +31,6 @@ export class ContactFormComponent {
   isSubmitted = false;
   isAccepted = false;
   errors: Array<string> = [];
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly contactService: ContactService,
-  ) { }
 
   onSubmit(): void {
     this.isSubmitted = true;

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CategoryPosts, categoryPostsSchema, CategorySummary, categorySummarySchema, Post, PostPreview, postPreviewSchema, PostRequest, postSchema } from '../models';
 import { parseSchema, parseSchemaArray } from '@core/operators/parse-schema.operator';
@@ -8,11 +8,8 @@ import { parseSchema, parseSchemaArray } from '@core/operators/parse-schema.oper
   providedIn: 'root',
 })
 export class BlogService {
+  private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/blog';
-
-  constructor(
-    private readonly http: HttpClient,
-  ) { }
 
   searchPosts(q?: string, from?: Date, to?: Date): Observable<Array<PostPreview>> {
     let params = new HttpParams();

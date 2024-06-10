@@ -11,9 +11,5 @@ import { appVersion } from 'src/environments';
   imports: [RouterLink],
 })
 export class FooterComponent {
-  year: string;
-
-  constructor() {
-    this.year = appVersion.commitDate.split('-')[0];
-  }
+  year = appVersion.commitDate.split('-')[0];
 }

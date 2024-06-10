@@ -86,6 +86,7 @@
             "maxComplexity": 10
           }
         ],
+        "@angular-eslint/template/no-call-expression": "off", // This conflicts with signals.
         "@angular-eslint/template/i18n": "off"
       }
     }

@@ -14,6 +14,7 @@ export const APP_ENVIRONMENT_VALIDATOR = z.object({
   }).optional(),
 });
 
+// TODO: this can be converted to an injection token.
 export class AppEnvironment {
   constructor(
     public readonly appInsights?: { connectionString?: string | null },

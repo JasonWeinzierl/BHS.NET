@@ -1,8 +1,8 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouteConfigLoadEnd, RouteConfigLoadStart, Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { merge, Observable } from 'rxjs';
+import { merge } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { InsightsService } from '@core/services/insights.service';
 
@@ -15,25 +15,24 @@ import { InsightsService } from '@core/services/insights.service';
   imports: [RouterOutlet, AsyncPipe],
 })
 export class AppComponent {
-  public loading$: Observable<boolean>;
+  private readonly router = inject(Router);
+  private readonly insightsService = inject(InsightsService);
+  private readonly auth = inject(AuthService);
 
-  public constructor(
-    private readonly router: Router,
-    private readonly insightsService: InsightsService,
-    private readonly auth: AuthService,
-  ) {
-    this.insightsService.init();
-    this.loading$ = merge(
-      this.router.events
-        .pipe(
-          filter(
-            event =>
-              event instanceof RouteConfigLoadStart ||
-              event instanceof RouteConfigLoadEnd,
-          ),
-          map(event => event instanceof RouteConfigLoadStart),
+  public loading$ = merge(
+    this.router.events
+      .pipe(
+        filter(
+          event =>
+            event instanceof RouteConfigLoadStart ||
+            event instanceof RouteConfigLoadEnd,
         ),
-      this.auth.isLoading$,
-    );
+        map(event => event instanceof RouteConfigLoadStart),
+      ),
+    this.auth.isLoading$,
+  );
+
+  constructor() {
+    this.insightsService.init();
   }
 }

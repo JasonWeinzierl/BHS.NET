@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -19,24 +19,22 @@ import { Category, categorySchema, Post, PostRequest } from '@data/blog';
   ],
 })
 export class EditBlogEntryFormComponent implements OnChanges {
+  private readonly fb = inject(FormBuilder);
+
   @Input() initialPost?: Post;
-  @Input() currentAuthor: Author | null = null;
+  @Input() currentAuthor?: Author | null;
   @Input() allCategories: Array<Category> = [];
 
   @Output() readonly publish = new EventEmitter<PostRequest>();
 
   cancelRoute: Array<string> = ['/apps/blog'];
-  editFormGroup = this.formBuilder.nonNullable.group({
+  editFormGroup = this.fb.nonNullable.group({
     title: ['', [Validators.required]],
     categories: [[] as Array<string>],
     publishDate: [new Date()],
     contentMarkdown: [''],
   });
   authorWarning?: string | null;
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-  ) { }
 
   ngOnChanges(): void {
     this.cancelRoute = this.initialPost ? ['/apps/blog/entry', this.initialPost.slug] : ['/apps/blog'];
@@ -65,7 +63,7 @@ export class EditBlogEntryFormComponent implements OnChanges {
       contentMarkdown: raw.contentMarkdown,
       filePath: this.initialPost?.filePath ?? null,
       photosAlbumSlug: this.initialPost?.photosAlbumSlug ?? null,
-      author: this.isChangingAuthor() ? this.currentAuthor : this.initialPost?.author ?? null, // TODO: support multiple authors.
+      author: this.isChangingAuthor() ? this.currentAuthor ?? null : this.initialPost?.author ?? null, // TODO: support multiple authors.
       datePublished: raw.publishDate,
       categories: this.allCategories.filter(c => raw.categories.includes(c.slug)).map(c => categorySchema.parse(c)),
     };

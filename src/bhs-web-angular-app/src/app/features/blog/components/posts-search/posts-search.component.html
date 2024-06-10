@@ -4,7 +4,7 @@
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search Posts" aria-label="Search Posts" name="search" [(ngModel)]="searchText">
         <button type="submit" class="btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
-          @if (isLoading$ | async) {
+          @if (isLoading()) {
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           }
           Search

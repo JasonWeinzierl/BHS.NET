@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { parseSchemaArray } from '@core/operators/parse-schema.operator';
 import { Director, directorSchema } from '@data/leadership/models/director';
@@ -9,11 +9,8 @@ import { Officer, officerSchema } from '@data/leadership/models/officer';
   providedIn: 'root',
 })
 export class LeadershipService {
+  private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/leadership';
-
-  constructor(
-    private readonly http: HttpClient,
-  ) { }
 
   getOfficers(): Observable<Array<Officer>> {
     return this.http.get(this.baseUrl + '/officers')

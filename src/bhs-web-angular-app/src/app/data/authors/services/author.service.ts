@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Author, authorSchema } from '../models/author';
 import { parseSchemaArray } from '@core/operators/parse-schema.operator';
@@ -9,11 +9,8 @@ import { PostPreview, postPreviewSchema } from '@data/blog';
   providedIn: 'root',
 })
 export class AuthorService {
+  private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/authors';
-
-  constructor(
-    private readonly http: HttpClient,
-  ) { }
 
   getAuthors(authUserId: string): Observable<Array<Author>> {
     return this.http.get(this.baseUrl + '?authUserId=' + authUserId)

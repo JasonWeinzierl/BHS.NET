@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -14,7 +14,7 @@ interface EntryEditVm {
   categories: Array<Category>;
   isLoading: boolean;
   error?: string;
-  currentAuthor: Author | null;
+  currentAuthor?: Author | null;
 }
 
 @Component({
@@ -31,30 +31,27 @@ interface EntryEditVm {
   ],
 })
 export class EntryEditComponent {
-  vm$: Observable<EntryEditVm>;
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly blogService = inject(BlogService);
+  private readonly auth = inject(AuthService);
+
   private readonly submittedRequestSubject = new Subject<{slug: string, body: PostRequest}>();
 
-  constructor(
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly blogService: BlogService,
-    private readonly auth: AuthService,
-  ) {
-    // Emit a merged combination of the initial post loaded from the URL, and the updated post after a submission.
-    this.vm$ = merge(this.getInitialPost$(), this.getUpdatedPost$()).pipe(
-      // Start with loading indicator.
-      startWith({ categories: [], isLoading: true, currentAuthor: null }),
-      // If an error occurs, populate the error property of the view model.
-      catchError((err: unknown) => {
-        console.error(err);
-        let msg = 'An error occurred.';
-        // TODO: this belongs in SharedModule
-        if (typeof err === 'object' && err && 'message' in err && typeof err.message === 'string') {
-          msg = err.message;
-        }
-        return of({ categories: [], isLoading: false, error: msg, currentAuthor: null });
-      }),
-    );
-  }
+  // Emit a merged combination of the initial post loaded from the URL, and the updated post after a submission.
+  vm$ = merge(this.getInitialPost$(), this.getUpdatedPost$()).pipe(
+    // Start with loading indicator.
+    startWith({ categories: [], isLoading: true } as EntryEditVm),
+    // If an error occurs, populate the error property of the view model.
+    catchError((err: unknown) => {
+      console.error(err);
+      let msg = 'An error occurred.';
+      // TODO: this belongs in SharedModule
+      if (typeof err === 'object' && err && 'message' in err && typeof err.message === 'string') {
+        msg = err.message;
+      }
+      return of({ categories: [], isLoading: false, error: msg } as EntryEditVm);
+    }),
+  );
 
   private getInitialPost$(): Observable<EntryEditVm> {
     return this.activatedRoute.paramMap.pipe(
