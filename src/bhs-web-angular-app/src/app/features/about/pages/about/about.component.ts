@@ -10,6 +10,6 @@ import { appVersion } from 'src/environments';
   standalone: true,
   imports: [NgOptimizedImage],
 })
-export class AboutComponent {
+export default class AboutComponent {
   version = appVersion;
 }

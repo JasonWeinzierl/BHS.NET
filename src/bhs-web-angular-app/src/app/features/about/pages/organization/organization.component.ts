@@ -17,7 +17,7 @@ import { LeadershipService } from '@data/leadership';
     DatePipe,
   ],
 })
-export class OrganizationComponent {
+export default class OrganizationComponent {
   private readonly leadershipService = inject(LeadershipService);
 
   vm$ = combineLatest([this.leadershipService.getOfficers(), this.leadershipService.getDirectors()]).pipe(

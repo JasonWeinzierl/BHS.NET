@@ -9,4 +9,4 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
 })
-export class TermsOfServiceComponent { }
+export default class TermsOfServiceComponent { }
