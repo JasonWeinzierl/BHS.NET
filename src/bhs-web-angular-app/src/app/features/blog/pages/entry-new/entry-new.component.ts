@@ -40,7 +40,8 @@ export class EntryNewComponent {
   vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
     startWith({ allCategories: [], isLoading: true } as EntryNewVm),
     catchError((err: unknown) => {
-      let msg = 'An error occurred.';
+      let msg = 'An error occurred creating post.';
+      console.error(msg, err);
       if (typeof err === 'object' && err && 'message' in err && typeof err.message === 'string') {
         msg = err.message;
       }
