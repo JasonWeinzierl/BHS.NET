@@ -8,12 +8,9 @@
           Belton, Missouri 64012
         </address>
         <h3>Hours of operation</h3>
-        <p>
-          Tuesdays and Thursdays from <time datetime="13:00">1:00pm</time>&#8211;
-          <time datetime="16:00">4:00pm</time><br>
-          Saturday from <time datetime="10:00">10:00am</time>&#8211;<time datetime="13:00">1:00pm</time><br>
-          Open <time>March</time> through <time>December</time>
-        </p>
+        @if (schedule$ | async; as schedule) {
+          <p class="honor-newlines">{{schedule}}</p>
+        }
       </div>
       <div class="col-lg">
         <img ngSrc="/assets/img/2017/oldcityhall.jpg" alt="city hall" class="img-fluid" width="641" height="482">

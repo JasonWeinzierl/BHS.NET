@@ -41,6 +41,10 @@ const auth0ConfigFactory = () => {
             uri: '/api/blog/posts/*',
             httpMethod: HttpMethod.Delete,
           },
+          {
+            uri: '/api/museum/schedule',
+            httpMethod: HttpMethod.Put,
+          },
         ],
       },
     });
