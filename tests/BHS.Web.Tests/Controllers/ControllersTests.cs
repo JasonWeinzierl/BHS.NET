@@ -48,26 +48,22 @@ public sealed class ControllerTestsClassFixture
 }
 
 [Trait("Category", "CompositionRootTest")]
-public class ControllersTests : IClassFixture<ControllerTestsClassFixture>
+public class ControllersTests(ControllerTestsClassFixture fixture) : IClassFixture<ControllerTestsClassFixture>
 {
-    private readonly ControllerTestsClassFixture _fixture;
+    private readonly ControllerTestsClassFixture _fixture = fixture;
 
-    public ControllersTests(ControllerTestsClassFixture fixture)
-    {
-        _fixture = fixture;
-    }
-
-    public static IEnumerable<object[]> Controllers =>
+    public static TheoryData<Type> Controllers => new(
     [
-        [typeof(AuthorController)],
-        [typeof(BannersController)],
-        [typeof(BlogController)],
-        [typeof(ContactUsController)],
-        [typeof(ErrorController)],
-        [typeof(HealthCheckController)],
-        [typeof(LeadershipController)],
-        [typeof(PhotosController)],
-    ];
+        typeof(AuthorController),
+        typeof(BannersController),
+        typeof(BlogController),
+        typeof(ContactUsController),
+        typeof(ErrorController),
+        typeof(HealthCheckController),
+        typeof(LeadershipController),
+        typeof(MuseumController),
+        typeof(PhotosController),
+    ]);
 
     [Theory]
     [MemberData(nameof(Controllers))]

@@ -165,7 +165,7 @@ resource "azurerm_cosmosdb_account" "bhs_db" {
   mongo_server_version = "4.2"
   enable_free_tier     = var.enable_free_cosmos
 
-  ip_range_filter = "0.0.0.0"
+  ip_range_filter = "97.135.189.47,104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26,40.80.152.199,13.95.130.121,20.245.81.54,40.118.23.126,0.0.0.0"
 
   consistency_policy {
     consistency_level = "Session"
@@ -623,6 +623,11 @@ resource "auth0_resource_server_scopes" "bhs_api_scopes" {
     name        = "write:blog"
     description = "Author blog resources"
   }
+
+  scopes {
+    name        = "write:museum"
+    description = "Author museum resources"
+  }
 }
 
 resource "auth0_role" "owner" {
@@ -638,13 +643,18 @@ resource "auth0_role_permissions" "owner_permissions" {
     name                       = "write:blog"
   }
 
+  permissions {
+    resource_server_identifier = auth0_resource_server.bhs_api.identifier
+    name                       = "write:museum"
+  }
+
   depends_on = [
     auth0_resource_server_scopes.bhs_api_scopes
   ]
 }
 
 resource "auth0_connection" "bhs_userpassauth" {
-  name     = "Username-Password-Authentication2" # WARNING: Auth0 automatically creates a database connection when a client is created. You must manually delete that connection in the UI.
+  name     = "Username-Password-Authentication" # WARNING: Auth0 automatically creates a database connection when a client is created. You must manually delete that connection in the UI.
   strategy = "auth0"
 
   options {

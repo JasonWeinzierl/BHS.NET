@@ -34,7 +34,7 @@ public class BlogController : ControllerBase
     /// Create a new post.
     /// </summary>
     [HttpPost("posts")]
-    [Authorize("BlogWriteAccess")]
+    [Authorize(AuthConfig.BlogWriteAccess)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<Post>> CreatePost(PostRequest request, CancellationToken cancellationToken)
     {
@@ -60,7 +60,7 @@ public class BlogController : ControllerBase
     /// Update a post.
     /// </summary>
     [HttpPut("posts/{slug}")]
-    [Authorize("BlogWriteAccess")]
+    [Authorize(AuthConfig.BlogWriteAccess)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Post>> UpdatePost(string slug, PostRequest request, CancellationToken cancellationToken)
@@ -74,7 +74,7 @@ public class BlogController : ControllerBase
     /// Delete a post.
     /// </summary>
     [HttpDelete("posts/{slug}")]
-    [Authorize("BlogWriteAccess")]
+    [Authorize(AuthConfig.BlogWriteAccess)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeletePost(string slug, CancellationToken cancellationToken)

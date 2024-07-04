@@ -5,6 +5,7 @@ using BHS.Domain.Banners;
 using BHS.Domain.Blog;
 using BHS.Domain.ContactUs;
 using BHS.Domain.Leadership;
+using BHS.Domain.Museum;
 using BHS.Domain.Notifications;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Adapters;
@@ -76,6 +77,7 @@ public static class BhsServiceCollectionExtensions
         services.AddSingleton<IContactAlertRepository, ContactAlertRepository>();
         services.AddSingleton<ISiteBannerRepository, SiteBannerRepository>();
         services.AddSingleton<ISequenceRepository, SequenceRepository>();
+        services.AddSingleton<IMuseumScheduleRepository, MuseumScheduleRepository>();
 
         return services;
     }

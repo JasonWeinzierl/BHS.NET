@@ -1,5 +1,6 @@
 ﻿using BHS.Contracts;
 using BHS.Contracts.Blog;
+using BHS.Contracts.Museum;
 using BHS.Web;
 using System.Net;
 using System.Net.Http.Json;
@@ -63,5 +64,31 @@ public class ResourceLifecycleTests : IClassFixture<BhsWebApplicationFactory<Pro
 
         Assert.NotNull(allPosts);
         Assert.DoesNotContain(slug, allPosts.Select(x => x.Slug));
+    }
+
+    [Fact]
+    public async Task MuseumScheduleLifecycle()
+    {
+        // GET 204
+        using var initialResponse = await _httpClient.GetAsync("/api/museum/schedule");
+
+        Assert.Equal(HttpStatusCode.NoContent, initialResponse.StatusCode);
+
+        // UPDATE
+        var schedule = new MuseumSchedule([new MuseumDay(DayOfWeek.Monday, "09:00", "17:00")], new MuseumMonthRange(1, 12));
+        using var updateResponse = await _httpClient.PutAsJsonAsync("/api/museum/schedule", schedule);
+        var updatedSchedule = await updateResponse.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<MuseumSchedule>();
+
+        Assert.NotNull(updatedSchedule);
+        Assert.Equal(schedule.Days.Single(), updatedSchedule.Days.Single());
+        Assert.Equal(schedule.Months, updatedSchedule.Months);
+
+        // GET 200
+        using var currentResponse = await _httpClient.GetAsync("/api/museum/schedule");
+        var currentSchedule = await currentResponse.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<MuseumSchedule>();
+
+        Assert.NotNull(currentSchedule);
+        Assert.Equal(updatedSchedule.Days.Single(), currentSchedule.Days.Single());
+        Assert.Equal(updatedSchedule.Months, currentSchedule.Months);
     }
 }
