@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig , ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, TitleStrategy } from '@angular/router';
+import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -25,7 +25,13 @@ export const APP_CONFIG: ApplicationConfig = {
       CarouselModule.forRoot(),
       CollapseModule.forRoot(),
     ),
-    provideRouter(APP_ROUTES),
+    provideRouter(
+      APP_ROUTES,
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'enabled',
+      }),
+    ),
     provideAnimations(),
     provideAuth0(),
     provideBhsAuth0Config(),
