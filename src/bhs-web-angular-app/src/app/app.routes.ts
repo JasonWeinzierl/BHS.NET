@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 import { Routes } from '@angular/router';
-import { AuthGuard } from '@auth0/auth0-angular';
+import { authGuardFn } from '@auth0/auth0-angular';
 import { paths } from './app-paths';
 import { ContentLayoutComponent } from './core/components/content-layout/content-layout.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
@@ -57,7 +57,7 @@ export const APP_ROUTES: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('@features/admin/admin.routes'),
-    canActivate: [AuthGuard], // Must use canActivate because canLoad and canMatch don't seem to redirect to login properly.
+    canActivate: [authGuardFn], // Must use canActivate because canLoad and canMatch don't seem to redirect to login properly.
   },
   {
     path: '**',

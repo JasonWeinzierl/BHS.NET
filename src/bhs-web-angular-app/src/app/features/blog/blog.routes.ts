@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from '@auth0/auth0-angular';
+import { authGuardFn } from '@auth0/auth0-angular';
 import { BlogEntryComponent } from './pages/blog-entry/blog-entry.component';
 import { BlogIndexComponent } from './pages/blog-index/blog-index.component';
 import { CategoryPostsComponent } from './pages/category-posts/category-posts.component';
@@ -22,7 +22,7 @@ export default [
     path: 'edit/:slug', // TODO: move under entries/:slug/edit ?
     component: EntryEditComponent,
     data: { title: 'Edit Entry' },
-    canActivate: [AuthGuard],
+    canActivate: [authGuardFn],
   },
   {
     path: 'category/:slug',
@@ -32,6 +32,6 @@ export default [
     path: 'new',
     component: EntryNewComponent,
     data: { title: 'New Entry' },
-    canActivate: [AuthGuard],
+    canActivate: [authGuardFn],
   },
 ] satisfies Routes;

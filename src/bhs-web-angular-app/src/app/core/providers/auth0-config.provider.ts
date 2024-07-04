@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, FactoryProvider, inject } from '@angular/core';
+import { APP_INITIALIZER, inject, Provider } from '@angular/core';
 import { AuthClientConfig, AuthConfig , HttpMethod } from '@auth0/auth0-angular';
 import { APP_ENVIRONMENT } from 'src/environments';
 
@@ -48,11 +48,15 @@ const auth0ConfigFactory = () => {
 };
 
 /**
- * Provider for initializing Auth0.
+ * Initialize our config for Auth0.
  */
-export const auth0ConfigProvider: FactoryProvider = {
-  provide: APP_INITIALIZER,
-  useFactory: auth0ConfigFactory,
-  deps: [APP_ENVIRONMENT, AuthClientConfig],
-  multi: true,
-};
+export function provideBhsAuth0Config(): Array<Provider> {
+  return [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: auth0ConfigFactory,
+      deps: [APP_ENVIRONMENT, AuthClientConfig],
+      multi: true,
+    },
+  ];
+}
