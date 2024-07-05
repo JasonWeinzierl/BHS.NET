@@ -5157,7 +5157,7 @@ __metadata:
     marked: "npm:^12.0.2"
     merge-partially: "npm:^2.0.2"
     ng-mocks: "npm:^14.13.0"
-    ngx-bootstrap: "npm:^12.0.0"
+    ngx-bootstrap: "npm:^18.0.0"
     ngx-markdown: "npm:^18.0.0"
     ngx-toastr: "npm:^19.0.0"
     rxjs: "npm:^7.8.1"
@@ -11285,18 +11285,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ngx-bootstrap@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "ngx-bootstrap@npm:12.0.0"
+"ngx-bootstrap@npm:^18.0.0":
+  version: 18.0.0
+  resolution: "ngx-bootstrap@npm:18.0.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
-    "@angular/animations": ^17.0.0
-    "@angular/common": ^17.0.0
-    "@angular/core": ^17.0.0
-    "@angular/forms": ^17.0.0
+    "@angular/animations": ^18.0.1
+    "@angular/common": ^18.0.1
+    "@angular/core": ^18.0.1
+    "@angular/forms": ^18.0.1
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 10c0/b63dbed72994922dbfb5137b75b6d80cee1bc826c5eea22fe829b4606465f49a8e512eafd3d1725a396e950eda91d7e92430dbf99571401de40c9b0cd478f30f
+  checksum: 10c0/f649a1cce222d6dc915f94cb408af27e359c7d525193804b21be56ce1091e63f693d98adb0acb9cb3a0f45ad0faca8b96af61ebe98aa5a6794f4911fcbbd39f9
   languageName: node
   linkType: hard
 
