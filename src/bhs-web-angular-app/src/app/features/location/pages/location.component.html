@@ -9,7 +9,21 @@
         </address>
         <h3>Hours of operation</h3>
         @if (schedule$ | async; as schedule) {
-          <p class="honor-newlines">{{schedule}}</p>
+          @if (schedule.isLoading) {
+            <div class="spinner-grow" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          } @else {
+            <p id="location-museum-schedule">
+              @for (day of schedule.days; track day) {
+                {{ day.dayOfWeek }} from <time [dateTime]="day.fromTime">{{ day.fromTimeStandard }}</time>&#8211;<time [dateTime]="day.toTime">{{ day.toTimeStandard }}</time>
+                <br>
+              }
+              Open <time>{{ schedule.months.startMonth }}</time> to <time>{{ schedule.months.endMonth }}</time>
+            </p>
+          }
+        } @else {
+          <p id="location-museum-schedule-error">Hours of operation are not available at this time.</p>
         }
       </div>
       <div class="col-lg">

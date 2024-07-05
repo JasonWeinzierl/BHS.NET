@@ -1,6 +1,6 @@
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { map } from 'rxjs';
+import { catchError, map, of, startWith } from 'rxjs';
 import { MuseumService } from '@data/museum';
 
 const ZERO_INDEXED_DAYS = [
@@ -29,6 +29,13 @@ const ONE_INDEXED_MONTHS = [
   'December',
 ];
 
+function toStandardTime(militaryTime: string): string {
+  const [hours, minutes] = militaryTime.split(':').map(Number);
+  const period = hours < 12 ? 'AM' : 'PM';
+  const standardHours = hours % 12 || 12;
+  return `${standardHours.toString()}:${String(minutes).padStart(2, '0')} ${period}`;
+}
+
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
@@ -44,15 +51,26 @@ export class LocationComponent {
   private readonly museumService = inject(MuseumService);
 
   readonly schedule$ = this.museumService.getSchedule().pipe(
-    map(schedule => {
-      if (!schedule?.days.length) {return 'Not open';}
-
-      // TODO: for accessibility, we really should wrap the times in a <time> element.
-      // TODO: use endash for date ranges?
-      const days = schedule.days.map(day => `${ZERO_INDEXED_DAYS[day.dayOfWeek]} from ${day.fromTime} to ${day.toTime}`);
-      const months = `Open ${ONE_INDEXED_MONTHS[schedule.months.startMonth]} through ${ONE_INDEXED_MONTHS[schedule.months.endMonth]}`;
-
-      return days.join('\n') + '\n' + months;
+    map(schedule => schedule ? {
+      days: schedule.days.map(day => ({
+        dayOfWeek: ZERO_INDEXED_DAYS[day.dayOfWeek],
+        fromTime: day.fromTime,
+        fromTimeStandard: toStandardTime(day.fromTime),
+        toTime: day.toTime,
+        toTimeStandard: toStandardTime(day.toTime),
+      })),
+      months: {
+        startMonth: ONE_INDEXED_MONTHS[schedule.months.startMonth],
+        endMonth: ONE_INDEXED_MONTHS[schedule.months.endMonth],
+      },
+      isLoading: false as const,
+    } : null),
+    catchError((err: unknown) => {
+      console.error('Failed to load schedule.', err);
+      return of(null);
+    }),
+    startWith({
+      isLoading: true as const,
     }),
   );
 }
