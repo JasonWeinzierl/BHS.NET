@@ -18,21 +18,13 @@ public class MuseumController(IMuseumScheduleRepository scheduleRepo) : Controll
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult<MuseumSchedule>> GetSchedule(CancellationToken cancellationToken = default)
-    {
-        var schedule = await _scheduleRepo.GetSchedule(cancellationToken);
-        if (schedule is null) return NoContent();
-        else return Ok(schedule);
-    }
+        => Ok(await _scheduleRepo.GetSchedule(cancellationToken));
 
     /// <summary>
     /// Update the museum schedule.
     /// </summary>
     [HttpPut("schedule")]
     [Authorize(AuthConfig.MuseumWriteAccess)]
-    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<MuseumSchedule>> UpdateSchedule(MuseumSchedule schedule, CancellationToken cancellationToken = default)
-    {
-        var updatedSchedule = await _scheduleRepo.UpdateSchedule(schedule, cancellationToken);
-        return CreatedAtAction(nameof(GetSchedule), updatedSchedule);
-    }
+        => Ok(await _scheduleRepo.UpdateSchedule(schedule, cancellationToken));
 }
