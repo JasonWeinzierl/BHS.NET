@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, inject, Provider } from '@angular/core';
-import { AuthClientConfig, AuthConfig , HttpMethod } from '@auth0/auth0-angular';
+import { AuthClientConfig, AuthConfig } from '@auth0/auth0-angular';
 import { APP_ENVIRONMENT } from 'src/environments';
 
 const auth0ConfigFactory = () => {
@@ -31,19 +31,19 @@ const auth0ConfigFactory = () => {
         allowedList: [
           {
             uri: '/api/blog/posts',
-            httpMethod: HttpMethod.Post,
+            httpMethod: 'Post',
           },
           {
             uri: '/api/blog/posts/*',
-            httpMethod: HttpMethod.Put,
+            httpMethod: 'Put',
           },
           {
             uri: '/api/blog/posts/*',
-            httpMethod: HttpMethod.Delete,
+            httpMethod: 'Delete',
           },
           {
             uri: '/api/museum/schedule',
-            httpMethod: HttpMethod.Put,
+            httpMethod: 'Put',
           },
         ],
       },
