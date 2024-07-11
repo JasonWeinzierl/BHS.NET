@@ -11,7 +11,7 @@ built on ASP.NET Core, Angular, and MongoDB.
 
 - .NET 8 SDK and Visual Studio 2022
   - `dotnet tool restore`
-- Node.JS 20 and yarn
+- Node.JS 22 and yarn
   - `corepack enable`
 - MongoDB
 

@@ -22,7 +22,7 @@ on:
 
 env:
   CLIENTAPP_DIRECTORY: ./src/bhs-web-angular-app
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
 
 jobs:
   smoke:
