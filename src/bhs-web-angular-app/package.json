@@ -72,6 +72,6 @@
     "merge-partially": "^2.0.2",
     "ng-mocks": "^14.13.0",
     "typescript": "~5.5.3",
-    "typescript-eslint": "^7.16.0"
+    "typescript-eslint": "^8.0.0"
   }
 }
