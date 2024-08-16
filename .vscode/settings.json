@@ -4,7 +4,8 @@
     "datetime",
     "healthcheck",
     "testid",
-    "toastr"
+    "toastr",
+    "tseslint"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
