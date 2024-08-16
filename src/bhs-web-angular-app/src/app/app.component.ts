@@ -24,8 +24,8 @@ export class AppComponent {
       .pipe(
         filter(
           event =>
-            event instanceof RouteConfigLoadStart ||
-            event instanceof RouteConfigLoadEnd,
+            event instanceof RouteConfigLoadStart
+            || event instanceof RouteConfigLoadEnd,
         ),
         map(event => event instanceof RouteConfigLoadStart),
       ),

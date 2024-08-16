@@ -1,6 +1,4 @@
-
 describe('Liveness', () => {
-
   it('should pass the health check', () => {
     cy.request('/api/healthcheck/status').then(response => {
       expect(response.status).to.equal(200);
@@ -23,5 +21,4 @@ describe('Liveness', () => {
 
     cy.url().should('contain', Cypress.config().baseUrl);
   });
-
 });

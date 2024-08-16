@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute, convertToParamMap, RouterLink , RouterModule } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, RouterLink, RouterModule } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 import { AlbumPageComponent } from './album-page.component';
@@ -41,7 +41,7 @@ describe('AlbumPageComponent', () => {
           getAlbum: () => of(createAlbum()),
         }),
         MockProvider(ActivatedRoute, {
-          'paramMap': of(convertToParamMap({
+          paramMap: of(convertToParamMap({
             slug: 'album-three',
             id: 'photo-four',
           })),

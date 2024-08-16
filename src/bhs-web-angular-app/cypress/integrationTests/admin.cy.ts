@@ -1,7 +1,6 @@
 import { AppEnvironment } from '../../src/environments/app-environment';
 
 describe('Admin', () => {
-
   beforeEach(() => {
     const appEnv: AppEnvironment = {
       auth0: {
@@ -31,5 +30,4 @@ describe('Admin', () => {
 
     cy.url().should('contain', Cypress.config().baseUrl);
   });
-
 });

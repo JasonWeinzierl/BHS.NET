@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterModule , RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterModule, RouterStateSnapshot } from '@angular/router';
 import { resolveClosestPath } from './closest-path.resolver';
 
 describe('resolveClosestPath', () => {

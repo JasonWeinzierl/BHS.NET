@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig , ErrorHandler, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';

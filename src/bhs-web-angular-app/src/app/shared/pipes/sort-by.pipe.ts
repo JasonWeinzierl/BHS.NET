@@ -6,7 +6,6 @@ import { orderBy } from 'lodash-es';
   standalone: true,
 })
 export class SortByPipe implements PipeTransform {
-
   /**
    * Sorts a collection.
    * @param value Array to be sorted.
@@ -23,5 +22,4 @@ export class SortByPipe implements PipeTransform {
     }
     return orderBy(value, column, order);
   }
-
 }

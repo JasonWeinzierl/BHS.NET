@@ -35,7 +35,7 @@ export class EntryEditComponent {
   private readonly blogService = inject(BlogService);
   private readonly auth = inject(AuthService);
 
-  private readonly submittedRequestSubject = new Subject<{slug: string, body: PostRequest}>();
+  private readonly submittedRequestSubject = new Subject<{ slug: string; body: PostRequest }>();
 
   // Emit a merged combination of the initial post loaded from the URL, and the updated post after a submission.
   vm$ = merge(this.getInitialPost$(), this.getUpdatedPost$()).pipe(
@@ -125,5 +125,4 @@ export class EntryEditComponent {
   onPublish(slug: string, request: PostRequest): void {
     this.submittedRequestSubject.next({ slug, body: request });
   }
-
 }

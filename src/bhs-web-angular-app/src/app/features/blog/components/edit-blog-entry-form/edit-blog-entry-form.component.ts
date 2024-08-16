@@ -34,6 +34,7 @@ export class EditBlogEntryFormComponent implements OnChanges {
     publishDate: [new Date()],
     contentMarkdown: [''],
   });
+
   authorWarning = signal<string | null>(null);
 
   ngOnChanges(): void {

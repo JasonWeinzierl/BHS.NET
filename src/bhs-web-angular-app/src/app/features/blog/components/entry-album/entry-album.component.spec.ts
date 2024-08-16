@@ -1,7 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterLink , RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { MockDirective } from 'ng-mocks';
 import { EntryAlbumComponent } from './entry-album.component';
 

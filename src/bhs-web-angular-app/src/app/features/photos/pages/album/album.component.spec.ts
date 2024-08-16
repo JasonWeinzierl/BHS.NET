@@ -21,7 +21,7 @@ describe('AlbumComponent', () => {
           getAlbum: () => EMPTY,
         }),
         MockProvider(ActivatedRoute, {
-          'paramMap': of(convertToParamMap({
+          paramMap: of(convertToParamMap({
             slug: '3',
           })),
         }),

@@ -35,7 +35,7 @@ export class EntryNewComponent {
   private readonly authorService = inject(AuthorService);
 
   private readonly submittedRequestSubject = new Subject<PostRequest>();
-  private readonly routeErrorSubject = new Subject<{ newPost?: Post, error: unknown }>();
+  private readonly routeErrorSubject = new Subject<{ newPost?: Post; error: unknown }>();
 
   vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
     startWith({ allCategories: [], isLoading: true } as EntryNewVm),
@@ -56,7 +56,7 @@ export class EntryNewComponent {
   private getInitialVm$(): Observable<EntryNewVm> {
     // TODO: entry-edit can be simplified to use combineLatest too?
     return combineLatest([this.blogService.getCategories(), this.auth.user$]).pipe(
-      switchMap(([ allCategories, user ]) => (user?.sub ? this.authorService.getAuthors(user.sub) : of([])).pipe(
+      switchMap(([allCategories, user]) => (user?.sub ? this.authorService.getAuthors(user.sub) : of([])).pipe(
         map(authors => ({ allCategories, authors })),
       )),
       map(({ allCategories, authors }) => {

@@ -17,7 +17,7 @@ describe('ProfileIndexComponent', () => {
           getAuthorPosts: () => EMPTY,
         }),
         MockProvider(ActivatedRoute, {
-          'paramMap': of(convertToParamMap({
+          paramMap: of(convertToParamMap({
             username: 'abc',
           })),
         }),

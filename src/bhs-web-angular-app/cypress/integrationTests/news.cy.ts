@@ -1,10 +1,9 @@
 import { createBlogPostPreview, createCategorySummary } from 'cypress/factories/dataFactories';
 
 describe('News', () => {
-
   it('should navigate to News', () => {
-    cy.intercept('GET', '/api/blog/posts', [ createBlogPostPreview() ]).as('blogPosts');
-    cy.intercept('GET', '/api/blog/categories', [ createCategorySummary() ]).as('blogCategories');
+    cy.intercept('GET', '/api/blog/posts', [createBlogPostPreview()]).as('blogPosts');
+    cy.intercept('GET', '/api/blog/categories', [createCategorySummary()]).as('blogCategories');
 
     cy.visit('/');
     cy.get('.nav-item > a').contains('News').click();
@@ -14,9 +13,9 @@ describe('News', () => {
 
   it('should display each post preview', () => {
     const preview1 = createBlogPostPreview();
-    cy.intercept('GET', '/api/blog/posts', [ preview1, createBlogPostPreview(), createBlogPostPreview() ]).as('blogPosts');
+    cy.intercept('GET', '/api/blog/posts', [preview1, createBlogPostPreview(), createBlogPostPreview()]).as('blogPosts');
     const category1 = createCategorySummary();
-    cy.intercept('GET', '/api/blog/categories', [ category1, createCategorySummary() ]).as('blogCategories');
+    cy.intercept('GET', '/api/blog/categories', [category1, createCategorySummary()]).as('blogCategories');
 
     cy.visit('/apps/blog');
     cy.wait('@blogPosts');
@@ -29,5 +28,4 @@ describe('News', () => {
       cy.get(`[data-testid=${preview1.slug}]`).contains('.card-subtitle', preview1.author.name);
     }
   });
-
 });

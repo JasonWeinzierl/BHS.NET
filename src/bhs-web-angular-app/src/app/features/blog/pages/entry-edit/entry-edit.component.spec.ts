@@ -22,7 +22,7 @@ describe('EntryEditComponent', () => {
           updatePost: () => EMPTY,
         }),
         MockProvider(ActivatedRoute, {
-          'paramMap': of(convertToParamMap({
+          paramMap: of(convertToParamMap({
             slug: '123',
           })),
         }),

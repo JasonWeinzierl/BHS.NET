@@ -11,7 +11,7 @@ import { catchError, map, of } from 'rxjs';
 import { AlertTheme, alertThemeScheme, SiteBanner, SiteBannerService } from '@data/banners';
 
 interface SiteBannerStyled extends SiteBanner {
-  alertType: string,
+  alertType: string;
 }
 
 @Component({
@@ -50,6 +50,7 @@ export class HeaderComponent {
       return of();
     }),
   );
+
   isAuthenticated$ = this.auth.isAuthenticated$;
 
   private createStyledBanners(banners: Array<SiteBanner>): Array<SiteBannerStyled> {
@@ -66,5 +67,4 @@ export class HeaderComponent {
       return 'light';
     }
   }
-
 }

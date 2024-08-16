@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, convertToParamMap , RouterModule } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { MarkdownComponent } from 'ngx-markdown';
@@ -26,7 +26,7 @@ describe('BlogEntryComponent', () => {
       ],
       providers: [
         MockProvider(ActivatedRoute, {
-          'paramMap': of(convertToParamMap({
+          paramMap: of(convertToParamMap({
             slug: '123',
           })),
         }),

@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class SnippetPipe implements PipeTransform {
-
   /**
    * Gets a snippet from a string.
    * @param value The string to get a snippet from.
@@ -29,5 +28,4 @@ export class SnippetPipe implements PipeTransform {
 
     return value.slice(0, end) + '...';
   }
-
 }

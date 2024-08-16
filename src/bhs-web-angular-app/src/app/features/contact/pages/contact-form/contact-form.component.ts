@@ -28,9 +28,10 @@ export class ContactFormComponent {
     message: [''],
     body: [''],
   });
+
   isSubmitted = signal(false);
   isAccepted = signal(false);
-  errors = signal<Array<{ id: number, msg: string }>>([]);
+  errors = signal<Array<{ id: number; msg: string }>>([]);
 
   onSubmit(): void {
     this.isSubmitted.set(true);
