@@ -10,7 +10,6 @@ const globals = require('globals');
 const tseslint = require('typescript-eslint');
 
 // TODO: re-add these plugins when they support eslint v9:
-// - deprecation
 // - rxjs
 
 module.exports = tseslint.config({
