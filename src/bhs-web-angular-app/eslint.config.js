@@ -80,14 +80,8 @@ module.exports = tseslint.config({
     ],
     'import-x/no-useless-path-segments': 'warn',
     // TODO: import-x doesn't support flat config yet, so we're enabling these rules manually
-    'import-x/export': 'error',
-    'import-x/no-named-as-default': 'warn',
-    'import-x/no-named-as-default-member': 'warn',
-    'import-x/default': 'error',
-    'import-x/named': 'error',
-    'import-x/namespace': 'error',
-    'import-x/no-unresolved': 'error',
-    'import-x/no-duplicates': 'warn',
+    ...importX.configs.recommended.rules,
+    ...importX.configs.typescript.rules,
 
     // jsdoc
     'valid-jsdoc': 'off',
