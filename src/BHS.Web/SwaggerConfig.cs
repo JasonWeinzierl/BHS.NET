@@ -16,7 +16,7 @@ internal static class SwaggerConfig
         services.AddSwaggerGen(opt =>
         {
             opt.SwaggerDoc(GetDocumentName(), GetApiInfo());
-            opt.IncludeXmlComments(GetXmlCommentsPath(), includeControllerXmlComments: true);
+            opt.IncludeXmlComments(Assembly.GetExecutingAssembly(), includeControllerXmlComments: true);
 
             // Defines a Bearer security scheme.
             // Swagger UI will add the Authorize button to the UI and accept a Bearer token.
@@ -95,12 +95,6 @@ internal static class SwaggerConfig
                 // TODO: Add Identifier "GPL-3.0-or-later" when microsoft/OpenAPI.NET#1042 is published.
             },
         };
-
-    private static string GetXmlCommentsPath()
-    {
-        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        return Path.Combine(AppContext.BaseDirectory, xmlFile);
-    }
 
     private static string GetDocumentName()
         => $"v{Assembly.GetExecutingAssembly().GetName().Version?.Major.ToString() ?? "next"}";
