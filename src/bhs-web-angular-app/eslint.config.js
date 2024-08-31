@@ -31,12 +31,11 @@ module.exports = tseslint.config({
       braceStyle: '1tbs',
       commaDangle: 'always-multiline',
     }),
+    importX.flatConfigs.recommended,
+    importX.flatConfigs.typescript,
     // @ts-expect-error -- TODO: cjs problem with jsdoc plugin
     jsdoc.configs['flat/recommended-typescript-error'],
   ],
-  plugins: {
-    'import-x': importX,
-  },
   rules: {
     // general
     'complexity': [
@@ -78,10 +77,8 @@ module.exports = tseslint.config({
         },
       },
     ],
+    'import-x/no-rename-default': 'warn',
     'import-x/no-useless-path-segments': 'warn',
-    // TODO: import-x doesn't support flat config yet, so we're enabling these rules manually
-    ...importX.configs.recommended.rules,
-    ...importX.configs.typescript.rules,
 
     // jsdoc
     'valid-jsdoc': 'off',
