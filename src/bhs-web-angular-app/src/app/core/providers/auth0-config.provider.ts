@@ -31,19 +31,19 @@ const auth0ConfigFactory = () => {
         allowedList: [
           {
             uri: '/api/blog/posts',
-            httpMethod: 'Post',
+            httpMethod: 'POST',
           },
           {
             uri: '/api/blog/posts/*',
-            httpMethod: 'Put',
+            httpMethod: 'PUT',
           },
           {
             uri: '/api/blog/posts/*',
-            httpMethod: 'Delete',
+            httpMethod: 'DELETE',
           },
           {
             uri: '/api/museum/schedule',
-            httpMethod: 'Put',
+            httpMethod: 'PUT',
           },
         ],
       },
