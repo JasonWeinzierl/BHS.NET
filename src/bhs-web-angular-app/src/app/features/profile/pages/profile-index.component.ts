@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertModule } from 'ngx-bootstrap/alert';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { PostCardComponent } from '../../blog/components/post-card/post-card.component';
 import { AuthorService } from '@data/authors';
@@ -14,7 +14,7 @@ import { AuthorService } from '@data/authors';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AlertModule,
+    AlertComponent,
     PostCardComponent,
     AsyncPipe,
   ],

@@ -2,7 +2,7 @@ import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AlertModule } from 'ngx-bootstrap/alert';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
 
@@ -24,7 +24,7 @@ interface AlbumPageVm {
   imports: [
     RouterLink,
     NgOptimizedImage,
-    AlertModule,
+    AlertComponent,
     AsyncPipe,
   ],
 })

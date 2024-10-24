@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AlertModule } from 'ngx-bootstrap/alert';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
 
 @Component({
@@ -12,7 +12,7 @@ import { ContactAlertRequest, ContactService } from '@data/contact-us';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AlertModule,
+    AlertComponent,
     RouterLink,
     FormsModule,
     ReactiveFormsModule,

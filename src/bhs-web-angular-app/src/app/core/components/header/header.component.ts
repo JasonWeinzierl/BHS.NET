@@ -3,8 +3,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { AlertModule } from 'ngx-bootstrap/alert';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { AlertComponent } from 'ngx-bootstrap/alert';
+import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, map, of } from 'rxjs';
@@ -21,11 +21,11 @@ interface SiteBannerStyled extends SiteBanner {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AlertModule,
+    AlertComponent,
     RouterLink,
-    CollapseModule,
-    RouterLinkActive,
     BsDropdownModule,
+    RouterLinkActive,
+    CollapseDirective,
     AsyncPipe,
   ],
 })

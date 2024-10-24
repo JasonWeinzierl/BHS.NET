@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { AlertModule } from 'ngx-bootstrap/alert';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
 import { EditBlogEntryFormComponent } from '../../components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { Author, AuthorService } from '@data/authors';
@@ -22,7 +22,7 @@ interface EntryNewVm {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AlertModule,
+    AlertComponent,
     EditBlogEntryFormComponent,
     AsyncPipe,
   ],

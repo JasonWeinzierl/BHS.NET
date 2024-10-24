@@ -1,7 +1,7 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AlertModule } from 'ngx-bootstrap/alert';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, combineLatest, map, of, startWith } from 'rxjs';
 import { LeadershipService } from '@data/leadership';
 
@@ -12,7 +12,7 @@ import { LeadershipService } from '@data/leadership';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AlertModule,
+    AlertComponent,
     AsyncPipe,
     DatePipe,
   ],

@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AlertModule } from 'ngx-bootstrap/alert';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 import { BehaviorSubject, catchError, map, of, switchMap, tap } from 'rxjs';
 import { SortByPipe } from '../../../../shared/pipes/sort-by.pipe';
 import { PostCardComponent } from '../post-card/post-card.component';
@@ -16,7 +16,7 @@ import { BlogService, PostPreview } from '@data/blog';
   standalone: true,
   imports: [
     FormsModule,
-    AlertModule,
+    AlertComponent,
     PostCardComponent,
     SortByPipe,
     AsyncPipe,
