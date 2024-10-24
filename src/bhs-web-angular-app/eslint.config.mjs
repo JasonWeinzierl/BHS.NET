@@ -48,6 +48,7 @@ export default tseslint.config(gitignore(), {
     ],
     'no-shadow': 'error',
     'default-param-last': 'error',
+    'no-warning-comments': 'warn',
 
     // stylistic
     '@stylistic/arrow-parens': 'off',
