@@ -1,24 +1,25 @@
+/* eslint-disable import-x/no-named-as-default-member */
+/* eslint-disable import-x/no-rename-default */
 // @ts-check
-const js = require('@eslint/js');
-const stylistic = require('@stylistic/eslint-plugin');
-const angular = require('angular-eslint');
-const cypress = require('eslint-plugin-cypress/flat');
-const importX = require('eslint-plugin-import-x');
-const jest = require('eslint-plugin-jest');
-const jsdoc = require('eslint-plugin-jsdoc');
-const globals = require('globals');
-const tseslint = require('typescript-eslint');
+import js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+import angular from 'angular-eslint';
+import gitignore from 'eslint-config-flat-gitignore';
+import cypress from 'eslint-plugin-cypress/flat';
+import importX from 'eslint-plugin-import-x';
+import jest from 'eslint-plugin-jest';
+import jsdoc from 'eslint-plugin-jsdoc';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 // TODO: re-add these plugins when they support eslint v9:
 // - rxjs
 
-module.exports = tseslint.config({
+export default tseslint.config(gitignore(), {
   files: [
     '**/*.js',
+    '**/*.mjs',
     '**/*.ts',
-  ],
-  ignores: [
-    'dist/**',
   ],
   extends: [
     js.configs.recommended,
@@ -33,7 +34,6 @@ module.exports = tseslint.config({
     }),
     importX.flatConfigs.recommended,
     importX.flatConfigs.typescript,
-    // @ts-expect-error -- TODO: cjs problem with jsdoc plugin
     jsdoc.configs['flat/recommended-typescript-error'],
   ],
   rules: {
@@ -97,7 +97,7 @@ module.exports = tseslint.config({
   },
 }, {
   files: [
-    'eslint.config.js',
+    'eslint.config.mjs',
   ],
   languageOptions: {
     globals: {
