@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "Preserve",
+        "moduleResolution": "Bundler",
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "allowImportingTsExtensions": true,
+
+        "lib": [
+            "ES2022",
+            "DOM",
+        ],
+        "types": [
+            "node",
+            "@wdio/globals/types",
+            "@wdio/jasmine-framework",
+            "jasmine",
+        ],
+
+        "noEmit": true,
+
+        "skipLibCheck": true,
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+    },
+    "include": [
+        "test",
+        "wdio.conf.ts",
+    ],
+}
