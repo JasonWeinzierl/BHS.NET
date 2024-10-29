@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "e2e": "tsc && wdio run wdio.conf.ts"
+    "e2e": "wdio run wdio.conf.ts",
+    "lint": "tsc --noEmit && eslint"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
@@ -15,8 +16,15 @@
     "tsx": "^4.19.2"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^2.9.0",
     "@types/jasmine": "^5.1.4",
     "@types/node": "^22",
-    "typescript": "~5.5.4"
+    "eslint": "^9.13.0",
+    "eslint-config-flat-gitignore": "^0.3.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import-x": "^4.3.1",
+    "eslint-plugin-wdio": "^9.0.8",
+    "typescript": "~5.5.4",
+    "typescript-eslint": "^8.12.1"
   }
 }

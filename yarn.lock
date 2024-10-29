@@ -4041,7 +4041,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylistic/eslint-plugin@npm:^2.10.1":
+"@stylistic/eslint-plugin@npm:^2.10.1, @stylistic/eslint-plugin@npm:^2.9.0":
   version: 2.10.1
   resolution: "@stylistic/eslint-plugin@npm:2.10.1"
   dependencies:
@@ -5762,15 +5762,22 @@ __metadata:
   resolution: "bhs-e2e@workspace:src/bhs-e2e"
   dependencies:
     "@actions/core": "npm:^1.11.1"
+    "@stylistic/eslint-plugin": "npm:^2.9.0"
     "@types/jasmine": "npm:^5.1.4"
     "@types/node": "npm:^22"
     "@wdio/cli": "npm:^9.2.4"
     "@wdio/jasmine-framework": "npm:^9.2.4"
     "@wdio/local-runner": "npm:^9.2.4"
     "@wdio/spec-reporter": "npm:^9.2.2"
+    eslint: "npm:^9.13.0"
+    eslint-config-flat-gitignore: "npm:^0.3.0"
+    eslint-import-resolver-typescript: "npm:^3.6.3"
+    eslint-plugin-import-x: "npm:^4.3.1"
+    eslint-plugin-wdio: "npm:^9.0.8"
     tslib: "npm:^2.8.0"
     tsx: "npm:^4.19.2"
     typescript: "npm:~5.5.4"
+    typescript-eslint: "npm:^8.12.1"
   languageName: unknown
   linkType: soft
 
@@ -8246,7 +8253,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import-x@npm:^4.4.0":
+"eslint-plugin-import-x@npm:^4.3.1, eslint-plugin-import-x@npm:^4.4.0":
   version: 4.4.0
   resolution: "eslint-plugin-import-x@npm:4.4.0"
   dependencies:
@@ -8323,6 +8330,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-wdio@npm:^9.0.8":
+  version: 9.0.8
+  resolution: "eslint-plugin-wdio@npm:9.0.8"
+  checksum: 10c0/b4596239e5dd0defb637e2d980ad008f84f4da67e11e17613bc22553beda8296f14f8d42e28a789356a02560d6b3d5888d63426918031bab96271c17e8c95787
+  languageName: node
+  linkType: hard
+
 "eslint-scope@npm:5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
@@ -8357,7 +8371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^9.14.0":
+"eslint@npm:^9.13.0, eslint@npm:^9.14.0":
   version: 9.14.0
   resolution: "eslint@npm:9.14.0"
   dependencies:
@@ -15187,7 +15201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-eslint@npm:^8.12.2":
+"typescript-eslint@npm:^8.12.1, typescript-eslint@npm:^8.12.2":
   version: 8.12.2
   resolution: "typescript-eslint@npm:8.12.2"
   dependencies:
