@@ -3,6 +3,7 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import gitignore from 'eslint-config-flat-gitignore';
 import importX from 'eslint-plugin-import-x';
+import n from 'eslint-plugin-n';
 import * as wdio from 'eslint-plugin-wdio';
 import tseslint from 'typescript-eslint';
 
@@ -25,6 +26,7 @@ export default tseslint.config(gitignore(), {
     }),
     importX.flatConfigs.recommended,
     importX.flatConfigs.typescript,
+    n.configs['flat/recommended-module'],
   ],
   rules: {
     '@stylistic/arrow-parens': 'off',
