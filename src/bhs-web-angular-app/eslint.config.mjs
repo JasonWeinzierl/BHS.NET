@@ -33,7 +33,6 @@ export default tseslint.config(gitignore(), {
     importX.flatConfigs.recommended,
     importX.flatConfigs.typescript,
     jsdoc.configs['flat/recommended-typescript-error'],
-    rxjsX.configs.recommended,
   ],
   rules: {
     // #region General
@@ -166,6 +165,7 @@ export default tseslint.config(gitignore(), {
   extends: [
     ...tseslint.configs.strictTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
+    rxjsX.configs.recommended,
   ],
   settings: {
     'import-x/resolver': {
