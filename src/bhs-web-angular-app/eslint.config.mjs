@@ -9,11 +9,9 @@ import cypress from 'eslint-plugin-cypress/flat';
 import importX from 'eslint-plugin-import-x';
 import jest from 'eslint-plugin-jest';
 import jsdoc from 'eslint-plugin-jsdoc';
+import rxjsX from 'eslint-plugin-rxjs-x';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-
-// TODO: re-add these plugins when they support eslint v9:
-// - rxjs
 
 export default tseslint.config(gitignore(), {
   files: [
@@ -35,6 +33,7 @@ export default tseslint.config(gitignore(), {
     importX.flatConfigs.recommended,
     importX.flatConfigs.typescript,
     jsdoc.configs['flat/recommended-typescript-error'],
+    rxjsX.configs.recommended,
   ],
   rules: {
     // #region General
