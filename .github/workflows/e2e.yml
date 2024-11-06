@@ -33,7 +33,7 @@ env:
   NODE_VERSION: '22'
 
 jobs:
-  smoke:
+  e2e:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
 
