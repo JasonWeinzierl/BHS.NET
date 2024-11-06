@@ -108,45 +108,10 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "cypress/**/*.ts",
               "src/**/*.ts",
               "src/**/*.html"
             ]
           }
-        },
-        "e2e": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "configFile": "cypress/configFiles/cypress.config.integration.ts"
-          },
-          "configurations": {
-            "ci": {
-              "devServerTarget": "bhs-web-angular-app:serve:ci",
-              "headless": true
-            },
-            "debug": {
-              "devServerTarget": "bhs-web-angular-app:serve",
-              "watch": true
-            }
-          },
-          "defaultConfiguration": "debug"
-        },
-        "smoke": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "configFile": "cypress/configFiles/cypress.config.smoke.ts"
-          },
-          "configurations": {
-            "debug": {
-              "devServerTarget": "bhs-web-angular-app:serve",
-              "watch": true
-            },
-            "local": {
-              "devServerTarget": "bhs-web-angular-app:serve:ci",
-              "headless": true
-            }
-          },
-          "defaultConfiguration": "debug"
         }
       }
     }
@@ -154,7 +119,6 @@
   "cli": {
     "schematicCollections": [
       "@schematics/angular",
-      "@cypress/schematic",
       "@angular-eslint/schematics"
     ],
     "packageManager": "yarn",

@@ -5,7 +5,6 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import angular from 'angular-eslint';
 import gitignore from 'eslint-config-flat-gitignore';
-import cypress from 'eslint-plugin-cypress/flat';
 import importX from 'eslint-plugin-import-x';
 import jest from 'eslint-plugin-jest';
 import jsdoc from 'eslint-plugin-jsdoc';
@@ -303,13 +302,4 @@ export default tseslint.config(gitignore(), {
     'jest/padding-around-all': 'error',
   },
   // #endregion Unit tests
-}, {
-  // #region Cypress
-  files: [
-    'cypress/**/*.ts',
-  ],
-  extends: [
-    cypress.configs.recommended,
-  ],
-  // #endregion Cypress
 });

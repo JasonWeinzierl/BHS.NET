@@ -24,10 +24,6 @@ updates:
         patterns:
           - "jest*"
           - "@types/jest"
-      cypress:
-        patterns:
-          - "cypress*"
-          - "@cypress/schematic"
 
   - package-ecosystem: nuget
     directory: "/"
