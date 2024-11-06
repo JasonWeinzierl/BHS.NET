@@ -1,4 +1,4 @@
-name: Smoke Tests
+name: E2E Tests
 
 on:
   workflow_dispatch:
@@ -11,11 +11,19 @@ on:
         - staging
         - production
         default: staging
+      smoke:
+        description: Only run smoke tests.
+        required: false
+        type: boolean
+        default: false
   workflow_call:
     inputs:
       environment:
         required: true
         type: string
+      smoke:
+        required: false
+        type: boolean
     secrets:
       CYPRESS_AUTH0_TEST_PASSWORD:
         required: true
@@ -43,7 +51,13 @@ jobs:
     - run: yarn workspaces focus bhs-e2e
       working-directory: ${{ env.E2E_DIRECTORY }}
 
-    - run: yarn e2e --spec=liveness --baseUrl=${{ vars.CYPRESS_BASE_URL }}
+    - name: Run E2E
+      run: |
+        if [ "${{ inputs.smoke }}" = "true" ]; then
+          yarn e2e --baseUrl=${{ vars.CYPRESS_BASE_URL }} --spec=liveness
+        else
+          yarn e2e --baseUrl=${{ vars.CYPRESS_BASE_URL }}
+        fi
       working-directory: ${{ env.E2E_DIRECTORY }}
       env:
         E2E_auth0Domain: ${{ vars.CYPRESS_AUTH0_DOMAIN }}

@@ -92,9 +92,6 @@ jobs:
     - run: yarn test:ci
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
-    - run: yarn integration:ci
-      working-directory: ${{ env.CLIENTAPP_PATH }}
-
 
     - name: Run dotnet publish
       run: dotnet publish "${{ env.WEB_SRC_PATH }}" --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} --no-build
@@ -136,9 +133,9 @@ jobs:
         package: ${{ env.WEB_PUBLISH_PATH }}
 
 
-  smoke-test-stage:
+  e2e-test-stage:
     needs: deploy-stage
-    uses: ./.github/workflows/smoke.yml
+    uses: ./.github/workflows/e2e.yml
     with:
       environment: staging
     secrets: inherit
@@ -149,7 +146,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-      - smoke-test-stage
+      - e2e-test-stage
     environment:
       name: production
       url: https://beltonhistoricalsociety.org/
@@ -176,9 +173,9 @@ jobs:
         package: ${{ env.WEB_PUBLISH_PATH }}
 
 
-  smoke-test-prod:
+  e2e-test-prod:
     needs: deploy-prod
-    uses: ./.github/workflows/smoke.yml
+    uses: ./.github/workflows/e2e.yml
     with:
       environment: production
     secrets: inherit

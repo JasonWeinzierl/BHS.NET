@@ -6,13 +6,15 @@ on:
   
 jobs:
   smoke-test-stage:
-    uses: ./.github/workflows/smoke.yml
+    uses: ./.github/workflows/e2e.yml
     with:
       environment: staging
+      smoke: true
     secrets: inherit
 
   smoke-test-prod:
-    uses: ./.github/workflows/smoke.yml
+    uses: ./.github/workflows/e2e.yml
     with:
       environment: production
+      smoke: true
     secrets: inherit
