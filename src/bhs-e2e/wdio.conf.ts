@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import registerCustomCommands from './test/wdio-commands/register-custom-commands';
 
 export const config: WebdriverIO.Config = {
   specs: [
@@ -36,13 +37,20 @@ export const config: WebdriverIO.Config = {
     }
   },
 
+  before(_capabilities, _specs, browser) {
+    registerCustomCommands(browser as WebdriverIO.Browser);
+  },
+
   logLevel: 'info',
   bail: 0,
   reporters: [
     'spec',
     // TODO: consider adding wdio-video-reporter
   ],
+  waitforTimeout: 10_000,
 
   framework: 'jasmine',
-  jasmineOpts: {},
+  jasmineOpts: {
+    defaultTimeoutInterval: 120_000,
+  },
 };

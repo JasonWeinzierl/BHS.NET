@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 import { Agent, fetch } from 'undici';
-import runnerEnv from '../runnerEnv';
 
 describe('liveness', () => {
   it('should pass the health check', async () => {
@@ -34,22 +33,7 @@ describe('liveness', () => {
 
     await browser.url('/');
 
-    // Login.
-    await browser.url('/admin');
-
-    await expect(browser).toHaveUrl(expect.stringContaining(`https://${runnerEnv.E2E_auth0Domain}/`));
-
-    await $('input#username').setValue(runnerEnv.E2E_auth0TestUsername);
-    await $('input#password').setValue(runnerEnv.E2E_auth0TestPassword);
-    await $('button[value=default], button[type=submit').click();
-
-    await expect(browser).toHaveUrl(expect.stringContaining(browser.options.baseUrl));
-
-    await browser.waitUntil(async () => {
-      return (await browser.execute(clientId => {
-        return localStorage.getItem(`@@auth0spajs@@::${clientId}::@@user@@`);
-      }, runnerEnv.E2E_auth0ClientId)) !== null;
-    });
+    await browser.login();
 
     // Go to Admin page after login.
     await browser.url('/admin');
