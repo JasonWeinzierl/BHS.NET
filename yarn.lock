@@ -5781,6 +5781,7 @@ __metadata:
     typescript: "npm:~5.5.4"
     typescript-eslint: "npm:^8.12.1"
     undici: "npm:^6.20.1"
+    zod: "npm:^3.23.8"
   languageName: unknown
   linkType: soft
 

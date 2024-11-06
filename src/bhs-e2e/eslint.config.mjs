@@ -31,6 +31,9 @@ export default tseslint.config(gitignore(), {
   rules: {
     '@stylistic/arrow-parens': 'off',
 
+    // Use zod to safely parse process.env.
+    'n/no-process-env': 'error',
+
     'sort-imports': [
       'warn',
       {

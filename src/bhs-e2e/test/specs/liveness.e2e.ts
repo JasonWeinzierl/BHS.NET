@@ -1,16 +1,6 @@
 import * as core from '@actions/core';
 import { Agent, fetch } from 'undici';
-
-const { auth0Domain, auth0ClientId, username, password } = {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  auth0Domain: process.env.E2E_auth0Domain!,
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  auth0ClientId: process.env.E2E_auth0ClientId!,
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  username: process.env.E2E_auth0TestUsername!,
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  password: process.env.E2E_auth0TestPassword!,
-};
+import runnerEnv from '../runnerEnv';
 
 describe('liveness', () => {
   it('should pass the health check', async () => {
@@ -47,10 +37,10 @@ describe('liveness', () => {
     // Login.
     await browser.url('/admin');
 
-    await expect(browser).toHaveUrl(expect.stringContaining(`https://${auth0Domain}/`));
+    await expect(browser).toHaveUrl(expect.stringContaining(`https://${runnerEnv.E2E_auth0Domain}/`));
 
-    await $('input#username').setValue(username);
-    await $('input#password').setValue(password);
+    await $('input#username').setValue(runnerEnv.E2E_auth0TestUsername);
+    await $('input#password').setValue(runnerEnv.E2E_auth0TestPassword);
     await $('button[value=default], button[type=submit').click();
 
     await expect(browser).toHaveUrl(expect.stringContaining(browser.options.baseUrl));
@@ -58,7 +48,7 @@ describe('liveness', () => {
     await browser.waitUntil(async () => {
       return (await browser.execute(clientId => {
         return localStorage.getItem(`@@auth0spajs@@::${clientId}::@@user@@`);
-      }, auth0ClientId)) !== null;
+      }, runnerEnv.E2E_auth0ClientId)) !== null;
     });
 
     // Go to Admin page after login.
