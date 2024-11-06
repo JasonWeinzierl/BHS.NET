@@ -21,12 +21,21 @@ export const config: WebdriverIO.Config = {
   maxInstances: 10,
   capabilities: [{
     browserName: 'chrome',
+    'goog:chromeOptions': {
+      args: ['headless', 'disable-gpu'],
+    },
   }, {
     browserName: 'firefox',
+    'moz:firefoxOptions': {
+      args: ['-headless'],
+    },
   }, {
     browserName: 'safari',
   }, {
     browserName: 'edge',
+    'ms:edgeOptions': {
+      args: ['--headless'],
+    },
   }],
 
   onPrepare(cfg, capabilities) {
