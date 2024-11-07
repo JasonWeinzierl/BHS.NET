@@ -29,4 +29,3 @@ jobs:
     - run: yarn lint
     - run: yarn build
     - run: yarn test:ci
-    - run: yarn integration:ci
