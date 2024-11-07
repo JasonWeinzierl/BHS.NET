@@ -52,7 +52,7 @@ describe('news', () => {
 
     await expect($('app-post-card')).toExist();
     await expect($(`[data-testid="${firstPost.slug}"] .card-title`)).toHaveText(firstPost.title);
-    await expect($(`[data-testid="${firstPost.slug}"] .card-body`)).toHaveText(expect.stringContaining(firstPost.contentPreview));
+    await expect($(`[data-testid="${firstPost.slug}"] .card-body`)).toHaveText(expect.stringContaining(firstPost.contentPreview.replace(/\n/g, ' ')));
     await expect($(`[data-testid="${firstPost.slug}"] .card-subtitle`)).toHaveText(expect.stringContaining(firstPost.datePublished.getFullYear().toString()));
     if (firstPost.author?.name) {
       await expect($(`[data-testid="${firstPost.slug}"] .card-subtitle`)).toHaveText(expect.stringContaining(firstPost.author.name));
