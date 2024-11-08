@@ -157,7 +157,6 @@ export default tseslint.config(gitignore(), {
   },
   // #endregion Config files
 }, {
-  // #region TypeScript
   files: [
     '**/*.ts',
   ],
@@ -177,6 +176,31 @@ export default tseslint.config(gitignore(), {
     },
   },
   rules: {
+    // #region RxJS
+    'rxjs-x/finnish': [
+      'warn',
+      {
+        methods: false,
+        strict: true,
+        names: {
+          // Add paramMap|data to defaults for ActivatedRoute.
+          '^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate|paramMap|data)$': false,
+        },
+        types: {
+          // Add the subjects to defaults to work with suffix-subjects.
+          '^(EventEmitter|BehaviorSubject|ReplaySubject|AsyncSubject|Subject)$': false,
+        },
+      },
+    ],
+    'rxjs-x/suffix-subjects': 'warn',
+    'rxjs-x/no-exposed-subjects': 'error',
+    'rxjs-x/no-explicit-generics': 'warn',
+    'rxjs-x/no-ignored-error': 'warn',
+    'rxjs-x/no-ignored-subscribe': 'warn',
+    'rxjs-x/no-ignored-subscription': 'warn',
+    'rxjs-x/throw-error': 'warn',
+    // #endregion RxJS
+    // #region TypeScript
     // Use Array<T> for all types.
     '@typescript-eslint/array-type': [
       'error',
@@ -215,8 +239,8 @@ export default tseslint.config(gitignore(), {
 
     'default-param-last': 'off',
     '@typescript-eslint/default-param-last': 'error',
+    // #endregion TypeScript
   },
-  // #endregion TypeScript
 }, {
   // #region Angular
   files: [
