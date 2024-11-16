@@ -196,6 +196,7 @@ export default tseslint.config(gitignore(), {
     'rxjs-x/no-exposed-subjects': 'error',
     'rxjs-x/no-explicit-generics': 'warn',
     'rxjs-x/no-ignored-error': 'warn',
+    'rxjs-x/no-ignored-default-value': 'warn',
     'rxjs-x/no-ignored-subscribe': 'warn',
     'rxjs-x/no-ignored-subscription': 'warn',
     'rxjs-x/throw-error': 'warn',

@@ -2562,11 +2562,11 @@ __metadata:
   linkType: hard
 
 "@eslint/plugin-kit@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@eslint/plugin-kit@npm:0.2.0"
+  version: 0.2.3
+  resolution: "@eslint/plugin-kit@npm:0.2.3"
   dependencies:
     levn: "npm:^0.4.1"
-  checksum: 10c0/00b92bc52ad09b0e2bbbb30591c02a895f0bec3376759562590e8a57a13d096b22f8c8773b6bf791a7cf2ea614123b3d592fd006c51ac5fd0edbb90ea6d8760c
+  checksum: 10c0/89a8035976bb1780e3fa8ffe682df013bd25f7d102d991cecd3b7c297f4ce8c1a1b6805e76dd16465b5353455b670b545eff2b4ec3133e0eab81a5f9e99bd90f
   languageName: node
   linkType: hard
 
@@ -5680,7 +5680,7 @@ __metadata:
     eslint-plugin-import-x: "npm:^4.4.2"
     eslint-plugin-jest: "npm:^28.9.0"
     eslint-plugin-jsdoc: "npm:^50.5.0"
-    eslint-plugin-rxjs-x: "npm:~0.2.4"
+    eslint-plugin-rxjs-x: "npm:~0.3.0"
     globals: "npm:^15.11.0"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
@@ -8053,9 +8053,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-rxjs-x@npm:~0.2.4":
-  version: 0.2.4
-  resolution: "eslint-plugin-rxjs-x@npm:0.2.4"
+"eslint-plugin-rxjs-x@npm:~0.3.0":
+  version: 0.3.0
+  resolution: "eslint-plugin-rxjs-x@npm:0.3.0"
   dependencies:
     "@typescript-eslint/scope-manager": "npm:^8.1.0"
     "@typescript-eslint/utils": "npm:^8.1.0"
@@ -8070,7 +8070,7 @@ __metadata:
   peerDependenciesMeta:
     rxjs:
       optional: true
-  checksum: 10c0/903f343e84e2231c03c3ec1d092b3e4dc79d59ea71b17f1595a22e00cd417b7ab8885f482e24ee72c358022ef0869d921e5aa9cd4007151f548a21e143187e66
+  checksum: 10c0/330cbb2a86ac1611a65f01891616156bfe88803ae214cc8ee4d91cb2fd3cbd9ef13570c15b0b5b1ee0b483e80a144f5ae3b8c9e63d78cf4b7b21441270245171
   languageName: node
   linkType: hard
 
