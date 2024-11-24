@@ -1,8 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { of } from 'rxjs';
-import { catchError, map, startWith } from 'rxjs/operators';
+import { catchError, map, of, startWith } from 'rxjs';
 import { CategoriesListViewComponent } from '../../components/categories-list-view/categories-list-view.component';
 import { PostsSearchComponent } from '../../components/posts-search/posts-search.component';
 import { BlogService } from '@data/blog';

@@ -2,8 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouteConfigLoadEnd, RouteConfigLoadStart, Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { merge } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, merge } from 'rxjs';
 import { InsightsService } from '@core/services/insights.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-not-found',
