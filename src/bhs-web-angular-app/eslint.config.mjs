@@ -195,6 +195,7 @@ export default tseslint.config(gitignore(), {
     'rxjs-x/suffix-subjects': 'warn',
     'rxjs-x/no-ignored-subscribe': 'warn',
     'rxjs-x/no-ignored-subscription': 'warn',
+    'rxjs-x/no-floating-observables': 'error',
     // #endregion RxJS
     // #region TypeScript
     // Use Array<T> for all types.
