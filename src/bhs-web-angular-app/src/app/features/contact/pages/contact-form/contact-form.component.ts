@@ -11,7 +11,6 @@ import { ContactAlertRequest, ContactService } from '@data/contact-us';
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AlertComponent,
     RouterLink,

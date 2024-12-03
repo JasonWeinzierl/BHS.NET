@@ -5,7 +5,7 @@ import { provideRouter, Router } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
 import { BhsTitleStrategy } from './bhs-title-strategy';
 
-@Component({ selector: 'app-fake', standalone: true, changeDetection: ChangeDetectionStrategy.OnPush })
+@Component({ selector: 'app-fake', changeDetection: ChangeDetectionStrategy.OnPush })
 class FakeComponent {}
 
 describe('BhsTitleStrategy', () => {

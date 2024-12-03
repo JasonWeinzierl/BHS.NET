@@ -11,7 +11,6 @@ import { BlogService } from '@data/blog';
   templateUrl: './blog-index.component.html',
   styleUrl: './blog-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     PostsSearchComponent,
     CategoriesListViewComponent,

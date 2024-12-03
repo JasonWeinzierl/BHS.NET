@@ -20,7 +20,6 @@ interface EntryNewVm {
   templateUrl: './entry-new.component.html',
   styleUrl: './entry-new.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AlertComponent,
     EditBlogEntryFormComponent,

@@ -8,7 +8,6 @@ import { AlbumPhotos } from '@data/photos';
   templateUrl: './entry-album.component.html',
   styleUrl: './entry-album.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, NgOptimizedImage],
 })
 export class EntryAlbumComponent {

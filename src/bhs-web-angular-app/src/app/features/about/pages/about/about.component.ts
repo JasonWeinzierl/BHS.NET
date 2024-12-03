@@ -7,7 +7,6 @@ import { appVersion } from 'src/environments';
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NgOptimizedImage],
 })
 export default class AboutComponent {

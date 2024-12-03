@@ -20,7 +20,6 @@ interface AlbumPageVm {
   templateUrl: './album-page.component.html',
   styleUrl: './album-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     NgOptimizedImage,

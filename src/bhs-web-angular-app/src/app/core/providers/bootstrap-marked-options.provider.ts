@@ -1,4 +1,5 @@
 import { Provider } from '@angular/core';
+import { Tokens } from 'marked';
 import { MARKED_OPTIONS, MarkedOptions, MarkedRenderer, provideMarkdown } from 'ngx-markdown';
 
 /**
@@ -7,7 +8,7 @@ import { MARKED_OPTIONS, MarkedOptions, MarkedRenderer, provideMarkdown } from '
 const markedOptionsFactory = (): MarkedOptions => {
   const renderer = new MarkedRenderer();
 
-  renderer.image = (href: string | null, title: string | null, text: string): string => {
+  renderer.image = ({ href, title, text }: Tokens.Image): string => {
     if (!href) {
       return text;
     }

@@ -4,7 +4,7 @@ import { AppComponent } from './app/app.component';
 import { APP_ENVIRONMENT, APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './environments';
 import { APP_CONFIG } from '@app/app.config';
 
-// TODO: Can we use APP_INITIALIZER instead of doing this before Angular bootstrap?
+// TODO: Can we use provideAppInitializer instead of doing this before Angular bootstrap?
 fetch('/api/client-app-environment')
   .then(async response => {
     const appEnv: AppEnvironment = await parseAppEnvironment(response) ?? {};

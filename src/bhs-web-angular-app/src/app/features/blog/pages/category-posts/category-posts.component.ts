@@ -12,7 +12,6 @@ import { BlogService } from '@data/blog';
   templateUrl: './category-posts.component.html',
   styleUrl: './category-posts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AlertComponent,
     PostCardComponent,

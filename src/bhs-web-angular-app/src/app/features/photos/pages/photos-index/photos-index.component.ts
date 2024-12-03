@@ -12,7 +12,6 @@ import { PhotosService } from '@data/photos';
   templateUrl: './photos-index.component.html',
   styleUrl: './photos-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AlertComponent,
     NgOptimizedImage,

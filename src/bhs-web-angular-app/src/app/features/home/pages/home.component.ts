@@ -7,7 +7,6 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CarouselModule, NgOptimizedImage],
 })
 export class HomeComponent { }

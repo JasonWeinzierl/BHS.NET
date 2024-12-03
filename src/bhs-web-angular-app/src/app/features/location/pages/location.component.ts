@@ -41,7 +41,6 @@ function toStandardTime(militaryTime: string): string {
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AsyncPipe,
     NgOptimizedImage,

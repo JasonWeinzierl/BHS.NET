@@ -8,7 +8,6 @@ import { PostPreview } from '@data/blog';
   templateUrl: './post-card.component.html',
   styleUrl: './post-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, DateComponent],
 })
 export class PostCardComponent {

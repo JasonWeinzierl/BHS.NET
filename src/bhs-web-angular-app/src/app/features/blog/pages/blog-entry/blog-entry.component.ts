@@ -16,7 +16,6 @@ import { PhotosService } from '@data/photos';
   templateUrl: './blog-entry.component.html',
   styleUrl: './blog-entry.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     DateComponent,

@@ -10,12 +10,11 @@ import { Category, categorySchema, Post, PostRequest } from '@data/blog';
   templateUrl: './edit-blog-entry-form.component.html',
   styleUrl: './edit-blog-entry-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    BsDatepickerModule,
-    RouterLink,
+      FormsModule,
+      ReactiveFormsModule,
+      BsDatepickerModule,
+      RouterLink,
   ],
 })
 export class EditBlogEntryFormComponent implements OnChanges {

@@ -7,7 +7,6 @@ import { CategorySummary } from '@data/blog';
   templateUrl: './categories-list-view.component.html',
   styleUrl: './categories-list-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink],
 })
 export class CategoriesListViewComponent {

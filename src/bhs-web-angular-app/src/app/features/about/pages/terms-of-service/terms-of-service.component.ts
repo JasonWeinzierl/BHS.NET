@@ -6,7 +6,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './terms-of-service.component.html',
   styleUrl: './terms-of-service.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink],
 })
 export default class TermsOfServiceComponent { }

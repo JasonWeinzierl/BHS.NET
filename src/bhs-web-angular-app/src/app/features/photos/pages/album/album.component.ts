@@ -12,7 +12,6 @@ import { PhotosService } from '@data/photos';
   templateUrl: './album.component.html',
   styleUrl: './album.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AlertComponent,
     RouterLink,

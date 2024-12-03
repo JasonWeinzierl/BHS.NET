@@ -12,7 +12,6 @@ import { AuthorService } from '@data/authors';
   templateUrl: './profile-index.component.html',
   styleUrl: './profile-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AlertComponent,
     PostCardComponent,

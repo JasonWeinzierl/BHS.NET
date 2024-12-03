@@ -11,7 +11,6 @@ import { catchError, map, of } from 'rxjs';
   templateUrl: './admin-index.component.html',
   styleUrl: './admin-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     AsyncPipe,

@@ -22,7 +22,6 @@ interface EntryEditVm {
   templateUrl: './entry-edit.component.html',
   styleUrl: './entry-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AlertComponent,
     EditBlogEntryFormComponent,

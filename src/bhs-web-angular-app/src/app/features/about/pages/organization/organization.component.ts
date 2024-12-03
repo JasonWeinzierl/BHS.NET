@@ -10,7 +10,6 @@ import { LeadershipService } from '@data/leadership';
   templateUrl: './organization.component.html',
   styleUrl: './organization.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AlertComponent,
     AsyncPipe,

@@ -10,7 +10,6 @@ import { InsightsService } from '@core/services/insights.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterOutlet, AsyncPipe],
 })
 export class AppComponent {

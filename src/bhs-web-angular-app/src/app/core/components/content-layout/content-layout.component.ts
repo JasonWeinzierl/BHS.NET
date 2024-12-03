@@ -8,7 +8,6 @@ import { HeaderComponent } from '../header/header.component';
   templateUrl: './content-layout.component.html',
   styleUrl: './content-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     HeaderComponent,
     RouterOutlet,

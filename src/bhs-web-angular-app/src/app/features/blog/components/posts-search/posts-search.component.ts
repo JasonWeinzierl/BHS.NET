@@ -13,7 +13,6 @@ import { BlogService, PostPreview } from '@data/blog';
   templateUrl: './posts-search.component.html',
   styleUrl: './posts-search.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     FormsModule,
     AlertComponent,

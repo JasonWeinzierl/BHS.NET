@@ -8,7 +8,6 @@ import { map } from 'rxjs';
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     AsyncPipe,
