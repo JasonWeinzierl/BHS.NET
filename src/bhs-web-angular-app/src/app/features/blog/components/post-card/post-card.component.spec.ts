@@ -19,13 +19,13 @@ describe('PostCardComponent', () => {
 
     fixture = TestBed.createComponent(PostCardComponent);
     component = fixture.componentInstance;
-    component.post = {
+    fixture.componentRef.setInput('post', {
       slug: '123',
       title: 'Test 123',
       contentPreview: 'Test',
       categories: [],
       datePublished: new Date(),
-    };
+    });
     fixture.detectChanges();
   });
 

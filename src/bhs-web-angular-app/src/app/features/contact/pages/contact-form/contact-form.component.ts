@@ -29,9 +29,9 @@ export class ContactFormComponent {
     body: [''],
   });
 
-  isSubmitted = signal(false);
-  isAccepted = signal(false);
-  errors = signal<Array<{ id: number; msg: string }>>([]);
+  readonly isSubmitted = signal(false);
+  readonly isAccepted = signal(false);
+  readonly errors = signal<Array<{ id: number; msg: string }>>([]);
 
   onSubmit(): void {
     this.isSubmitted.set(true);

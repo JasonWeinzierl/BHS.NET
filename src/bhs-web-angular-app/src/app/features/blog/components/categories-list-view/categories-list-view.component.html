@@ -1,12 +1,12 @@
-@if (!isLoading) {
+@if (!isLoading()) {
   <div class="list-group list-group-flush">
-  @if (error) {
+  @if (error()) {
     <span class="list-group-item list-group-item-danger">
-      {{error}}
+      {{error()}}
     </span>
   }
 
-  @for (category of categories; track category.slug) {
+  @for (category of categories(); track category.slug) {
     <a [routerLink]="['/apps/blog/category', category.slug]"
       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
       {{category.name}}

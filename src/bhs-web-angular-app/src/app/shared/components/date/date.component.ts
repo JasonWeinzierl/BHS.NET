@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-date',
@@ -9,5 +9,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   imports: [DatePipe],
 })
 export class DateComponent {
-  @Input() datetime = new Date();
+  readonly datetime = input(new Date());
 }

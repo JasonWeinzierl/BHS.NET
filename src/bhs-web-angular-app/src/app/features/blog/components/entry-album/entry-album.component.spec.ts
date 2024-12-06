@@ -22,14 +22,14 @@ describe.skip('EntryAlbumComponent', () => {
 
     fixture = TestBed.createComponent(EntryAlbumComponent);
     component = fixture.componentInstance;
-    component.album = {
+    fixture.componentRef.setInput('album', {
       slug: 'album-one',
       photos: [{
         id: 'photo-one',
         imagePath: 'http://example.com/photo-one.jpg',
         datePosted: new Date(),
       }],
-    };
+    });
     fixture.detectChanges();
   });
 

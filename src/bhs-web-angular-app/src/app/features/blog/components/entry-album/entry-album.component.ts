@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AlbumPhotos } from '@data/photos';
 
@@ -11,5 +11,5 @@ import { AlbumPhotos } from '@data/photos';
   imports: [RouterLink, NgOptimizedImage],
 })
 export class EntryAlbumComponent {
-  @Input({ required: true }) album!: AlbumPhotos;
+  readonly album = input.required<AlbumPhotos>();
 }

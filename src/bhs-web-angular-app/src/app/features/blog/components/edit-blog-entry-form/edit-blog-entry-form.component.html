@@ -8,7 +8,7 @@
   <div class="mb-3">
     <label for="inputCategories" class="form-label">Categories</label>
     <select multiple class="form-select" id="inputCategories" name="categories" formControlName="categories">
-      @for (c of allCategories; track c.slug) {
+      @for (c of allCategories(); track c.slug) {
         <option [ngValue]="c.slug">{{c.name}}</option>
       }
     </select>

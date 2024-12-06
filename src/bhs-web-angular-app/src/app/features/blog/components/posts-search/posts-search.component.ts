@@ -42,7 +42,7 @@ export class PostsSearchComponent {
     tap(() => { this.isLoading.set(false); }),
   );
 
-  isLoading = signal(true);
+  readonly isLoading = signal(true);
 
   searchText = '';
 

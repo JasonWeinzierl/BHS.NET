@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DateComponent } from '../../../../shared/components/date/date.component';
 import { PostPreview } from '@data/blog';
@@ -11,5 +11,5 @@ import { PostPreview } from '@data/blog';
   imports: [RouterLink, DateComponent],
 })
 export class PostCardComponent {
-  @Input({ required: true }) post!: PostPreview;
+  readonly post = input.required<PostPreview>();
 }

@@ -264,6 +264,12 @@ export default tseslint.config(gitignore(), {
         style: 'kebab-case',
       },
     ],
+    '@angular-eslint/prefer-signals': [
+      'error',
+      {
+        useTypeChecking: true,
+      },
+    ],
 
     // Allow Angular modules with only a decorator.
     '@typescript-eslint/no-extraneous-class': [

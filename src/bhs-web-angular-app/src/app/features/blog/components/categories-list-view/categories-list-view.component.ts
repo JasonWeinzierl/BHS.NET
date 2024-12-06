@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CategorySummary } from '@data/blog';
 
@@ -10,7 +10,7 @@ import { CategorySummary } from '@data/blog';
   imports: [RouterLink],
 })
 export class CategoriesListViewComponent {
-  @Input() isLoading = false;
-  @Input() error?: string | null;
-  @Input() categories: Array<CategorySummary> = [];
+  readonly isLoading = input(false);
+  readonly error = input<string | null>();
+  readonly categories = input<Array<CategorySummary>>([]);
 }
