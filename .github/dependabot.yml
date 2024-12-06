@@ -5,6 +5,7 @@ updates:
     schedule:
       interval: weekly
       day: saturday
+    open-pull-requests-limit: 10
     ignore:
       - dependency-name: "@angular*"
       - dependency-name: "rxjs"
@@ -30,6 +31,7 @@ updates:
     schedule:
       interval: weekly
       day: saturday
+    open-pull-requests-limit: 10
     groups:
       microsoft:
         patterns:
@@ -46,3 +48,4 @@ updates:
     schedule:
       interval: weekly
       day: saturday
+    open-pull-requests-limit: 10
