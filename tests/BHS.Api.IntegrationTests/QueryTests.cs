@@ -28,7 +28,7 @@ public class QueryTests : IClassFixture<BhsWebApplicationFactory<Program>>
         using (var scope = _factory.Services.CreateScope())
         {
             var repo = scope.ServiceProvider.GetRequiredService<ISequenceRepository>();
-            initial = await repo.GetNextValue(name);
+            initial = await repo.GetNextValue(name, TestContext.Current.CancellationToken);
         }
 
         Assert.Equal(1, initial);
@@ -39,11 +39,11 @@ public class QueryTests : IClassFixture<BhsWebApplicationFactory<Program>>
         {
             var repo = scope.ServiceProvider.GetRequiredService<ISequenceRepository>();
             values = await Task.WhenAll(
-                repo.GetNextValue(name),
-                repo.GetNextValue(name),
-                repo.GetNextValue(name));
+                repo.GetNextValue(name, TestContext.Current.CancellationToken),
+                repo.GetNextValue(name, TestContext.Current.CancellationToken),
+                repo.GetNextValue(name, TestContext.Current.CancellationToken));
         }
 
-        Assert.Equal(new long[] { 2, 3, 4 }, values.Order());
+        Assert.Equal([2, 3, 4], values.Order());
     }
 }

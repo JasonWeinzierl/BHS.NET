@@ -52,7 +52,7 @@ public class ControllersTests(ControllerTestsClassFixture fixture) : IClassFixtu
 {
     private readonly ControllerTestsClassFixture _fixture = fixture;
 
-    public static TheoryData<Type> Controllers => new(
+    public static IEnumerable<TheoryDataRow<Type>> Controllers =>
     [
         typeof(AuthorController),
         typeof(BannersController),
@@ -63,7 +63,7 @@ public class ControllersTests(ControllerTestsClassFixture fixture) : IClassFixtu
         typeof(LeadershipController),
         typeof(MuseumController),
         typeof(PhotosController),
-    ]);
+    ];
 
     [Theory]
     [MemberData(nameof(Controllers))]

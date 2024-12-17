@@ -22,7 +22,7 @@ public class SendGridEmailAdapterTests
         // Arrange
         _options.FromAddress = "test@test.com";
         _options.FromName = "test person";
-        var request = new EmailMessageRequest(new[] { "test2@test.com" }, "test subject", "<p>Hi</p>", "Hi");
+        var request = new EmailMessageRequest(["test2@test.com"], "test subject", "<p>Hi</p>", "Hi");
 
         var httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
 
@@ -32,10 +32,10 @@ public class SendGridEmailAdapterTests
             .Returns(new Response(httpResponse.StatusCode, httpResponse.Content, httpResponse.Headers));
 
         // Act
-        var response = await Subject.Send(request);
+        var response = await Subject.Send(request, TestContext.Current.CancellationToken);
 
         // Assert
-        await _sgClient.Received(1).SendEmailAsync(Arg.Any<SendGridMessage>(), default);
+        await _sgClient.Received(1).SendEmailAsync(Arg.Any<SendGridMessage>(), Arg.Any<CancellationToken>());
 
         Assert.NotNull(sent);
         Assert.Equal("test@test.com", sent.From.Email);
@@ -51,11 +51,11 @@ public class SendGridEmailAdapterTests
     [Fact]
     public async Task IfNoToAddresses_Throws()
     {
-        var request = new EmailMessageRequest(Array.Empty<string>(), "", "", "");
+        var request = new EmailMessageRequest([], "", "", "");
 
         var ex = await Assert.ThrowsAsync<ArgumentException>(async () =>
         {
-            _ = await Subject.Send(request);
+            _ = await Subject.Send(request, TestContext.Current.CancellationToken);
         });
 
         Assert.Equal("request", ex.ParamName);

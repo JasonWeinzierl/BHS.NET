@@ -25,20 +25,20 @@ public class ContactUsServiceTests
             // Arrange
             var request = new ContactAlertRequest(default, "x", default, default, null);
             _repo
-                .Insert(request, default)
+                .Insert(request, Arg.Any<CancellationToken>())
                 .Returns(new ContactAlert("1", default, string.Empty, default, default, default));
             _emailAdapter
                 .Send(Arg.Any<EmailMessageRequest>(), Arg.Any<CancellationToken>())
                 .Returns(new EmailMessageResponse(System.Net.HttpStatusCode.OK, new StringContent("")));
 
             // Act
-            var result = await Subject.AddRequest(request);
+            var result = await Subject.AddRequest(request, TestContext.Current.CancellationToken);
 
             // Assert
             Assert.NotNull(result);
             await _repo
                 .Received(1)
-                .Insert(request, default);
+                .Insert(request, Arg.Any<CancellationToken>());
             await _emailAdapter
                 .Received(1)
                 .Send(Arg.Any<EmailMessageRequest>(), Arg.Any<CancellationToken>());
@@ -51,16 +51,16 @@ public class ContactUsServiceTests
             var request = new ContactAlertRequest(default, string.Empty, default, default, "something");
 
             // Act
-            var result = await Subject.AddRequest(request);
+            var result = await Subject.AddRequest(request, TestContext.Current.CancellationToken);
 
             // Assert
             Assert.Null(result);
             await _repo
                 .DidNotReceiveWithAnyArgs()
-                .Insert(Arg.Any<ContactAlertRequest>(), default);
+                .Insert(Arg.Any<ContactAlertRequest>(), Arg.Any<CancellationToken>());
             await _emailAdapter
                 .DidNotReceiveWithAnyArgs()
-                .Send(Arg.Any<EmailMessageRequest>(), default);
+                .Send(Arg.Any<EmailMessageRequest>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -72,16 +72,16 @@ public class ContactUsServiceTests
             await Assert.ThrowsAsync<InvalidContactRequestException>(async () =>
             {
                 // Act
-                _ = await Subject.AddRequest(request);
+                _ = await Subject.AddRequest(request, TestContext.Current.CancellationToken);
             });
 
             // Assert
             await _repo
                 .DidNotReceiveWithAnyArgs()
-                .Insert(Arg.Any<ContactAlertRequest>(), default);
+                .Insert(Arg.Any<ContactAlertRequest>(), Arg.Any<CancellationToken>());
             await _emailAdapter
                 .DidNotReceiveWithAnyArgs()
-                .Send(Arg.Any<EmailMessageRequest>());
+                .Send(Arg.Any<EmailMessageRequest>(), Arg.Any<CancellationToken>());
         }
     }
 }

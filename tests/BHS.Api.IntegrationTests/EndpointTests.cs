@@ -33,9 +33,9 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task HealthCheck_Ok()
     {
-        using var response = await _httpClient.GetAsync("/api/healthcheck/status");
+        using var response = await _httpClient.GetAsync("/api/healthcheck/status", TestContext.Current.CancellationToken);
 
-        string content = await response.Content.ReadAsStringAsync();
+        string content = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
 
         Assert.Equal("Healthy", content);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -44,7 +44,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Swagger_Ok()
     {
-        using var response = await _httpClient.GetAsync("/api/swagger/index.html");
+        using var response = await _httpClient.GetAsync("/api/swagger/index.html", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal(MediaTypeNames.Text.Html, response.Content.Headers.ContentType?.MediaType);
@@ -57,7 +57,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             .GetAsync<User>(Arg.Any<Uri>(), Arg.Any<Dictionary<string, string>>(), null, Arg.Any<CancellationToken>())
             .Throws(new ErrorApiException(HttpStatusCode.BadRequest));
 
-        using var response = await _httpClient.GetAsync("/api/authors?authUserId=12345");
+        using var response = await _httpClient.GetAsync("/api/authors?authUserId=12345", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
@@ -65,7 +65,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Author_GetPosts_Empty()
     {
-        var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>($"/api/authors/{Random.Shared.Next()}/posts");
+        var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>($"/api/authors/{Random.Shared.Next()}/posts", TestContext.Current.CancellationToken);
 
         Assert.NotNull(posts);
         Assert.Empty(posts);
@@ -74,7 +74,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Banners_GetCurrent()
     {
-        var banners = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBanner>>("/api/banners/current");
+        var banners = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBanner>>("/api/banners/current", TestContext.Current.CancellationToken);
 
         Assert.NotNull(banners);
         Assert.Empty(banners);
@@ -83,7 +83,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Blog_GetPosts()
     {
-        var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>("/api/blog/posts");
+        var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>("/api/blog/posts", TestContext.Current.CancellationToken);
 
         Assert.NotNull(posts);
         Assert.Empty(posts);
@@ -102,10 +102,10 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             datePublished,
             [new Category("newsletters", "Newsletters")]);
 
-        using var response = await _httpClient.PostAsJsonAsync("/api/blog/posts", request);
+        using var response = await _httpClient.PostAsJsonAsync("/api/blog/posts", request, TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        var post = await response.Content.ReadFromJsonAsync<Post>();
+        var post = await response.Content.ReadFromJsonAsync<Post>(TestContext.Current.CancellationToken);
 
         Assert.NotNull(post);
         Assert.Contains("-hello-world", post.Slug);
@@ -139,16 +139,16 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             Categories = [new Category("cat1", "Cat1"), new Category("cat3", "Cat3")],
         };
 
-        using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest);
+        using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest, TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-        var initialPost = await createResponse.Content.ReadFromJsonAsync<Post>();
+        var initialPost = await createResponse.Content.ReadFromJsonAsync<Post>(TestContext.Current.CancellationToken);
         Assert.NotNull(initialPost?.Slug);
 
-        using var response2 = await _httpClient.PutAsJsonAsync($"/api/blog/posts/{initialPost.Slug}", updateRequest);
+        using var response2 = await _httpClient.PutAsJsonAsync($"/api/blog/posts/{initialPost.Slug}", updateRequest, TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.OK, response2.StatusCode);
-        var updatedPost = await response2.Content.ReadFromJsonAsync<Post>();
+        var updatedPost = await response2.Content.ReadFromJsonAsync<Post>(TestContext.Current.CancellationToken);
 
         Assert.NotNull(updatedPost);
         Assert.Equal(initialPost.Slug, updatedPost.Slug);
@@ -170,13 +170,13 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
             DateTimeOffset.Now,
             []);
 
-        using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest);
+        using var createResponse = await _httpClient.PostAsJsonAsync("/api/blog/posts", createRequest, TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-        var post = await createResponse.Content.ReadFromJsonAsync<Post>();
+        var post = await createResponse.Content.ReadFromJsonAsync<Post>(TestContext.Current.CancellationToken);
         Assert.NotNull(post);
 
-        using var deleteResponse = await _httpClient.DeleteAsync($"/api/blog/posts/{post.Slug}");
+        using var deleteResponse = await _httpClient.DeleteAsync($"/api/blog/posts/{post.Slug}", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
     }
@@ -184,7 +184,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Blog_GetPostById_404()
     {
-        using var response = await _httpClient.GetAsync($"/api/blog/posts/{Random.Shared.Next()}");
+        using var response = await _httpClient.GetAsync($"/api/blog/posts/{Random.Shared.Next()}", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -192,7 +192,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Blog_GetCategories()
     {
-        var categories = await _httpClient.GetFromJsonAsync<IEnumerable<CategorySummary>>("/api/blog/categories");
+        var categories = await _httpClient.GetFromJsonAsync<IEnumerable<CategorySummary>>("/api/blog/categories", TestContext.Current.CancellationToken);
 
         Assert.NotNull(categories);
     }
@@ -200,7 +200,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Blog_GetCategoryById_404()
     {
-        using var response = await _httpClient.GetAsync($"/api/blog/categories/{Random.Shared.Next()}");
+        using var response = await _httpClient.GetAsync($"/api/blog/categories/{Random.Shared.Next()}", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -208,7 +208,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Leadership_GetOfficers()
     {
-        var officers = await _httpClient.GetFromJsonAsync<IEnumerable<Officer>>("/api/leadership/officers");
+        var officers = await _httpClient.GetFromJsonAsync<IEnumerable<Officer>>("/api/leadership/officers", TestContext.Current.CancellationToken);
 
         Assert.NotNull(officers);
         Assert.Empty(officers);
@@ -217,7 +217,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Leadership_GetDirectors()
     {
-        var directors = await _httpClient.GetFromJsonAsync<IEnumerable<Director>>("/api/leadership/directors");
+        var directors = await _httpClient.GetFromJsonAsync<IEnumerable<Director>>("/api/leadership/directors", TestContext.Current.CancellationToken);
 
         Assert.NotNull(directors);
         Assert.Empty(directors);
@@ -226,7 +226,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Photos_GetAlbums()
     {
-        var albums = await _httpClient.GetFromJsonAsync<IEnumerable<Album>>("/api/photos/albums");
+        var albums = await _httpClient.GetFromJsonAsync<IEnumerable<Album>>("/api/photos/albums", TestContext.Current.CancellationToken);
 
         Assert.NotNull(albums);
         Assert.Empty(albums);
@@ -235,7 +235,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Photos_GetAlbumById_404()
     {
-        using var response = await _httpClient.GetAsync($"/api/photos/albums/{Random.Shared.Next()}");
+        using var response = await _httpClient.GetAsync($"/api/photos/albums/{Random.Shared.Next()}", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -245,7 +245,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     {
         string notAnObjectId = Random.Shared.Next().ToString();
 
-        using var response = await _httpClient.GetAsync($"/api/photos/albums/{Random.Shared.Next()}/photos/{notAnObjectId}");
+        using var response = await _httpClient.GetAsync($"/api/photos/albums/{Random.Shared.Next()}/photos/{notAnObjectId}", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
@@ -255,7 +255,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     {
         string objectId = ObjectId.GenerateNewId().ToString();
 
-        using var response = await _httpClient.GetAsync($"/api/photos/albums/{Random.Shared.Next()}/photos/{objectId}");
+        using var response = await _httpClient.GetAsync($"/api/photos/albums/{Random.Shared.Next()}/photos/{objectId}", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }

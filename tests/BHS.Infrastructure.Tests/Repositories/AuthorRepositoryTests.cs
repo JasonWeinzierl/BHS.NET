@@ -38,11 +38,11 @@ public class AuthorRepositoryTests
             }),
         };
         _usersClient
-            .GetAsync(userId, null, true, default)
+            .GetAsync(userId, null, true, Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
-        var authors = await Subject.GetByAuthUserId(userId);
+        var authors = await Subject.GetByAuthUserId(userId, TestContext.Current.CancellationToken);
 
         // Assert
         var author = Assert.Single(authors);
@@ -67,11 +67,11 @@ public class AuthorRepositoryTests
             }),
         };
         _usersClient
-            .GetAsync(userId, null, true, default)
+            .GetAsync(userId, null, true, Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
-        var authors = await Subject.GetByAuthUserId(userId);
+        var authors = await Subject.GetByAuthUserId(userId, TestContext.Current.CancellationToken);
 
         // Assert
         var author = Assert.Single(authors);
