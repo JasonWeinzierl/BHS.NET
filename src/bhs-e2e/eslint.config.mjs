@@ -30,6 +30,10 @@ export default tseslint.config(gitignore(), {
   ],
   rules: {
     '@stylistic/arrow-parens': 'off',
+    '@stylistic/quote-props': [
+      'error',
+      'as-needed',
+    ],
 
     // Use zod to safely parse process.env.
     'n/no-process-env': 'error',
