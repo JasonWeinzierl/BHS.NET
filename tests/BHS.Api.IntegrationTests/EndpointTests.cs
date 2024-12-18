@@ -83,7 +83,7 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
     [Fact]
     public async Task Blog_GetPosts()
     {
-        var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>("/api/blog/posts", TestContext.Current.CancellationToken);
+        var posts = await _httpClient.GetFromJsonAsync<IEnumerable<PostPreview>>($"/api/blog/posts?q={Random.Shared.Next()}", TestContext.Current.CancellationToken);
 
         Assert.NotNull(posts);
         Assert.Empty(posts);
