@@ -6347,7 +6347,7 @@ __metadata:
     jest-environment-jsdom: "npm:^29.7.0"
     jwt-decode: "npm:^4.0.0"
     lodash-es: "npm:^4.17.21"
-    marked: "npm:^15.0.3"
+    marked: "npm:^15.0.4"
     merge-partially: "npm:^2.0.2"
     ng-mocks: "npm:^14.13.1"
     ngx-bootstrap: "npm:^19.0.1"
@@ -11733,12 +11733,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^15.0.3":
-  version: 15.0.3
-  resolution: "marked@npm:15.0.3"
+"marked@npm:^15.0.4":
+  version: 15.0.4
+  resolution: "marked@npm:15.0.4"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/2e08d50b2ad96509a8ca93a5b57e9c7bf64ea44c8f504392191955dac5b117996ee39ceaafe0330e87a3bd93f7af5942bb87ef9bf55664a8d660012e7a43c3cc
+  checksum: 10c0/e2bfd9178e5242cc814aaf8020f3c2e954c047652c498dac0732f4b711d5e3ab80dbc54b964799d80470d6c515a24905e554c4a40f87b05dedc26e4e36cfdfdb
   languageName: node
   linkType: hard
 
