@@ -34,7 +34,7 @@ export class EntryEditComponent {
   private readonly blogService = inject(BlogService);
   private readonly auth = inject(AuthService);
 
-  private readonly submittedRequestSubject = new Subject<{ slug: string; body: PostRequest }>();
+  private readonly submittedRequestSubject$ = new Subject<{ slug: string; body: PostRequest }>();
 
   // Emit a merged combination of the initial post loaded from the URL, and the updated post after a submission.
   vm$ = merge(this.getInitialPost$(), this.getUpdatedPost$()).pipe(
@@ -81,7 +81,7 @@ export class EntryEditComponent {
         return { post, categories: allCategories, isLoading: false, currentAuthor };
       }),
       // Handle when the user submits an update.
-      switchMap(vm => this.submittedRequestSubject.pipe(
+      switchMap(vm => this.submittedRequestSubject$.pipe(
         // If any request is submitted, display loading.
         map(() => true),
         // Before any request is submitted, don't show loading.
@@ -94,7 +94,7 @@ export class EntryEditComponent {
 
   private getUpdatedPost$(): Observable<EntryEditVm> {
     // Listen to the stream of submitted requests.
-    return this.submittedRequestSubject.pipe(
+    return this.submittedRequestSubject$.pipe(
       // Submit the first update and wait. All other requests are discarded.
       exhaustMap(request => this.blogService.updatePost(request.slug, request.body)),
       // When update is complete, re-fetch all possible categories.
@@ -122,6 +122,6 @@ export class EntryEditComponent {
   }
 
   onPublish(slug: string, request: PostRequest): void {
-    this.submittedRequestSubject.next({ slug, body: request });
+    this.submittedRequestSubject$.next({ slug, body: request });
   }
 }

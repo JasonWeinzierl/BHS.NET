@@ -24,8 +24,8 @@ import { BlogService, PostPreview } from '@data/blog';
 export class PostsSearchComponent {
   private readonly blogService = inject(BlogService);
 
-  private readonly searchTextSubject = new BehaviorSubject('');
-  postsVm$ = this.searchTextSubject.pipe(
+  private readonly searchTextSubject$ = new BehaviorSubject('');
+  postsVm$ = this.searchTextSubject$.pipe(
     switchMap(searchText => this.blogService.searchPosts(searchText).pipe(
       map(posts => ({ posts, error: null })),
       // Must do the catchError in this inner observable so it doesn't replace the outer observable and break search.
@@ -48,6 +48,6 @@ export class PostsSearchComponent {
 
   onSearch(searchText: string): void {
     this.isLoading.set(true);
-    this.searchTextSubject.next(searchText);
+    this.searchTextSubject$.next(searchText);
   }
 }

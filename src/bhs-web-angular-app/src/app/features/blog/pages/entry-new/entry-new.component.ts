@@ -33,8 +33,8 @@ export class EntryNewComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly authorService = inject(AuthorService);
 
-  private readonly submittedRequestSubject = new Subject<PostRequest>();
-  private readonly routeErrorSubject = new Subject<{ newPost?: Post; error: unknown }>();
+  private readonly submittedRequestSubject$ = new Subject<PostRequest>();
+  private readonly routeErrorSubject$ = new Subject<{ newPost?: Post; error: unknown }>();
 
   vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
     startWith({ allCategories: [], isLoading: true } as EntryNewVm),
@@ -49,7 +49,7 @@ export class EntryNewComponent {
   );
 
   onPublish(request: PostRequest): void {
-    this.submittedRequestSubject.next(request);
+    this.submittedRequestSubject$.next(request);
   }
 
   private getInitialVm$(): Observable<EntryNewVm> {
@@ -63,7 +63,7 @@ export class EntryNewComponent {
 
         return { currentAuthor, allCategories, isLoading: false };
       }),
-      switchMap(vm => this.submittedRequestSubject.pipe(
+      switchMap(vm => this.submittedRequestSubject$.pipe(
         map(() => true),
         startWith(false),
         map(isSubmitting => ({ ...vm, isLoading: isSubmitting })),
@@ -72,11 +72,11 @@ export class EntryNewComponent {
   }
 
   private getCreatedPost$(): Observable<EntryNewVm> {
-    return this.submittedRequestSubject.pipe(
+    return this.submittedRequestSubject$.pipe(
       exhaustMap(request => this.blogService.createPost(request)),
       map(newPost => {
         this.router.navigate(['../entry', newPost.slug], { relativeTo: this.route })
-        .catch((error: unknown) => { this.routeErrorSubject.next({ error, newPost }); });
+        .catch((error: unknown) => { this.routeErrorSubject$.next({ error, newPost }); });
 
         // Instead of mapping the post into the VM, just keep loading until the route changes.
         return { isLoading: true, allCategories: [], currentAuthor: null };
@@ -85,7 +85,7 @@ export class EntryNewComponent {
   }
 
   private getRouteError$(): Observable<never> {
-    return this.routeErrorSubject.pipe(
+    return this.routeErrorSubject$.pipe(
       map(({ error, newPost }) => {
         let msg = `An error occurred while navigating to new post '${newPost?.title ?? newPost?.slug ?? '(null)'}'.`;
         if (typeof error === 'object' && error && 'message' in error && typeof error.message === 'string') {

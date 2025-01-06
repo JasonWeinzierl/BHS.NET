@@ -186,10 +186,6 @@ export default tseslint.config(gitignore(), {
           // Add paramMap|data to defaults for ActivatedRoute.
           '^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate|paramMap|data)$': false,
         },
-        types: {
-          // Add the subjects to defaults to work with suffix-subjects.
-          '^(EventEmitter|BehaviorSubject|ReplaySubject|AsyncSubject|Subject)$': false,
-        },
       },
     ],
     'rxjs-x/suffix-subjects': 'warn',
