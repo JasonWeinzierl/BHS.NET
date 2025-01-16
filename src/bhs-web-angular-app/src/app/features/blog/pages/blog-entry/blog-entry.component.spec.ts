@@ -11,8 +11,7 @@ import { PhotosService } from '@data/photos';
 import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry-album.component';
 import { DateComponent } from '@shared/components/date/date.component';
 
-// TODO: re-enable when ng-mocks supports Angular 19.
-describe.skip('BlogEntryComponent', () => {
+describe('BlogEntryComponent', () => {
   let component: BlogEntryComponent;
   let fixture: ComponentFixture<BlogEntryComponent>;
 

@@ -6,8 +6,7 @@ import { EMPTY, of } from 'rxjs';
 import { AlbumComponent } from './album.component';
 import { PhotosService } from '@data/photos/services/photos.service';
 
-// TODO: re-enable when ng-mocks supports Angular 19.
-describe.skip('AlbumComponent', () => {
+describe('AlbumComponent', () => {
   let component: AlbumComponent;
   let fixture: ComponentFixture<AlbumComponent>;
 
