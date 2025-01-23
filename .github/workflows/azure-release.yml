@@ -101,6 +101,7 @@ jobs:
       with:
         name: webapp
         path: ${{ env.WEB_PUBLISH_PATH }}
+        retention-days: 5
 
 
   deploy-stage:
