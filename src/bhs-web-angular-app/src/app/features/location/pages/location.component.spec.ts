@@ -8,14 +8,14 @@ describe('LocationComponent', () => {
   let component: LocationComponent;
   let fixture: ComponentFixture<LocationComponent>;
   let nativeElement: HTMLElement;
-  const scheduleSubject = new Subject<MuseumSchedule>();
+  const scheduleSubject$ = new Subject<MuseumSchedule>();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LocationComponent],
       providers: [
         MockProvider(MuseumService, {
-          getSchedule: () => scheduleSubject,
+          getSchedule: () => scheduleSubject$,
         }),
       ],
     })
@@ -36,7 +36,7 @@ describe('LocationComponent', () => {
   });
 
   it('should show schedule if loaded', () => {
-    scheduleSubject.next({
+    scheduleSubject$.next({
       days: [
         { dayOfWeek: 0, fromTime: '09:00', toTime: '17:00' },
       ],
@@ -56,7 +56,7 @@ describe('LocationComponent', () => {
   });
 
   it('should show unavailable on error', () => {
-    scheduleSubject.error(new Error('Test failure to load schedule.'));
+    scheduleSubject$.error(new Error('Test failure to load schedule.'));
 
     fixture.detectChanges();
     const errorEl = nativeElement.querySelector('#location-museum-schedule-error');
