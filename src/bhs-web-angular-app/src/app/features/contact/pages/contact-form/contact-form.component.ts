@@ -46,7 +46,7 @@ export class ContactFormComponent {
 
     this.contactService.sendMessage(request)
       .pipe(takeUntilDestroyed())
-      // eslint-disable-next-line rxjs-x/no-ignored-subscription
+      // eslint-disable-next-line rxjs-x/no-ignored-subscription, rxjs-angular-x/prefer-async-pipe
       .subscribe({
         next: () => {
           this.isAccepted.set(true);

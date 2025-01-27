@@ -8,6 +8,7 @@ import gitignore from 'eslint-config-flat-gitignore';
 import importX from 'eslint-plugin-import-x';
 import jest from 'eslint-plugin-jest';
 import jsdoc from 'eslint-plugin-jsdoc';
+import rxjsAngularX from 'eslint-plugin-rxjs-angular-x';
 import rxjsX from 'eslint-plugin-rxjs-x';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -175,6 +176,9 @@ export default tseslint.config(gitignore(), {
       projectService: true,
     },
   },
+  plugins: {
+    'rxjs-angular-x': rxjsAngularX,
+  },
   rules: {
     // #region RxJS
     'rxjs-x/finnish': [
@@ -191,6 +195,8 @@ export default tseslint.config(gitignore(), {
     'rxjs-x/suffix-subjects': 'warn',
     'rxjs-x/no-ignored-subscribe': 'warn',
     'rxjs-x/no-ignored-subscription': 'warn',
+
+    'rxjs-angular-x/prefer-async-pipe': 'error',
     // #endregion RxJS
     // #region TypeScript
     // Use Array<T> for all types.

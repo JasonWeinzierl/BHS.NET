@@ -42,7 +42,7 @@ export class AdminIndexComponent {
       },
     })
       .pipe(takeUntilDestroyed())
-      // eslint-disable-next-line rxjs-x/no-ignored-subscription
+      // eslint-disable-next-line rxjs-x/no-ignored-subscription, rxjs-angular-x/prefer-async-pipe
       .subscribe({
         error: (err: unknown) => { console.error('An error occurred while logging out:', err); },
       });
