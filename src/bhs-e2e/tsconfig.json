@@ -1,16 +1,19 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
+        /* Type Checking */
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+
+        /* Modules */
+        "allowImportingTsExtensions": true,
         "module": "Preserve",
         "moduleResolution": "Bundler",
-        "esModuleInterop": true,
-        "isolatedModules": true,
-        "allowImportingTsExtensions": true,
-
-        "lib": [
-            "ES2022",
-            "DOM",
-        ],
+        "noUncheckedSideEffectImports": true,
         "types": [
             "node",
             "@wdio/globals/types",
@@ -18,15 +21,23 @@
             "jasmine",
         ],
 
+        /* Emit */
+        "importHelpers": true,
         "noEmit": true,
 
+        /* Interop Constraints */
+        "esModuleInterop": true,
+        "isolatedModules": true,
+
+        /* Language and Environment */
+        "lib": [
+            "ES2022",
+            "DOM",
+        ],
+        "target": "ESNext",
+
+        /* Completeness */
         "skipLibCheck": true,
-        "strict": true,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitOverride": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
     },
     "include": [
         "test",
