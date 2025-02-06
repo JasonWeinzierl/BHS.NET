@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AlertComponent } from 'ngx-bootstrap/alert';
+import { timeout, TimeoutError } from 'rxjs';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
 
 @Component({
@@ -21,7 +22,7 @@ export class ContactFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly contactService = inject(ContactService);
 
-  contactForm = this.fb.nonNullable.group({
+  readonly contactForm = this.fb.nonNullable.group({
     name: [''],
     emailAddress: ['', [Validators.required, Validators.email]],
     message: [''],
@@ -43,9 +44,10 @@ export class ContactFormComponent {
       body: this.contactForm.value.body,
     };
 
-    this.contactService.sendMessage(request)
-      // eslint-disable-next-line rxjs-x/no-ignored-subscription, rxjs-angular-x/prefer-async-pipe
-      .subscribe({
+    this.contactService.sendMessage(request).pipe(
+      timeout(10_000),
+    // eslint-disable-next-line rxjs-x/no-ignored-subscription, rxjs-angular-x/prefer-async-pipe
+    ).subscribe({
         next: () => {
           this.isAccepted.set(true);
           this.contactForm.reset();
@@ -60,6 +62,8 @@ export class ContactFormComponent {
             } else {
               this.errors.update(errors => [...errors, { id: errors.length, msg: err.message }]);
             }
+          } else if (err instanceof TimeoutError) {
+            this.errors.update(errors => [...errors, { id: errors.length, msg: 'Something took too long...' }]);
           } else {
             this.errors.update(errors => [...errors, { id: errors.length, msg: '' }]);
           }

@@ -97,5 +97,58 @@ describe('ContactFormComponent', () => {
 
       expect((fixture.nativeElement as HTMLElement).querySelector('.alert')?.textContent).toContain('There was an error submitting your message.');
     });
+
+    describe('when the request takes a while', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+
+      afterEach(async () => {
+        await jest.runAllTimersAsync();
+        jest.useRealTimers();
+      });
+
+      it('should timeout after 10 seconds', async () => {
+        if (!nameInput || !emailInput || !messageInput || !bodyInput || !submitButton) {
+          throw new Error('One or more elements are missing');
+        }
+
+        nameInput.value = 'Test Name';
+        emailInput.value = 'test@test.com';
+        messageInput.value = 'Test Message';
+        submitButton.click();
+        fixture.detectChanges();
+
+        expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+        expect(sendMessage).toHaveBeenCalled();
+
+        await jest.advanceTimersByTimeAsync(10_000);
+        fixture.detectChanges();
+
+        expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeFalsy();
+        expect((fixture.nativeElement as HTMLElement).querySelector('.alert')?.textContent).toContain('Something took too long...');
+      });
+
+      it('should not timeout after 5 seconds', async () => {
+        if (!nameInput || !emailInput || !messageInput || !bodyInput || !submitButton) {
+          throw new Error('One or more elements are missing');
+        }
+
+        nameInput.value = 'Test Name';
+        emailInput.value = 'test@test.com';
+        messageInput.value = 'Test Message';
+        submitButton.click();
+        fixture.detectChanges();
+
+        expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+        expect(sendMessage).toHaveBeenCalled();
+
+        await jest.advanceTimersByTimeAsync(5_000);
+        fixture.detectChanges();
+
+        expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+        expect((fixture.nativeElement as HTMLElement).querySelector('.alert')).toBeFalsy();
+      });
+    });
   });
 });
