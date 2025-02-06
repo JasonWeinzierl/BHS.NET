@@ -15,7 +15,10 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        runs-on: [ macOS-latest, ubuntu-latest, windows-latest ]
+        runs-on: 
+          - macOS-latest
+          - ubuntu-22.04 # EphemeralMongo currently breaks on ubuntu-latest (v24) per asimmon/ephemeral-mongo#57
+          - windows-latest
 
     name: ${{ matrix.runs-on }}
     runs-on: ${{ matrix.runs-on }}
