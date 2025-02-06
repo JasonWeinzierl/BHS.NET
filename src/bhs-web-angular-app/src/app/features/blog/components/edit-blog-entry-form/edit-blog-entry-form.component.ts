@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, OnChanges, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -17,43 +17,49 @@ import { Category, categorySchema, Post, PostRequest } from '@data/blog';
       RouterLink,
   ],
 })
-export class EditBlogEntryFormComponent implements OnChanges {
+export class EditBlogEntryFormComponent {
   private readonly fb = inject(FormBuilder);
 
   readonly initialPost = input<Post>();
   readonly currentAuthor = input<Author | null>();
   readonly allCategories = input<Array<Category>>([]);
+  readonly publish = output<PostRequest>();
 
-  @Output() readonly publish = new EventEmitter<PostRequest>();
+  readonly cancelRoute = computed(() => {
+    const initialPost = this.initialPost();
+    return initialPost ? ['/apps/blog/entry', initialPost.slug] : ['/apps/blog'];
+  });
 
-  readonly cancelRoute = signal<Array<string>>(['/apps/blog']);
-  editFormGroup = this.fb.nonNullable.group({
+  readonly editFormGroup = this.fb.nonNullable.group({
     title: ['', [Validators.required]],
     categories: [[] as Array<string>],
     publishDate: [new Date()],
     contentMarkdown: [''],
   });
 
-  readonly authorWarning = signal<string | null>(null);
-
-  ngOnChanges(): void {
-    const initialPost = this.initialPost();
-    this.cancelRoute.set(initialPost ? ['/apps/blog/entry', initialPost.slug] : ['/apps/blog']);
-
-    this.editFormGroup.reset({
-      title: initialPost?.title ?? '',
-      categories: initialPost?.categories.map(x => x.slug) ?? [],
-      publishDate: initialPost?.datePublished ?? new Date(),
-      contentMarkdown: initialPost?.contentMarkdown ?? '',
-    });
-
-    this.authorWarning.set(this.isChangingAuthor()
-      ? `Author is changing from '${initialPost?.author?.username ?? '(null)'}' to '${this.currentAuthor()?.username ?? '(null)'}'.`
-      : null);
-  }
-
-  private isChangingAuthor(): boolean {
+  private readonly isChangingAuthor = computed(() => {
     return !this.initialPost()?.author && !!this.currentAuthor();
+  });
+
+  readonly authorWarning = computed(() => {
+    const isChangingAuthor = this.isChangingAuthor();
+    const currentAuthor = this.currentAuthor();
+    return isChangingAuthor && currentAuthor
+      ? `Author is changing from '${this.initialPost()?.author?.username ?? '(null)'}' to '${currentAuthor.username}'.`
+      : null;
+  });
+
+  constructor() {
+    effect(() => {
+      const initialPost = this.initialPost();
+
+      this.editFormGroup.reset({
+        title: initialPost?.title ?? '',
+        categories: initialPost?.categories.map(x => x.slug) ?? [],
+        publishDate: initialPost?.datePublished ?? new Date(),
+        contentMarkdown: initialPost?.contentMarkdown ?? '',
+      });
+    });
   }
 
   onSubmit(): void {
