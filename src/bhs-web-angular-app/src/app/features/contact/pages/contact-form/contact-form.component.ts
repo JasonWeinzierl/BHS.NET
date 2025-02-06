@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AlertComponent } from 'ngx-bootstrap/alert';
@@ -45,7 +44,6 @@ export class ContactFormComponent {
     };
 
     this.contactService.sendMessage(request)
-      .pipe(takeUntilDestroyed())
       // eslint-disable-next-line rxjs-x/no-ignored-subscription, rxjs-angular-x/prefer-async-pipe
       .subscribe({
         next: () => {

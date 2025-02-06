@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
+import { Observable, Subject } from 'rxjs';
 import { ContactFormComponent } from './contact-form.component';
-import { ContactService } from '@data/contact-us';
+import { ContactAlertRequest, ContactService } from '@data/contact-us';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -13,6 +15,7 @@ describe('ContactFormComponent', () => {
         ContactFormComponent,
       ],
       providers: [
+        provideRouter([]),
         MockProvider(ContactService),
       ],
     })
@@ -25,5 +28,74 @@ describe('ContactFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('when sending a message', () => {
+    let nameInput: HTMLInputElement | null;
+    let emailInput: HTMLInputElement | null;
+    let messageInput: HTMLTextAreaElement | null;
+    let bodyInput: HTMLInputElement | null;
+    let submitButton: HTMLButtonElement | null;
+    let sendMessage: jest.SpyInstance<Observable<void>, [request: ContactAlertRequest]>;
+    let sendMessageResponseSubject$: Subject<void>;
+
+    beforeEach(() => {
+      const nativeElement = fixture.nativeElement as HTMLElement;
+      nameInput = nativeElement.querySelector('#inputName');
+      emailInput = nativeElement.querySelector('#inputEmail');
+      messageInput = nativeElement.querySelector('#inputMessage');
+      bodyInput = nativeElement.querySelector('#body');
+      submitButton = nativeElement.querySelector('button[type="submit"]');
+      sendMessageResponseSubject$ = new Subject<void>();
+      sendMessage = jest.spyOn(TestBed.inject(ContactService), 'sendMessage').mockImplementation(() => sendMessageResponseSubject$);
+    });
+
+    it('should show contact form', () => {
+      expect(nameInput).toBeTruthy();
+      expect(emailInput).toBeTruthy();
+      expect(messageInput).toBeTruthy();
+      expect(bodyInput).toBeTruthy();
+      expect(submitButton).toBeTruthy();
+    });
+
+    it('should send a successful message', () => {
+      if (!nameInput || !emailInput || !messageInput || !bodyInput || !submitButton) {
+        throw new Error('One or more elements are missing');
+      }
+
+      nameInput.value = 'Test Name';
+      emailInput.value = 'test@test.com';
+      messageInput.value = 'Test Message';
+      submitButton.click();
+      fixture.detectChanges();
+
+      expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+      expect(sendMessage).toHaveBeenCalled();
+
+      sendMessageResponseSubject$.next();
+      fixture.detectChanges();
+
+      expect((fixture.nativeElement as HTMLElement).querySelector('.card-subtitle')?.textContent).toBe('Thank you for your message.');
+    });
+
+    it('should show an error on failure', () => {
+      if (!nameInput || !emailInput || !messageInput || !bodyInput || !submitButton) {
+        throw new Error('One or more elements are missing');
+      }
+
+      nameInput.value = 'Test Name';
+      emailInput.value = 'test@test.com';
+      messageInput.value = 'Test Message';
+      submitButton.click();
+      fixture.detectChanges();
+
+      expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+      expect(sendMessage).toHaveBeenCalled();
+
+      sendMessageResponseSubject$.error(new Error('Test error'));
+      fixture.detectChanges();
+
+      expect((fixture.nativeElement as HTMLElement).querySelector('.alert')?.textContent).toContain('There was an error submitting your message.');
+    });
   });
 });

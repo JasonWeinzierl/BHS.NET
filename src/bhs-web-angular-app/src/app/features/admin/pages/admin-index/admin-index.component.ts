@@ -1,6 +1,5 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { jwtDecode } from 'jwt-decode';
@@ -41,7 +40,6 @@ export class AdminIndexComponent {
         returnTo: window.location.origin,
       },
     })
-      .pipe(takeUntilDestroyed())
       // eslint-disable-next-line rxjs-x/no-ignored-subscription, rxjs-angular-x/prefer-async-pipe
       .subscribe({
         error: (err: unknown) => { console.error('An error occurred while logging out:', err); },
