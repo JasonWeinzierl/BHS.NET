@@ -4,6 +4,7 @@ internal static class AuthConfig
 {
     public const string BlogWriteAccess = "BlogWriteAccess";
     public const string MuseumWriteAccess = "MuseumWriteAccess";
+    public const string BannerWriteAccess = "BannerWriteAccess";
 
     public static IServiceCollection AddBhsAuth(this IServiceCollection services)
     {
@@ -17,6 +18,7 @@ internal static class AuthConfig
             const string permissions = "permissions";
             opt.AddPolicy(BlogWriteAccess, policy => policy.RequireClaim(permissions, "write:blog"));
             opt.AddPolicy(MuseumWriteAccess, policy => policy.RequireClaim(permissions, "write:museum"));
+            opt.AddPolicy(BannerWriteAccess, policy => policy.RequireClaim(permissions, "write:banners"));
         });
 
         return services;

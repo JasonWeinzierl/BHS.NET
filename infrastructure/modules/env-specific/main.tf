@@ -628,6 +628,11 @@ resource "auth0_resource_server_scopes" "bhs_api_scopes" {
     name        = "write:museum"
     description = "Author museum resources"
   }
+
+  scopes {
+    name        = "write:banners"
+    description = "Author banner resources"
+  }
 }
 
 resource "auth0_role" "owner" {
@@ -646,6 +651,11 @@ resource "auth0_role_permissions" "owner_permissions" {
   permissions {
     resource_server_identifier = auth0_resource_server.bhs_api.identifier
     name                       = "write:museum"
+  }
+
+  permissions {
+    resource_server_identifier = auth0_resource_server.bhs_api.identifier
+    name                       = "write:banners"
   }
 
   depends_on = [

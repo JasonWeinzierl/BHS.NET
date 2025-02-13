@@ -34,4 +34,15 @@ public class SiteBannerRepository : ISiteBannerRepository
             .Match(x => x.IsEnabled)
             .Project(x => new SiteBanner(x.Id.ToString(), (AlertTheme)x.ThemeId, x.Lead, x.Body))
             .ToListAsync(cancellationToken);
+
+    public async Task<IReadOnlyCollection<SiteBannerHistory>> GetAllHistory(CancellationToken cancellationToken = default)
+        => await _mongoClient.GetBhsCollection<SiteBannerDto>("banners")
+            .Aggregate()
+            .Project(x => new SiteBannerHistory(
+                x.Id.ToString(),
+                (AlertTheme)x.ThemeId,
+                x.Lead,
+                x.Body,
+                x.StatusChanges.Select(x => new SiteBannerStatusChange(x.DateModified, x.IsEnabled))))
+            .ToListAsync(cancellationToken);
 }
