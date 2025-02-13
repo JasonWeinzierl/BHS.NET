@@ -18,7 +18,7 @@ describe('AdminBannersComponent', () => {
       ],
       providers: [
         MockProvider(SiteBannerService, {
-          getEnabled: () => bannersSubject$,
+          getEnabled$: () => bannersSubject$,
         }),
       ],
     })

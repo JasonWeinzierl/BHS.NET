@@ -21,7 +21,7 @@ describe('HeaderComponent', () => {
         provideNoopAnimations(),
         provideRouter([]),
         MockProvider(SiteBannerService, {
-          getEnabled: () => EMPTY,
+          getEnabled$: () => EMPTY,
         }),
         MockProvider(ToastrService),
         MockProvider(AuthService),

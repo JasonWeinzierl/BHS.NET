@@ -35,7 +35,7 @@ export class HeaderComponent {
 
   isCollapsed = true;
 
-  banners$ = this.bannerService.getEnabled().pipe(
+  banners$ = this.bannerService.getEnabled$().pipe(
     map(banners => this.createStyledBanners(banners)),
     catchError((err: unknown) => {
       const title = 'Site banners could not be loaded.';

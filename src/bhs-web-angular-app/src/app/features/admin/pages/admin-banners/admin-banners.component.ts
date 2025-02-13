@@ -14,7 +14,7 @@ export default class AdminBannersComponent {
   private readonly siteBannerService = inject(SiteBannerService);
 
   readonly errorSignal = signal<string | null>(null);
-  readonly bannersSignal = toSignal(this.siteBannerService.getEnabled().pipe(
+  readonly bannersSignal = toSignal(this.siteBannerService.getEnabled$().pipe(
     map(banners => banners.map(banner => ({
       ...banner,
       bootstrapAlertType: getBootstrapAlertType(banner.theme),

@@ -11,7 +11,7 @@ export class SiteBannerService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/banners';
 
-  getEnabled(): Observable<Array<SiteBanner>> {
+  getEnabled$(): Observable<Array<SiteBanner>> {
     return this.http.get(this.baseUrl + '/current')
       .pipe(parseSchemaArray(siteBannerSchema));
   }
