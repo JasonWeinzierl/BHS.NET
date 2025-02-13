@@ -8,7 +8,7 @@ import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, map, of } from 'rxjs';
-import { AlertTheme, alertThemeScheme, SiteBanner, SiteBannerService } from '@data/banners';
+import { getBootstrapAlertType, SiteBanner, SiteBannerService } from '@data/banners';
 
 interface SiteBannerStyled extends SiteBanner {
   alertType: string;
@@ -55,15 +55,7 @@ export class HeaderComponent {
   private createStyledBanners(banners: Array<SiteBanner>): Array<SiteBannerStyled> {
     return banners.map(b => ({
       ...b,
-      alertType: this.getBootstrapAlertType(b.theme),
+      alertType: getBootstrapAlertType(b.theme),
     }));
-  }
-
-  private getBootstrapAlertType(theme: AlertTheme): string {
-    if (alertThemeScheme.safeParse(theme).success && theme !== 'None') {
-      return theme.toLowerCase();
-    } else {
-      return 'light';
-    }
   }
 }
