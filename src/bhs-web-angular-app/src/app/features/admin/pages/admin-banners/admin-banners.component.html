@@ -27,7 +27,7 @@
             <ul>
               @for (statusChange of banner.statusChanges; track statusChange) {
                 <li>
-                  <span [class]="'bi bi-'+ (statusChange.isEnabled ? 'checked' : 'x')"></span>
+                  <span [class]="'bi bi-'+ (statusChange.isEnabled ? 'calendar-check' : 'calendar-x')"></span>
                   {{ statusChange.isEnabled ? 'Shown' : 'Removed' }}
                   {{ statusChange.dateModified | date:'long' }}
                 </li>
