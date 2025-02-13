@@ -21,7 +21,7 @@
     </alert>
   }
 
-  @for (post of postsVm.posts | sortBy: 'desc' : 'datePublished'; track post.slug) {
+  @for (post of postsVm.posts; track post.slug) {
     <app-post-card [post]="post" [attr.data-testid]="post.slug" />
   }
 }

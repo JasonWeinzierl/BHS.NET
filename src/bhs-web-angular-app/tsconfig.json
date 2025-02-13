@@ -10,7 +10,7 @@
 
     /* Modules */
     "baseUrl": "./",
-    "module": "ES2022",
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "noUncheckedSideEffectImports": true,
     "paths": {
@@ -47,11 +47,7 @@
 
     /* Language and Environment */
     "experimentalDecorators": true,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
-    "target": "ES2022",
+    "target": "ESNext",
 
     /* Completeness */
     "skipLibCheck": true,

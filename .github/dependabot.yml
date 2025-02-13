@@ -13,10 +13,6 @@ updates:
       - dependency-name: "typescript"
       - dependency-name: "tslib"
     groups:
-      lodash:
-        patterns:
-          - "lodash"
-          - "@types/lodash"
       lint:
         patterns:
           - "@typescript-eslint/*"

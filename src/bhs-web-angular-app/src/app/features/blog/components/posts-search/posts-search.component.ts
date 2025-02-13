@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from 'ngx-bootstrap/alert';
 import { BehaviorSubject, catchError, map, of, switchMap, tap } from 'rxjs';
-import { SortByPipe } from '../../../../shared/pipes/sort-by.pipe';
 import { PostCardComponent } from '../post-card/post-card.component';
 import { BlogService, PostPreview } from '@data/blog';
 
@@ -17,7 +16,6 @@ import { BlogService, PostPreview } from '@data/blog';
     FormsModule,
     AlertComponent,
     PostCardComponent,
-    SortByPipe,
     AsyncPipe,
   ],
 })
@@ -27,7 +25,10 @@ export class PostsSearchComponent {
   private readonly searchTextSubject$ = new BehaviorSubject('');
   postsVm$ = this.searchTextSubject$.pipe(
     switchMap(searchText => this.blogService.searchPosts(searchText).pipe(
-      map(posts => ({ posts, error: null })),
+      map(posts => ({
+        posts: posts.toSorted((a, b) => b.datePublished.getTime() - a.datePublished.getTime()),
+        error: null,
+      })),
       // Must do the catchError in this inner observable so it doesn't replace the outer observable and break search.
       catchError((err: unknown) => {
         let msg = 'An error occurred.';

@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockPipe, MockProvider } from 'ng-mocks';
+import { MockProvider } from 'ng-mocks';
 import { PostsSearchComponent } from './posts-search.component';
 import { BlogService } from '@data/blog';
-import { SortByPipe } from '@shared/pipes/sort-by.pipe';
 
 describe('PostsSearchComponent', () => {
   let component: PostsSearchComponent;
@@ -12,7 +11,6 @@ describe('PostsSearchComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         PostsSearchComponent,
-        MockPipe(SortByPipe),
       ],
       providers: [
         MockProvider(BlogService),
