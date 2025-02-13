@@ -1,4 +1,5 @@
 ﻿using BHS.Contracts;
+using BHS.Contracts.Banners;
 using BHS.Contracts.Blog;
 using BHS.Contracts.Museum;
 using BHS.Web;
@@ -90,5 +91,43 @@ public class ResourceLifecycleTests : IClassFixture<BhsWebApplicationFactory<Pro
         Assert.NotNull(currentSchedule);
         Assert.Equal(updatedSchedule.Days.Single(), currentSchedule.Days.Single());
         Assert.Equal(updatedSchedule.Months, currentSchedule.Months);
+    }
+
+    [Fact]
+    public async Task SiteBannerLifecycle()
+    {
+        // CREATE
+        var createRequest = new SiteBannerRequest(AlertTheme.Success, "Hello", "world");
+        
+        using var createResponse = await _httpClient.PostAsJsonAsync("/api/banners", createRequest, TestContext.Current.CancellationToken);
+        var newBanner = await createResponse.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<SiteBannerHistory>(TestContext.Current.CancellationToken);
+        Assert.NotNull(newBanner);
+        
+        // GET CURRENT
+        var currentBanners = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBanner>>("/api/banners/current", TestContext.Current.CancellationToken);
+        Assert.NotNull(currentBanners);
+        Assert.Contains(currentBanners, x => x.Id == newBanner.Id);
+
+        // GET HISTORY
+        var allHistory = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBannerHistory>>("/api/banners/history", TestContext.Current.CancellationToken);
+        Assert.NotNull(allHistory);
+        Assert.Contains(allHistory, x => x.Id == newBanner.Id);
+
+        // DELETE
+        var deleteResponse = await _httpClient.DeleteAsync($"/api/banners/{newBanner.Id}", TestContext.Current.CancellationToken);
+        deleteResponse.EnsureSuccessStatusCode();
+
+        // GET CURRENT (GONE)
+        currentBanners = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBanner>>("/api/banners/current", TestContext.Current.CancellationToken);
+        Assert.NotNull(currentBanners);
+        Assert.DoesNotContain(currentBanners, x => x.Id == newBanner.Id);
+
+        // GET HISTORY (UPDATED)
+        allHistory = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBannerHistory>>("/api/banners/history", TestContext.Current.CancellationToken);
+        Assert.NotNull(allHistory);
+        Assert.Contains(allHistory, x => x.Id == newBanner.Id);
+        Assert.Collection(allHistory.First(x => x.Id == newBanner.Id).StatusChanges,
+            x => Assert.True(x.IsEnabled),
+            x => Assert.False(x.IsEnabled));
     }
 }

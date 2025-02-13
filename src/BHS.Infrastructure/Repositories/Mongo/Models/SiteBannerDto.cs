@@ -10,8 +10,8 @@ internal sealed record SiteBannerDto(
     string? Body,
     IReadOnlyCollection<SiteBannerStatusChangeDto> StatusChanges)
 {
-    public static SiteBannerDto New(DateTimeOffset now, AlertTheme theme, string? lead, string? body, bool isEnabled)
-        => new(ObjectId.GenerateNewId(now.UtcDateTime), (byte)theme, lead, body, [new SiteBannerStatusChangeDto(now, isEnabled)]);
+    public static SiteBannerDto New(DateTimeOffset now, AlertTheme theme, string? lead, string? body, DateTimeOffset startDate)
+        => new(ObjectId.GenerateNewId(now.UtcDateTime), (byte)theme, lead, body, [new SiteBannerStatusChangeDto(startDate, true)]);
 }
 
 internal sealed record SiteBannerUnwoundDto(

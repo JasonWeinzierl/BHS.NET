@@ -19,16 +19,10 @@ namespace BHS.Api.IntegrationTests;
 
 [Trait("Category", "Integration")]
 [Collection("Sequential")]
-public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
+public class EndpointTests(BhsWebApplicationFactory<Program> factory) : IClassFixture<BhsWebApplicationFactory<Program>>
 {
-    private readonly HttpClient _httpClient;
-    private readonly IManagementConnection _mockManagementConnection;
-
-    public EndpointTests(BhsWebApplicationFactory<Program> factory)
-    {
-        _httpClient = factory.CreateClient();
-        _mockManagementConnection = factory.MockManagementConnection;
-    }
+    private readonly HttpClient _httpClient = factory.CreateClient();
+    private readonly IManagementConnection _mockManagementConnection = factory.MockManagementConnection;
 
     [Fact]
     public async Task HealthCheck_Ok()
@@ -77,7 +71,50 @@ public class EndpointTests : IClassFixture<BhsWebApplicationFactory<Program>>
         var banners = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBanner>>("/api/banners/current", TestContext.Current.CancellationToken);
 
         Assert.NotNull(banners);
-        Assert.Empty(banners);
+    }
+
+    [Fact]
+    public async Task Banners_GetHistory()
+    {
+        var banners = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBannerHistory>>("/api/banners/history", TestContext.Current.CancellationToken);
+
+        Assert.NotNull(banners);
+    }
+
+    [Fact]
+    public async Task Banners_Insert()
+    {
+        var request = new SiteBannerRequest(AlertTheme.Success, "Hello", "world");
+
+        using var response = await _httpClient.PostAsJsonAsync("/api/banners", request, TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var banner = await response.Content.ReadFromJsonAsync<SiteBanner>(TestContext.Current.CancellationToken);
+
+        Assert.NotNull(banner);
+        Assert.Equal(AlertTheme.Success, banner.Theme);
+        Assert.Equal("Hello", banner.Lead);
+        Assert.Equal("world", banner.Body);
+    }
+
+    [Fact]
+    public async Task Banners_Delete()
+    {
+        var request = new SiteBannerRequest(AlertTheme.Success, "Hello", "world");
+
+        using var createResponse = await _httpClient.PostAsJsonAsync("/api/banners", request, TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.OK, createResponse.StatusCode);
+        var banner = await createResponse.Content.ReadFromJsonAsync<SiteBanner>(TestContext.Current.CancellationToken);
+
+        Assert.NotNull(banner);
+        Assert.Equal(AlertTheme.Success, banner.Theme);
+        Assert.Equal("Hello", banner.Lead);
+        Assert.Equal("world", banner.Body);
+
+        using var deleteResponse = await _httpClient.DeleteAsync($"/api/banners/{banner.Id}", TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
     }
 
     [Fact]
