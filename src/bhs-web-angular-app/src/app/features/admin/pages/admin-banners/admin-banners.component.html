@@ -1,21 +1,48 @@
 <div class="container">
 
   <div class="card">
-    <div class="card-body">
-      @if (bannersSignal(); as banners) {
-        <h2>Enabled Banners</h2>
-        <li class="list-group">
-          @for (banner of banners; track banner.id) {
-            <li class="list-group-item">
-              <span [class]="'badge text-bg-' + banner.bootstrapAlertType">{{ banner.theme }}</span>
-              <h3 class="card-title">{{ banner.lead }}</h3>
-              <p class="card-text">{{ banner.body }}</p>
-            </li>
-          } @empty {
-            <li class="list-group-item">No banners are enabled.</li>
-          }
-        </li>
-      } @else {
+    @if (bannersSignal(); as banners) {
+      <div class="card-body">
+        <h2 class="card-title">Banners</h2>
+      </div>
+      <li class="list-group list-group-flush">
+        @for (banner of banners; track banner.id) {
+          <li class="list-group-item">
+            <span [class]="'badge text-bg-' + banner.bootstrapAlertType">
+              {{ banner.theme }}
+            </span>
+            <span [class]="'badge text-bg-' + (banner.isEnabled ? 'primary' : 'secondary')">
+              {{ banner.isEnabled ? 'Enabled' : 'Disabled' }}
+            </span>
+            <h3>{{ banner.lead }}</h3>
+            <p>{{ banner.body }}</p>
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Date Modified</th>
+                  <th scope="col">Enabled?</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (statusChange of banner.statusChanges; track statusChange) {
+                  <tr [class.table-primary]="statusChange.isEnabled">
+                    <td>{{ statusChange.dateModified | date }}</td>
+                    <td>{{ statusChange.isEnabled ? 'Yes' : 'No' }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="2">No history found.</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </li>
+        } @empty {
+          <li class="list-group-item">No banners are enabled.</li>
+        }
+      </li>
+    } @else {
+      <div class="card-body">
         @if (errorSignal(); as error) {
           <p class="text-danger">{{ error }}</p>
         } @else {
@@ -23,8 +50,8 @@
             <span class="visually-hidden">Loading...</span>
           </div>
         }
-      }
-    </div>
+      </div>
+    }
   </div>
 
 </div>

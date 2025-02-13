@@ -42,6 +42,10 @@ const auth0ConfigFactory = (env: AppEnvironment, cfg: AuthClientConfig) => {
             uri: '/api/museum/schedule',
             httpMethod: 'PUT',
           },
+          {
+            uri: '/api/banners/history',
+            httpMethod: 'GET',
+          },
         ],
       },
     });
