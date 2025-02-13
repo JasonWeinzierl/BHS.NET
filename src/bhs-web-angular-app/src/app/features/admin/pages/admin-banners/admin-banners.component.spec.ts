@@ -113,7 +113,7 @@ describe('AdminBannersComponent', () => {
     const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('.list-group-item');
 
     expect(itemElements).toHaveLength(1);
-    expect(itemElements[0].textContent).toContain('No banners are enabled.');
+    expect(itemElements[0].textContent).toContain('No banners found.');
   });
 
   it('should show error message on error', () => {
