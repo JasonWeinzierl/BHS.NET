@@ -25,7 +25,7 @@
             <p><strong>{{ banner.lead }}</strong></p>
             <h4>Body</h4>
             <p>{{ banner.body }}</p>
-            <h4>History</h4>
+            <h4>History <span class="bi bi-sort-down"></span></h4>
             <ul>
               @for (statusChange of banner.statusChanges; track statusChange) {
                 <li>

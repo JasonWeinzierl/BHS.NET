@@ -100,12 +100,16 @@ describe('AdminBannersComponent', () => {
 
     const itemElement = (fixture.nativeElement as HTMLElement).querySelector('.list-group-item');
     const badgeElements = itemElement?.querySelectorAll('span.badge') ?? [];
-    const iconElements = itemElement?.querySelectorAll('.bi') ?? [];
+    const statusElements = itemElement?.querySelectorAll('li') ?? [];
 
     expect(badgeElements).toHaveLength(2);
     expect(badgeElements[0].textContent).toContain('Info');
     expect(badgeElements[1].textContent).toContain('Visible');
-    expect(iconElements).toHaveLength(4);
+    expect(statusElements).toHaveLength(4);
+    expect(statusElements[0].textContent).toContain('Removed');
+    expect(statusElements[1].textContent).toContain('Shown');
+    expect(statusElements[2].textContent).toContain('Removed');
+    expect(statusElements[3].textContent).toContain('Shown');
   });
 
   it('should show no banners after data is loaded', () => {
