@@ -57,21 +57,20 @@ describe('AdminBannersComponent', () => {
     ]);
     fixture.detectChanges();
 
-    const bannerElements = (fixture.nativeElement as HTMLElement).querySelectorAll('.card');
+    const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('.list-group-item');
 
-    expect(bannerElements).toHaveLength(2);
-    expect(bannerElements[0].textContent).toContain('Test Banner');
+    expect(itemElements).toHaveLength(2);
+    expect(itemElements[0].textContent).toContain('Test Banner');
   });
 
   it('should show no banners after data is loaded', () => {
     bannersSubject$.next([]);
     fixture.detectChanges();
 
-    const nativeElement = fixture.nativeElement as HTMLElement;
-    const bannerElements = nativeElement.querySelectorAll('.card');
+    const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('.list-group-item');
 
-    expect(bannerElements).toHaveLength(0);
-    expect(nativeElement.textContent).toContain('No banners are enabled.');
+    expect(itemElements).toHaveLength(1);
+    expect(itemElements[0].textContent).toContain('No banners are enabled.');
   });
 
   it('should show error message on error', () => {
