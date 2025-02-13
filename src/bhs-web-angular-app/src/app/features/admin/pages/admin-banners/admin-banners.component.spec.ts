@@ -98,12 +98,12 @@ describe('AdminBannersComponent', () => {
 
     const itemElement = (fixture.nativeElement as HTMLElement).querySelector('.list-group-item');
     const badgeElements = itemElement?.querySelectorAll('span.badge') ?? [];
-    const isEnabledCellElements = itemElement?.querySelectorAll('table > tbody > tr > td:nth-child(2)') ?? [];
+    const iconElements = itemElement?.querySelectorAll('.bi') ?? [];
 
     expect(badgeElements).toHaveLength(2);
     expect(badgeElements[0].textContent).toContain('Info');
-    expect(badgeElements[1].textContent).toContain('Enabled');
-    expect(isEnabledCellElements).toHaveLength(4);
+    expect(badgeElements[1].textContent).toContain('Visible');
+    expect(iconElements).toHaveLength(4);
   });
 
   it('should show no banners after data is loaded', () => {

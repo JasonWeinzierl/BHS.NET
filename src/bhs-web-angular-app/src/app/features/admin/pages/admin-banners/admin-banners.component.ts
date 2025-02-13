@@ -18,14 +18,18 @@ export default class AdminBannersComponent {
 
   readonly errorSignal = signal<string | null>(null);
   readonly bannersSignal = toSignal(this.siteBannerService.getHistory$().pipe(
-    map(banners => banners.map(banner => ({
-      ...banner,
-      bootstrapAlertType: getBootstrapAlertType(banner.theme),
-      isEnabled: banner.statusChanges
-        .filter(c => c.dateModified.getTime() <= new Date().getTime())
-        .toSorted((a, b) => b.dateModified.getTime() - a.dateModified.getTime())
-        .at(0)?.isEnabled ?? false,
-    }))),
+    map(banners => banners.toReversed().map(banner => {
+      const sortedChanges = banner.statusChanges
+        .toSorted((a, b) => b.dateModified.getTime() - a.dateModified.getTime());
+      const pastChanges = sortedChanges
+        .filter(c => c.dateModified.getTime() < new Date().getTime());
+      return {
+        ...banner,
+        statusChanges: sortedChanges,
+        bootstrapAlertType: getBootstrapAlertType(banner.theme),
+        isEnabled: pastChanges[0]?.isEnabled ?? false,
+      };
+    })),
     catchError((err: unknown) => {
       console.error('Failed to load banners.', err);
       this.errorSignal.set('Failed to load banners.');

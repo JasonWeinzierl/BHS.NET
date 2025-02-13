@@ -8,34 +8,29 @@
       <li class="list-group list-group-flush">
         @for (banner of banners; track banner.id) {
           <li class="list-group-item">
+            <h3>{{ banner.id }}</h3>
             <span [class]="'badge text-bg-' + banner.bootstrapAlertType">
               {{ banner.theme }}
             </span>
             <span [class]="'badge text-bg-' + (banner.isEnabled ? 'primary' : 'secondary')">
-              {{ banner.isEnabled ? 'Enabled' : 'Disabled' }}
+              {{ banner.isEnabled ? 'Visible' : 'Hidden' }}
             </span>
-            <h3>{{ banner.lead }}</h3>
+            <h4>Lead</h4>
+            <p><strong>{{ banner.lead }}</strong></p>
+            <h4>Body</h4>
             <p>{{ banner.body }}</p>
-            <table class="table table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">Date Modified</th>
-                  <th scope="col">Enabled?</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (statusChange of banner.statusChanges; track statusChange) {
-                  <tr [class.table-primary]="statusChange.isEnabled">
-                    <td>{{ statusChange.dateModified | date }}</td>
-                    <td>{{ statusChange.isEnabled ? 'Yes' : 'No' }}</td>
-                  </tr>
-                } @empty {
-                  <tr>
-                    <td colspan="2">No history found.</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
+            <h4>History</h4>
+            <ul>
+              @for (statusChange of banner.statusChanges; track statusChange) {
+                <li>
+                  <span [class]="'bi bi-'+ (statusChange.isEnabled ? 'checked' : 'x')"></span>
+                  {{ statusChange.isEnabled ? 'Shown' : 'Removed' }}
+                  {{ statusChange.dateModified | date:'long' }}
+                </li>
+              } @empty {
+                <li>No history found.</li>
+              }
+            </ul>
           </li>
         } @empty {
           <li class="list-group-item">No banners found.</li>
