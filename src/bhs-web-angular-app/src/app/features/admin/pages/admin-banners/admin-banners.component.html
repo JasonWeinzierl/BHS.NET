@@ -13,12 +13,14 @@
         @for (banner of banners; track banner.id) {
           <li class="list-group-item">
             <h3>{{ banner.id }}</h3>
-            <span [class]="'badge text-bg-' + banner.bootstrapAlertType">
-              {{ banner.theme }}
-            </span>
-            <span [class]="'badge text-bg-' + (banner.isEnabled ? 'primary' : 'secondary')">
-              {{ banner.isEnabled ? 'Visible' : 'Hidden' }}
-            </span>
+            <p>
+              <span [class]="'badge text-bg-' + banner.bootstrapAlertType">
+                {{ banner.theme }}
+              </span>
+              <span [class]="'badge text-bg-' + (banner.isEnabled ? 'primary' : 'secondary')">
+                {{ banner.isEnabled ? 'Visible' : 'Hidden' }}
+              </span>
+            </p>
             <h4>Lead</h4>
             <p><strong>{{ banner.lead }}</strong></p>
             <h4>Body</h4>
