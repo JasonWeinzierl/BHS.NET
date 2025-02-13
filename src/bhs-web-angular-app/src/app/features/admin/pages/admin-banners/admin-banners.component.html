@@ -12,7 +12,11 @@
     <p>No banners are enabled.</p>
   }
 } @else {
-  <div class="spinner-grow" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
+  @if (errorSignal(); as error) {
+    <p class="text-danger">{{ error }}</p>
+  } @else {
+    <div class="spinner-grow" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  }
 }

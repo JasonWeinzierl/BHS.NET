@@ -73,4 +73,14 @@ describe('AdminBannersComponent', () => {
     expect(bannerElements).toHaveLength(0);
     expect(nativeElement.textContent).toContain('No banners are enabled.');
   });
+
+  it('should show error message on error', () => {
+    bannersSubject$.error(new Error('test error'));
+    fixture.detectChanges();
+
+    const errorElement = (fixture.nativeElement as HTMLElement).querySelector('.text-danger');
+
+    expect(errorElement).toBeTruthy();
+    expect(errorElement?.textContent).toContain('Failed to load banners.');
+  });
 });
