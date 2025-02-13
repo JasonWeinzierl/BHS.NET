@@ -1,5 +1,6 @@
 /* eslint-disable rxjs-x/finnish */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
 import { Subject } from 'rxjs';
 import AdminBannersComponent from './admin-banners.component';
@@ -19,6 +20,7 @@ describe('AdminBannersComponent', () => {
         AdminBannersComponent,
       ],
       providers: [
+        provideRouter([]),
         MockProvider(SiteBannerService, {
           getHistory$: () => bannersSubject$,
         }),

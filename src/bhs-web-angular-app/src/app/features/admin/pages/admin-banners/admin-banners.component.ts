@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { getBootstrapAlertType, SiteBannerService } from '@data/banners';
 
@@ -11,6 +12,7 @@ import { getBootstrapAlertType, SiteBannerService } from '@data/banners';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
+    RouterLink,
   ],
 })
 export default class AdminBannersComponent {
