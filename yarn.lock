@@ -6197,11 +6197,11 @@ __metadata:
     jest-environment-jsdom: "npm:^29.7.0"
     jwt-decode: "npm:^4.0.0"
     lodash-es: "npm:^4.17.21"
-    marked: "npm:^15.0.6"
+    marked: "npm:^15.0.7"
     merge-partially: "npm:^2.0.2"
     ng-mocks: "npm:^14.13.2"
     ngx-bootstrap: "npm:^19.0.2"
-    ngx-markdown: "npm:^19.0.0"
+    ngx-markdown: "npm:^19.1.0"
     ngx-toastr: "npm:^19.0.0"
     rxjs: "npm:^7.8.1"
     tslib: "npm:^2.8.1"
@@ -11510,12 +11510,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^15.0.6":
-  version: 15.0.6
-  resolution: "marked@npm:15.0.6"
+"marked@npm:^15.0.7":
+  version: 15.0.7
+  resolution: "marked@npm:15.0.7"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/8f30972ac5fdf879353484bdd7717409c241d15031a58bbc483070dedb58e4b314c41c0b59b78e536658907c02ee149eaf4b9be221f198df97beae703f529d40
+  checksum: 10c0/0b9d07bace37bbf0548bae356c4184765afa4d2296ed0be4418aa4bb0ce703f323dc1a475125d536581f9fe264797e6265dd0b57499d97c0fe0f29bc6d016343
   languageName: node
   linkType: hard
 
@@ -12011,9 +12011,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ngx-markdown@npm:^19.0.0":
-  version: 19.0.0
-  resolution: "ngx-markdown@npm:19.0.0"
+"ngx-markdown@npm:^19.1.0":
+  version: 19.1.0
+  resolution: "ngx-markdown@npm:19.1.0"
   dependencies:
     clipboard: "npm:^2.0.11"
     emoji-toolkit: "npm:>= 8.0.0 < 10.0.0"
@@ -12039,7 +12039,7 @@ __metadata:
       optional: true
     prismjs:
       optional: true
-  checksum: 10c0/1544abed67014d02ae40db77ad6ae3686757796456f0f9a140a6968d0660ba86b0b9ebc18b01f9b8c10db1e16085e50c370bb0a90a8d205c5dbc9499a575e832
+  checksum: 10c0/3310380cbb43b6305b7e5f4421de5066e8ffce52b73a0cf3b3bf8bec367c7b72098d31c785b00c493c24a64bc3b6f601e719741195851d4461a037dadf50ba19
   languageName: node
   linkType: hard
 
