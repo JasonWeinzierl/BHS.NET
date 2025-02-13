@@ -1,5 +1,9 @@
 <div class="container">
+
   <div class="card">
+    <div class="card-header">
+      <a class="card-link" [routerLink]="['/home']">Home</a>
+    </div>
     <div class="card-body">
 
       <h1>Admin</h1>
@@ -15,12 +19,11 @@
       }
 
       <h2>Actions</h2>
-      <a [routerLink]="['/home']">Home</a>
 
       <button type="button" class="btn btn-secondary" (click)="handleLogout()">Log out</button>
 
-      <a [routerLink]="['/apps/blog/new']">New Blog Post</a>
-      <a [routerLink]="['/admin/banners']">Banners</a>
+      <a class="card-link" [routerLink]="['/apps/blog/new']">New Blog Post</a>
+      <a class="card-link" [routerLink]="['/admin/banners']">Banners</a>
 
     </div>
   </div>
