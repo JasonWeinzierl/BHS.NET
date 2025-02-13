@@ -46,6 +46,14 @@ const auth0ConfigFactory = (env: AppEnvironment, cfg: AuthClientConfig) => {
             uri: '/api/banners/history',
             httpMethod: 'GET',
           },
+          {
+            uri: '/api/banners',
+            httpMethod: 'POST',
+          },
+          {
+            uri: '/api/banners/*',
+            httpMethod: 'DELETE',
+          },
         ],
       },
     });
