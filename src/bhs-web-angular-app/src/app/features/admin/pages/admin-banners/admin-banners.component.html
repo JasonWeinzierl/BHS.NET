@@ -1,0 +1,18 @@
+@if (bannersSignal(); as banners) {
+  <h2>Enabled Banners</h2>
+  @for (banner of banners; track banner.id) {
+    <div class="card">
+      <div class="card-body">
+        <span [class]="'badge text-bg-' + banner.bootstrapAlertType">{{banner.theme}}</span>
+        <h3 class="card-title">{{ banner.lead }}</h3>
+        <p class="card-text">{{ banner.body }}</p>
+      </div>
+    </div>
+  } @empty {
+    <p>No banners are enabled.</p>
+  }
+} @else {
+  <div class="spinner-grow" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+}
