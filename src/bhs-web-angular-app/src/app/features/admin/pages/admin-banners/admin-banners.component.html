@@ -12,7 +12,7 @@
       <li class="list-group list-group-flush">
         @for (banner of banners; track banner.id) {
           <li class="list-group-item">
-            <h3>{{ banner.id }}</h3>
+            <h3>Banner {{ banner.id }}</h3>
             <p>
               <span [class]="'badge text-bg-' + banner.bootstrapAlertType">
                 {{ banner.theme }}
