@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "19.2.1",
     "@angular/router": "19.2.1",
     "@auth0/auth0-angular": "^2.2.3",
-    "@microsoft/applicationinsights-analytics-js": "3.3.5",
+    "@microsoft/applicationinsights-analytics-js": "3.3.6",
     "@microsoft/applicationinsights-angularplugin-js": "^15.3.5",
     "@microsoft/applicationinsights-web": "^3.3.5",
     "@popperjs/core": "^2.11.8",
