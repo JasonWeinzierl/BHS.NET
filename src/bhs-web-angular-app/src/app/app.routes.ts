@@ -51,13 +51,13 @@ export const APP_ROUTES: Routes = [
         loadChildren: () =>
           import('@features/about/about.routes'),
       },
+      {
+        path: 'admin',
+        loadChildren: () =>
+          import('@features/admin/admin.routes'),
+        canActivate: [authGuardFn], // Must use canActivate because canLoad and canMatch don't seem to redirect to login properly.
+      },
     ],
-  },
-  {
-    path: 'admin',
-    loadChildren: () =>
-      import('@features/admin/admin.routes'),
-    canActivate: [authGuardFn], // Must use canActivate because canLoad and canMatch don't seem to redirect to login properly.
   },
   {
     path: '**',
