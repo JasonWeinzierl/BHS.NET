@@ -3,16 +3,46 @@
   <div class="card">
     <div class="card-body">
 
-      <h1>Admin</h1>
+      <h1>Your Profile</h1>
 
-      <h2>User</h2>
       @if (user$ | async; as user) {
-        <pre>{{user | json}}</pre>
+        @if (user.picture) {
+          <img [ngSrc]="user.picture" alt="Profile Picture" width="100" height="100" class="img-thumbnail">
+        }
+
+        <p>
+          <strong>Name:</strong> {{user.name}}
+        </p>
+        <p>
+          <strong>Nickname:</strong> {{user.nickname}}
+        </p>
+        <p>
+          <strong>Email:</strong> {{user.email}}
+          @if (user.email_verified) {
+            <span class="bi bi-check-circle text-success"></span>
+          } @else {
+            <span class="bi bi-x-circle text-danger"></span>
+          }
+        </p>
+        <p>
+          <strong>sub (ID):</strong> {{user.sub}}
+        </p>
+        <p>
+          <strong>Last Updated:</strong> {{user.updated_at | date}}
+        </p>
       }
 
-      <h2>Access Token</h2>
-      @if (accessToken$ | async; as accessToken) {
-        <pre>{{accessToken | json}}</pre>
+      <h2>Permissions</h2>
+      @if (permissionsVm$ | async; as vm) {
+        @if (vm.type !== 'success') {
+          <p>{{vm.message}}</p>
+        } @else {
+          <ul>
+            @for (permission of vm.permissions; track permission) {
+              <li>{{permission}}</li>
+            }
+          </ul>
+        }
       }
 
       <h2>Actions</h2>

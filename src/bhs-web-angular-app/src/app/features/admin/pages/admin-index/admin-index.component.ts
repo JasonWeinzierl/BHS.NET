@@ -1,9 +1,9 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { jwtDecode } from 'jwt-decode';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-admin-index',
@@ -13,15 +13,28 @@ import { catchError, map, of } from 'rxjs';
   imports: [
     RouterLink,
     AsyncPipe,
-    JsonPipe,
+    NgOptimizedImage,
+    DatePipe,
   ],
 })
 export class AdminIndexComponent {
   private readonly auth = inject(AuthService);
 
-  user$ = this.auth.user$;
-  accessToken$ = this.auth.getAccessTokenSilently({ cacheMode: 'cache-only' }).pipe(
-    map((token: string | undefined) => token ? jwtDecode(token) : { message: 'No token found in cache!' }),
+  readonly user$ = this.auth.user$;
+  readonly permissionsVm$ = this.auth.getAccessTokenSilently({ cacheMode: 'cache-only' }).pipe(
+    map((token: string | undefined) => {
+      if (!token) {
+        return {
+          type: 'error' as const,
+          message: 'No token found in cache!',
+        };
+      }
+      const jwt = jwtDecode(token);
+      return {
+        type: 'success' as const,
+        permissions: 'permissions' in jwt && Array.isArray(jwt.permissions) && jwt.permissions.every(p => typeof p === 'string') ? jwt.permissions : [],
+      };
+    }),
     catchError((err: unknown) => {
       let message = 'An error occurred. ';
       if (typeof err === 'string') {
@@ -30,8 +43,9 @@ export class AdminIndexComponent {
         message += err.message;
       }
       console.error(message, err);
-      return of({ message });
+      return of({ type: 'error' as const, message });
     }),
+    startWith({ type: 'loading' as const, message: 'Loading...' }),
   );
 
   handleLogout(): void {
