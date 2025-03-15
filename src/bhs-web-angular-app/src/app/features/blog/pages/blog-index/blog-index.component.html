@@ -4,6 +4,9 @@
       <div class="card-body">
         <h1 class="card-title">News</h1>
         <p>The online feed for the Society's newsletters, announcements, and stories.</p>
+        @if (isAuthenticated$ | async) {
+          <a class="btn btn-primary" routerLink="/apps/blog/new">New Post</a>
+        }
       </div>
     </div>
   </div>
