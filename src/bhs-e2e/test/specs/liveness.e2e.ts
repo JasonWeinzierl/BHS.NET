@@ -38,7 +38,7 @@ describe('liveness', () => {
     // Go to Admin page after login.
     await browser.url('/admin');
 
-    await $('button=Log out').click();
+    await $('[data-testid="logout"]').click();
 
     await expect(browser).toHaveUrl(expect.stringContaining(browser.options.baseUrl));
   });

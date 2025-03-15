@@ -47,7 +47,9 @@
 
       <h2>Actions</h2>
 
-      <a class="card-link link-danger" href="#" (click)="handleLogout()">Log out</a>
+      <a class="card-link link-danger" href="#" (click)="handleLogout()" data-testid="logout">
+        Log out
+      </a>
 
       <a class="card-link" [routerLink]="['/apps/blog/new']">New Blog Post</a>
       <a class="card-link" [routerLink]="['/admin/banners']">Banners</a>
