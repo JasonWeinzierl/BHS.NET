@@ -31,7 +31,14 @@ export class CategoryPostsComponent {
       return slug;
     }),
     switchMap(slug => this.blogService.getCategory(slug)),
-    map(category => ({ category, isLoading: false, error: null })),
+    map(category => ({
+      category: {
+        ...category,
+        posts: category.posts.toSorted((a, b) => b.datePublished.getTime() - a.datePublished.getTime()),
+      },
+      isLoading: false,
+      error: null,
+    })),
     startWith({ category: null, isLoading: true, error: null }),
     catchError((err: unknown) => {
       let msg = 'An error occurred.';
