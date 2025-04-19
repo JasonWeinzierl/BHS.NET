@@ -5,11 +5,11 @@
 ```sh
 az login
 
-cd modules/shared
+cd environments/shared
 terraform init
 terraform apply
 
-cd ../env-specific
+cd ../modules/env-specific
 terraform init
 
 ../../LoadDotEnv.ps1 staging
