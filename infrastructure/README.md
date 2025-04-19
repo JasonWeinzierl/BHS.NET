@@ -26,6 +26,7 @@ terraform apply -var-file="env/production.tfvars"
 Populate environment variables:
 
 * ARM_ACCESS_KEY
+* ARM_SUBSCRIPTION_ID
 * GITHUB_TOKEN
 * AUTH0_DOMAIN
 * AUTH0_CLIENT_ID
