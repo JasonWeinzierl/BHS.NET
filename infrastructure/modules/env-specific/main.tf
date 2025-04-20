@@ -117,7 +117,7 @@ resource "azuread_service_principal" "bhs_github_actions" {
 }
 
 resource "azuread_service_principal_password" "bhs_github_actions" {
-  service_principal_id = azuread_service_principal.bhs_github_actions.object_id
+  service_principal_id = azuread_service_principal.bhs_github_actions.id
 }
 
 resource "azurerm_role_assignment" "bhs_github_actions" {
@@ -163,9 +163,21 @@ resource "azurerm_cosmosdb_account" "bhs_db" {
   offer_type           = "Standard"
   kind                 = "MongoDB"
   mongo_server_version = "4.2"
-  enable_free_tier     = var.enable_free_cosmos
+  free_tier_enabled    = var.enable_free_cosmos
 
-  ip_range_filter = "97.135.189.47,104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26,40.80.152.199,13.95.130.121,20.245.81.54,40.118.23.126,0.0.0.0"
+  ip_range_filter = [
+    "97.135.189.47",
+    "104.42.195.92",
+    "40.76.54.131",
+    "52.176.6.30",
+    "52.169.50.45",
+    "52.187.184.26",
+    "40.80.152.199",
+    "13.95.130.121",
+    "20.245.81.54",
+    "40.118.23.126",
+    "0.0.0.0",
+  ]
 
   consistency_policy {
     consistency_level = "Session"
@@ -255,7 +267,7 @@ resource "azurerm_key_vault_secret" "bhs_db_connstr" {
   key_vault_id = azurerm_key_vault.bhs.id
 
   name  = "connection-strings-bhs-mongo"
-  value = replace(azurerm_cosmosdb_account.bhs_db.connection_strings[0], "/?", "/${azurerm_cosmosdb_mongo_database.bhs_db.name}?")
+  value = replace(azurerm_cosmosdb_account.bhs_db.primary_mongodb_connection_string, "/?", "/${azurerm_cosmosdb_mongo_database.bhs_db.name}?")
 
   depends_on = [
     azurerm_role_assignment.me_admin,
@@ -388,20 +400,21 @@ resource "azurerm_storage_account" "bhs" {
   resource_group_name = azurerm_resource_group.bhs.name
   location            = azurerm_resource_group.bhs.location
 
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+  account_tier                     = "Standard"
+  account_replication_type         = "LRS"
+  cross_tenant_replication_enabled = true
 }
 
 resource "azurerm_storage_container" "bhs_photos" {
-  name                 = "photos"
-  storage_account_name = azurerm_storage_account.bhs.name
+  name               = "photos"
+  storage_account_id = azurerm_storage_account.bhs.id
 
   container_access_type = "blob"
 }
 
 resource "azurerm_storage_container" "bhs_videos" {
-  name                 = "videos"
-  storage_account_name = azurerm_storage_account.bhs.name
+  name               = "videos"
+  storage_account_id = azurerm_storage_account.bhs.id
 
   container_access_type = "blob"
 }
@@ -442,10 +455,11 @@ resource "azurerm_linux_web_app" "bhs_web" {
   https_only = true
 
   site_config {
-    always_on         = false
-    ftps_state        = "Disabled"
-    health_check_path = "/api/healthcheck/status"
-    http2_enabled     = true
+    always_on                         = false
+    ftps_state                        = "Disabled"
+    health_check_path                 = "/api/healthcheck/status"
+    health_check_eviction_time_in_min = 10
+    http2_enabled                     = true
 
     application_stack {
       dotnet_version = "8.0"
@@ -498,6 +512,14 @@ resource "azurerm_linux_web_app" "bhs_web" {
     type  = "Custom"
     value = data.azurerm_app_configuration.bhs.primary_read_key[0].connection_string
   }
+
+  lifecycle {
+    ignore_changes = [
+      tags["hidden-link: /app-insights-conn-string"],
+      tags["hidden-link: /app-insights-instrumentation-key"],
+      tags["hidden-link: /app-insights-resource-id"],
+    ]
+  }
 }
 
 module "bhs_hostname_root" {
@@ -541,6 +563,7 @@ resource "auth0_client" "bhs_spa" {
   is_first_party       = true
   oidc_conformant      = true
   custom_login_page_on = true
+  cross_origin_auth    = true
 
   jwt_configuration {
     alg                 = "RS256"
@@ -571,6 +594,7 @@ resource "auth0_client" "bhs_api" {
   is_first_party       = true
   oidc_conformant      = true
   custom_login_page_on = true
+  cross_origin_auth    = true
 
   jwt_configuration {
     alg                 = "RS256"
