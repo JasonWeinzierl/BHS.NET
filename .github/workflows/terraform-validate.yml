@@ -29,6 +29,6 @@ jobs:
       working-directory: ./infrastructure/modules/env-specific
 
     - run: terraform init -backend=false
-      working-directory: ./infrastructure/modules/shared
+      working-directory: ./infrastructure/environments/shared
     - run: terraform validate
-      working-directory: ./infrastructure/modules/shared
+      working-directory: ./infrastructure/environments/shared
