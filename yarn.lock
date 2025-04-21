@@ -4968,10 +4968,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:^5.1.5":
-  version: 5.1.5
-  resolution: "@types/jasmine@npm:5.1.5"
-  checksum: 10c0/904a2a6bfe7478478ec73d502708dc4b4cc46fa554c459cee3e0be01efda96fba7d26ef8bec2f246d9163cc517407b135acabcf6f076c11aa514ed9b79bc67e5
+"@types/jasmine@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "@types/jasmine@npm:5.1.7"
+  checksum: 10c0/f8df11fb8c8dce20088bfbaf5f805878b1228b4522f6ef100ea539e2f363537304095200ea8e856a0795e45d18803970d12683bc5afa35ccb475cc8ec5ea6d54
   languageName: node
   linkType: hard
 
@@ -6448,7 +6448,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@eslint/js": "npm:^9.24.0"
     "@stylistic/eslint-plugin": "npm:^4.2.0"
-    "@types/jasmine": "npm:^5.1.5"
+    "@types/jasmine": "npm:^5.1.7"
     "@types/node": "npm:^22.10.5"
     "@wdio/cli": "npm:^9.12.6"
     "@wdio/jasmine-framework": "npm:^9.12.6"

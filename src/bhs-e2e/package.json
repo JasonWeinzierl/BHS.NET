@@ -20,7 +20,7 @@
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@stylistic/eslint-plugin": "^4.2.0",
-    "@types/jasmine": "^5.1.5",
+    "@types/jasmine": "^5.1.7",
     "@types/node": "^22.10.5",
     "eslint": "^9.24.0",
     "eslint-config-flat-gitignore": "^2.1.0",
