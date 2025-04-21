@@ -23,10 +23,18 @@ jobs:
       with:
         terraform_version: "1.5.7"
 
+    - run: terraform fmt -check -recursive
+      working-directory: ./infrastructure
+
     - run: terraform init -backend=false
-      working-directory: ./infrastructure/modules/env-specific
+      working-directory: ./infrastructure/environments/staging
     - run: terraform validate
-      working-directory: ./infrastructure/modules/env-specific
+      working-directory: ./infrastructure/environments/staging
+
+    - run: terraform init -backend=false
+      working-directory: ./infrastructure/environments/production
+    - run: terraform validate
+      working-directory: ./infrastructure/environments/production
 
     - run: terraform init -backend=false
       working-directory: ./infrastructure/environments/shared

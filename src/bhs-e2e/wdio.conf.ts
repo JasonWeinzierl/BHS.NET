@@ -4,7 +4,6 @@ import registerCustomCommands from './test/wdio-commands/register-custom-command
 const defaultRunnerEnv: Record<string, string> = {
   E2E_auth0Domain: 'dev-wz656qr7u8q11d84.us.auth0.com',
   E2E_auth0ClientId: 'MEQJ4p2Y10CLMRebfZAEV2o2zxJVNFk7',
-  E2E_auth0Audience: 'https://beltonhistoricalsociety.org/api/swagger/index.html',
   // These credentials do not work on any published app; this Auth0 tenant is for local development only.
   E2E_auth0TestUsername: 'noreply@beltonhistoricalsociety.org',
   E2E_auth0TestPassword: 'This password is fine to publish!',

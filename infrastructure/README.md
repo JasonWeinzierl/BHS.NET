@@ -5,20 +5,22 @@
 ```sh
 az login
 
+cd infrastructure
+./LoadDotEnv.ps1
+
 cd environments/shared
 terraform init
 terraform apply
 
-cd ../modules/env-specific
-terraform init
-
+cd ../staging
 ../../LoadDotEnv.ps1 staging
-terraform workspace select staging
-terraform apply -var-file="env/staging.tfvars"
+terraform init
+terraform apply
 
+cd ../production
 ../../LoadDotEnv.ps1 production
-terraform workspace select default
-terraform apply -var-file="env/production.tfvars"
+terraform init
+terraform apply
 ```
 
 ## Getting Started

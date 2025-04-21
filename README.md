@@ -61,7 +61,7 @@ You must also add the configuration settings as mentioned below.
 
 #### Configuration
 
-The required configuration settings are listed in the `env-specific` infrastructure files.
+The required configuration settings are listed in the `infrastructure/modules/web-apps/configs.tf` infrastructure file.
 These settings include authentication settings, database connection strings, API keys, etc.
 Without these settings, various features may fail to work locally.
 

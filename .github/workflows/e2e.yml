@@ -62,7 +62,6 @@ jobs:
       env:
         E2E_auth0Domain: ${{ vars.CYPRESS_AUTH0_DOMAIN }}
         E2E_auth0ClientId: ${{ vars.CYPRESS_AUTH0_CLIENT_ID }}
-        E2E_auth0Audience: ${{ vars.CYPRESS_AUTH0_AUDIENCE }}
         E2E_auth0TestUsername: ${{ vars.CYPRESS_AUTH0_TEST_USERNAME }}
         E2E_auth0TestPassword: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
 
