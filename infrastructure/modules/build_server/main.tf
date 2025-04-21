@@ -122,4 +122,9 @@ resource "azuread_service_principal" "bhs_github_actions" {
 
 resource "azuread_service_principal_password" "bhs_github_actions" {
   service_principal_id = azuread_service_principal.bhs_github_actions.id
+
+  rotate_when_changed = {
+    # Change this to rotate the password.
+    last_changed = "2025-04-21T07:37:01Z"
+  }
 }
