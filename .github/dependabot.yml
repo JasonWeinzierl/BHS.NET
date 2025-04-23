@@ -45,3 +45,9 @@ updates:
       interval: weekly
       day: saturday
     open-pull-requests-limit: 10
+
+  - package-ecosystem: bundler
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
