@@ -14,10 +14,10 @@
           <li class="list-group-item">
             <h3>Banner {{ banner.id }}</h3>
             <p>
-              <span [class]="'badge text-bg-' + banner.bootstrapAlertType">
+              <span [class]="`badge text-bg-${banner.bootstrapAlertType}`">
                 {{ banner.theme }}
               </span>
-              <span [class]="'badge text-bg-' + (banner.isEnabled ? 'primary' : 'secondary')">
+              <span [class]="`badge text-bg-${banner.isEnabled ? 'primary' : 'secondary'}`">
                 {{ banner.isEnabled ? 'Visible' : 'Hidden' }}
               </span>
             </p>
@@ -29,7 +29,7 @@
             <ul>
               @for (statusChange of banner.statusChanges; track statusChange) {
                 <li>
-                  <span [class]="'bi bi-'+ (statusChange.isEnabled ? 'calendar-check' : 'calendar-x')"></span>
+                  <span [class]="`bi bi-${statusChange.isEnabled ? 'calendar-check' : 'calendar-x'}`"></span>
                   {{ statusChange.isEnabled ? 'Shown' : 'Removed' }}
                   {{ statusChange.dateModified | date:'long' }}
                 </li>
