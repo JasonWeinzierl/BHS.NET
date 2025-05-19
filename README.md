@@ -51,7 +51,7 @@ This does not require the frontend development server to be running.
 
 #### Infrastructure
 
-See the README in `infrastructure/` for further documentation.
+See separate repository: [https://github.com/JasonWeinzierl/belton-historical-society-infrastructure]
 
 #### Auth
 
@@ -61,7 +61,7 @@ You must also add the configuration settings as mentioned below.
 
 #### Configuration
 
-The required configuration settings are listed in the `infrastructure/modules/web-apps/configs.tf` infrastructure file.
+The required configuration settings are listed in the `modules/web-apps/configs.tf` file **of the separate infrastructure repository**.
 These settings include authentication settings, database connection strings, API keys, etc.
 Without these settings, various features may fail to work locally.
 
