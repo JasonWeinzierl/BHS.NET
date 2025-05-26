@@ -1,5 +1,6 @@
 import { AsyncPipe, DatePipe, NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { jwtDecode } from 'jwt-decode';
@@ -19,6 +20,7 @@ import { catchError, map, of, startWith } from 'rxjs';
 })
 export class AdminIndexComponent {
   private readonly auth = inject(AuthService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly user$ = this.auth.user$;
   readonly permissionsVm$ = this.auth.getAccessTokenSilently({ cacheMode: 'cache-only' }).pipe(
@@ -54,7 +56,8 @@ export class AdminIndexComponent {
         returnTo: window.location.origin,
       },
     })
-      // eslint-disable-next-line rxjs-x/no-ignored-subscription, rxjs-angular-x/prefer-async-pipe
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      // eslint-disable-next-line rxjs-angular-x/prefer-async-pipe
       .subscribe({
         error: (err: unknown) => { console.error('An error occurred while logging out:', err); },
       });
