@@ -23,7 +23,6 @@ export default tseslint.config(gitignore(), {
     js.configs.recommended,
     stylistic.configs['disable-legacy'],
     stylistic.configs.customize({
-      flat: true,
       quotes: 'single',
       semi: true,
       jsx: false,
@@ -302,6 +301,14 @@ export default tseslint.config(gitignore(), {
 
     // TODO: this conflicts with signals.
     '@angular-eslint/template/no-call-expression': 'off',
+
+    // Increase for new Angular control flow syntax.
+    '@angular-eslint/template/cyclomatic-complexity': [
+      'error',
+      {
+        maxComplexity: 10,
+      },
+    ],
   },
   // #endregion Angular templates
 }, {
