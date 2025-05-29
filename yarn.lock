@@ -4086,7 +4086,7 @@ __metadata:
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.33.0"
     undici: "npm:^6.21.2"
-    zod: "npm:^3.24.4"
+    zod: "npm:^3.25.34"
   languageName: unknown
   linkType: soft
 
@@ -4135,7 +4135,7 @@ __metadata:
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.33.0"
     vitest: "npm:^3.1.4"
-    zod: "npm:^3.24.4"
+    zod: "npm:^3.25.34"
     zone.js: "npm:~0.15.1"
   languageName: unknown
   linkType: soft
@@ -10120,10 +10120,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.24.4":
-  version: 3.24.4
-  resolution: "zod@npm:3.24.4"
-  checksum: 10c0/ab3112f017562180a41a0f83d870b333677f7d6b77f106696c56894567051b91154714a088149d8387a4f50806a2520efcb666f108cd384a35c236a191186d91
+"zod@npm:^3.25.34":
+  version: 3.25.34
+  resolution: "zod@npm:3.25.34"
+  checksum: 10c0/29f836f6dacace3ae247318362019937f429146676f6d185dbf62f808bba3783dff11f60d49864c4d9589b3d85c353a9fbd36c2fbe8c91b06447ab600243a6c5
   languageName: node
   linkType: hard
 
