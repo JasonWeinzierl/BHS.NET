@@ -388,20 +388,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/platform-browser-dynamic@npm:20.0.0":
-  version: 20.0.0
-  resolution: "@angular/platform-browser-dynamic@npm:20.0.0"
-  dependencies:
-    tslib: "npm:^2.3.0"
-  peerDependencies:
-    "@angular/common": 20.0.0
-    "@angular/compiler": 20.0.0
-    "@angular/core": 20.0.0
-    "@angular/platform-browser": 20.0.0
-  checksum: 10c0/ac78250df47928bf9c38974388b0d8c31730474189e0ab60b90dbc1dc6004d4557cfa35e6912ed58ba54c14edd337a0cf8f0d469e48034e3cdb79930d985850f
-  languageName: node
-  linkType: hard
-
 "@angular/platform-browser@npm:20.0.0":
   version: 20.0.0
   resolution: "@angular/platform-browser@npm:20.0.0"
@@ -4103,7 +4089,6 @@ __metadata:
     "@angular/core": "npm:20.0.0"
     "@angular/forms": "npm:20.0.0"
     "@angular/platform-browser": "npm:20.0.0"
-    "@angular/platform-browser-dynamic": "npm:20.0.0"
     "@angular/router": "npm:20.0.0"
     "@auth0/auth0-angular": "npm:^2.2.3"
     "@microsoft/applicationinsights-analytics-js": "npm:3.3.8"
