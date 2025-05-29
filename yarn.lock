@@ -204,7 +204,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/build@npm:^20.0.0":
+"@angular/build@npm:20.0.0":
   version: 20.0.0
   resolution: "@angular/build@npm:20.0.0"
   dependencies:
@@ -4081,7 +4081,7 @@ __metadata:
   resolution: "bhs-web-angular-app@workspace:src/bhs-web-angular-app"
   dependencies:
     "@angular/animations": "npm:20.0.0"
-    "@angular/build": "npm:^20.0.0"
+    "@angular/build": "npm:20.0.0"
     "@angular/cli": "npm:20.0.0"
     "@angular/common": "npm:20.0.0"
     "@angular/compiler": "npm:20.0.0"
