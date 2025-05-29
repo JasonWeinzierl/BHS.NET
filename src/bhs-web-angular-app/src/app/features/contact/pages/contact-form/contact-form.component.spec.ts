@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
 import { Observable, Subject } from 'rxjs';
+import { MockInstance, vi } from 'vitest';
 import { ContactFormComponent } from './contact-form.component';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
 
@@ -36,7 +37,7 @@ describe('ContactFormComponent', () => {
     let messageInput: HTMLTextAreaElement | null;
     let bodyInput: HTMLInputElement | null;
     let submitButton: HTMLButtonElement | null;
-    let sendMessage: jest.SpyInstance<Observable<void>, [request: ContactAlertRequest]>;
+    let sendMessage: MockInstance<(request: ContactAlertRequest) => Observable<void>>;
     let sendMessageResponseSubject$: Subject<void>;
 
     beforeEach(() => {
@@ -47,7 +48,7 @@ describe('ContactFormComponent', () => {
       bodyInput = nativeElement.querySelector('#body');
       submitButton = nativeElement.querySelector('button[type="submit"]');
       sendMessageResponseSubject$ = new Subject<void>();
-      sendMessage = jest.spyOn(TestBed.inject(ContactService), 'sendMessage').mockImplementation(() => sendMessageResponseSubject$);
+      sendMessage = vi.spyOn(TestBed.inject(ContactService), 'sendMessage').mockImplementation(() => sendMessageResponseSubject$);
     });
 
     it('should show contact form', () => {
@@ -100,12 +101,12 @@ describe('ContactFormComponent', () => {
 
     describe('when the request takes a while', () => {
       beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
       });
 
       afterEach(async () => {
-        await jest.runAllTimersAsync();
-        jest.useRealTimers();
+        await vi.runAllTimersAsync();
+        vi.useRealTimers();
       });
 
       it('should timeout after 10 seconds', async () => {
@@ -122,7 +123,7 @@ describe('ContactFormComponent', () => {
         expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
         expect(sendMessage).toHaveBeenCalled();
 
-        await jest.advanceTimersByTimeAsync(10_000);
+        await vi.advanceTimersByTimeAsync(10_000);
         fixture.detectChanges();
 
         expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeFalsy();
@@ -143,7 +144,7 @@ describe('ContactFormComponent', () => {
         expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
         expect(sendMessage).toHaveBeenCalled();
 
-        await jest.advanceTimersByTimeAsync(5_000);
+        await vi.advanceTimersByTimeAsync(5_000);
         fixture.detectChanges();
 
         expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();

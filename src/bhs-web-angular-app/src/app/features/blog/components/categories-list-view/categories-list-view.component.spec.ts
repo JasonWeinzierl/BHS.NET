@@ -72,7 +72,9 @@ describe('CategoriesListViewComponent', () => {
     const routerLinks = linkDebugElements.map(de => de.injector.get(RouterLink));
 
     expect(routerLinks).toHaveLength(2);
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- only the setter is deprecated
     expect(routerLinks[0].href).toBe('/apps/blog/category/newsletters');
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     expect(routerLinks[1].href).toBe('/apps/blog/category/stories');
   });
 });

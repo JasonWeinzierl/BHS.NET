@@ -3,9 +3,10 @@ import { TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
+import { vi } from 'vitest';
 import { BhsTitleStrategy } from './bhs-title-strategy';
 
-@Component({ selector: 'app-fake', changeDetection: ChangeDetectionStrategy.OnPush })
+@Component({ selector: 'app-fake', changeDetection: ChangeDetectionStrategy.OnPush, template: '' })
 class FakeComponent {}
 
 describe('BhsTitleStrategy', () => {
@@ -21,7 +22,7 @@ describe('BhsTitleStrategy', () => {
           { path: 'bar', component: FakeComponent },
         ]),
         MockProvider(Title, {
-          setTitle: jest.fn(),
+          setTitle: vi.fn(),
         }),
       ],
     });
@@ -35,7 +36,7 @@ describe('BhsTitleStrategy', () => {
   });
 
   it('should add a suffix if title is defined', async () => {
-    const setTitle = jest.spyOn(title, 'setTitle');
+    const setTitle = vi.spyOn(title, 'setTitle');
 
     await router.navigate(['foo']);
     service.updateTitle(router.routerState.snapshot);
@@ -44,7 +45,7 @@ describe('BhsTitleStrategy', () => {
   });
 
   it('should use the app initial title if title is not defined', async () => {
-    const setTitle = jest.spyOn(title, 'setTitle');
+    const setTitle = vi.spyOn(title, 'setTitle');
 
     await router.navigate(['bar']);
     service.updateTitle(router.routerState.snapshot);

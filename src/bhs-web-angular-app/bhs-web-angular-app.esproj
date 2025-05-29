@@ -10,7 +10,7 @@
 
     <TestCommand>yarn test</TestCommand>
     <JavaScriptTestRoot></JavaScriptTestRoot>
-    <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
+    <JavaScriptTestFramework>Vitest</JavaScriptTestFramework>
 
     <CleanCommand>yarn clean</CleanCommand>
 

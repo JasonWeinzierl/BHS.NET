@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { MockComponent, MockProvider } from 'ng-mocks';
+import { MockProvider } from 'ng-mocks';
 import { ToastrService } from 'ngx-toastr';
 import { of, throwError } from 'rxjs';
 import { BlogEntryComponent } from './blog-entry.component';
@@ -9,7 +9,6 @@ import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';
 import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry-album.component';
 import { DateComponent } from '@shared/components/date/date.component';
-import { MarkdownComponent } from '@shared/components/markdown/markdown.component';
 
 describe('BlogEntryComponent', () => {
   let component: BlogEntryComponent;
@@ -22,7 +21,6 @@ describe('BlogEntryComponent', () => {
         DateComponent,
         BlogEntryComponent,
         EntryAlbumComponent,
-        MockComponent(MarkdownComponent),
       ],
       providers: [
         MockProvider(ActivatedRoute, {

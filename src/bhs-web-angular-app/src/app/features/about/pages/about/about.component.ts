@@ -10,5 +10,9 @@ import { appVersion } from 'src/environments';
   imports: [NgOptimizedImage],
 })
 export default class AboutComponent {
-  version = appVersion;
+  readonly version: typeof appVersion;
+
+  constructor() {
+    this.version = appVersion;
+  }
 }

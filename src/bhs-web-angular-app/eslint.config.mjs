@@ -3,10 +3,10 @@
 // @ts-check
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
+import vitest from '@vitest/eslint-plugin';
 import angular from 'angular-eslint';
 import gitignore from 'eslint-config-flat-gitignore';
 import importX from 'eslint-plugin-import-x';
-import jest from 'eslint-plugin-jest';
 import jsdoc from 'eslint-plugin-jsdoc';
 import rxjsAngularX from 'eslint-plugin-rxjs-angular-x';
 import rxjsX from 'eslint-plugin-rxjs-x';
@@ -317,24 +317,23 @@ export default tseslint.config(gitignore(), {
     '**/*.spec.ts',
   ],
   extends: [
-    jest.configs['flat/recommended'],
-    jest.configs['flat/style'],
+    vitest.configs.recommended,
   ],
-  languageOptions: {
-    globals: {
-      ...globals.jest,
+  settings: {
+    vitest: {
+      typecheck: true,
     },
   },
   rules: {
     // Allow expect(unbound methods).
     '@typescript-eslint/unbound-method': 'off',
-    'jest/unbound-method': 'error',
+    // 'vitest/unbound-method': 'error', // Not finished in their plugin yet. #591
 
     // Require everything to be wrapped in describe().
-    'jest/require-top-level-describe': 'error',
+    'vitest/require-top-level-describe': 'error',
 
     // All formatting.
-    'jest/padding-around-all': 'error',
+    'vitest/padding-around-all': 'error',
   },
   // #endregion Unit tests
 });

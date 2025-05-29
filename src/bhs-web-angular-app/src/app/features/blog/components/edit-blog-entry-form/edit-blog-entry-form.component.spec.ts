@@ -45,6 +45,7 @@ describe('EditBlogEntryFormComponent', () => {
     const routerLinkDe = fixture.debugElement.query(By.directive(RouterLink));
     const routerLink = routerLinkDe.injector.get(RouterLink);
 
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- only the setter is deprecated
     expect(routerLink.href).toBe('/apps/blog');
   });
 
@@ -57,6 +58,7 @@ describe('EditBlogEntryFormComponent', () => {
     const routerLinkDe = fixture.debugElement.query(By.directive(RouterLink));
     const routerLink = routerLinkDe.injector.get(RouterLink);
 
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     expect(routerLink.href).toBe(`/apps/blog/entry/${post.slug}`);
   });
 

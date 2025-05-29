@@ -17,10 +17,10 @@ updates:
         patterns:
           - "@typescript-eslint/*"
           - "eslint*"
-      jest:
+      vitest:
         patterns:
-          - "jest*"
-          - "@types/jest"
+          - "vitest*"
+          - "@vitest/*"
 
   - package-ecosystem: nuget
     directory: "/"

@@ -81,6 +81,7 @@ describe('AlbumPageComponent', () => {
     const linkDebugElements = fixture.debugElement.queryAll(By.directive(RouterLink));
     const routerLinks = linkDebugElements.map(de => de.injector.get(RouterLink));
 
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- only the setter is deprecated
     expect(routerLinks.map(l => l.href)).toEqual([
       '/apps/photos/album/album-three/photo/photo-six',
       '/apps/photos/album/album-three',

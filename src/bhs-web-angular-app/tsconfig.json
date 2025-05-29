@@ -33,6 +33,11 @@
         "src/app/*"
       ]
     },
+    "types": [
+      // Since vitest doesn't have separate types (e.g. @types/jest), VS Code doesn't know to include those,
+      // so even though tsconfig.spec.json specifies vitest/globals, we need this for intellisense and linting.
+      "vitest/globals",
+    ],
 
     /* Emit */
     "declaration": false,
