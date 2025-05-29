@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, ErrorHandler } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
@@ -11,6 +11,7 @@ import { BhsTitleStrategy } from '@core/services/bhs-title-strategy';
 
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
+    provideBrowserGlobalErrorListeners(),
     provideRouter(
       APP_ROUTES,
       withInMemoryScrolling({
