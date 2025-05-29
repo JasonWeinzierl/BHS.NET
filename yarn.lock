@@ -4172,7 +4172,7 @@ __metadata:
     ng-mocks: "npm:^14.13.5"
     ngx-bootstrap: "npm:^19.0.2"
     ngx-toastr: "npm:^19.0.0"
-    rxjs: "npm:^7.8.1"
+    rxjs: "npm:^7.8.2"
     tslib: "npm:^2.8.1"
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.33.0"
@@ -8746,7 +8746,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.8.2, rxjs@npm:^7.8.1":
+"rxjs@npm:7.8.2, rxjs@npm:^7.8.1, rxjs@npm:^7.8.2":
   version: 7.8.2
   resolution: "rxjs@npm:7.8.2"
   dependencies:
