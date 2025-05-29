@@ -1,44 +1,33 @@
-import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { Tokens } from 'marked';
-import { MARKED_OPTIONS, MarkedOptions, MarkedRenderer, provideMarkdown } from 'ngx-markdown';
+import { InjectionToken } from '@angular/core';
+import { MarkedOptions, Renderer, Tokens } from 'marked';
 
-/**
- * Initialize our config for ngx-markdown.
- */
-export function provideBhsMarkdown(): EnvironmentProviders {
-  return makeEnvironmentProviders([
-    provideMarkdown({
-      markedOptions: {
-        provide: MARKED_OPTIONS,
-        useFactory: (): MarkedOptions => {
-          // marked.js options with bootstrap styles added.
+export const MARKED_OPTIONS = new InjectionToken<MarkedOptions>('MarkedOptions', {
+  factory: () => {
+    // marked.js options with bootstrap styles added.
 
-          const renderer = new MarkedRenderer();
+    const renderer = new Renderer();
 
-          renderer.image = ({ href, title, text }: Tokens.Image): string => {
-            if (!href) {
-              return text;
-            }
+    renderer.image = ({ href, title, text }: Tokens.Image): string => {
+      if (!href) {
+        return text;
+      }
 
-            const encodedSrc = encodeURI(href).replace(/%25/g, '%');
-            if (!encodedSrc) {
-              return text;
-            }
+      const encodedSrc = encodeURI(href).replace(/%25/g, '%');
+      if (!encodedSrc) {
+        return text;
+      }
 
-            let out = '<img src="' + encodedSrc + '" alt="' + text + '"';
-            if (title) {
-              out += ' title="' + title + '"';
-            }
-            out += ' class="img-fluid"';
-            out += '>';
-            return out;
-          };
+      let out = '<img src="' + encodedSrc + '" alt="' + text + '"';
+      if (title) {
+        out += ' title="' + title + '"';
+      }
+      out += ' class="img-fluid"';
+      out += '>';
+      return out;
+    };
 
-          return {
-            renderer,
-          };
-        },
-      },
-    }),
-  ]);
-}
+    return {
+      renderer,
+    };
+  },
+});

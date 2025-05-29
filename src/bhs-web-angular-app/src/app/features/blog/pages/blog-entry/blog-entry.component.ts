@@ -3,13 +3,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { MarkdownComponent } from 'ngx-markdown';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
-import { DateComponent } from '../../../../shared/components/date/date.component';
-import { EntryAlbumComponent } from '../../components/entry-album/entry-album.component';
 import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';
+import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry-album.component';
+import { DateComponent } from '@shared/components/date/date.component';
+import { MarkdownComponent } from '@shared/components/markdown/markdown.component';
 
 @Component({
   selector: 'app-blog-entry',
@@ -22,7 +22,7 @@ import { PhotosService } from '@data/photos';
     MarkdownComponent,
     EntryAlbumComponent,
     AsyncPipe,
-  ],
+],
 })
 export class BlogEntryComponent {
   private readonly activatedRoute = inject(ActivatedRoute);

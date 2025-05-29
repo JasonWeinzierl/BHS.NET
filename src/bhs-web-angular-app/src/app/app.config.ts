@@ -7,7 +7,6 @@ import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applica
 import { provideToastr } from 'ngx-toastr';
 import { APP_ROUTES } from './app.routes';
 import { provideBhsAuth0Config } from '@core/providers/auth0-config.provider';
-import { provideBhsMarkdown } from '@core/providers/bootstrap-marked-options.provider';
 import { BhsTitleStrategy } from '@core/services/bhs-title-strategy';
 
 export const APP_CONFIG: ApplicationConfig = {
@@ -27,7 +26,6 @@ export const APP_CONFIG: ApplicationConfig = {
         authHttpInterceptorFn,
       ]),
     ),
-    provideBhsMarkdown(),
     provideToastr(),
     {
       provide: TitleStrategy,
