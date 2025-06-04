@@ -46,6 +46,6 @@
   }
 
   @for (post of postsVm.posts; track post.slug) {
-    <app-post-card [post]="post" [attr.data-testid]="post.slug" />
+    <app-post-card [post]="post" />
   }
 }

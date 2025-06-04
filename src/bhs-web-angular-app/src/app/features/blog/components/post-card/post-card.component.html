@@ -1,11 +1,11 @@
-<div class="card bg-base-100 mb-5">
+<div class="card bg-base-100 mb-5" [attr.data-testid]="post().slug">
   <div class="card-body">
-    <h2>
+    <h2 [attr.data-testid]="`${post().slug}-Title`">
       <a class="link link-primary link-hover" [routerLink]="['/apps/blog/entry', post().slug]">
         {{post().title}}
       </a>
     </h2>
-    <p class="text-sm">
+    <p class="text-sm" [attr.data-testid]="`${post().slug}-Posted`">
       Posted
       @let author = post().author;
       @if (author) {
@@ -18,7 +18,9 @@
   </div>
   <hr>
   <div class="card-body">
-    <p>{{post().contentPreview}}</p>
+    <p [attr.data-testid]="`${post().slug}-ContentPreview`">
+      {{post().contentPreview}}
+    </p>
     <p>
       <a class="btn btn-secondary" role="button" [routerLink]="['/apps/blog/entry', post().slug]">
         Read Full Post

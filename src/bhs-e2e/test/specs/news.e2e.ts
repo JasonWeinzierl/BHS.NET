@@ -51,11 +51,11 @@ describe('news', () => {
     await browser.url('/apps/blog');
 
     await expect($('app-post-card')).toExist();
-    await expect($(`[data-testid="${firstPost.slug}"] .card-title`)).toHaveText(firstPost.title);
-    await expect($(`[data-testid="${firstPost.slug}"] .card-body`)).toHaveText(expect.stringContaining(firstPost.contentPreview.replace(/\n\n*/g, ' ')));
-    await expect($(`[data-testid="${firstPost.slug}"] .card-subtitle`)).toHaveText(expect.stringContaining(firstPost.datePublished.getFullYear().toString()));
+    await expect($(`[data-testid="${firstPost.slug}-Title"]`)).toHaveText(firstPost.title);
+    await expect($(`[data-testid="${firstPost.slug}-ContentPreview"]`)).toHaveText(expect.stringContaining(firstPost.contentPreview.replace(/\n\n*/g, ' ')));
+    await expect($(`[data-testid="${firstPost.slug}-Posted"]`)).toHaveText(expect.stringContaining(firstPost.datePublished.getFullYear().toString()));
     if (firstPost.author?.name) {
-      await expect($(`[data-testid="${firstPost.slug}"] .card-subtitle`)).toHaveText(expect.stringContaining(firstPost.author.name));
+      await expect($(`[data-testid="${firstPost.slug}-Posted"]`)).toHaveText(expect.stringContaining(firstPost.author.name));
     }
   });
 });
