@@ -2,19 +2,28 @@
   <div class="container mx-auto">
     <ul class="flex gap-2 justify-center text-center text-sm text-base-content/70">
       <li>
-        <a [routerLink]="['/about/this-site']" class="link link-primary link-hover">About this Site</a>
+        <a [routerLink]="['/about/this-site']" class="link link-primary link-hover">
+          About <span class="hidden sm:inline">this Site</span>
+        </a>
       </li>
       <li>
-        <a [routerLink]="['/contact']" class="link link-primary link-hover">Contact Us</a>
+        <a [routerLink]="['/contact']" class="link link-primary link-hover">
+          Contact <span class="hidden sm:inline">Us</span>
+        </a>
       </li>
       <li>
-        Copyright &copy; <time datetime="2011">2011</time>&ndash;<time [attr.datetime]="year">{{year}}</time>
+        <span class="hidden sm:inline">Copyright</span>
+        &copy; <time datetime="2011">2011</time>&ndash;<time [attr.datetime]="year">{{year}}</time>
       </li>
       <li>
-        <a [routerLink]="['/about/terms-of-service']" class="link link-primary link-hover">Terms of Service</a>
+        <a [routerLink]="['/about/terms-of-service']" class="link link-primary link-hover">
+          Terms <span class="hidden sm:inline">of Service</span>
+        </a>
       </li>
       <li>
-        <a [routerLink]="['/about/privacy-policy']" class="link link-primary link-hover">Privacy Policy</a>
+        <a [routerLink]="['/about/privacy-policy']" class="link link-primary link-hover">
+          Privacy <span class="hidden sm:inline">Policy</span>
+        </a>
       </li>
     </ul>
   </div>
