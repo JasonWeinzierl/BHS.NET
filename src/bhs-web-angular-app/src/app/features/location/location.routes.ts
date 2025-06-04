@@ -5,6 +5,6 @@ export default [
   {
     path: '',
     component: LocationComponent,
-    data: { title: 'Location' },
+    title: 'Location',
   },
 ] satisfies Routes;

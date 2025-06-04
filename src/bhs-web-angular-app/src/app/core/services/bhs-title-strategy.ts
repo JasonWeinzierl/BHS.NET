@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, TitleStrategy } from '@angular/router';
+import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 
 const APP_TITLE = 'Belton Historical Society';
 
@@ -18,11 +18,5 @@ export class BhsTitleStrategy extends TitleStrategy {
     } else {
       this.title.setTitle(APP_TITLE);
     }
-  }
-
-  // TODO: move title up out of data for each route and then remove this override.
-  override getResolvedTitleForRoute(snapshot: ActivatedRouteSnapshot): string | undefined {
-    const title: unknown = snapshot.data['title'];
-    return title && typeof title === 'string' ? title : undefined;
   }
 }

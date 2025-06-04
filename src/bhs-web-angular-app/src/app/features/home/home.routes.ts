@@ -6,6 +6,6 @@ export default [
     path: '',
     component: HomeComponent,
     pathMatch: 'full',
-    data: { title: 'Home' },
+    title: 'Home',
   },
 ] satisfies Routes;

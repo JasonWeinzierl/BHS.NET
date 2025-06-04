@@ -5,6 +5,6 @@ export default [
   {
     path: '',
     component: ContactComponent,
-    data: { title: 'Contact Us' },
+    title: 'Contact Us',
   },
 ] satisfies Routes;

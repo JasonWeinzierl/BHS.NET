@@ -69,7 +69,7 @@ export const APP_ROUTES: Routes = [
         resolve: {
           closestPath: resolveClosestPath,
         },
-        data: { title: '404 Not Found' },
+        title: '404 Not Found',
       },
     ],
   },

@@ -11,17 +11,17 @@ export default [
     path: '',
     component: BlogIndexComponent,
     pathMatch: 'full',
-    data: { title: 'News' },
+    title: 'News',
   },
   {
     path: 'entry/:slug',
     component: BlogEntryComponent,
-    data: { title: 'Post' },
+    title: 'Post',
   },
   {
     path: 'edit/:slug', // TODO: move under entries/:slug/edit ?
     component: EntryEditComponent,
-    data: { title: 'Edit Entry' },
+    title: 'Edit Entry',
     canActivate: [authGuardFn],
   },
   {
@@ -31,7 +31,7 @@ export default [
   {
     path: 'new',
     component: EntryNewComponent,
-    data: { title: 'New Entry' },
+    title: 'New Entry',
     canActivate: [authGuardFn],
   },
 ] satisfies Routes;

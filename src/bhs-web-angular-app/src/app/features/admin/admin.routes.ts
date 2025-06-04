@@ -7,11 +7,11 @@ export default [
     path: '',
     pathMatch: 'full',
     component: AdminIndexComponent,
-    data: { title: 'Administration Tools' },
+    title: 'Administration Tools',
   },
   {
     path: 'banners',
     loadComponent: () => import('./pages/admin-banners/admin-banners.component'),
-    data: { title: 'Edit Banners' },
+    title: 'Edit Banners',
   },
 ] satisfies Routes;

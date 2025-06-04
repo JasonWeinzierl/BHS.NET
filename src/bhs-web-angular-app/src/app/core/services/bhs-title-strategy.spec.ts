@@ -18,7 +18,7 @@ describe('BhsTitleStrategy', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([
-          { path: 'foo', data: { title: 'foo title' }, component: FakeComponent },
+          { path: 'foo', title: 'foo title', component: FakeComponent },
           { path: 'bar', component: FakeComponent },
         ]),
         MockProvider(Title, {

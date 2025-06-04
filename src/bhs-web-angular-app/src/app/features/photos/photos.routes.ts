@@ -8,16 +8,16 @@ export default [
     path: '',
     pathMatch: 'full',
     component: PhotosIndexComponent,
-    data: { title: 'Photo Albums' },
+    title: 'Photo Albums',
   },
   {
     path: 'album/:slug',
     component: AlbumComponent,
-    data: { title: 'Album' },
+    title: 'Album',
   },
   {
     path: 'album/:slug/photo/:id',
     component: AlbumPageComponent,
-    data: { title: 'Photo' },
+    title: 'Photo',
   },
 ] satisfies Routes;
