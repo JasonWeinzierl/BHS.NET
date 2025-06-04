@@ -36,7 +36,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
     - name: Setup GitVersion
-      uses: gittools/actions/gitversion/setup@v3.1
+      uses: gittools/actions/gitversion/setup@v3.2
       with:
         versionSpec: '5.x'
 
@@ -50,7 +50,7 @@ jobs:
 
     - name: Run gitversion
       id: gitversion
-      uses: gittools/actions/gitversion/execute@v3.1
+      uses: gittools/actions/gitversion/execute@v3.2
       with:
         useConfigFile: true
 
