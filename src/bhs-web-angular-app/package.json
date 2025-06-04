@@ -35,8 +35,8 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "20.0.0",
-    "@angular/cli": "20.0.0",
+    "@angular/build": "20.0.1",
+    "@angular/cli": "20.0.1",
     "@angular/compiler-cli": "20.0.0",
     "@stylistic/eslint-plugin": "^4.4.1",
     "@tailwindcss/postcss": "^4.1.8",
