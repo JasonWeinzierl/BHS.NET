@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 @Component({
   selector: 'app-date',
   templateUrl: './date.component.html',
-  styleUrl: './date.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe],
 })

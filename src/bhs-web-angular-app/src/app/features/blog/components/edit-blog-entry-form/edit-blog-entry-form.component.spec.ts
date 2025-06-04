@@ -83,7 +83,7 @@ describe('EditBlogEntryFormComponent', () => {
     fixture.componentRef.setInput('allCategories', categories);
     fixture.detectChanges();
 
-    const dangerEl = (fixture.nativeElement as HTMLElement).querySelector('.form-text.text-danger');
+    const dangerEl = (fixture.nativeElement as HTMLElement).querySelector('.alert.alert-error');
 
     expect(dangerEl?.textContent).toBeTruthy();
   });

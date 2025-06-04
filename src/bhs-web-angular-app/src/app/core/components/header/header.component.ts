@@ -1,31 +1,21 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { AlertComponent } from 'ngx-bootstrap/alert';
-import { CollapseDirective } from 'ngx-bootstrap/collapse';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, map, of } from 'rxjs';
-import { getBootstrapAlertType, SiteBanner, SiteBannerService } from '@data/banners';
-
-interface SiteBannerStyled extends SiteBanner {
-  alertType: string;
-}
+import { catchError, of, scan, startWith, Subject, switchMap } from 'rxjs';
+import { SiteBannerService } from '@data/banners';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AlertComponent,
     RouterLink,
-    BsDropdownModule,
     RouterLinkActive,
-    CollapseDirective,
     AsyncPipe,
+    NgClass,
   ],
 })
 export class HeaderComponent {
@@ -33,10 +23,12 @@ export class HeaderComponent {
   private readonly toastr = inject(ToastrService);
   private readonly auth = inject(AuthService);
 
-  isCollapsed = true;
+  readonly isCollapsed = signal(true);
+  readonly isContentMenuCollapsed = signal(true);
+  readonly isAboutMenuCollapsed = signal(true);
 
-  banners$ = this.bannerService.getEnabled$().pipe(
-    map(banners => this.createStyledBanners(banners)),
+  private readonly hideSubject$ = new Subject<string>();
+  readonly banners$ = this.bannerService.getEnabled$().pipe(
     catchError((err: unknown) => {
       const title = 'Site banners could not be loaded.';
       let msg = 'An error occurred.';
@@ -48,14 +40,29 @@ export class HeaderComponent {
       this.toastr.error(msg, title);
       return of();
     }),
+    switchMap(banners => this.hideSubject$.pipe(
+      scan((acc, bannerId) => acc.filter(banner => banner.id !== bannerId), banners),
+      startWith(banners),
+    )),
   );
 
-  isAuthenticated$ = this.auth.isAuthenticated$;
+  readonly isAuthenticated$ = this.auth.isAuthenticated$;
 
-  private createStyledBanners(banners: Array<SiteBanner>): Array<SiteBannerStyled> {
-    return banners.map(b => ({
-      ...b,
-      alertType: getBootstrapAlertType(b.theme),
-    }));
+  hideBanner(bannerId: string): void {
+    this.hideSubject$.next(bannerId);
+  }
+
+  toggleNavbar(): void {
+    this.isCollapsed.update(collapsed => !collapsed);
+    this.isContentMenuCollapsed.set(true);
+    this.isAboutMenuCollapsed.set(true);
+  }
+
+  toggleContentMenu(force?: boolean): void {
+    this.isContentMenuCollapsed.update(collapsed => force ?? !collapsed);
+  }
+
+  toggleAboutMenu(force?: boolean): void {
+    this.isAboutMenuCollapsed.update(collapsed => force ?? !collapsed);
   }
 }

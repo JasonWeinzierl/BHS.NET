@@ -14,7 +14,6 @@ import { MarkdownComponent } from '@shared/components/markdown/markdown.componen
 @Component({
   selector: 'app-blog-entry',
   templateUrl: './blog-entry.component.html',
-  styleUrl: './blog-entry.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,

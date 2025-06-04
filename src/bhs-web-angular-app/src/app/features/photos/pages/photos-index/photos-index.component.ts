@@ -2,18 +2,15 @@ import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, map, of, startWith } from 'rxjs';
-import { SnippetPipe } from '../../../../shared/pipes/snippet.pipe';
 import { PhotosService } from '@data/photos';
+import { SnippetPipe } from '@shared/pipes/snippet.pipe';
 
 @Component({
   selector: 'app-photos-index',
   templateUrl: './photos-index.component.html',
-  styleUrl: './photos-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AlertComponent,
     NgOptimizedImage,
     RouterLink,
     SnippetPipe,

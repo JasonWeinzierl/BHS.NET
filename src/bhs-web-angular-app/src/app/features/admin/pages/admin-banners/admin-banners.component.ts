@@ -1,18 +1,18 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
-import { getBootstrapAlertType, SiteBannerService } from '@data/banners';
+import { SiteBannerService } from '@data/banners';
 
 @Component({
   selector: 'app-admin-banners',
   templateUrl: './admin-banners.component.html',
-  styleUrl: './admin-banners.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
     RouterLink,
+    NgClass,
   ],
 })
 export default class AdminBannersComponent {
@@ -28,7 +28,6 @@ export default class AdminBannersComponent {
       return {
         ...banner,
         statusChanges: sortedChanges,
-        bootstrapAlertType: getBootstrapAlertType(banner.theme),
         isEnabled: pastChanges[0]?.isEnabled ?? false,
       };
     })),

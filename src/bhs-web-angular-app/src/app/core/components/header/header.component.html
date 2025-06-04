@@ -1,90 +1,236 @@
-<header>
-  <div class="brand">The Belton Historical Society</div>
-  <div class="address-bar">
-    <address>
-      P.O Box 1144 | Belton, MO 64012 | <a href="tel:+18163223977">816-322-3977</a>
+<header class="mb-5">
+  <div id="brand" class="hidden md:block pt-12 pb-4 text-center text-shadow-lg/30 text-7xl text-neutral-content font-serif">
+    The Belton Historical Society
+  </div>
+  <div id="address-bar" class="hidden md:block mb-5 text-center text-shadow-md/30 text-xl text-neutral-content">
+    <address class="not-italic">
+      P.O Box 1144 | Belton, MO 64012 | <a href="tel:+18163223977" class="link">816-322-3977</a>
     </address>
   </div>
 
-  <div class="container">
-    @for (b of banners$ | async; track b.id) {
-      <alert [type]="b.alertType" [dismissible]="true">
-        @if (b.lead) {
-          <strong>{{b.lead}}</strong>
-        }
-        {{b.body}}
-      </alert>
+  <div class="container mx-auto mb-5 px-20">
+    @for (banner of banners$ | async; track banner.id) {
+      <div
+        role="alert"
+        class="alert"
+        [ngClass]="{
+          'alert-info': banner.theme === 'Info' || banner.theme === 'Primary',
+          'alert-soft': banner.theme === 'Info' || banner.theme === 'Secondary',
+          'alert-warning': banner.theme === 'Warning',
+          'alert-success': banner.theme === 'Success',
+          'alert-error': banner.theme === 'Danger'
+        }"
+      >
+        <i class="bi bi-info-circle" aria-hidden="true"></i>
+        <div>
+          @if (banner.lead) {
+            <strong>{{banner.lead}}</strong>
+          }
+          {{banner.body}}
+        </div>
+        <button
+          type="button"
+          class="cursor-pointer"
+          aria-label="Close"
+          (click)="hideBanner(banner.id)"
+        >
+          <i class="bi bi-x" aria-hidden="true"></i>
+        </button>
+      </div>
     }
   </div>
 
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="navbar-header">
-      <a class="navbar-brand" [routerLink]="['/']" title="Home">The Belton Historical Society</a>
-      <button type="button" class="navbar-toggler collapsed" aria-controls="navbarSupportedContent"
-        [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation" (click)="isCollapsed = !!!isCollapsed">
-        <span class="navbar-toggler-icon"></span>
+  <nav class="bg-base-100 shadow-md flex flex-wrap items-center justify-between py-2 md:py-0">
+    <div class="w-full flex items-center justify-between px-4 md:hidden">
+      <a
+        class="font-bold text-xl font-serif tracking-widest"
+        [routerLink]="['/']"
+        title="Home"
+      >
+        The Belton Historical Society
+      </a>
+      <button
+        type="button"
+        class="btn btn-square btn-ghost text-3xl"
+        aria-controls="navbarSupportedContent"
+        [attr.aria-expanded]="!isCollapsed()"
+        aria-label="Toggle navigation"
+        (click)="toggleNavbar()"
+      >
+        <i class="bi bi-list" aria-hidden="true"></i>
       </button>
     </div>
-    <div [collapse]="isCollapsed" [isAnimated]="true" class="navbar-collapse collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/apps/blog']" [routerLinkActive]="['active']">News</a>
-        </li>
-        <li class="nav-item dropdown" dropdown>
-          <a class="nav-link dropdown-toggle" dropdownToggle role="button" aria-haspopup="true">
-            Content
+    <div
+      id="navbarSupportedContent"
+      class="grow basis-full md:flex md:basis-auto"
+      [class.hidden]="isCollapsed()"
+    >
+      <ul class="flex flex-col md:flex-row md:mx-auto tracking-widest">
+        <li>
+          <a
+            class="block cursor-pointer py-2 px-4 transition-colors"
+            [routerLink]="['/home']"
+            [routerLinkActive]="['bg-primary', 'text-primary-content']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Home
           </a>
-          <ul class="dropdown-menu" *dropdownMenu role="menu">
-            <li><a class="dropdown-item" [routerLink]="['/apps/photos']" [routerLinkActive]="['active']">Photos</a></li>
+        </li>
+        <li>
+          <a
+            class="block cursor-pointer py-2 px-4 transition-colors"
+            [routerLink]="['/apps/blog']"
+            [routerLinkActive]="['bg-primary', 'text-primary-content']"
+          >
+            News
+          </a>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="block w-full text-left cursor-pointer py-2 px-4"
+            aria-haspopup="true"
+            (click)="toggleContentMenu()"
+          >
+            Content
+            <i
+              class="bi ml-2"
+              [ngClass]="{
+                'bi-chevron-down': isContentMenuCollapsed(),
+                'bi-chevron-up': !isContentMenuCollapsed()
+              }"
+              aria-hidden="true"
+            ></i>
+          </button>
+          <ul
+            class="py-2 bg-base-200 border-y border-y-neutral md:rounded-b md:absolute md:z-2"
+            role="menu"
+            [class.hidden]="isContentMenuCollapsed()"
+          >
             <li>
-              <a class="dropdown-item" [routerLink]="['/apps/location']" [routerLinkActive]="['active']">The Museum</a>
+              <a
+                class="block cursor-pointer py-2 px-4 transition-colors"
+                [routerLink]="['/apps/photos']"
+                [routerLinkActive]="['bg-primary', 'text-primary-content']"
+                (click)="toggleContentMenu(true)"
+              >
+                Photos
+              </a>
+            </li>
+            <li>
+              <a
+                class="block cursor-pointer py-2 px-4 transition-colors"
+                [routerLink]="['/apps/location']"
+                [routerLinkActive]="['bg-primary', 'text-primary-content']"
+                (click)="toggleContentMenu(true)"
+              >
+                The Museum
+              </a>
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/contact']" [routerLinkActive]="['active']">Contact Us</a>
+        <li>
+          <a
+            class="block cursor-pointer py-2 px-4 transition-colors"
+            [routerLink]="['/contact']"
+            [routerLinkActive]="['bg-primary', 'text-primary-content']"
+          >
+            Contact Us
+          </a>
         </li>
         @if (isAuthenticated$ | async) {
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/admin']" [routerLinkActive]="['active']">Admin</a>
+          <li>
+            <a
+              class="block cursor-pointer py-2 px-4 transition-colors"
+              [routerLink]="['/admin']"
+              [routerLinkActive]="['bg-primary', 'text-primary-content']"
+            >
+              Admin
+            </a>
           </li>
         }
-        <li class="nav-item dropdown" dropdown>
-          <a class="nav-link dropdown-toggle" dropdownToggle role="button" aria-haspopup="true">
+        <li class="">
+          <button
+            type="button"
+            class="block w-full text-left cursor-pointer py-2 px-4 transition-colors"
+            aria-haspopup="true"
+            (click)="toggleAboutMenu()"
+          >
             About
-          </a>
-          <ul class="dropdown-menu" *dropdownMenu role="menu">
+            <i
+              class="bi ml-2"
+              [ngClass]="{
+                'bi-chevron-down': isAboutMenuCollapsed(),
+                'bi-chevron-up': !isAboutMenuCollapsed()
+              }"
+              aria-hidden="true"
+            ></i>
+          </button>
+          <ul
+            class="py-2 bg-base-200 border-y border-y-neutral md:rounded-b md:absolute md:z-2"
+            role="menu"
+            [class.hidden]="isAboutMenuCollapsed()"
+          >
             <li>
-              <a class="dropdown-item" [routerLink]="['/about/who-we-are']" [routerLinkActive]="['active']">
+              <a
+                class="block cursor-pointer py-2 px-4 transition-colors"
+                [routerLink]="['/about/who-we-are']"
+                [routerLinkActive]="['bg-primary', 'text-primary-content']"
+                (click)="toggleAboutMenu(true)"
+              >
                 Who We Are
               </a>
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/about/by-laws-and-leadership']"
-                [routerLinkActive]="['active']">By-laws and Leadership</a>
+              <a
+                class="block cursor-pointer py-2 px-4 transition-colors"
+                [routerLink]="['/about/by-laws-and-leadership']"
+                [routerLinkActive]="['bg-primary', 'text-primary-content']"
+                (click)="toggleAboutMenu(true)"
+              >
+                By-laws and Leadership
+              </a>
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/about/donate']" [routerLinkActive]="['active']">Donate</a>
+              <a
+                class="block cursor-pointer py-2 px-4 transition-colors"
+                [routerLink]="['/about/donate']"
+                [routerLinkActive]="['bg-primary', 'text-primary-content']"
+                (click)="toggleAboutMenu(true)"
+              >
+                Donate
+              </a>
             </li>
             <li>
-              <hr role="separator" class="dropdown-divider">
+              <hr role="separator" class="my-2 text-neutral">
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/about/this-site']" [routerLinkActive]="['active']">
+              <a
+                class="block cursor-pointer py-2 px-4 transition-colors"
+                [routerLink]="['/about/this-site']"
+                [routerLinkActive]="['bg-primary', 'text-primary-content']"
+                (click)="toggleAboutMenu(true)"
+              >
                 About this Site
               </a>
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/about/terms-of-service']" [routerLinkActive]="['active']">
+              <a
+                class="block cursor-pointer py-2 px-4 transition-colors"
+                [routerLink]="['/about/terms-of-service']"
+                [routerLinkActive]="['bg-primary', 'text-primary-content']"
+                (click)="toggleAboutMenu(true)"
+              >
                 Terms of Service
               </a>
             </li>
             <li>
-              <a class="dropdown-item" [routerLink]="['/about/privacy-policy']" [routerLinkActive]="['active']">
+              <a
+                class="block cursor-pointer py-2 px-4 transition-colors"
+                [routerLink]="['/about/privacy-policy']"
+                [routerLinkActive]="['bg-primary', 'text-primary-content']"
+                (click)="toggleAboutMenu(true)"
+              >
                 Privacy Policy
               </a>
             </li>

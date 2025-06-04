@@ -8,7 +8,7 @@ import { InsightsService } from '@core/services/insights.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrl: './app.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet, AsyncPipe],
 })

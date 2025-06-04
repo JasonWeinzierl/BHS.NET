@@ -1,41 +1,41 @@
-<div class="card">
+<div class="card bg-base-100 mb-5">
   <div class="card-body">
-    <h1 class="card-title">Photo Albums</h1>
+    <h1>Photo Albums</h1>
     <p>Photos from the society.</p>
   </div>
 </div>
 
 @if (vm$ | async; as vm) {
   @if (vm.isLoading) {
-    <div class="d-flex justify-content-center">
-      <div class="spinner-grow text-light" role="status">
-        <span class="visually-hidden">Loading category...</span>
+    <div class="card bg-base-100">
+      <div class="card-body skeleton" role="status">
+        <span class="hidden">Loading photos...</span>
       </div>
     </div>
   }
 
   @if (vm.error) {
-    <alert type="danger">
+    <div class="alert alert-error" role="alert">
       {{vm.error}}
-    </alert>
+    </div>
   }
 
   @if (!vm.error && !vm.isLoading) {
-    <div class="row">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       @for (album of vm.albums; track album.slug) {
-        <div class="col-md-4">
-          <div class="card">
-            @if (album.bannerPhoto) {
-              <img [ngSrc]="album.bannerPhoto.imagePath" class="card-img-top img-fluid" [alt]="album.bannerPhoto.name" width="100" height="100">
+        <div class="card bg-base-100 relative aspect-square" [class.image-full]="album.bannerPhoto">
+          @if (album.bannerPhoto) {
+            <figure>
+              <img [ngSrc]="album.bannerPhoto.imagePath" [alt]="album.bannerPhoto.name" class="rounded object-cover" fill>
+            </figure>
+          }
+          <div class="card-body">
+            <h2>
+              <a class="link link-primary after:absolute after:inset-0 after:z-2" [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
+            </h2>
+            @if (album.description) {
+              <p class="opacity-70">{{album.description | snippet}}</p>
             }
-            <div class="card-body">
-              <h2 class="card-title">
-                <a class="stretched-link" [routerLink]="['/apps/photos/album', album.slug]">{{album.name}}</a>
-              </h2>
-              @if (album.description) {
-                <p class="card-subtitle text-muted">{{album.description | snippet}}</p>
-              }
-            </div>
           </div>
         </div>
       }

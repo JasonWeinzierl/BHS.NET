@@ -2,7 +2,6 @@ import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { PostCardComponent } from '../../components/post-card/post-card.component';
 import { BlogService } from '@data/blog';
@@ -10,10 +9,8 @@ import { BlogService } from '@data/blog';
 @Component({
   selector: 'app-category-posts',
   templateUrl: './category-posts.component.html',
-  styleUrl: './category-posts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AlertComponent,
     PostCardComponent,
     AsyncPipe,
   ],

@@ -2,57 +2,67 @@
   @if (vm.error) {
     <div class="card bg-warning">
       <div class="card-body">
-        <h1 class="card-title">An error occurred</h1>
-        {{vm.error}}
+        <h1>An error occurred</h1>
+        <p>
+          {{vm.error}}
+        </p>
       </div>
     </div>
   }
 
   @if (vm.isLoading) {
-    <div class="d-flex justify-content-center">
-      <div class="spinner-grow text-light" role="status">
-        <span class="visually-hidden">Loading post...</span>
+    <div class="card bg-base-100">
+      <div class="card-body skeleton" role="status">
+        <span class="hidden">Loading post...</span>
       </div>
     </div>
   }
 
   @if (vm.post) {
-    <div class="card">
-      <div class="card-header">
-        <h1 class="card-title">{{vm.post.title}}</h1>
-        <p class="card-subtitle text-muted">
+    <div class="card bg-base-100">
+      <div class="card-body">
+        <h1>{{vm.post.title}}</h1>
+        <p class="opacity-70">
           Posted
           @if (vm.post.author) {
             <span>
               by
-              <a [routerLink]="['/apps/profile', vm.post.author.username]">{{vm.post.author.name}}</a>
+              <a class="link link-primary" [routerLink]="['/apps/profile', vm.post.author.username]">{{vm.post.author.name}}</a>
             </span>
           }
           on
           <app-date [datetime]="vm.post.datePublished" />
         </p>
       </div>
+      <hr>
       <div class="card-body">
 
         <app-markdown [data]="vm.post.contentMarkdown" />
-
-        @if (vm.postAlbum) {
-          <hr>
-          <app-entry-album [album]="vm.postAlbum" />
-        }
-
-        @if (vm.showEdit) {
-          <hr>
-          <a class="card-link" [routerLink]="['/apps/blog/edit', vm.post.slug]">Edit this post</a>
-        }
-
       </div>
-      <div class="card-footer">
+
+      @if (vm.postAlbum) {
+        <hr>
+        <div class="card-body">
+          <app-entry-album [album]="vm.postAlbum" />
+        </div>
+      }
+
+      @if (vm.showEdit) {
+        <hr>
+        <div class="card-body">
+          <p class="text-sm">
+            <a class="link link-primary" [routerLink]="['/apps/blog/edit', vm.post.slug]">Edit this post</a>
+          </p>
+        </div>
+      }
+
+      <hr>
+      <div class="card-body">
         <p>
           Categories:
           @for (cat of vm.post.categories; track cat.slug) {
             <a [routerLink]="['/apps/blog/category', cat.slug]"
-              class="btn btn-outline-secondary btn-sm me-sm-2">
+              class="btn btn-outline btn-secondary btn-sm me-2">
               {{cat.name}}
             </a>
           }

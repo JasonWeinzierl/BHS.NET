@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "angular.ng-template",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss"
   ]
 }

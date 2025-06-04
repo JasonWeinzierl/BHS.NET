@@ -34,7 +34,7 @@ describe('CategoriesListViewComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
 
     expect(component.isLoading()).toBe(true);
-    expect(element.querySelector('.list-group .placeholder-glow')).toBeTruthy(); // should show placeholder
+    expect(element.querySelector('.skeleton')).toBeTruthy(); // should show placeholder
   });
 
   it('should show error', () => {
@@ -46,7 +46,7 @@ describe('CategoriesListViewComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
 
     expect(component.error()).toBeDefined();
-    expect(element.querySelector('.list-group .list-group-item-danger')).toBeTruthy(); // should show danger banner
+    expect(element.querySelector('.alert.alert-error')).toBeTruthy(); // should show error banner
   });
 
   it('should show each category', () => {
@@ -66,7 +66,7 @@ describe('CategoriesListViewComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
 
     expect(component.categories()).toHaveLength(2);
-    expect(element.querySelector('.list-group')?.children).toHaveLength(2);
+    expect(element.querySelector('[data-testid=categories-list-view]')?.children).toHaveLength(2 + 2); // hr
 
     const linkDebugElements = fixture.debugElement.queryAll(By.directive(RouterLink));
     const routerLinks = linkDebugElements.map(de => de.injector.get(RouterLink));

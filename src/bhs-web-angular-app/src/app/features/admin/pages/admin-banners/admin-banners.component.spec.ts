@@ -38,7 +38,7 @@ describe('AdminBannersComponent', () => {
   });
 
   it('should show loading before data is loaded', () => {
-    const loadingElement = (fixture.nativeElement as HTMLElement).querySelector('.spinner-grow');
+    const loadingElement = (fixture.nativeElement as HTMLElement).querySelector('.loading');
 
     expect(loadingElement).toBeTruthy();
     expect(loadingElement?.textContent).toContain('Loading...');
@@ -63,7 +63,7 @@ describe('AdminBannersComponent', () => {
     ]);
     fixture.detectChanges();
 
-    const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('.list-group-item');
+    const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('li.border-base-300');
 
     expect(itemElements).toHaveLength(2);
     expect(itemElements[0].textContent).toContain('Test Banner');
@@ -98,7 +98,7 @@ describe('AdminBannersComponent', () => {
     ]);
     fixture.detectChanges();
 
-    const itemElement = (fixture.nativeElement as HTMLElement).querySelector('.list-group-item');
+    const itemElement = (fixture.nativeElement as HTMLElement).querySelector('li.border-base-300');
     const badgeElements = itemElement?.querySelectorAll('span.badge') ?? [];
     const statusElements = itemElement?.querySelectorAll('li') ?? [];
 
@@ -116,7 +116,7 @@ describe('AdminBannersComponent', () => {
     bannersSubject$.next([]);
     fixture.detectChanges();
 
-    const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('.list-group-item');
+    const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('li');
 
     expect(itemElements).toHaveLength(1);
     expect(itemElements[0].textContent).toContain('No banners found.');
@@ -126,7 +126,7 @@ describe('AdminBannersComponent', () => {
     bannersSubject$.error(new Error('test error'));
     fixture.detectChanges();
 
-    const errorElement = (fixture.nativeElement as HTMLElement).querySelector('.text-danger');
+    const errorElement = (fixture.nativeElement as HTMLElement).querySelector('.alert.alert-error');
 
     expect(errorElement).toBeTruthy();
     expect(errorElement?.textContent).toContain('Failed to load banners.');

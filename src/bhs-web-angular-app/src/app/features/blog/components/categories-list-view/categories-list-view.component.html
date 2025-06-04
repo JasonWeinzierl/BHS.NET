@@ -1,29 +1,40 @@
 @if (!isLoading()) {
-  <div class="list-group list-group-flush">
-  @if (error()) {
-    <span class="list-group-item list-group-item-danger">
-      {{error()}}
-    </span>
-  }
+  <div class="w-full" data-testid="categories-list-view">
+    @if (error()) {
+      <div class="alert alert-error rounded-t-none" role="alert">
+        {{error()}}
+      </div>
+    }
 
-  @for (category of categories(); track category.slug) {
-    <a [routerLink]="['/apps/blog/category', category.slug]"
-      class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-      {{category.name}}
-      <span class="badge bg-primary rounded-pill">{{category.postsCount}}</span>
-    </a>
-  }
+    @for (category of categories(); track category.slug) {
+      <hr class="text-neutral">
+      <a
+        [routerLink]="['/apps/blog/category', category.slug]"
+        class="btn btn-secondary btn-ghost flex justify-between items-center rounded-none"
+        [class.rounded-b]="$last"
+      >
+        {{category.name}}
+        <span
+          class="badge badge-primary rounded"
+        >
+          {{category.postsCount}}
+        </span>
+      </a>
+    }
   </div>
 } @else {
-  <div class="list-group list-group-flush">
-    <span class="list-group-item placeholder-glow">
-      <span class="placeholder col-7"></span>
-    </span>
-    <span class="list-group-item placeholder-glow">
-      <span class="placeholder col-4"></span>
-    </span>
-    <span class="list-group-item placeholder-glow">
-      <span class="placeholder col-5"></span>
-    </span>
+  <div class="w-full">
+    <div class="m-4 flex justify-between items-center">
+      <div class="skeleton w-9/12 h-4"></div>
+      <div class="skeleton w-1/12 h-4"></div>
+    </div>
+    <div class="m-4 flex justify-between items-center">
+      <div class="skeleton w-5/12 h-4"></div>
+      <div class="skeleton w-1/12 h-4"></div>
+    </div>
+    <div class="m-4 flex justify-between items-center">
+      <div class="skeleton w-9/12 h-4"></div>
+      <div class="skeleton w-1/12 h-4"></div>
+    </div>
   </div>
 }

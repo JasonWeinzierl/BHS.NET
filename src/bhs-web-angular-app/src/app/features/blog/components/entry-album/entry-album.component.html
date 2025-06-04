@@ -1,8 +1,10 @@
 <div>
-  <p class="text-muted">This post contains photos:</p>
-  @for (photo of album().photos; track photo.id) {
-    <a [routerLink]="['/apps/photos/album', album().slug, 'photo', photo.id]" class="d-inline-block m-1">
-      <img [ngSrc]="photo.imagePath" class="img-fluid" [alt]="photo.name" width="200" height="200">
-    </a>
-  }
+  <p class="opacity-70">This post contains photos:</p>
+  <div class="flex flex-wrap gap-1">
+    @for (photo of album().photos; track photo.id) {
+      <a [routerLink]="['/apps/photos/album', album().slug, 'photo', photo.id]">
+        <img [ngSrc]="photo.imagePath" [alt]="photo.name" width="200" height="200">
+      </a>
+    }
+  </div>
 </div>

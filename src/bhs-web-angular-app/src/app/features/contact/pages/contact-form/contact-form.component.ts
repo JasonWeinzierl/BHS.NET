@@ -2,17 +2,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AlertComponent } from 'ngx-bootstrap/alert';
 import { timeout, TimeoutError } from 'rxjs';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
 
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
-  styleUrl: './contact-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AlertComponent,
     RouterLink,
     FormsModule,
     ReactiveFormsModule,

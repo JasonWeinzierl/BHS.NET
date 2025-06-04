@@ -33,7 +33,7 @@ describe('MarkdownComponent', () => {
     expect(compiled.querySelector('strong')?.textContent).toContain('test');
   });
 
-  it('should render images with img-fluid class', () => {
+  it('should render images', () => {
     const testMarkdown = '![Alt text](https://example.com/image.jpg "Image Title")';
     fixture.componentRef.setInput('data', testMarkdown);
     fixture.detectChanges();
@@ -43,6 +43,5 @@ describe('MarkdownComponent', () => {
 
     expect(img).toBeTruthy();
     expect(img?.getAttribute('src')).toBe('https://example.com/image.jpg');
-    expect(img?.classList).toContain('img-fluid');
   });
 });

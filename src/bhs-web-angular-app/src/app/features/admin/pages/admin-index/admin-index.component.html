@@ -1,59 +1,60 @@
-<div class="container">
+<div class="card bg-base-100">
+  <div class="card-body">
 
-  <div class="card">
-    <div class="card-body">
+    <h1>Your Profile</h1>
 
-      <h1>Your Profile</h1>
-
-      @if (user$ | async; as user) {
-        @if (user.picture) {
-          <img [ngSrc]="user.picture" alt="Profile Picture" width="100" height="100" class="img-thumbnail">
-        }
-
-        <p>
-          <strong>Name:</strong> {{user.name}}
-        </p>
-        <p>
-          <strong>Nickname:</strong> {{user.nickname}}
-        </p>
-        <p>
-          <strong>Email:</strong> {{user.email}}
-          @if (user.email_verified) {
-            <span class="bi bi-check-circle text-success"></span>
-          } @else {
-            <span class="bi bi-x-circle text-danger"></span>
-          }
-        </p>
-        <p>
-          <strong>sub (ID):</strong> {{user.sub}}
-        </p>
-        <p>
-          <strong>Last Updated:</strong> {{user.updated_at | date}}
-        </p>
+    @if (user$ | async; as user) {
+      @if (user.picture) {
+        <img [ngSrc]="user.picture" alt="Profile Picture" width="100" height="100" class="rounded">
       }
 
-      <h2>Permissions</h2>
-      @if (permissionsVm$ | async; as vm) {
-        @if (vm.type !== 'success') {
-          <p>{{vm.message}}</p>
+      <p>
+        <strong>Name:</strong> {{user.name}}
+      </p>
+      <p>
+        <strong>Nickname:</strong> {{user.nickname}}
+      </p>
+      <p>
+        <strong>Email:</strong> {{user.email}}
+        @if (user.email_verified) {
+          <span class="bi bi-check-circle text-success"></span>
         } @else {
-          <ul>
-            @for (permission of vm.permissions; track permission) {
-              <li>{{permission}}</li>
-            }
-          </ul>
+          <span class="bi bi-x-circle text-error"></span>
         }
+      </p>
+      <p>
+        <strong>sub (ID):</strong> {{user.sub}}
+      </p>
+      <p>
+        <strong>Last Updated:</strong> {{user.updated_at | date}}
+      </p>
+    }
+
+    <h2>Permissions</h2>
+    @if (permissionsVm$ | async; as vm) {
+      @if (vm.type !== 'success') {
+        <div class="alert alert-error">
+          <p>{{vm.message}}</p>
+        </div>
+      } @else {
+        <ul class="list-disc pl-8">
+          @for (permission of vm.permissions; track permission) {
+            <li>{{permission}}</li>
+          }
+        </ul>
       }
+    }
 
-      <h2>Actions</h2>
+    <h2>Actions</h2>
 
-      <a class="card-link link-danger" href="#" (click)="handleLogout()" data-testid="logout">
+    <div class="card-actions">
+      <a class="link link-error" href="#" (click)="handleLogout()" data-testid="logout">
         Log out
       </a>
 
-      <a class="card-link" [routerLink]="['/apps/blog/new']">New Blog Post</a>
-      <a class="card-link" [routerLink]="['/admin/banners']">Banners</a>
-
+      <a class="link link-primary" [routerLink]="['/apps/blog/new']">New Blog Post</a>
+      <a class="link link-primary" [routerLink]="['/admin/banners']">Banners</a>
     </div>
+
   </div>
 </div>

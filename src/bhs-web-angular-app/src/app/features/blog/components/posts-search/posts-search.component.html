@@ -1,11 +1,11 @@
-<div class="card">
+<div class="card bg-base-100 mb-5">
   <div class="card-body">
     <form>
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search Posts" aria-label="Search Posts" name="search" [(ngModel)]="searchText">
-        <button type="submit" class="btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
+      <div class="join w-full">
+        <input type="text" class="w-full join-item input" placeholder="Search Posts" aria-label="Search Posts" name="search" [(ngModel)]="searchText">
+        <button type="submit" class="join-item btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
           @if (isLoading()) {
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="loading loading-spinner loading-sm" role="status" aria-hidden="true"></span>
           }
           Search
         </button>
@@ -14,11 +14,35 @@
   </div>
 </div>
 
+@if (isLoading()) {
+  @for (i of [1, 2, 3]; track i) {
+    <div class="card bg-base-100 mb-5 relative">
+      <div class="z-2 absolute inset-0 flex place-content-center">
+        <div class="loading loading-spinner loading-xl"></div>
+      </div>
+      <div class="card-body">
+        <div class="skeleton h-10 w-96"></div>
+        <div class="skeleton h-6 w-50"></div>
+      </div>
+      <hr>
+      <div class="card-body">
+        <div class="skeleton h-6 w-full"></div>
+        <div class="skeleton h-6 w-1/2"></div>
+        <div class="skeleton h-8 w-32"></div>
+      </div>
+      <hr>
+      <div class="card-body">
+        <div class="skeleton h-6 w-24"></div>
+      </div>
+    </div>
+  }
+}
+
 @if (postsVm$ | async; as postsVm) {
   @if (postsVm.error) {
-    <alert type="danger">
-      {{postsVm.error}}
-    </alert>
+    <div class="alert alert-error">
+      <p>{{postsVm.error}}</p>
+    </div>
   }
 
   @for (post of postsVm.posts; track post.slug) {

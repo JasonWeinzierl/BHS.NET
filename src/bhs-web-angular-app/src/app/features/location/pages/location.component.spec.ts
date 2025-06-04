@@ -32,7 +32,7 @@ describe('LocationComponent', () => {
   });
 
   it('should show loading if schedule is not loaded yet', () => {
-    expect(nativeElement.querySelector('.spinner-grow')).toBeTruthy();
+    expect(nativeElement.querySelector('.loading')).toBeTruthy();
   });
 
   it('should show schedule if loaded', () => {

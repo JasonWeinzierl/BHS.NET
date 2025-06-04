@@ -1,24 +1,25 @@
 @if (vm$ | async; as vm) {
     @if (vm.isLoading) {
-      <div class="d-flex justify-content-center">
-        <div class="spinner-grow text-light" role="status">
-          <span class="visually-hidden">Loading profile...</span>
+      <div class="card bg-base-100">
+        <div class="card-body skeleton" role="status">
+          <span class="hidden">Loading profile...</span>
         </div>
       </div>
     }
 
     @if (vm.error) {
-      <alert type="danger">
+      <div class="alert alert-error" role="alert">
         {{vm.error}}
-      </alert>
+      </div>
     }
 
     @if (vm.author) {
-      <div class="card">
+      <div class="card bg-base-100 mb-5">
         <div class="card-body">
-          <h1 class="card-title">
-            {{vm.author.username}}
+          <h1>
+            {{vm.author.name}}
           </h1>
+          <p>Username: <code>{{vm.author.username}}</code></p>
           <h2>Blog posts by this user</h2>
         </div>
       </div>

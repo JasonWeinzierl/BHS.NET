@@ -39,7 +39,6 @@ function toStandardTime(militaryTime: string): string {
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
-  styleUrl: './location.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AsyncPipe,

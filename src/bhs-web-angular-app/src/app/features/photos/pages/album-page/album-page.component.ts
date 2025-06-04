@@ -2,7 +2,6 @@ import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
 
@@ -18,12 +17,10 @@ interface AlbumPageVm {
 @Component({
   selector: 'app-album-page',
   templateUrl: './album-page.component.html',
-  styleUrl: './album-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
     NgOptimizedImage,
-    AlertComponent,
     AsyncPipe,
   ],
 })

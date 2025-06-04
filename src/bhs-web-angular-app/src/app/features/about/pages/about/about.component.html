@@ -1,11 +1,12 @@
-<div class="card">
+<div class="card bg-base-100">
   <div class="card-body">
-    <h1 class="card-title">About this Site</h1>
+    <h1>About this Site</h1>
     <p>
       Created by a now-graduated Belton High School student, this site was built in July of 2011 using Freewebs.
       It was rebuilt with Bootstrap/PHP/MariaDB in the Summer of 2017.
       It was again rebuilt with Angular/ASP.NET Core/SQL Server in 2020&ndash;2021.
       The database was changed to MongoDB in 2023.
+      The frontend Bootstrap styling was replaced with Tailwind CSS in June 2025.
     </p>
     <p>
       The webmaster can be contacted at the following email:
@@ -14,7 +15,7 @@
       <img ngSrc="/assets/img/2021/email-address.png" alt="email not available" width="225" height="20">
     </address>
     <pre>
-<span class="bi bi-github"></span>&nbsp;<a href="https://github.com/JasonWeinzierl/BHS.NET">This program is publicly available on GitHub!</a>
+<i class="bi bi-github"></i>&nbsp;<a href="https://github.com/JasonWeinzierl/BHS.NET" class="link link-primary">This program is publicly available on GitHub!</a>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +31,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
     </pre>
   </div>
-  <div class="card-footer">
+  <hr>
+  <div class="card-body">
     <p [title]="version.info">
       Version {{version.semver}}
     </p>

@@ -1,60 +1,74 @@
-<div class="card">
+<div class="card bg-base-100">
   <div class="card-body">
 
-    <h1 class="card-title">Contact Us</h1>
+    <h1>Contact Us</h1>
 
     @for (error of errors(); track error) {
-      <alert type="danger" [dismissible]="true" (onClose)="removeError(error.id)">
-        There was an error submitting your message. {{error.msg}}
-        <hr>
-        <p class="small text-muted mb-0">
-          Please <a [routerLink]="['/about/this-site']">email the webmaster</a> if this keeps happening.
-        </p>
-      </alert>
-    }
-
-    @if (isSubmitted() && !isAccepted()) {
-      <div class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
+      <div class="alert alert-error" role="alert">
+        <i class="bi bi-exclamation-triangle text-xl"></i>
+        <div>
+          There was an error submitting your message. {{error.msg}}
+          <hr class="my-1">
+          <span class="opacity-70">
+            Please <a class="link" [routerLink]="['/about/this-site']">email the webmaster</a> if this keeps happening.
+          </span>
+        </div>
+        <button
+          type="button"
+          class="btn btn-square btn-ghost text-3xl"
+          aria-label="Close"
+          (click)="removeError(error.id)"
+        >
+          <i class="bi bi-x" aria-hidden="true"></i>
+        </button>
       </div>
     }
 
+    @if (isSubmitted() && !isAccepted()) {
+      <progress class="progress"></progress>
+    }
+
     @if (!isSubmitted()) {
-      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" ngNativeValidate class="flex flex-col gap-3">
 
-        <div class="mb-3">
-          <label for="inputName" class="form-label">Name</label>
-          <input type="text" class="form-control" id="inputName" placeholder="Name" name="name" formControlName="name">
-        </div>
+        <fieldset class="fieldset">
+          <label for="inputName" class="label">Name</label>
+          <input type="text" class="input" id="inputName" placeholder="Name" name="name" formControlName="name">
+        </fieldset>
 
-        <div class="mb-3">
-          <label for="inputEmail" class="form-label">Email</label>
-          <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email"
+        <fieldset class="fieldset">
+          <label for="inputEmail" class="label">Email</label>
+          <input type="email" class="input" id="inputEmail" placeholder="Email" name="email"
             formControlName="emailAddress" required>
-        </div>
+        </fieldset>
 
-        <div class="mb-3">
-          <label for="inputMessage" class="form-label">Message</label>
-          <textarea id="inputMessage" class="form-control" rows="3" placeholder="Message" name="message"
+        <fieldset class="fieldset">
+          <label for="inputMessage" class="label">Message</label>
+          <textarea id="inputMessage" class="textarea" rows="3" placeholder="Message" name="message"
             formControlName="message"></textarea>
-        </div>
+        </fieldset>
 
-        <div class="d-none">
-          <label for="body" class="form-label">Please leave this secion blank</label>
+        <div class="hidden">
+          <label for="body">Please leave this secion blank</label>
           <input type="text" id="body" name="body" formControlName="body" value="" aria-hidden="true">
         </div>
 
-        <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+        <div>
+          <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+        </div>
 
-        <p class="form-text">We will try to respond as soon as possible.</p>
+        <p class="opacity-70">We will try to respond as soon as possible.</p>
 
       </form>
     }
 
     @if (isAccepted()) {
       <div>
-        <p class="card-subtitle">Thank you for your message.</p>
-        <a [routerLink]="['/']" class="card-link">&laquo; Back Home</a>
+        <p data-testid="ContactForm-ThankYou">Thank you for your message.</p>
+        <a [routerLink]="['/']" class="link link-primary">
+          <i class="bi bi-arrow-left"></i>
+          Back Home
+        </a>
       </div>
     }
   </div>

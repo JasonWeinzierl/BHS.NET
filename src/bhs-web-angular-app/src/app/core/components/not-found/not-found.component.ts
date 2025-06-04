@@ -6,7 +6,6 @@ import { map } from 'rxjs';
 @Component({
   selector: 'app-not-found',
   templateUrl: './not-found.component.html',
-  styleUrl: './not-found.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,

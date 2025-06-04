@@ -1,34 +1,65 @@
-<form [formGroup]="editFormGroup" (submit)="onSubmit()">
+<form [formGroup]="editFormGroup" (submit)="onSubmit()" class="flex flex-col gap-3">
 
-  <div class="mb-3">
-    <label for="inputTitle" class="form-label">Title</label>
-    <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title" formControlName="title">
-  </div>
+  <fieldset class="fieldset">
+    <label for="inputTitle" class="fieldset-legend">Title</label>
+    <input type="text" class="input" id="inputTitle" placeholder="Title" name="title" formControlName="title">
+  </fieldset>
 
-  <div class="mb-3">
-    <label for="inputCategories" class="form-label">Categories</label>
-    <select multiple class="form-select" id="inputCategories" name="categories" formControlName="categories">
-      @for (c of allCategories(); track c.slug) {
-        <option [ngValue]="c.slug">{{c.name}}</option>
-      }
-    </select>
-  </div>
+  <fieldset class="fieldset">
+    <label for="inputCategories" class="fieldset-legend">Categories</label>
+    <div class="outline outline-base-content/20 rounded w-80">
+      <select multiple class="w-full" id="inputCategories" name="categories" formControlName="categories">
+        @for (c of allCategories(); track c.slug) {
+          <option class="p-1" [ngValue]="c.slug">{{c.name}}</option>
+        }
+      </select>
+    </div>
+    <span class="label">
+      <kbd class="kbd">{{isMacOS ? '⌘' : 'Ctrl'}}</kbd>
+      +
+      <kbd class="kbd">Click</kbd>
+      to select multiple
+    </span>
+  </fieldset>
 
-  <div class="mb-3">
-    <label for="inputPublishDate" class="form-label">Time</label>
-    <input bsDatepicker [bsConfig]="{dateInputFormat: 'YYYY-MM-DD HH:mm:ss.SSS', withTimepicker: true, keepDatepickerOpened: true}"
-      type="text" class="form-control" id="inputPublishDate" name="publishDate" formControlName="publishDate">
-  </div>
+  <fieldset class="fieldset">
+    <label for="inputPublishDate" class="fieldset-legend">Time</label>
+    <input
+      type="datetime-local"
+      class="input"
+      id="inputPublishDate"
+      name="publishDate"
+      formControlName="publishDate"
+    >
+  </fieldset>
 
-  <textarea class="form-control mb-3" rows="10" placeholder="Content Markdown" formControlName="contentMarkdown"></textarea>
+  <fieldset class="fieldset">
+    <label for="inputContentMarkdown" class="fieldset-legend">Markdown</label>
+    <div class="flex gap-5 max-h-[80vh]">
+      <textarea
+        class="textarea flex-1 resize-none font-mono"
+        rows="10"
+        placeholder="Content Markdown"
+        id="inputContentMarkdown"
+        name="contentMarkdown"
+        formControlName="contentMarkdown"
+        #scrollable
+      ></textarea>
+      <app-markdown
+        [data]="contentSignal()"
+        class="flex-1 outline outline-base-content/20 p-3 rounded overflow-auto"
+        #scrollable
+      />
+    </div>
+  </fieldset>
 
-  <div>
+  <div class="flex gap-2">
     <button type="submit" class="btn btn-primary">Publish</button>
-    <a class="btn btn-danger ms-2" role="link" [routerLink]="cancelRoute()">Cancel</a>
+    <a class="btn btn-error" role="link" [routerLink]="cancelRoute()">Cancel</a>
   </div>
 
   @if (authorWarning()) {
-    <div class="form-text text-danger">
+    <div class="alert alert-error alert-outline">
       {{authorWarning()}}
     </div>
   }

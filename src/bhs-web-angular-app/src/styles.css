@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@600&display=swap');
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'tailwindcss';
+
+@theme {
+  /* custom serif font */
+  --font-serif: 'Josefin Slab', serif;
+  /*
+  HTML has this neat trick where if the root element (`html`) has no background,
+  then `body`'s background will be applied to the whole canvas and not the `body`.
+  Tailwind turns that off probably because it's unexpected,
+  but we want to opt back in.
+  */
+  --root-bg: transparent;
+}
+
+@plugin '@tailwindcss/typography';
+
+@plugin 'daisyui' {
+  themes: corporate --default, business --prefersdark;
+}
+@plugin 'daisyui/theme' {
+  name: 'corporate';
+  /* gray text is a failure of design */
+  --color-base-content: oklch(0% 0 0) !important;
+}
+@plugin 'daisyui/theme' {
+  name: 'business';
+  /* gray text is a failure of design */
+  --color-base-content: oklch(100% 0 0) !important;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    /* serif headings */
+    font-family: var(--font-serif);
+    letter-spacing: 0.0625rem;
+  }
+
+  /* put back heading sizes */
+  h1 {
+    font-size: var(--text-4xl);
+  }
+  h2 {
+    font-size: var(--text-3xl);
+  }
+  h3 {
+    font-size: var(--text-2xl);
+  }
+  h4 {
+    font-size: var(--text-xl);
+  }
+  h5 {
+    font-size: var(--text-lg);
+  }
+
+  p, dl, ol, ul {
+    /* larger text */
+    font-size: 1.25rem;
+  }
+}

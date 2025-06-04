@@ -2,7 +2,6 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
 import { EditBlogEntryFormComponent } from '../../components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { Author, AuthorService } from '@data/authors';
@@ -18,10 +17,8 @@ interface EntryNewVm {
 @Component({
   selector: 'app-entry-new',
   templateUrl: './entry-new.component.html',
-  styleUrl: './entry-new.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AlertComponent,
     EditBlogEntryFormComponent,
     AsyncPipe,
   ],

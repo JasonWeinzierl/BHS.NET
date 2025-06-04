@@ -1,17 +1,17 @@
-<div class="card">
+<div class="card bg-base-100 mb-5">
   <div class="card-body">
-    <h1 class="card-title">The City Hall Museum</h1>
-    <div class="row">
-      <div class="col-lg">
-        <address>
+    <h1>The City Hall Museum</h1>
+    <div class="flex flex-wrap">
+      <div class="flex-1">
+        <address class="not-italic mb-3">
           512 Main Street<br>
           Belton, Missouri 64012
         </address>
         <h3>Hours of operation</h3>
         @if (schedule$ | async; as schedule) {
           @if (schedule.isLoading) {
-            <div class="spinner-grow" role="status">
-              <span class="visually-hidden">Loading...</span>
+            <div class="loading loading-ring" role="status">
+              <span class="hidden">Loading...</span>
             </div>
           } @else {
             <p id="location-museum-schedule">
@@ -26,18 +26,20 @@
           <p id="location-museum-schedule-error">Hours of operation are not available at this time.</p>
         }
       </div>
-      <div class="col-lg">
-        <img ngSrc="/assets/img/2017/oldcityhall.jpg" alt="city hall" class="img-fluid" width="641" height="482">
+      <div class="flex-1">
+        <img ngSrc="/assets/img/2017/oldcityhall.jpg" alt="city hall" width="641" height="482">
       </div>
     </div>
   </div>
 </div>
-<div class="card">
+<div class="card bg-base-100">
   <div class="card-body">
-    <h2 class="card-title">Map</h2>
-    <div class="ratio ratio-16x9">
+    <h2>Map</h2>
+    <div class="aspect-video">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3108.9494231284616!2d-94.53322138434861!3d38.81071215965356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87c0db7b546ca8a3%3A0x4d96d3e0b578f14a!2sBelton+Museum!5e0!3m2!1sen!2sus!4v1503459942193"></iframe>
+        class="w-full h-full"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3108.9494231284616!2d-94.53322138434861!3d38.81071215965356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87c0db7b546ca8a3%3A0x4d96d3e0b578f14a!2sBelton+Museum!5e0!3m2!1sen!2sus!4v1503459942193"
+      ></iframe>
     </div>
   </div>
 </div>

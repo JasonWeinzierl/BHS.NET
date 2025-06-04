@@ -1,32 +1,37 @@
-<div class="card">
-  <div class="card-header">
-    <h2 class="card-title">
-      <a [routerLink]="['/apps/blog/entry', post().slug]">
+<div class="card bg-base-100 mb-5">
+  <div class="card-body">
+    <h2>
+      <a class="link link-primary link-hover" [routerLink]="['/apps/blog/entry', post().slug]">
         {{post().title}}
       </a>
     </h2>
-    <p class="card-subtitle">
+    <p class="text-sm">
       Posted
       @let author = post().author;
       @if (author) {
         by
-        <a [routerLink]="['/apps/profile', author.username]">{{author.name}}</a>
+        <a class="link link-primary link-hover" [routerLink]="['/apps/profile', author.username]">{{author.name}}</a>
       }
       on
       <app-date [datetime]="post().datePublished" />
     </p>
   </div>
+  <hr>
   <div class="card-body">
     <p>{{post().contentPreview}}</p>
     <p>
       <a class="btn btn-secondary" role="button" [routerLink]="['/apps/blog/entry', post().slug]">
-        Read Full Post &raquo;
+        Read Full Post
+        <i class="bi bi-chevron-double-right"></i>
       </a>
     </p>
   </div>
-  <div class="card-footer">
-    @for (cat of post().categories; track cat.slug) {
-      <span class="me-2">{{cat.name}}</span>
-    }
+  <hr>
+  <div class="card-body">
+    <div class="card-actions">
+      @for (cat of post().categories; track cat.slug) {
+        <span>{{cat.name}}</span>
+      }
+    </div>
   </div>
 </div>

@@ -1,26 +1,25 @@
-<div class="row">
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <h1 class="card-title">News</h1>
-        <p>The online feed for the Society's newsletters, announcements, and stories.</p>
-        @if (isAuthenticated$ | async) {
-          <a class="btn btn-primary" routerLink="/apps/blog/new">New Post</a>
-        }
+<div class="card bg-base-100 mb-5">
+  <div class="card-body">
+    <h1>News</h1>
+    <p>The online feed for the Society's newsletters, announcements, and stories.</p>
+    @if (isAuthenticated$ | async) {
+      <div>
+        <a class="btn btn-primary" routerLink="/apps/blog/new">New Post</a>
       </div>
-    </div>
+    }
   </div>
 </div>
-<div class="row">
 
-  <div class="col-lg-9">
+<div class="flex flex-wrap gap-5">
+
+  <div class="flex-2">
     <app-posts-search />
   </div>
 
-  <div class="col-lg-3">
-    <div class="card">
+  <div class="flex-1">
+    <div class="card bg-base-100">
       <div class="card-body">
-        <h2 class="card-title">Categories</h2>
+        <h2>Categories</h2>
       </div>
 
       @if (categoriesVm$ | async; as categoriesVm) {

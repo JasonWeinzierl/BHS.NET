@@ -6,7 +6,6 @@ import { AlbumPhotos } from '@data/photos';
 @Component({
   selector: 'app-entry-album',
   templateUrl: './entry-album.component.html',
-  styleUrl: './entry-album.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, NgOptimizedImage],
 })

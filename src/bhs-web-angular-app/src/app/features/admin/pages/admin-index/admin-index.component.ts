@@ -9,7 +9,6 @@ import { catchError, map, of, startWith } from 'rxjs';
 @Component({
   selector: 'app-admin-index',
   templateUrl: './admin-index.component.html',
-  styleUrl: './admin-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,

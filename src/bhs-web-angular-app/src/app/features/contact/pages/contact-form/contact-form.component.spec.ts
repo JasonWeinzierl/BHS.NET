@@ -70,13 +70,13 @@ describe('ContactFormComponent', () => {
       submitButton.click();
       fixture.detectChanges();
 
-      expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+      expect((fixture.nativeElement as HTMLElement).querySelector('.progress')).toBeTruthy();
       expect(sendMessage).toHaveBeenCalled();
 
       sendMessageResponseSubject$.next();
       fixture.detectChanges();
 
-      expect((fixture.nativeElement as HTMLElement).querySelector('.card-subtitle')?.textContent).toBe('Thank you for your message.');
+      expect((fixture.nativeElement as HTMLElement).querySelector('[data-testid="ContactForm-ThankYou"]')?.textContent).toBe('Thank you for your message.');
     });
 
     it('should show an error on failure', () => {
@@ -90,7 +90,7 @@ describe('ContactFormComponent', () => {
       submitButton.click();
       fixture.detectChanges();
 
-      expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+      expect((fixture.nativeElement as HTMLElement).querySelector('.progress')).toBeTruthy();
       expect(sendMessage).toHaveBeenCalled();
 
       sendMessageResponseSubject$.error(new Error('Test error'));
@@ -120,13 +120,13 @@ describe('ContactFormComponent', () => {
         submitButton.click();
         fixture.detectChanges();
 
-        expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+        expect((fixture.nativeElement as HTMLElement).querySelector('.progress')).toBeTruthy();
         expect(sendMessage).toHaveBeenCalled();
 
         await vi.advanceTimersByTimeAsync(10_000);
         fixture.detectChanges();
 
-        expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeFalsy();
+        expect((fixture.nativeElement as HTMLElement).querySelector('.progress')).toBeFalsy();
         expect((fixture.nativeElement as HTMLElement).querySelector('.alert')?.textContent).toContain('Something took too long...');
       });
 
@@ -141,13 +141,13 @@ describe('ContactFormComponent', () => {
         submitButton.click();
         fixture.detectChanges();
 
-        expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+        expect((fixture.nativeElement as HTMLElement).querySelector('.progress')).toBeTruthy();
         expect(sendMessage).toHaveBeenCalled();
 
         await vi.advanceTimersByTimeAsync(5_000);
         fixture.detectChanges();
 
-        expect((fixture.nativeElement as HTMLElement).querySelector('.progress-bar')).toBeTruthy();
+        expect((fixture.nativeElement as HTMLElement).querySelector('.progress')).toBeTruthy();
         expect((fixture.nativeElement as HTMLElement).querySelector('.alert')).toBeFalsy();
       });
     });

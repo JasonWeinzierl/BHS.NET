@@ -1,20 +1,20 @@
-<footer>
-  <div class="container">
-    <ul class="list-inline text-muted text-center small">
-      <li class="list-inline-item">
-        <a [routerLink]="['/about/this-site']">About this Site</a>
+<footer class="w-full min-h-12 absolute bottom-0 flex flex-col justify-center bg-base-100/90">
+  <div class="container mx-auto">
+    <ul class="flex gap-2 justify-center text-center text-sm text-base-content/70">
+      <li>
+        <a [routerLink]="['/about/this-site']" class="link link-primary link-hover">About this Site</a>
       </li>
-      <li class="list-inline-item">
-        <a [routerLink]="['/contact']">Contact Us</a>
+      <li>
+        <a [routerLink]="['/contact']" class="link link-primary link-hover">Contact Us</a>
       </li>
-      <li class="list-inline-item">
+      <li>
         Copyright &copy; <time datetime="2011">2011</time>&ndash;<time [attr.datetime]="year">{{year}}</time>
       </li>
-      <li class="list-inline-item">
-        <a [routerLink]="['/about/terms-of-service']">Terms of Service</a>
+      <li>
+        <a [routerLink]="['/about/terms-of-service']" class="link link-primary link-hover">Terms of Service</a>
       </li>
-      <li class="list-inline-item">
-        <a [routerLink]="['/about/privacy-policy']">Privacy Policy</a>
+      <li>
+        <a [routerLink]="['/about/privacy-policy']" class="link link-primary link-hover">Privacy Policy</a>
       </li>
     </ul>
   </div>

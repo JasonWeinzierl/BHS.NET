@@ -6,7 +6,6 @@ import { PostPreview } from '@data/blog';
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
-  styleUrl: './post-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, DateComponent],
 })

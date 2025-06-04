@@ -1,24 +1,31 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, output, viewChildren } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Author } from '@data/authors';
 import { Category, categorySchema, Post, PostRequest } from '@data/blog';
+import { MarkdownComponent } from '@shared/components/markdown/markdown.component';
 
 @Component({
   selector: 'app-edit-blog-entry-form',
   templateUrl: './edit-blog-entry-form.component.html',
-  styleUrl: './edit-blog-entry-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-      FormsModule,
-      ReactiveFormsModule,
-      BsDatepickerModule,
-      RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+    MarkdownComponent,
+  ],
+  providers: [
+    DatePipe,
   ],
 })
 export class EditBlogEntryFormComponent {
-  private readonly fb = inject(FormBuilder);
+  private readonly fb = inject(NonNullableFormBuilder);
+  private readonly datePipe = inject(DatePipe);
+
+  readonly scrollableElements = viewChildren<string, ElementRef<HTMLElement>>('scrollable', { read: ElementRef });
 
   readonly initialPost = input<Post>();
   readonly currentAuthor = input<Author | null>();
@@ -30,10 +37,10 @@ export class EditBlogEntryFormComponent {
     return initialPost ? ['/apps/blog/entry', initialPost.slug] : ['/apps/blog'];
   });
 
-  readonly editFormGroup = this.fb.nonNullable.group({
+  readonly editFormGroup = this.fb.group({
     title: ['', [Validators.required]],
     categories: [[] as Array<string>],
-    publishDate: [new Date()],
+    publishDate: [this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss') ?? '', [Validators.required]],
     contentMarkdown: [''],
   });
 
@@ -49,6 +56,10 @@ export class EditBlogEntryFormComponent {
       : null;
   });
 
+  readonly isMacOS = /(macintosh|macinte|macppc|mac68k|macos)/.test(window.navigator.userAgent.toLowerCase());
+
+  readonly contentSignal = toSignal(this.editFormGroup.controls.contentMarkdown.valueChanges);
+
   constructor() {
     effect(() => {
       const initialPost = this.initialPost();
@@ -56,8 +67,52 @@ export class EditBlogEntryFormComponent {
       this.editFormGroup.reset({
         title: initialPost?.title ?? '',
         categories: initialPost?.categories.map(x => x.slug) ?? [],
-        publishDate: initialPost?.datePublished ?? new Date(),
+        publishDate: this.datePipe.transform(initialPost?.datePublished ?? new Date(), 'yyyy-MM-ddTHH:mm:ss') ?? '',
         contentMarkdown: initialPost?.contentMarkdown ?? '',
+      });
+    });
+
+    effect(onCleanup => {
+      const scrollableElements = this.scrollableElements();
+
+      let isScrolling = false;
+      const scrollListener = (event: Event): void => {
+        // Prevent infinite loop when scroll causes scroll.
+        if (isScrolling) {
+          return;
+        }
+        isScrolling = true;
+
+        const scrolledElement = event.target as HTMLElement;
+
+        for (const { nativeElement } of scrollableElements) {
+          if (nativeElement === scrolledElement) {
+            continue;
+          }
+          // Keep in sync via percentages, assuming heights are equal.
+          const heightPercent = scrolledElement.scrollTop / (scrolledElement.scrollHeight - scrolledElement.clientHeight);
+          const top = heightPercent * (nativeElement.scrollHeight - nativeElement.clientHeight);
+
+          nativeElement.scrollTo({
+            behavior: 'instant',
+            top,
+          });
+        }
+
+        // Re-enable listener right before browser paints.
+        window.requestAnimationFrame(() => {
+          isScrolling = false;
+        });
+      };
+
+      for (const ele of scrollableElements) {
+        ele.nativeElement.addEventListener('scroll', scrollListener);
+      }
+
+      onCleanup(() => {
+        for (const ele of scrollableElements) {
+          ele.nativeElement.removeEventListener('scroll', scrollListener);
+        }
       });
     });
   }
@@ -71,7 +126,7 @@ export class EditBlogEntryFormComponent {
       filePath: this.initialPost()?.filePath ?? null,
       photosAlbumSlug: this.initialPost()?.photosAlbumSlug ?? null,
       author: this.isChangingAuthor() ? this.currentAuthor() ?? null : this.initialPost()?.author ?? null, // TODO: support multiple authors.
-      datePublished: raw.publishDate,
+      datePublished: new Date(raw.publishDate),
       categories: this.allCategories().filter(c => raw.categories.includes(c.slug)).map(c => categorySchema.parse(c)),
     };
 

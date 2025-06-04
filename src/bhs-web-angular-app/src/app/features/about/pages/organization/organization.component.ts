@@ -1,17 +1,14 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, combineLatest, map, of, startWith } from 'rxjs';
 import { LeadershipService } from '@data/leadership';
 
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
-  styleUrl: './organization.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AlertComponent,
     AsyncPipe,
     DatePipe,
   ],

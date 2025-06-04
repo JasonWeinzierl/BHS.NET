@@ -1,20 +1,27 @@
-<div class="container">
-
-  <div class="card">
-    <div class="card-header">
-      <a class="card-link" [routerLink]="['/home']">Home</a>
-      <a class="card-link" [routerLink]="['/admin']">Admin</a>
+<div class="card bg-base-100">
+  <div class="card-body">
+    <div class="card-actions">
+      <a class="link link-primary" [routerLink]="['/home']">Home</a>
+      <a class="link link-primary" [routerLink]="['/admin']">Admin</a>
     </div>
+    <h2>Banners</h2>
     @if (bannersSignal(); as banners) {
-      <div class="card-body">
-        <h2 class="card-title">Banners</h2>
-      </div>
-      <li class="list-group list-group-flush">
+      <ul>
         @for (banner of banners; track banner.id) {
-          <li class="list-group-item">
+          <li class="not-last:border-b border-base-300 not-last:mb-4 not-last:pb-4">
             <h3>Banner {{ banner.id }}</h3>
-            <p>
-              <span [class]="`badge text-bg-${banner.bootstrapAlertType}`">
+            <p class="flex gap-2">
+              <span
+                class="badge"
+                [ngClass]="{
+                  'badge-info': banner.theme === 'Info' || banner.theme === 'Primary',
+                  'badge-neutral': banner.theme === 'Secondary',
+                  'badge-outline': banner.theme === 'Info' || banner.theme === 'Secondary',
+                  'badge-warning': banner.theme === 'Warning',
+                  'badge-success': banner.theme === 'Success',
+                  'badge-error': banner.theme === 'Danger',
+                }"
+              >
                 {{ banner.theme }}
               </span>
               <span [class]="`badge text-bg-${banner.isEnabled ? 'primary' : 'secondary'}`">
@@ -26,10 +33,10 @@
             <h4>Body</h4>
             <p>{{ banner.body }}</p>
             <h4>History <span class="bi bi-sort-down"></span></h4>
-            <ul>
+            <ul class="list-disc pl-8">
               @for (statusChange of banner.statusChanges; track statusChange) {
                 <li>
-                  <span [class]="`bi bi-${statusChange.isEnabled ? 'calendar-check' : 'calendar-x'}`"></span>
+                  <span [class]="`bi ${statusChange.isEnabled ? 'bi-calendar-check' : 'bi-calendar-x'}`"></span>
                   {{ statusChange.isEnabled ? 'Shown' : 'Removed' }}
                   {{ statusChange.dateModified | date:'long' }}
                 </li>
@@ -39,20 +46,25 @@
             </ul>
           </li>
         } @empty {
-          <li class="list-group-item">No banners found.</li>
+          <li>
+            <div class="alert alert-info">
+              <i class="bi bi-info-circle"></i>
+              <p>No banners found.</p>
+            </div>
+          </li>
         }
-      </li>
+      </ul>
     } @else {
-      <div class="card-body">
-        @if (errorSignal(); as error) {
-          <p class="text-danger">{{ error }}</p>
-        } @else {
-          <div class="spinner-grow" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        }
-      </div>
+      @if (errorSignal(); as error) {
+        <div class="alert alert-error" role="alert">
+          <i class="bi bi-exclamation-triangle"></i>
+          <p>{{ error }}</p>
+        </div>
+      } @else {
+        <div class="loading loading-ring loading-xl" role="status">
+          <span class="hidden">Loading...</span>
+        </div>
+      }
     }
   </div>
-
 </div>

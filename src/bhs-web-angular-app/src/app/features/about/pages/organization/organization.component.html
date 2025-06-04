@@ -1,36 +1,41 @@
-<div class="card">
+<div class="card bg-base-100 mb-5">
   <div class="card-body">
-    <h1 class="card-title">Leadership</h1>
+    <h1>Leadership</h1>
     @if (vm$ | async; as vm) {
-      <div class="row">
+      @if (vm.error) {
+        <div role="alert" class="alert alert-error alert-soft mb-5">
+          {{vm.error}}
+        </div>
+      }
+      <div class="flex flex-wrap">
 
-        <div class="col-sm">
+        <div class="flex-1">
           <h2>Officers</h2>
 
           @if (vm.isLoading) {
-            <div class="spinner-grow" role="status">
-              <span class="visually-hidden">Loading...</span>
+            <div class="loading loading-ring" role="status">
+              <span class="hidden">Loading...</span>
             </div>
           }
 
           <dl>
             @for (officer of vm.officers; track officer) {
-              <dt>{{officer.title}}</dt>
-              <dd [title]="officer.dateStarted | date:'\'since\' yyyy'">{{officer.name}}</dd>
+              <dt class="font-bold">{{officer.title}}</dt>
+              <dd [title]="officer.dateStarted | date:'\'since\' yyyy'" class="mb-2">{{officer.name}}</dd>
             }
           </dl>
         </div>
 
-        <div class="col-sm">
+        <div class="flex-1">
           <h2>Directors</h2>
 
           @if (vm.isLoading) {
-            <div class="spinner-grow" role="status">
-              <span class="visually-hidden">Loading...</span>
+            <div class="loading loading-ring" role="status">
+              <span class="hidden">Loading...</span>
             </div>
           }
 
-          <ul class="list-unstyled">
+          <ul>
             @for (director of vm.directors; track director) {
               <li>
                 {{director.name}} ({{director.year}})
@@ -39,22 +44,16 @@
           </ul>
         </div>
 
-        @if (vm.error) {
-          <alert type="danger">
-            {{vm.error}}
-          </alert>
-        }
-
       </div>
     }
   </div>
 </div>
 
-<div class="card">
+<div class="card bg-base-100">
   <div class="card-body">
-    <h1 class="card-title">By-laws</h1>
-    <div class="ratio ratio-16x9">
-      <iframe src="https://drive.google.com/file/d/11s1RHMoIfVjBQrpAXXn5Qh6ZwH_Bejw_/preview"></iframe>
+    <h1>By-laws</h1>
+    <div class="aspect-video">
+      <iframe class="size-full" src="https://drive.google.com/file/d/11s1RHMoIfVjBQrpAXXn5Qh6ZwH_Bejw_/preview"></iframe>
     </div>
   </div>
 </div>

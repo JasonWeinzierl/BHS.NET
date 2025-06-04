@@ -9,18 +9,7 @@
   }
 }
 
-.router-load-indicator {
-  background-color: var(--bs-primary);
-  box-shadow: 0rem 0.4rem 1rem var(--bs-dark);
-  color: var(--bs-light);
-  font-size: 1rem;
-  left: 50%;
-  padding: 0.1rem 1rem;
-  position: fixed;
-  text-align: center;
-  transform: translateX(-50%);
-  width: 110%;
-  z-index: 2;
+.animate-router-load-indicator {
   /* delay animation for fast network connection */
   animation-delay: 100ms;
   animation-duration: 200ms;

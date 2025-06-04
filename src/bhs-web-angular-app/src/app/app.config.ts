@@ -27,7 +27,17 @@ export const APP_CONFIG: ApplicationConfig = {
         authHttpInterceptorFn,
       ]),
     ),
-    provideToastr(),
+    provideToastr({
+      // daisyUI classes.
+      positionClass: 'toast',
+      toastClass: 'alert',
+      iconClasses: {
+        error: 'alert-error',
+        info: 'alert-info',
+        success: 'alert-success',
+        warning: 'alert-warning',
+      },
+    }),
     {
       provide: TitleStrategy,
       useClass: BhsTitleStrategy,

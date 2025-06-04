@@ -1,17 +1,15 @@
 @if (vm$ | async; as vm) {
-  <div class="card">
+  <div class="card bg-base-100">
 
     <div class="card-body">
-      <h1 class="card-title">New Entry</h1>
+      <h1>New Entry</h1>
 
       @if (vm.error) {
-        <alert type="danger">{{vm.error}}</alert>
+        <div class="alert alert-error" role="alert">{{vm.error}}</div>
       }
 
       @if (vm.isLoading) {
-        <div class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-          <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
-        </div>
+        <progress class="progress"></progress>
       }
 
       @if (!vm.isLoading && !vm.error) {

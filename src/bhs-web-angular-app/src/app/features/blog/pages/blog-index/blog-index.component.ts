@@ -11,7 +11,6 @@ import { BlogService } from '@data/blog';
 @Component({
   selector: 'app-blog-index',
   templateUrl: './blog-index.component.html',
-  styleUrl: './blog-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     PostsSearchComponent,

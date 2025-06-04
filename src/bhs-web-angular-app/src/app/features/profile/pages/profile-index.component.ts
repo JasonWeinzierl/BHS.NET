@@ -2,18 +2,15 @@ import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertComponent } from 'ngx-bootstrap/alert';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
-import { PostCardComponent } from '../../blog/components/post-card/post-card.component';
 import { AuthorService } from '@data/authors';
+import { PostCardComponent } from '@features/blog/components/post-card/post-card.component';
 
 @Component({
   selector: 'app-profile-index',
   templateUrl: './profile-index.component.html',
-  styleUrl: './profile-index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AlertComponent,
     PostCardComponent,
     AsyncPipe,
   ],

@@ -2,7 +2,6 @@ import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AlertComponent } from 'ngx-bootstrap/alert';
 import { BehaviorSubject, catchError, map, of, switchMap, tap } from 'rxjs';
 import { PostCardComponent } from '../post-card/post-card.component';
 import { BlogService, PostPreview } from '@data/blog';
@@ -10,11 +9,9 @@ import { BlogService, PostPreview } from '@data/blog';
 @Component({
   selector: 'app-posts-search',
   templateUrl: './posts-search.component.html',
-  styleUrl: './posts-search.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
-    AlertComponent,
     PostCardComponent,
     AsyncPipe,
   ],
@@ -23,7 +20,7 @@ export class PostsSearchComponent {
   private readonly blogService = inject(BlogService);
 
   private readonly searchTextSubject$ = new BehaviorSubject('');
-  postsVm$ = this.searchTextSubject$.pipe(
+  readonly postsVm$ = this.searchTextSubject$.pipe(
     switchMap(searchText => this.blogService.searchPosts(searchText).pipe(
       map(posts => ({
         posts: posts.toSorted((a, b) => b.datePublished.getTime() - a.datePublished.getTime()),
