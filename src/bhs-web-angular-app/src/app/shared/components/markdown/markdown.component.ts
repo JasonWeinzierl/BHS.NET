@@ -3,8 +3,12 @@ import { marked } from 'marked';
 
 @Component({
   selector: 'app-markdown',
-  templateUrl: './markdown.component.html',
+  template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    'class': 'prose max-w-none',
+    '[innerHTML]': 'parsed()',
+  },
   imports: [],
 })
 export class MarkdownComponent {
