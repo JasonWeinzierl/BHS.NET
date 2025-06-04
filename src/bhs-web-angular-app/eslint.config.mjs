@@ -194,6 +194,7 @@ export default tseslint.config(gitignore(), {
     'rxjs-x/suffix-subjects': 'warn',
     'rxjs-x/no-ignored-subscribe': 'warn',
     'rxjs-x/no-ignored-subscription': 'warn',
+    'rxjs-x/no-subject-value': 'error',
 
     'rxjs-angular-x/prefer-async-pipe': 'error',
     // #endregion RxJS
