@@ -21,7 +21,6 @@ if (window.navigator.userAgent.includes('jsdom')) {
 
 declare global {
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     Element: {
       _mockScrollIntoView?: Mock;
     };

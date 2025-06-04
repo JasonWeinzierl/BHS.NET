@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention -- JSON-LD format */
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Post } from '@data/blog';

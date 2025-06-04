@@ -215,9 +215,6 @@ export default tseslint.config(gitignore(), {
       },
     ],
 
-    // Use standard naming conventions.
-    '@typescript-eslint/naming-convention': 'error',
-
     // Add readonly where possible.
     '@typescript-eslint/prefer-readonly': 'error',
 

@@ -21,7 +21,6 @@ export function provideBhsAuth0Config(): EnvironmentProviders {
       };
 
       baseConfig.authorizationParams = Object.assign({
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         redirect_uri: window.location.origin,
       }, baseConfig.authorizationParams);
 
