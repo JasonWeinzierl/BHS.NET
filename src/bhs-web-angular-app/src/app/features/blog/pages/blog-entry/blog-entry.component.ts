@@ -8,6 +8,7 @@ import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';
 import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry-album.component';
+import { JsonLdBlogPostingComponent } from '@features/blog/components/json-ld-blog-posting/json-ld-blog-posting.component';
 import { DateComponent } from '@shared/components/date/date.component';
 import { MarkdownComponent } from '@shared/components/markdown/markdown.component';
 
@@ -21,6 +22,7 @@ import { MarkdownComponent } from '@shared/components/markdown/markdown.componen
     MarkdownComponent,
     EntryAlbumComponent,
     AsyncPipe,
+    JsonLdBlogPostingComponent,
 ],
 })
 export class BlogEntryComponent {
