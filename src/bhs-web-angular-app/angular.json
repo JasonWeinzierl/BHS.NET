@@ -90,7 +90,8 @@
           "options": {
             "tsConfig": "tsconfig.spec.json",
             "buildTarget": "::debug",
-            "runner": "vitest"
+            "runner": "vitest",
+            "providersFile": "src/test-setup.ts"
           },
           "configurations": {
             "ci": {
