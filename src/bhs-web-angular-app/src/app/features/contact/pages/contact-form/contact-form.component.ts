@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { timeout, TimeoutError } from 'rxjs';
@@ -19,6 +19,8 @@ export class ContactFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly contactService = inject(ContactService);
 
+  readonly contactFormEl = viewChild.required<ElementRef<HTMLElement>>('contactUsHeader');
+
   readonly contactForm = this.fb.nonNullable.group({
     name: [''],
     emailAddress: ['', [Validators.required, Validators.email]],
@@ -32,6 +34,11 @@ export class ContactFormComponent {
 
   onSubmit(): void {
     this.isSubmitted.set(true);
+    this.contactFormEl().nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
 
     const request: ContactAlertRequest = {
       name: this.contactForm.value.name,
