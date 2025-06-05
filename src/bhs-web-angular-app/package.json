@@ -50,7 +50,7 @@
     "eslint-plugin-import-x": "^4.15.0",
     "eslint-plugin-jsdoc": "^50.7.1",
     "eslint-plugin-rxjs-angular-x": "^0.0.3",
-    "eslint-plugin-rxjs-x": "~0.7.4",
+    "eslint-plugin-rxjs-x": "~0.7.5",
     "globals": "^16.2.0",
     "jsdom": "^26.1.0",
     "merge-partially": "^2.0.2",

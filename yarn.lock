@@ -4290,7 +4290,7 @@ __metadata:
     eslint-plugin-import-x: "npm:^4.15.0"
     eslint-plugin-jsdoc: "npm:^50.7.1"
     eslint-plugin-rxjs-angular-x: "npm:^0.0.3"
-    eslint-plugin-rxjs-x: "npm:~0.7.4"
+    eslint-plugin-rxjs-x: "npm:~0.7.5"
     globals: "npm:^16.2.0"
     jsdom: "npm:^26.1.0"
     jwt-decode: "npm:^4.0.0"
@@ -5553,9 +5553,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-rxjs-x@npm:~0.7.4":
-  version: 0.7.4
-  resolution: "eslint-plugin-rxjs-x@npm:0.7.4"
+"eslint-plugin-rxjs-x@npm:~0.7.5":
+  version: 0.7.5
+  resolution: "eslint-plugin-rxjs-x@npm:0.7.5"
   dependencies:
     "@typescript-eslint/scope-manager": "npm:^8.19.1"
     "@typescript-eslint/utils": "npm:^8.19.1"
@@ -5570,7 +5570,7 @@ __metadata:
   peerDependenciesMeta:
     rxjs:
       optional: true
-  checksum: 10c0/ef8d7b98d59e1a249854c4e4f0ad9cb5b15a4f1261784a3a8542acbbac76d2975859140267c36b60e0413e621a6035f39a37a15ced58e211e0e36190f9ea76ec
+  checksum: 10c0/e1b1c628b51641c97283a51dd0b98f6802d65c8b3c7ac6be19e1db568dfa4b6740e959e7d61727a2cc12d4e11e7a446160938735a45d3da9e3565762080ebdd5
   languageName: node
   linkType: hard
 
