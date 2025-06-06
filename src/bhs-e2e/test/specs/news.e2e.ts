@@ -1,5 +1,5 @@
 import { Agent, fetch } from 'undici';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 // TODO: dedupe with web app, define models in a separate package.
 const postPreviewSchema = z.object({

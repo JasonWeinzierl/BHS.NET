@@ -55,6 +55,11 @@ export default tseslint.config(gitignore(), {
         },
       },
     ],
+
+    'no-restricted-imports': [
+      'error',
+      { name: 'zod', message: 'Please use zod/v4 instead.' },
+    ],
   },
 }, {
   files: [

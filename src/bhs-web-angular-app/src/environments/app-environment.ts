@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const APP_ENVIRONMENT_VALIDATOR = z.object({
   appInsights: z.object({

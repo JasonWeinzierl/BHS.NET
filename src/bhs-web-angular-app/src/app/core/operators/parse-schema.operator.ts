@@ -1,5 +1,5 @@
 import { map, OperatorFunction } from 'rxjs';
-import { ZodType } from 'zod';
+import { ZodType } from 'zod/v4';
 
 /**
  * Parses each value emitted by the source Observable
