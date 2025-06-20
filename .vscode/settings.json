@@ -17,4 +17,7 @@
   "files.associations": {
     "*.css": "tailwindcss",
   },
+  "typescript.preferences.autoImportSpecifierExcludeRegexes": [
+    "^zod$",
+  ],
 }
