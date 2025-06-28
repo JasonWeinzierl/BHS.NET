@@ -22,7 +22,7 @@
     "@angular/platform-browser": "20.0.4",
     "@angular/router": "20.0.4",
     "@auth0/auth0-angular": "^2.2.3",
-    "@microsoft/applicationinsights-analytics-js": "3.3.8",
+    "@microsoft/applicationinsights-analytics-js": "3.3.9",
     "@microsoft/applicationinsights-angularplugin-js": "^15.3.6",
     "@microsoft/applicationinsights-web": "^3.3.8",
     "bootstrap-icons": "1.13.1",
