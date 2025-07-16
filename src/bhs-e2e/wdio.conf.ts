@@ -30,11 +30,11 @@ export const config: WebdriverIO.Config = {
     },
   }, {
     browserName: 'safari',
-  }, {
-    browserName: 'edge',
-    'ms:edgeOptions': {
-      args: ['--headless'],
-    },
+  // }, { // TODO(webdriverio-community/node-edgedriver#500): uncomment when edgedriver updates their default MS Edge WebDriver CDN URL.
+  //   browserName: 'edge',
+  //   'ms:edgeOptions': {
+  //     args: ['--headless'],
+  //   },
   }],
 
   onPrepare(cfg, capabilities) {
