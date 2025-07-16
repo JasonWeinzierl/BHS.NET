@@ -1,6 +1,4 @@
-﻿using Auth0Net.DependencyInjection;
-using Auth0Net.DependencyInjection.Cache;
-using BHS.Domain.Authors;
+﻿using BHS.Domain.Authors;
 using BHS.Domain.Banners;
 using BHS.Domain.Blog;
 using BHS.Domain.ContactUs;
@@ -9,7 +7,6 @@ using BHS.Domain.Museum;
 using BHS.Domain.Notifications;
 using BHS.Domain.Photos;
 using BHS.Infrastructure.Adapters;
-using BHS.Infrastructure.Repositories.Auth0;
 using BHS.Infrastructure.Repositories.Mongo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,13 +35,6 @@ public static class BhsServiceCollectionExtensions
         services.AddSingleton(TimeProvider.System);
 
         services.AddMongoRepositories();
-        services.AddTransient<IAuthorRepository, AuthorRepository>();
-
-        services.AddAuth0AuthenticationClient(config => { });
-        services.AddOptions<Auth0Configuration>()
-                .BindConfiguration("Auth0ManagementApiOptions");
-        services.AddAuth0ManagementClient()
-                .AddManagementAccessToken();
 
         return services;
     }
@@ -69,6 +59,7 @@ public static class BhsServiceCollectionExtensions
             return new MongoClient(clientSettings);
         });
 
+        services.AddSingleton<IAuthorRepository, AuthorRepository>();
         services.AddSingleton<IPostRepository, PostRepository>();
         services.AddSingleton<IPostPreviewRepository, PostPreviewRepository>();
         services.AddSingleton<ICategoryRepository, CategoryRepository>();

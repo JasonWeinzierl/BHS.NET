@@ -1,5 +1,4 @@
-﻿using Auth0.ManagementApi;
-using BHS.Infrastructure.IoC;
+﻿using BHS.Infrastructure.IoC;
 using BHS.Web.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,10 +21,6 @@ public sealed class ControllerTestsClassFixture
 
                 { "NotificationOptions:FromAddress", "test@test.com" },
                 { "NotificationOptions:FromName", "test" },
-
-                { "Auth0ManagementApiOptions:Domain", "test.com" },
-                { "Auth0ManagementApiOptions:ClientId", "foo" },
-                { "Auth0ManagementApiOptions:ClientSecret", "bar" },
             })
             .Build();
 
@@ -33,7 +28,6 @@ public sealed class ControllerTestsClassFixture
 
         // Mock any services which shouldn't be instantiated.
         Services.AddSingleton(Substitute.For<IMongoClient>());
-        Services.AddSingleton(Substitute.For<IManagementConnection>());
 
         // Subject under test.
         Services.AddBhsServices();

@@ -1,7 +1,6 @@
 ﻿using BHS.Domain.Banners;
 using BHS.Domain.ContactUs;
 using BHS.Domain.Photos;
-using BHS.Infrastructure.Repositories.Auth0;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -35,12 +34,9 @@ public class ErrorController : ControllerBase
         {
             InvalidContactRequestException => StatusCodes.Status400BadRequest,
             InvalidPhotoIdException => StatusCodes.Status400BadRequest,
-            InvalidAuthorRequestException => StatusCodes.Status400BadRequest,
             InvalidBannerIdException => StatusCodes.Status400BadRequest,
 
             MongoWriteException ex when ex.WriteError.Category == ServerErrorCategory.DuplicateKey => StatusCodes.Status409Conflict,
-
-            FailedAuthorRequestException => StatusCodes.Status500InternalServerError,
 
             NotImplementedException => StatusCodes.Status501NotImplemented,
 

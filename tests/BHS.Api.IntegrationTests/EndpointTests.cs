@@ -1,15 +1,10 @@
-﻿using Auth0.Core.Exceptions;
-using Auth0.ManagementApi;
-using Auth0.ManagementApi.Models;
-using BHS.Contracts;
+﻿using BHS.Contracts;
 using BHS.Contracts.Banners;
 using BHS.Contracts.Blog;
 using BHS.Contracts.Leadership;
 using BHS.Contracts.Photos;
 using BHS.Web;
 using MongoDB.Bson;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using System.Net;
 using System.Net.Http.Json;
 using System.Net.Mime;
@@ -22,7 +17,6 @@ namespace BHS.Api.IntegrationTests;
 public class EndpointTests(BhsWebApplicationFactory<Program> factory) : IClassFixture<BhsWebApplicationFactory<Program>>
 {
     private readonly HttpClient _httpClient = factory.CreateClient();
-    private readonly IManagementConnection _mockManagementConnection = factory.MockManagementConnection;
 
     [Fact]
     public async Task HealthCheck_Ok()
@@ -45,15 +39,16 @@ public class EndpointTests(BhsWebApplicationFactory<Program> factory) : IClassFi
     }
 
     [Fact]
-    public async Task Author_GetByAuthUserId_InvalidFormat_400()
+    public async Task Author_GetByAuthUserId_Empty()
     {
-        _mockManagementConnection
-            .GetAsync<User>(Arg.Any<Uri>(), Arg.Any<Dictionary<string, string>>(), null, Arg.Any<CancellationToken>())
-            .Throws(new ErrorApiException(HttpStatusCode.BadRequest));
-
         using var response = await _httpClient.GetAsync("/api/authors?authUserId=12345", TestContext.Current.CancellationToken);
 
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(MediaTypeNames.Application.Json, response.Content.Headers.ContentType?.MediaType);
+
+        var authors = await response.Content.ReadFromJsonAsync<IEnumerable<Author>>(TestContext.Current.CancellationToken);
+        Assert.NotNull(authors);
+        Assert.Empty(authors);
     }
 
     [Fact]
