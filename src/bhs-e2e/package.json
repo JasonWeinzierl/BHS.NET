@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@wdio/cli": "^9.15.0",
-    "@wdio/jasmine-framework": "^9.15.0",
-    "@wdio/local-runner": "^9.15.0",
-    "@wdio/spec-reporter": "^9.15.0",
+    "@wdio/cli": "^9.17.1",
+    "@wdio/jasmine-framework": "^9.17.0",
+    "@wdio/local-runner": "^9.17.0",
+    "@wdio/spec-reporter": "^9.17.0",
     "tslib": "^2.8.1",
     "tsx": "^4.19.2",
     "undici": "^6.21.2",
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@eslint/js": "^9.29.0",
     "@stylistic/eslint-plugin": "^4.4.1",
-    "@types/jasmine": "^5.1.7",
+    "@types/jasmine": "^5.1.8",
     "@types/node": "^22.10.5",
     "eslint": "^9.29.0",
     "eslint-config-flat-gitignore": "^2.1.0",
