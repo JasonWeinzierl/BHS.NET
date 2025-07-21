@@ -4397,7 +4397,7 @@ __metadata:
     tsx: "npm:^4.19.2"
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.37.0"
-    undici: "npm:^6.21.2"
+    undici: "npm:^7.5.0"
     zod: "npm:^3.25.67"
   languageName: unknown
   linkType: soft
@@ -10575,10 +10575,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^6.19.5, undici@npm:^6.21.2, undici@npm:^6.21.3":
+"undici@npm:^6.19.5, undici@npm:^6.21.3":
   version: 6.21.3
   resolution: "undici@npm:6.21.3"
   checksum: 10c0/294da109853fad7a6ef5a172ad0ca3fb3f1f60cf34703d062a5ec967daf69ad8c03b52e6d536c5cba3bb65615769bf08e5b30798915cbccdddaca01045173dda
+  languageName: node
+  linkType: hard
+
+"undici@npm:^7.5.0":
+  version: 7.12.0
+  resolution: "undici@npm:7.12.0"
+  checksum: 10c0/27aada7bd8d2588f146a2ba554f2f6b7593f9c2d14bf3797bbc7b74825d9bee38eb3ab61e2d0ee01bb827a9ac8017eb2991cb4f06d9ed9971c8a142d8306fbab
   languageName: node
   linkType: hard
 
