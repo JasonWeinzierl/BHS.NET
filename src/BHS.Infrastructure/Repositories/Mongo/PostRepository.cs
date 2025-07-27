@@ -182,11 +182,12 @@ public partial class PostRepository : IPostRepository
             updates.Add(
                 newPublication.Value.Key.ToString(),
                 // Ditto LINQ3
-                b.Push($"{nameof(PostDto.Revisions)}.$[{newPublication.Value.Key}].{nameof(PostRevisionDto.Publications)}", newPublication.Value.Value));
+                b.Push($"{nameof(PostDto.Revisions)}.$[p{newPublication.Value.Key}].{nameof(PostRevisionDto.Publications)}", newPublication.Value.Value));
             arrayFilters.Add(
                 newPublication.Value.Key.ToString(),
                 new BsonDocumentArrayFilterDefinition<PostRevisionDto>(
-                    new BsonDocument($"{newPublication.Value.Key}._id", newPublication.Value.Key)));
+                    // Array filter field names must be an alphanumeric string beginning with a lowercase letter.
+                    new BsonDocument($"p{newPublication.Value.Key}._id", newPublication.Value.Key)));
         }
 
         if (!updates.Any())
