@@ -30,7 +30,7 @@ on:
 
 env:
   E2E_DIRECTORY: ./src/bhs-e2e
-  NODE_VERSION: '22'
+  NODE_VERSION: '24'
 
 jobs:
   e2e:
