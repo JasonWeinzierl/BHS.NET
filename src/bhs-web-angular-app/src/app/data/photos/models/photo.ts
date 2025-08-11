@@ -1,4 +1,4 @@
-import { z } from 'zod/v4';
+import { z } from 'zod';
 import { authorSchema } from '@data/authors';
 
 export const photoSchema = z.object({

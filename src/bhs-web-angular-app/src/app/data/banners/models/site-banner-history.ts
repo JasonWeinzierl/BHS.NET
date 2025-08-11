@@ -1,4 +1,4 @@
-import { z } from 'zod/v4';
+import { z } from 'zod';
 import { siteBannerSchema } from './site-banner';
 
 export const SITE_BANNER_STATUS_CHANGE_SCHEMA = z.object({

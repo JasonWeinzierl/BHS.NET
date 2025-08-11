@@ -122,11 +122,6 @@ export default tseslint.config(gitignore(), {
     ],
     'import-x/no-rename-default': 'warn',
     'import-x/no-useless-path-segments': 'warn',
-
-    'no-restricted-imports': [
-      'error',
-      { name: 'zod', message: 'Please use zod/v4 instead.' },
-    ],
     // #endregion Imports
 
     // #region JSDoc

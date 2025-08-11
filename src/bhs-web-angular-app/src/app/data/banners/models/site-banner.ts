@@ -1,4 +1,4 @@
-import { z } from 'zod/v4';
+import { z } from 'zod';
 import { alertThemeScheme } from './alert-theme';
 
 export const siteBannerSchema = z.object({
