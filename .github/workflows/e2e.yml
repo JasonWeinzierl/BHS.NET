@@ -39,7 +39,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - run: corepack enable
     - name: Setup Node.js with caching
