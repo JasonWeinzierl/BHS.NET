@@ -19,6 +19,7 @@ export const APP_CONFIG: ApplicationConfig = {
         scrollPositionRestoration: 'enabled',
       }),
     ),
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Needed by ngx-toastr for now.
     provideAnimations(),
     provideAuth0(),
     provideBhsAuth0Config(),

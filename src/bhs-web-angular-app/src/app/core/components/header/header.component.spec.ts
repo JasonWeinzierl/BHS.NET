@@ -18,6 +18,7 @@ describe('HeaderComponent', () => {
         HeaderComponent,
       ],
       providers: [
+        // eslint-disable-next-line @typescript-eslint/no-deprecated -- Needed by ngx-toastr for now.
         provideNoopAnimations(),
         provideRouter([]),
         MockProvider(SiteBannerService, {
