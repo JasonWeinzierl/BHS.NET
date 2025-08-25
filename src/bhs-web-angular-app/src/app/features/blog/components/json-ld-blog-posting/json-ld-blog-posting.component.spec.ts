@@ -38,7 +38,7 @@ describe('JsonLdBlogPostingComponent', () => {
 
     expect(jsonLdScriptEl.innerHTML).toContain('<script type="application/ld+json">');
 
-    const jsonLd = JSON.parse(jsonLdScriptEl.textContent ?? '') as Record<string, unknown>;
+    const jsonLd = JSON.parse(jsonLdScriptEl.textContent) as Record<string, unknown>;
 
     expect(jsonLd['@context']).toBe('https://schema.org');
     expect(jsonLd['@type']).toBe('BlogPosting');
