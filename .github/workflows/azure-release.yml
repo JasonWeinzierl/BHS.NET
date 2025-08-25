@@ -79,7 +79,7 @@ jobs:
     - run: yarn lint
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
-    - run: yarn transform:release
+    - run: yarn transform-release
       working-directory: ${{ env.CLIENTAPP_PATH }}
       env:
         SEMANTIC_VERSION: ${{ steps.gitversion.outputs.fullSemVer }}

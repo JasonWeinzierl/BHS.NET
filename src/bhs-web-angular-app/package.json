@@ -6,7 +6,7 @@
     "start": "ng serve --open",
     "build": "ng build",
     "build:release": "ng build --configuration release",
-    "transform:release": "./transform-release.sh",
+    "transform-release": "node scripts/transform-release.mjs",
     "watch": "ng build --watch --configuration debug",
     "lint": "ng lint",
     "test": "ng test",

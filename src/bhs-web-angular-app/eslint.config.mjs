@@ -6,7 +6,7 @@ import stylistic from '@stylistic/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
 import angular from 'angular-eslint';
 import gitignore from 'eslint-config-flat-gitignore';
-import importX from 'eslint-plugin-import-x';
+import { importX } from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
 import rxjsAngularX from 'eslint-plugin-rxjs-angular-x';
 import rxjsX from 'eslint-plugin-rxjs-x';
@@ -141,9 +141,10 @@ export default tseslint.config(gitignore(), {
     // #endregion JSDoc
   },
 }, {
-  // #region Config files
+  // #region Config and Script files
   files: [
     'eslint.config.mjs',
+    'scripts/**/*.mjs',
   ],
   languageOptions: {
     globals: {
@@ -155,7 +156,7 @@ export default tseslint.config(gitignore(), {
       node: true,
     },
   },
-  // #endregion Config files
+  // #endregion Config and Script files
 }, {
   files: [
     '**/*.ts',
