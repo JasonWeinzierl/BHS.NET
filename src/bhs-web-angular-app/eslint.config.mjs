@@ -13,6 +13,7 @@ import rxjsX from 'eslint-plugin-rxjs-x';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+// TODO: tseslint.config() is now deprecated, replace with eslint/config defineConfig().
 export default tseslint.config(gitignore(), {
   files: [
     '**/*.js',
