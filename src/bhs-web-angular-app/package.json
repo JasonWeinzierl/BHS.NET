@@ -14,13 +14,13 @@
     "clean": "ng cache clean"
   },
   "dependencies": {
-    "@angular/animations": "20.2.1",
-    "@angular/common": "20.2.1",
-    "@angular/compiler": "20.2.1",
-    "@angular/core": "20.2.1",
-    "@angular/forms": "20.2.1",
-    "@angular/platform-browser": "20.2.1",
-    "@angular/router": "20.2.1",
+    "@angular/animations": "20.2.4",
+    "@angular/common": "20.2.4",
+    "@angular/compiler": "20.2.4",
+    "@angular/core": "20.2.4",
+    "@angular/forms": "20.2.4",
+    "@angular/platform-browser": "20.2.4",
+    "@angular/router": "20.2.4",
     "@auth0/auth0-angular": "^2.2.3",
     "@microsoft/applicationinsights-analytics-js": "3.3.9",
     "@microsoft/applicationinsights-angularplugin-js": "^15.3.7",
@@ -35,9 +35,9 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "20.2.0",
-    "@angular/cli": "20.2.0",
-    "@angular/compiler-cli": "20.2.1",
+    "@angular/build": "20.2.2",
+    "@angular/cli": "20.2.2",
+    "@angular/compiler-cli": "20.2.4",
     "@stylistic/eslint-plugin": "^5.2.3",
     "@tailwindcss/postcss": "^4.1.12",
     "@tailwindcss/typography": "^0.5.16",
