@@ -14,7 +14,7 @@
     "@wdio/spec-reporter": "^9.20.0",
     "tslib": "^2.8.1",
     "tsx": "^4.20.5",
-    "undici": "^7.15.0",
+    "undici": "^7.16.0",
     "zod": "^4.1.11"
   },
   "devDependencies": {
