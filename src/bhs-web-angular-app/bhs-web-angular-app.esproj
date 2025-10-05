@@ -1,6 +1,9 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.544303-alpha">
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.3804879">
 
   <PropertyGroup>
+    <!-- Omit this project from PackageReference-based restore. -->
+    <RestoreProjectStyle>None</RestoreProjectStyle>
+
     <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
 
     <BuildCommand>yarn build</BuildCommand>
