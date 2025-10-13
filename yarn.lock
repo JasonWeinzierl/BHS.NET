@@ -4182,7 +4182,7 @@ __metadata:
     "@vitest/eslint-plugin": "npm:^1.3.17"
     angular-eslint: "npm:20.4.0"
     bootstrap-icons: "npm:1.13.1"
-    daisyui: "npm:^5.1.27"
+    daisyui: "npm:^5.2.3"
     eslint: "npm:^9.37.0"
     eslint-config-flat-gitignore: "npm:^2.1.0"
     eslint-import-resolver-typescript: "npm:^4.4.4"
@@ -4862,10 +4862,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^5.1.27":
-  version: 5.1.27
-  resolution: "daisyui@npm:5.1.27"
-  checksum: 10c0/679c2dd53cb3a067d42aed946a86371e97ed8eb1e42c4cf52c0dc79582c65394e474282c243c23b231d56d1312d8c74435ba31246642ddf85b839e7f87387e06
+"daisyui@npm:^5.2.3":
+  version: 5.2.3
+  resolution: "daisyui@npm:5.2.3"
+  checksum: 10c0/b50e58a93ceea4ce56a067f5f606acb823ed2637aa5222ad18699c3e703404e0a8441341c5ef1794ece47e04f7aa0324be34386e813374179e44a5630d2336f2
   languageName: node
   linkType: hard
 
