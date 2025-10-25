@@ -117,7 +117,7 @@ jobs:
     steps:
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v6
       with:
         name: webapp
         path: ${{ env.WEB_PUBLISH_PATH }}
@@ -157,7 +157,7 @@ jobs:
     steps:
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v6
       with:
         name: webapp
         path: ${{ env.WEB_PUBLISH_PATH }}
