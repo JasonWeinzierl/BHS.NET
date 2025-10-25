@@ -97,7 +97,7 @@ jobs:
       run: dotnet publish "${{ env.WEB_SRC_PATH }}" --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} --no-build
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: webapp
         path: ${{ env.WEB_PUBLISH_PATH }}
