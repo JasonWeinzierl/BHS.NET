@@ -38,6 +38,7 @@
     "@angular/build": "20.3.8",
     "@angular/cli": "20.3.8",
     "@angular/compiler-cli": "20.3.9",
+    "@eslint/config-helpers": "0.4.1",
     "@stylistic/eslint-plugin": "^5.5.0",
     "@tailwindcss/postcss": "^4.1.16",
     "@tailwindcss/typography": "^0.5.19",

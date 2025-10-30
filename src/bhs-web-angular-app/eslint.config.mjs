@@ -1,3 +1,4 @@
+/* eslint-disable import-x/no-named-as-default */
 /* eslint-disable import-x/no-named-as-default-member */
 /* eslint-disable import-x/no-rename-default */
 // @ts-check
@@ -5,6 +6,7 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
 import angular from 'angular-eslint';
+import { defineConfig } from 'eslint/config';
 import gitignore from 'eslint-config-flat-gitignore';
 import { importX } from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
@@ -13,14 +15,13 @@ import rxjsX from 'eslint-plugin-rxjs-x';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-// TODO: tseslint.config() is now deprecated, replace with eslint/config defineConfig().
-export default tseslint.config(gitignore(), {
+export default defineConfig(gitignore(), {
   files: [
     '**/*.js',
     '**/*.mjs',
     '**/*.ts',
   ],
-  extends: [
+  extends: ([
     js.configs.recommended,
     stylistic.configs['disable-legacy'],
     stylistic.configs.customize({
@@ -30,10 +31,12 @@ export default tseslint.config(gitignore(), {
       braceStyle: '1tbs',
       commaDangle: 'always-multiline',
     }),
+    // @ts-expect-error -- community is struggling with growing pains right now and plugin types aren't type-compatible for now.
     importX.flatConfigs.recommended,
+    // @ts-expect-error -- ditto.
     importX.flatConfigs.typescript,
-    jsdoc.configs['flat/recommended-typescript-error'],
-  ],
+    jsdoc.configs['flat/recommended-mixed'],
+  ]),
   rules: {
     // #region General
     // Maximum cyclomatic complexity.
