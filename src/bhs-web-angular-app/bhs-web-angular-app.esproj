@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.3804879">
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.4110890">
 
   <PropertyGroup>
     <!-- Omit this project from PackageReference-based restore. -->
@@ -6,7 +6,8 @@
 
     <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
 
-    <BuildCommand>yarn build</BuildCommand>
+    <!-- Even though ShouldRunBuildScript is false, publishing the API will still call this, so we need a no-op. -->
+    <BuildCommand>cd .</BuildCommand>
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
 
     <StartupCommand>yarn start</StartupCommand>
