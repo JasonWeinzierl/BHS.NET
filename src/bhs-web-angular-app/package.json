@@ -53,7 +53,7 @@
     "eslint-plugin-rxjs-angular-x": "^0.0.3",
     "eslint-plugin-rxjs-x": "~0.8.2",
     "globals": "^16.4.0",
-    "jsdom": "^26.1.0",
+    "jsdom": "^27.1.0",
     "merge-partially": "^2.0.2",
     "ng-mocks": "^14.14.0",
     "postcss": "^8.5.6",
