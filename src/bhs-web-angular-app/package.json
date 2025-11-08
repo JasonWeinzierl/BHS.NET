@@ -27,7 +27,7 @@
     "@microsoft/applicationinsights-web": "^3.3.10",
     "bootstrap-icons": "1.13.1",
     "jwt-decode": "^4.0.0",
-    "marked": "^15.0.12",
+    "marked": "^17.0.0",
     "ngx-toastr": "^19.1.0",
     "rxjs": "^7.8.2",
     "tslib": "^2.8.1",
