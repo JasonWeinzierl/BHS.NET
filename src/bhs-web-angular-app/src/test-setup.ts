@@ -1,4 +1,3 @@
-import { makeEnvironmentProviders } from '@angular/core';
 import { Mock, vi } from 'vitest';
 
 // jsdom doesn't implement scrollIntoView.
@@ -28,4 +27,4 @@ declare global {
 }
 
 // angular.json providersFile expects a default export of providers.
-export default makeEnvironmentProviders([]);
+export default [];
