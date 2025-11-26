@@ -234,6 +234,9 @@ export default defineConfig(gitignore(), {
       },
     ],
 
+    'no-unused-private-class-members': 'off',
+    '@typescript-eslint/no-unused-private-class-members': 'error',
+
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'error',
 
