@@ -1,10 +1,9 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
-import { provideToastr } from 'ngx-toastr';
+import { provideToastr, ToastNoAnimation } from 'ngx-toastr';
 import { APP_ROUTES } from './app.routes';
 import { provideBhsAuth0Config } from '@core/providers/auth0-config.provider';
 import { BhsTitleStrategy } from '@core/services/bhs-title-strategy';
@@ -19,8 +18,6 @@ export const APP_CONFIG: ApplicationConfig = {
         scrollPositionRestoration: 'enabled',
       }),
     ),
-    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Needed by ngx-toastr for now.
-    provideAnimations(),
     provideAuth0(),
     provideBhsAuth0Config(),
     provideHttpClient(
@@ -29,6 +26,7 @@ export const APP_CONFIG: ApplicationConfig = {
       ]),
     ),
     provideToastr({
+      toastComponent: ToastNoAnimation,
       // daisyUI classes.
       positionClass: 'toast',
       toastClass: 'alert',

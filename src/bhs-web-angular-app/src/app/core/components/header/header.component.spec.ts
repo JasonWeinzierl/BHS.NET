@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { MockProvider } from 'ng-mocks';
@@ -18,8 +17,6 @@ describe('HeaderComponent', () => {
         HeaderComponent,
       ],
       providers: [
-        // eslint-disable-next-line @typescript-eslint/no-deprecated -- Needed by ngx-toastr for now.
-        provideNoopAnimations(),
         provideRouter([]),
         MockProvider(SiteBannerService, {
           getEnabled$: () => EMPTY,
