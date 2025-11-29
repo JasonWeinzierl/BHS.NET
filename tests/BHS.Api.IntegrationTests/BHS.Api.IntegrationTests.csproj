@@ -14,7 +14,7 @@
   <!-- The Conditions ensure that only the OS-specific package is downloaded. -->
 
   <ItemGroup>
-    <PackageReference Include="EphemeralMongo.Core" Version="1.1.3" />
+    <PackageReference Include="EphemeralMongo.Core" Version="2.0.0" />
     <PackageReference Include="EphemeralMongo4.runtime.linux-x64" Version="1.1.3" Condition="$([MSBuild]::IsOSPlatform('Linux'))" />
     <PackageReference Include="EphemeralMongo4.runtime.osx-x64" Version="1.1.3" Condition="$([MSBuild]::IsOSPlatform('OSX'))" />
     <PackageReference Include="EphemeralMongo4.runtime.win-x64" Version="1.1.3" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
