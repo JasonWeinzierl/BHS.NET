@@ -42,7 +42,7 @@
     "@tailwindcss/postcss": "^4.1.16",
     "@tailwindcss/typography": "^0.5.19",
     "@vitest/eslint-plugin": "^1.5.0",
-    "angular-eslint": "20.7.0",
+    "angular-eslint": "21.0.1",
     "daisyui": "^5.3.10",
     "eslint": "^9.39.1",
     "eslint-config-flat-gitignore": "^2.1.0",
