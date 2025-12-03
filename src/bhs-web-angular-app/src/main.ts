@@ -1,4 +1,4 @@
-import { mergeApplicationConfig } from '@angular/core';
+import { mergeApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { APP_ENVIRONMENT, APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './environments';
@@ -14,6 +14,7 @@ fetch('/api/client-app-environment')
       { providers: [{ provide: APP_ENVIRONMENT, useValue: appEnv }] },
       APP_CONFIG,
     ));
+
   })
   .catch((err: unknown) => {
     console.error('Website failed to load!', err);
