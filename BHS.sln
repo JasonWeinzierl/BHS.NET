@@ -31,8 +31,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Domain.Tests", "tests\B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHS.Api.IntegrationTests", "tests\BHS.Api.IntegrationTests\BHS.Api.IntegrationTests.csproj", "{FAF7FB2D-C7E2-4BE9-89D6-E958FD77E469}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "bhs-web-angular-app", "src\bhs-web-angular-app\bhs-web-angular-app.esproj", "{9953F3CE-F0BB-4014-A2AF-A35403ED4ACE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,12 +69,6 @@ Global
 		{FAF7FB2D-C7E2-4BE9-89D6-E958FD77E469}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAF7FB2D-C7E2-4BE9-89D6-E958FD77E469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAF7FB2D-C7E2-4BE9-89D6-E958FD77E469}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9953F3CE-F0BB-4014-A2AF-A35403ED4ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9953F3CE-F0BB-4014-A2AF-A35403ED4ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9953F3CE-F0BB-4014-A2AF-A35403ED4ACE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{9953F3CE-F0BB-4014-A2AF-A35403ED4ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9953F3CE-F0BB-4014-A2AF-A35403ED4ACE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9953F3CE-F0BB-4014-A2AF-A35403ED4ACE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
