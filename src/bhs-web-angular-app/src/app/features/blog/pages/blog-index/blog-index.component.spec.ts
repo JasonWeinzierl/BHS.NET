@@ -1,12 +1,28 @@
+import { AsyncPipe } from '@angular/common';
+import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { MockComponent, MockProvider } from 'ng-mocks';
 import { EMPTY } from 'rxjs';
 import { BlogIndexComponent } from './blog-index.component';
 import { BlogService } from '@data/blog';
-import { CategoriesListViewComponent } from '@features/blog/components/categories-list-view/categories-list-view.component';
-import { PostsSearchComponent } from '@features/blog/components/posts-search/posts-search.component';
+import { MockProvider } from 'ng-mocks';
+
+@Component({
+  selector: 'app-categories-list-view',
+  template: '',
+})
+class CategoriesListViewStubComponent {
+  readonly isLoading = input(false);
+  readonly categories = input([]);
+  readonly error = input('');
+}
+
+@Component({
+  selector: 'app-posts-search',
+  template: '',
+})
+class PostsSearchStubComponent {}
 
 describe('BlogIndexComponent', () => {
   let component: BlogIndexComponent;
@@ -16,8 +32,6 @@ describe('BlogIndexComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         BlogIndexComponent,
-        MockComponent(CategoriesListViewComponent),
-        MockComponent(PostsSearchComponent),
       ],
       providers: [
         provideRouter([]),
@@ -28,6 +42,16 @@ describe('BlogIndexComponent', () => {
           isAuthenticated$: EMPTY,
         }),
       ],
+    })
+    .overrideComponent(BlogIndexComponent, {
+      set: {
+        imports: [
+          CategoriesListViewStubComponent,
+          PostsSearchStubComponent,
+          AsyncPipe,
+          RouterLink,
+        ],
+      },
     })
     .compileComponents();
 

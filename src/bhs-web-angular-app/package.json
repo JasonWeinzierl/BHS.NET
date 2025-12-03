@@ -54,7 +54,6 @@
     "globals": "^16.4.0",
     "jsdom": "^26.1.0",
     "merge-partially": "^2.0.2",
-    "ng-mocks": "^14.14.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.16",
     "typescript": "~5.9.3",

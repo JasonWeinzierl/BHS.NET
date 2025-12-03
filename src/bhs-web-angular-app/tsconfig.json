@@ -30,6 +30,10 @@
       ],
       "@app/*": [
         "src/app/*"
+      ],
+      // Shim until we find a better mocking library.
+      "ng-mocks": [
+        "src/mocks/index.ts"
       ]
     },
 

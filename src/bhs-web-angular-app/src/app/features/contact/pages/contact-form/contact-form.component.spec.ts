@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { MockProvider } from 'ng-mocks';
-import { Observable, Subject } from 'rxjs';
+import { EMPTY, Observable, Subject } from 'rxjs';
 import { MockInstance, vi } from 'vitest';
 import { ContactFormComponent } from './contact-form.component';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
+import { MockProvider } from 'ng-mocks';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -17,7 +17,9 @@ describe('ContactFormComponent', () => {
       ],
       providers: [
         provideRouter([]),
-        MockProvider(ContactService),
+        MockProvider(ContactService, {
+          sendMessage: () => EMPTY,
+        }),
       ],
     })
     .compileComponents();

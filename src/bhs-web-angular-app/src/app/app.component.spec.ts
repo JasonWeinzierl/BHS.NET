@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { MockProvider } from 'ng-mocks';
+import { of } from 'rxjs';
 import { AppComponent } from '@app/app.component';
 import { InsightsService } from '@core/services/insights.service';
+import { MockProvider } from 'ng-mocks';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -16,8 +17,12 @@ describe('AppComponent', () => {
         AppComponent,
       ],
       providers: [
-        MockProvider(InsightsService),
-        MockProvider(AuthService),
+        MockProvider(InsightsService, {
+          init: () => { /* empty */ },
+        }),
+        MockProvider(AuthService, {
+          isLoading$: of(false),
+        }),
       ],
     })
     .compileComponents();

@@ -1,9 +1,19 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
-import { MockComponent } from 'ng-mocks';
-import { FooterComponent } from '../footer/footer.component';
-import { HeaderComponent } from '../header/header.component';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { ContentLayoutComponent } from './content-layout.component';
+
+@Component({
+  selector: 'app-header',
+  template: '',
+})
+class HeaderStubComponent {}
+
+@Component({
+  selector: 'app-footer',
+  template: '',
+})
+class MockFooterComponent {}
 
 describe('ContentLayoutComponent', () => {
   let component: ContentLayoutComponent;
@@ -14,9 +24,16 @@ describe('ContentLayoutComponent', () => {
       imports: [
         RouterModule,
         ContentLayoutComponent,
-        MockComponent(HeaderComponent),
-        MockComponent(FooterComponent),
       ],
+    })
+    .overrideComponent(ContentLayoutComponent, {
+      set: {
+        imports: [
+          HeaderStubComponent,
+          MockFooterComponent,
+          RouterOutlet,
+        ],
+      },
     })
     .compileComponents();
 

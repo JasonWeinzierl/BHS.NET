@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockProvider } from 'ng-mocks';
+import { EMPTY } from 'rxjs';
 import { PostsSearchComponent } from './posts-search.component';
 import { BlogService } from '@data/blog';
+import { MockProvider } from 'ng-mocks';
 
 describe('PostsSearchComponent', () => {
   let component: PostsSearchComponent;
@@ -13,7 +14,9 @@ describe('PostsSearchComponent', () => {
         PostsSearchComponent,
       ],
       providers: [
-        MockProvider(BlogService),
+        MockProvider(BlogService, {
+          searchPosts: () => EMPTY,
+        }),
       ],
     })
     .compileComponents();

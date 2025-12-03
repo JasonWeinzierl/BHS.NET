@@ -1,7 +1,12 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
-import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ContactComponent } from './contact.component';
+
+@Component({
+  selector: 'app-contact-form',
+  template: '',
+})
+class ContactFormStubComponent {}
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -11,8 +16,12 @@ describe('ContactComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ContactComponent,
-        MockComponent(ContactFormComponent),
       ],
+    })
+    .overrideComponent(ContactComponent, {
+      set: {
+        imports: [ContactFormStubComponent],
+      },
     })
     .compileComponents();
 

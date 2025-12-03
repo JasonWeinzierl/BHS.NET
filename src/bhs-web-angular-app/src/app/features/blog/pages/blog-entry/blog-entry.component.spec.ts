@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { MockProvider } from 'ng-mocks';
-import { ToastrService } from 'ngx-toastr';
+import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { of, throwError } from 'rxjs';
 import { BlogEntryComponent } from './blog-entry.component';
 import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';
 import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry-album.component';
 import { DateComponent } from '@shared/components/date/date.component';
+import { MockProvider } from 'ng-mocks';
 
 describe('BlogEntryComponent', () => {
   let component: BlogEntryComponent;
@@ -47,7 +47,9 @@ describe('BlogEntryComponent', () => {
         MockProvider(AuthService, {
           isAuthenticated$: of(false),
         }),
-        MockProvider(ToastrService),
+        MockProvider(ToastrService, {
+          error: () => ({}) as ActiveToast<unknown>,
+        }),
       ],
     })
     .compileComponents();

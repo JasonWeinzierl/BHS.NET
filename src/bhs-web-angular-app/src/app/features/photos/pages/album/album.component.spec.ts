@@ -1,10 +1,18 @@
-import { NgOptimizedImage } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
+import { Directive } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { MockDirective, MockProvider } from 'ng-mocks';
+import { ActivatedRoute, convertToParamMap, RouterLink } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
 import { AlbumComponent } from './album.component';
 import { PhotosService } from '@data/photos/services/photos.service';
+import { SnippetPipe } from '@shared/pipes/snippet.pipe';
+import { MockProvider } from 'ng-mocks';
+
+@Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: '[ngSrc]',
+})
+class NgSrcStubComponent {}
 
 describe('AlbumComponent', () => {
   let component: AlbumComponent;
@@ -14,7 +22,6 @@ describe('AlbumComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         AlbumComponent,
-        MockDirective(NgOptimizedImage),
       ],
       providers: [
         MockProvider(PhotosService, {
@@ -26,6 +33,16 @@ describe('AlbumComponent', () => {
           })),
         }),
       ],
+    })
+    .overrideComponent(AlbumComponent, {
+      set: {
+        imports: [
+          RouterLink,
+          NgSrcStubComponent,
+          SnippetPipe,
+          AsyncPipe,
+        ],
+      },
     })
     .compileComponents();
 
