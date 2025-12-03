@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockProvider } from 'ng-mocks';
 import { EMPTY } from 'rxjs';
 import { PhotosIndexComponent } from './photos-index.component';
 import { PhotosService } from '@data/photos';
+import { MockProvider } from 'ng-mocks';
 
 describe('PhotosIndexComponent', () => {
   let component: PhotosIndexComponent;

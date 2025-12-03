@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { MockProvider } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
 import { ProfileIndexComponent } from './profile-index.component';
 import { AuthorService } from '@data/authors';
+import { MockProvider } from 'ng-mocks';
 
 describe('ProfileIndexComponent', () => {
   let component: ProfileIndexComponent;

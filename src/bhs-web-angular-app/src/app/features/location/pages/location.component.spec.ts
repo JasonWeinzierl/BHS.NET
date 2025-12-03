@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockProvider } from 'ng-mocks';
 import { Subject } from 'rxjs';
 import { LocationComponent } from './location.component';
 import { MuseumSchedule, MuseumService } from '@data/museum';
+import { MockProvider } from 'ng-mocks';
 
 describe('LocationComponent', () => {
   let component: LocationComponent;

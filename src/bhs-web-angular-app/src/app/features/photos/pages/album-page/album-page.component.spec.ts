@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, convertToParamMap, RouterLink, RouterModule } from '@angular/router';
-import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 import { AlbumPageComponent } from './album-page.component';
 import { AlbumPhotos } from '@data/photos';
 import { PhotosService } from '@data/photos/services/photos.service';
+import { MockProvider } from 'ng-mocks';
 
 const createAlbum = (): AlbumPhotos => ({
   slug: 'album-three',

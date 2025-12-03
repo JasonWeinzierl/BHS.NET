@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
-import { MockProvider } from 'ng-mocks';
 import { vi } from 'vitest';
 import { BhsTitleStrategy } from './bhs-title-strategy';
+import { MockProvider } from 'ng-mocks';
 
 @Component({ selector: 'app-fake', changeDetection: ChangeDetectionStrategy.OnPush, template: '' })
 class FakeComponent {}
