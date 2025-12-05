@@ -90,13 +90,27 @@
           "options": {
             "tsConfig": "tsconfig.spec.json",
             "buildTarget": "::debug",
+            "coverageReporters": [
+              "text"
+            ],
             "runner": "vitest",
             "providersFile": "src/test-setup.ts"
           },
           "configurations": {
             "ci": {
               "watch": false,
-              "buildTarget": "::ci"
+              "buildTarget": "::ci",
+              "coverage": true,
+              "coverageReporters": [
+                "text-summary",
+                "lcovonly"
+              ],
+              "coverageThresholds": {
+                "statements": 70,
+                "branches": 60,
+                "functions": 35,
+                "lines": 70
+              }
             }
           }
         },
