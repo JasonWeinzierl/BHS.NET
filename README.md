@@ -9,7 +9,7 @@ built on ASP.NET Core, Angular, and MongoDB.
 
 ### Prerequisites
 
-- .NET 8 SDK and Visual Studio 2022
+- .NET 10 SDK and Visual Studio 2026
   - `dotnet tool restore`
 - Node.JS 24 and yarn
   - `corepack enable`

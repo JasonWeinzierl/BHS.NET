@@ -16,7 +16,7 @@ env:
   WEB_PUBLISH_PATH: artifacts/publish/BHS.Web/release
   CLIENTAPP_PATH: ./src/bhs-web-angular-app
   DOTNET_BUILD_CONFIGURATION: Release
-  DOTNET_CORE_VERSION: 8.0.x
+  DOTNET_CORE_VERSION: 10.0.x
   NODE_VERSION: '24'
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
         fetch-depth: 0
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
