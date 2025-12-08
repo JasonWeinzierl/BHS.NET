@@ -1,6 +1,5 @@
 ﻿using BHS.Infrastructure.IoC;
 using Microsoft.AspNetCore.HttpOverrides;
-using Serilog;
 
 namespace BHS.Web;
 
@@ -42,8 +41,6 @@ public class Startup
             app.UseExceptionHandler("/api/error");
             app.UseHsts();
         }
-
-        app.UseSerilogRequestLogging();
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();

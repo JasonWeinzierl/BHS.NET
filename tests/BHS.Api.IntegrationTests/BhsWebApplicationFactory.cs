@@ -26,16 +26,11 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
             StandardOutputLogger = null,
         });
 
-        // Add the database to the URL (Serilog requires it).
-        var builder = new MongoUrlBuilder(_mongoRunner.ConnectionString)
-        {
-            DatabaseName = "bhs"
-        };
-        _mongoUrl = builder.ToMongoUrl();
+        _mongoUrl = MongoUrl.Create(_mongoRunner.ConnectionString);
 
         // Ensure the database exists.
         var client = new MongoClient(_mongoUrl);
-        client.GetDatabase(_mongoUrl.DatabaseName).CreateCollection("logs");
+        client.GetDatabase("bhs").CreateCollection("logs");
     }
 
     protected override IHost CreateHost(IHostBuilder builder)
@@ -46,7 +41,6 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
             {
                 // Replace any occurrence of the MongoDB connection string.
                 { "ConnectionStrings:bhsMongo", _mongoUrl.ToString() },
-                { "Serilog:WriteTo:0:Args:databaseUrl", _mongoUrl.ToString() },
             });
         });
 

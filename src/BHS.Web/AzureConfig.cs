@@ -1,6 +1,5 @@
 ﻿using Azure.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
-using Serilog;
 
 namespace BHS.Web;
 
@@ -16,7 +15,7 @@ internal static class AzureConfig
 
         if (connectionString is null)
         {
-            Log.Information("Azure App Configuration connection string is null, so data will not be loaded.");
+            Console.Error.WriteLine("Azure App Configuration connection string is null, so data will not be loaded.");
             return;
         }
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Serilog.Context;
 
 namespace BHS.Web;
 
@@ -13,7 +12,7 @@ internal static class InvalidModelStateConfig
     /// <see cref="ApiControllerAttribute"/> makes model validation errors automatically trigger an HTTP 400 response.
     /// This method ensures those errors are logged while otherwise preserving the same response behavior.
     /// </remarks>
-    /// <seealso href="https://learn.microsoft.com/en-us/aspnet/core/web-api#log-automatic-400-responses-1" />
+    /// <seealso href="https://learn.microsoft.com/en-us/aspnet/core/web-api#log-automatic-400-responses" />
     public static IMvcBuilder AddBhs400Logging(this IMvcBuilder builder)
         => builder.ConfigureApiBehaviorOptions(options =>
         {
@@ -34,9 +33,9 @@ internal static class InvalidModelStateConfig
                                         .GetRequiredService<ILoggerFactory>()
                                         .CreateLogger(controllerType);
 
-                    using (LogContext.PushProperty("ValidationErrors", problemDetails.Errors))
+                    if (logger.IsEnabled(LogLevel.Warning))
                     {
-                        logger.LogWarning("One or more validation errors occurred.");
+                        logger.LogWarning("One or more validation errors occurred: {ValidationErrors}", problemDetails.Errors);
                     }
                 }
 
