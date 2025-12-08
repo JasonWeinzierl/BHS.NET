@@ -11,7 +11,7 @@
   Tailwind turns that off probably because it's unexpected,
   but we want to opt back in.
   */
-  --root-bg: transparent;
+  --root-bg: transparent !important;
 }
 
 @plugin '@tailwindcss/typography';
