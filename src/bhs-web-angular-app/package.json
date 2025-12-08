@@ -44,7 +44,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@vitest/coverage-v8": "^4.0.15",
     "@vitest/eslint-plugin": "^1.5.0",
-    "angular-eslint": "21.0.1",
+    "angular-eslint": "21.1.0",
     "daisyui": "^5.3.10",
     "eslint": "^9.39.1",
     "eslint-config-flat-gitignore": "^2.1.0",
