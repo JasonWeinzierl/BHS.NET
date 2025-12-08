@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="GitVersion.yml" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/BHS.Api.IntegrationTests/BHS.Api.IntegrationTests.csproj" />
+    <Project Path="tests/BHS.Domain.Tests/BHS.Domain.Tests.csproj" />
+    <Project Path="tests/BHS.Infrastructure.Tests/BHS.Infrastructure.Tests.csproj" />
+    <Project Path="tests/BHS.Web.Tests/BHS.Web.Tests.csproj" />
+  </Folder>
+  <Project Path="src/BHS.Contracts/BHS.Contracts.csproj" />
+  <Project Path="src/BHS.Domain/BHS.Domain.csproj" />
+  <Project Path="src/BHS.Infrastructure/BHS.Infrastructure.csproj" />
+  <Project Path="src/BHS.Web/BHS.Web.csproj" />
+</Solution>
