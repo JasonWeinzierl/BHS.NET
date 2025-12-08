@@ -8,10 +8,10 @@ internal static class HealthChecksConfig
     /// <summary>
     /// Adds health checks.
     /// </summary>
-    public static void AddBhsHealthChecks(this IServiceCollection services, IConfiguration configuration)
+    public static void AddBhsHealthChecks(this IServiceCollection services)
     {
         services.AddHealthChecks()
-                .AddMongoDb(configuration.GetConnectionString("bhsMongo")!)
+                .AddMongoDb()
                 .AddCheck<SendGridHealthCheck>("sendgrid");
     }
 }

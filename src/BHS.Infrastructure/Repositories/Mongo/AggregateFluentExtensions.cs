@@ -116,9 +116,8 @@ internal static class AggregateFluentExtensions
                         x.LatestRevision.ContentMarkdown.Substring(0, 135) + "…",
                         x.LatestRevision.Author == null ? null : new Author(x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName),
                         x.LatestPublication.DatePublished,
-                        x.Categories.Select(x => new Category(x.Slug, x.Name))),
-                    DbConstants.TranslationOptions)
-                );
+                        x.Categories.Select(x => new Category(x.Slug, x.Name)))
+                ));
         else
             return aggregateFluent
                 .Match(x => x.LatestRevision.ContentMarkdown.Contains(searchText))
@@ -128,9 +127,8 @@ internal static class AggregateFluentExtensions
                         x.LatestRevision,
                         x.LatestPublication,
                         x.Categories,
-                        x.LatestRevision.ContentMarkdown.IndexOf(searchText) - 25), // TODO: bug, index could be negative, causes substrCP to error.
-                    DbConstants.TranslationOptions)
-                )
+                        x.LatestRevision.ContentMarkdown.IndexOf(searchText) - 25) // TODO: bug, index could be negative, causes substrCP to error.
+                ))
                 .AppendStage(PipelineStageDefinitionBuilder.Project<PostCurrentSnapshotWithSearchTextIdxDto, PostPreview>(
                     x => new PostPreview(
                         x.Slug,
@@ -138,8 +136,7 @@ internal static class AggregateFluentExtensions
                         "…" + x.LatestRevision.ContentMarkdown.Substring(x.SearchTextHighlightStart, 135) + "…",
                         x.LatestRevision.Author == null ? null : new Author(x.LatestRevision.Author.Username, x.LatestRevision.Author.DisplayName),
                         x.LatestPublication.DatePublished,
-                        x.Categories.Select(x => new Category(x.Slug, x.Name))),
-                    DbConstants.TranslationOptions)
-                );
+                        x.Categories.Select(x => new Category(x.Slug, x.Name)))
+                ));
     }
 }
