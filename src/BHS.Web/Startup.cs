@@ -7,8 +7,6 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddApplicationInsightsTelemetry();
-
         services.AddBhsAuth();
 
         services.AddControllers()
