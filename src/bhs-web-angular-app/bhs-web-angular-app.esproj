@@ -6,9 +6,10 @@
 
     <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
 
-    <!-- Even though ShouldRunBuildScript is false, publishing the API will still call this, so we need a no-op. -->
-    <BuildCommand>cd .</BuildCommand>
+    <!-- dotnet publish actually runs BuildCommand, not PublishCommand. -->
+    <BuildCommand>yarn build-release</BuildCommand>
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
+    <BuildOutputFolder>$(MSBuildProjectDirectory)/dist/bhs-web-angular-app/browser</BuildOutputFolder>
 
     <StartupCommand>yarn start</StartupCommand>
 
@@ -18,7 +19,7 @@
 
     <CleanCommand>yarn clean</CleanCommand>
 
-    <PublishCommand>yarn build:release</PublishCommand>
+    <PublishCommand>yarn build-release</PublishCommand>
   </PropertyGroup>
 
 </Project>

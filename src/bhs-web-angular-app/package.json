@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "ng serve --open",
+    "start": "ng serve",
+    "start-proxy": "node scripts/aspnetcore-https.mjs && ng serve --configuration proxy-windows",
     "build": "ng build",
-    "build:release": "ng build --configuration release",
+    "build-release": "ng build --configuration release",
     "transform-release": "node scripts/transform-release.mjs",
     "watch": "ng build --watch --configuration debug",
     "lint": "ng lint",
     "test": "ng test",
-    "test:ci": "ng test --configuration ci",
+    "test-ci": "ng test --configuration ci",
     "clean": "ng cache clean"
   },
   "dependencies": {

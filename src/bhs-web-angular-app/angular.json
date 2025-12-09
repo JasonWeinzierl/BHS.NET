@@ -75,9 +75,26 @@
             },
             "debug": {
               "buildTarget": "::debug"
+            },
+            "proxy-windows": {
+              "buildTarget": "::debug",
+              "proxyConfig": "src/proxy.conf.js",
+              "sslCert": "%APPDATA%\\ASP.NET\\https\\bhs-web-angular-app.pem",
+              "sslKey": "%APPDATA%\\ASP.NET\\https\\bhs-web-angular-app.key",
+              "host": "127.0.0.1"
+            },
+            "proxy-default": {
+              "buildTarget": "::debug",
+              "proxyConfig": "src/proxy.conf.js",
+              "sslCert": "$HOME/.aspnet/https/bhs-web-angular-app.pem",
+              "sslKey": "$HOME/.aspnet/https/bhs-web-angular-app.key",
+              "host": "127.0.0.1"
             }
           },
-          "defaultConfiguration": "debug"
+          "defaultConfiguration": "debug",
+          "options": {
+            "port": 4200
+          }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n",

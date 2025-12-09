@@ -149,6 +149,7 @@ export default defineConfig(gitignore(), {
   files: [
     'eslint.config.mjs',
     'scripts/**/*.mjs',
+    'src/proxy.conf.js',
   ],
   languageOptions: {
     globals: {

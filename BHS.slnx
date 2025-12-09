@@ -14,6 +14,10 @@
     <Project Path="tests/BHS.Infrastructure.Tests/BHS.Infrastructure.Tests.csproj" />
     <Project Path="tests/BHS.Web.Tests/BHS.Web.Tests.csproj" />
   </Folder>
+  <Project Path="src/bhs-web-angular-app/bhs-web-angular-app.esproj">
+    <Build />
+    <Deploy />
+  </Project>
   <Project Path="src/BHS.Contracts/BHS.Contracts.csproj" />
   <Project Path="src/BHS.Domain/BHS.Domain.csproj" />
   <Project Path="src/BHS.Infrastructure/BHS.Infrastructure.csproj" />

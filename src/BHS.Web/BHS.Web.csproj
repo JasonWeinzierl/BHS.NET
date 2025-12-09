@@ -10,9 +10,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Copyright>© 2020-2025 Jason Weinzierl</Copyright>
 
-    <SpaRoot>..\bhs-web-angular-app\</SpaRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <SpaRoot>../bhs-web-angular-app</SpaRoot>
+    <SpaProxyLaunchCommand>yarn start-proxy</SpaProxyLaunchCommand>
+    <SpaProxyServerUrl>https://localhost:4200</SpaProxyServerUrl>
+
     <UserSecretsId>b4c54d2c-26e1-4402-b773-4cf3cb2835ab</UserSecretsId>
   </PropertyGroup>
 
@@ -20,7 +21,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="9.0.0" />
     <PackageReference Include="Azure.Identity" Version="1.17.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="10.0.0" />
     <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="8.4.0" />
     <PackageReference Include="Microsoft.OpenApi" Version="1.6.22" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
@@ -30,21 +31,9 @@
     <ProjectReference Include="..\BHS.Contracts\BHS.Contracts.csproj" />
     <ProjectReference Include="..\BHS.Infrastructure\BHS.Infrastructure.csproj" />
     <ProjectReference Include="..\BHS.Domain\BHS.Domain.csproj" />
+    <ProjectReference Include="..\bhs-web-angular-app\bhs-web-angular-app.esproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
-
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- Ensure the JS resources are already built -->
-    <Error Condition=" !Exists('$(SpaRoot)dist\bhs-web-angular-app\browser\index.html') " Text="dist/bhs-web-angular-app/browser/index.html is required to publish this project. To continue, please build the JS resources." />
-
-    <!-- Include the JS resources in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="$(SpaRoot)dist\bhs-web-angular-app\browser\**" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>ClientApp\angular\%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </ResolvedFileToPublish>
-    </ItemGroup>
-  </Target>
 
 </Project>

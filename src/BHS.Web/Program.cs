@@ -1,20 +1,45 @@
-﻿namespace BHS.Web;
+﻿using BHS.Infrastructure.IoC;
+using BHS.Web;
 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+builder.AddAzureAppConfiguration();
+
+builder.Services.AddBhsAuth();
+
+builder.Services.AddControllers()
+        .AddBhs400Logging();
+
+builder.Services.AddBhsHealthChecks();
+builder.Services.AddBhsSwagger();
+
+builder.Services.AddBhsServices();
+
+
+var app = builder.Build();
+
+if (builder.Environment.IsDevelopment())
 {
-    public static async Task Main(string[] args)
-    {
-        await CreateHostBuilder(args).Build().RunAsync();
-    }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((context, cfgBuilder) =>
-            {
-                cfgBuilder.AddAzureAppConfiguration(context);
-            })
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+    app.UseExceptionHandler("/api/error-local-development");
 }
+else
+{
+    app.UseExceptionHandler("/api/error");
+    app.UseHsts();
+}
+
+app.UseDefaultFiles();
+app.MapStaticAssets();
+
+app.UseHttpsRedirection();
+
+app.UseBhsSwagger();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.MapFallbackToFile("/index.html");
+
+await app.RunAsync();

@@ -28,4 +28,4 @@ jobs:
     - run: yarn workspaces focus bhs-web-angular-app
     - run: yarn lint
     - run: yarn build
-    - run: yarn test:ci
+    - run: yarn test-ci

@@ -8,10 +8,9 @@ internal static class AzureConfig
     /// <summary>
     /// Adds Azure App Configuration data for the current environment.
     /// </summary>
-    public static void AddAzureAppConfiguration(this IConfigurationBuilder cfbBuilder, HostBuilderContext context)
+    public static void AddAzureAppConfiguration(this WebApplicationBuilder builder)
     {
-        IConfiguration applicationConfig = cfbBuilder.Build(); // Only necessary with the old bootstrap process.  WebApplication.CreateBuilder's Configuration doesn't need this.
-        string? connectionString = applicationConfig.GetConnectionString("AppConfig");
+        string? connectionString = builder.Configuration.GetConnectionString("AppConfig");
 
         if (connectionString is null)
         {
@@ -19,7 +18,7 @@ internal static class AzureConfig
             return;
         }
 
-        cfbBuilder.AddAzureAppConfiguration(options =>
+        builder.Configuration.AddAzureAppConfiguration(options =>
         {
             options
                 .Connect(connectionString)
@@ -28,7 +27,7 @@ internal static class AzureConfig
                 // Load configuration values with no label.
                 .Select(KeyFilter.Any, LabelFilter.Null)
                 // Override with any configuration values specific to current hosting environment.
-                .Select(KeyFilter.Any, context.HostingEnvironment.EnvironmentName.ToLowerInvariant());
+                .Select(KeyFilter.Any, builder.Environment.EnvironmentName.ToLowerInvariant());
         });
     }
 }

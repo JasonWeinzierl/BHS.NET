@@ -33,7 +33,7 @@ built on ASP.NET Core, Angular, and MongoDB.
 
 This starts the angular development server on `localhost:4200`, but backend requests will not succeed.
 See the next section for starting up the backend
-so that the web host can forward requests to the frontend development server if not handled by other middleware.
+so that the web host can receive requests from the frontend development server.
 
 #### Backend
 
@@ -43,8 +43,8 @@ Use the launch profile in Visual Studio, or
 dotnet run --project src/BHS.Web/BHS.Web.csproj --launch-profile BHS.Web
 ```
 
-This starts the web application server and forwards SPA requests to the frontend.
-Test the frontend application through the launched browser window.
+This starts the web application server and also launches the SPA with proxying enabled.
+Test the frontend application through the 2nd launched terminal window.
 
 Navigate to `/api/swagger` to use the Swagger UI.
 This does not require the frontend development server to be running.

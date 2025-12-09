@@ -85,14 +85,11 @@ jobs:
         INFORMATIONAL_VERSION: ${{ steps.gitversion.outputs.informationalVersion }}
         COMMIT_DATE: ${{ steps.gitversion.outputs.commitDate }}
 
-    - run: yarn build:release
-      working-directory: ${{ env.CLIENTAPP_PATH }}
-
-    - run: yarn test:ci
+    - run: yarn test-ci
       working-directory: ${{ env.CLIENTAPP_PATH }}
 
 
-    - name: Run dotnet publish
+    - name: Run dotnet publish (runs Angular build as part of publish)
       run: dotnet publish "${{ env.WEB_SRC_PATH }}" --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} --no-build
 
     - name: Upload Artifacts
