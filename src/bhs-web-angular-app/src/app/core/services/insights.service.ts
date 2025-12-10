@@ -38,5 +38,11 @@ export class InsightsService {
     }
   }
 
-  // TODO: passthrough to appInsights as necessary.
+  submitContactForm(): void {
+    try {
+      this.appInsights.trackEvent({ name: 'ContactFormSubmitted' });
+    } catch (error) {
+      console.error('Failed to submit contact form event to Application Insights.', error);
+    }
+  }
 }

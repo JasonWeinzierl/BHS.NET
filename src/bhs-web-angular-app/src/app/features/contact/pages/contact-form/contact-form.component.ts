@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, inject, signal, viewChi
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { timeout, TimeoutError } from 'rxjs';
+import { InsightsService } from '@core/services/insights.service';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
 
 @Component({
@@ -18,6 +19,7 @@ import { ContactAlertRequest, ContactService } from '@data/contact-us';
 export class ContactFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly contactService = inject(ContactService);
+  private readonly insights = inject(InsightsService);
 
   readonly contactFormEl = viewChild.required<ElementRef<HTMLElement>>('contactUsHeader');
 
@@ -33,6 +35,8 @@ export class ContactFormComponent {
   readonly errors = signal<Array<{ id: number; msg: string }>>([]);
 
   onSubmit(): void {
+    this.insights.submitContactForm();
+
     this.isSubmitted.set(true);
     this.contactFormEl().nativeElement.scrollIntoView({
       behavior: 'smooth',

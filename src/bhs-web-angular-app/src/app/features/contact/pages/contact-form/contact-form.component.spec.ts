@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { MockInstance, vi } from 'vitest';
 import { ContactFormComponent } from './contact-form.component';
+import { InsightsService } from '@core/services/insights.service';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
 import { MockProvider } from 'ng-mocks';
 
@@ -19,6 +20,9 @@ describe('ContactFormComponent', () => {
         provideRouter([]),
         MockProvider(ContactService, {
           sendMessage: () => EMPTY,
+        }),
+        MockProvider(InsightsService, {
+          submitContactForm: vi.fn(),
         }),
       ],
     })
