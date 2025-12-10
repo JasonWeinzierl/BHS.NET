@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { jwtDecode } from 'jwt-decode';
 import { catchError, map, of, startWith } from 'rxjs';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 @Component({
   selector: 'app-admin-index',
@@ -37,12 +38,7 @@ export class AdminIndexComponent {
       };
     }),
     catchError((err: unknown) => {
-      let message = 'An error occurred. ';
-      if (typeof err === 'string') {
-        message += err;
-      } else if (typeof err === 'object' && err && 'message' in err && typeof err.message === 'string') {
-        message += err.message;
-      }
+      const message = parseErrorMessage(err) ?? 'An unknown error occurred.';
       console.error(message, err);
       return of({ type: 'error' as const, message });
     }),

@@ -4,6 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { SiteBannerService } from '@data/banners';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 @Component({
   selector: 'app-admin-banners',
@@ -32,8 +33,9 @@ export default class AdminBannersComponent {
       };
     })),
     catchError((err: unknown) => {
+      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
       console.error('Failed to load banners.', err);
-      this.errorSignal.set('Failed to load banners.');
+      this.errorSignal.set('Failed to load banners. ' + msg);
       return of(null);
     }),
   ), { initialValue: null });

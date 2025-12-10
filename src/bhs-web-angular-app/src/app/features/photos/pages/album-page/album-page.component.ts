@@ -1,9 +1,9 @@
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 interface AlbumPageVm {
   album?: AlbumPhotos;
@@ -66,11 +66,7 @@ export class AlbumPageComponent {
     )),
     startWith({ previousPhotoId: '', nextPhotoId: '', isLoading: true } as AlbumPageVm),
     catchError((err: unknown) => {
-      let msg = 'An error occurred';
-      if (err instanceof HttpErrorResponse) {
-        msg = err.message;
-      }
-      console.error(msg, err);
+      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
       return of({ previousPhotoId: '', nextPhotoId: '', error: msg, isLoading: false } as AlbumPageVm);
     }),
   );

@@ -1,10 +1,10 @@
 import { AsyncPipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { PostCardComponent } from '../../components/post-card/post-card.component';
 import { BlogService } from '@data/blog';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 @Component({
   selector: 'app-category-posts',
@@ -38,12 +38,7 @@ export class CategoryPostsComponent {
     })),
     startWith({ category: null, isLoading: true, error: null }),
     catchError((err: unknown) => {
-      let msg = 'An error occurred.';
-      if (err instanceof HttpErrorResponse) {
-        msg = err.message;
-      } else {
-        console.error(err);
-      }
+      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
       return of({ category: null, isLoading: false, error: msg });
     }),
   );

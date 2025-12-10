@@ -1,10 +1,10 @@
 import { AsyncPipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, catchError, map, of, switchMap, tap } from 'rxjs';
 import { PostCardComponent } from '../post-card/post-card.component';
 import { BlogService, PostPreview } from '@data/blog';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 @Component({
   selector: 'app-posts-search',
@@ -28,12 +28,7 @@ export class PostsSearchComponent {
       })),
       // Must do the catchError in this inner observable so it doesn't replace the outer observable and break search.
       catchError((err: unknown) => {
-        let msg = 'An error occurred.';
-        if (err instanceof HttpErrorResponse) {
-          msg = err.message;
-        } else {
-          console.error(err);
-        }
+        const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
         return of({ posts: [] as Array<PostPreview>, error: msg });
       }),
     )),

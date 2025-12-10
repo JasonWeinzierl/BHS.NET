@@ -6,6 +6,7 @@ import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, star
 import { EditBlogEntryFormComponent } from '../../components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { Author, AuthorService } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 interface EntryNewVm {
   currentAuthor?: Author | null;
@@ -36,11 +37,8 @@ export class EntryNewComponent {
   vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
     startWith({ allCategories: [], isLoading: true } as EntryNewVm),
     catchError((err: unknown) => {
-      let msg = 'An error occurred creating post.';
+      const msg = parseErrorMessage(err) ?? 'An error occurred creating post.';
       console.error(msg, err);
-      if (typeof err === 'object' && err && 'message' in err && typeof err.message === 'string') {
-        msg = err.message;
-      }
       return of({ allCategories: [], isLoading: false, error: msg } as EntryNewVm);
     }),
   );

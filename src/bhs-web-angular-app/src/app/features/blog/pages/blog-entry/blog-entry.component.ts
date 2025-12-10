@@ -1,5 +1,4 @@
 import { AsyncPipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
@@ -11,6 +10,7 @@ import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry
 import { JsonLdBlogPostingComponent } from '@features/blog/components/json-ld-blog-posting/json-ld-blog-posting.component';
 import { DateComponent } from '@shared/components/date/date.component';
 import { MarkdownComponent } from '@shared/components/markdown/markdown.component';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 @Component({
   selector: 'app-blog-entry',
@@ -46,9 +46,7 @@ export class BlogEntryComponent {
         return this.photosService.getAlbum(post.photosAlbumSlug).pipe(
           // Alert but don't prevent the entire post from loading.
           catchError((err: unknown) => {
-            const msg = err instanceof HttpErrorResponse
-            ? err.message
-            : 'An error occurred';
+            const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
             this.toastr.error(msg, 'Failed to load photos.');
             console.warn(msg, err);
             return of(null);
@@ -65,12 +63,7 @@ export class BlogEntryComponent {
     )),
     startWith({ post: null, postAlbum: null, isLoading: true, error: null }),
     catchError((err: unknown) => {
-      let msg = 'An error occurred.';
-      if (err instanceof HttpErrorResponse) {
-        msg = err.message;
-      } else {
-        console.error(msg, err);
-      }
+      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
       return of({ post: null, postAlbum: null, isLoading: false, error: msg });
     }),
   );

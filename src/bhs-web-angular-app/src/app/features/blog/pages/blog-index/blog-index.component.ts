@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
@@ -7,6 +6,7 @@ import { catchError, map, of, startWith } from 'rxjs';
 import { CategoriesListViewComponent } from '../../components/categories-list-view/categories-list-view.component';
 import { PostsSearchComponent } from '../../components/posts-search/posts-search.component';
 import { BlogService } from '@data/blog';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 @Component({
   selector: 'app-blog-index',
@@ -26,12 +26,7 @@ export class BlogIndexComponent {
     map(categories => ({ categories, isLoading: false, error: null })),
     startWith({ categories: [], isLoading: true, error: null }),
     catchError((err: unknown) => {
-      let msg = 'An error occurred.';
-      if (err instanceof HttpErrorResponse) {
-        msg = err.message;
-      } else {
-        console.error(err);
-      }
+      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
       return of({ categories: [], isLoading: false, error: msg });
     }),
   ));

@@ -7,6 +7,7 @@ import { Author } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
 import { EditBlogEntryFormComponent } from '@features/blog/components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { DateComponent } from '@shared/components/date/date.component';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 interface EntryEditVm {
   post?: Post;
@@ -39,12 +40,8 @@ export class EntryEditComponent {
     startWith({ categories: [], isLoading: true } as EntryEditVm),
     // If an error occurs, populate the error property of the view model.
     catchError((err: unknown) => {
-      let msg = 'An error occurred editing post.';
+      const msg = parseErrorMessage(err) ?? 'An error occurred editing post.';
       console.error(msg, err);
-      // TODO: this belongs in SharedModule
-      if (typeof err === 'object' && err && 'message' in err && typeof err.message === 'string') {
-        msg = err.message;
-      }
       return of({ categories: [], isLoading: false, error: msg } as EntryEditVm);
     }),
   );

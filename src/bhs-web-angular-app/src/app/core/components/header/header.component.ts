@@ -1,11 +1,11 @@
 import { AsyncPipe, NgClass } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, of, scan, startWith, Subject, switchMap } from 'rxjs';
 import { SiteBannerService } from '@data/banners';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 @Component({
   selector: 'app-header',
@@ -30,14 +30,10 @@ export class HeaderComponent {
   private readonly hideSubject$ = new Subject<string>();
   readonly banners$ = this.bannerService.getEnabled$().pipe(
     catchError((err: unknown) => {
-      const title = 'Site banners could not be loaded.';
-      let msg = 'An error occurred.';
-      if (err instanceof HttpErrorResponse) {
-        msg = err.message;
-      } else {
-        console.error(err);
-      }
-      this.toastr.error(msg, title);
+      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
+      this.toastr.error(
+        msg,
+        'Site banners could not be loaded.');
       return of();
     }),
     switchMap(banners => this.hideSubject$.pipe(
