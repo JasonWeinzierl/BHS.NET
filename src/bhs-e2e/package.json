@@ -9,12 +9,17 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@wdio/cli": "^9.21.1",
+    "@wdio/globals": "^9.17.0",
     "@wdio/jasmine-framework": "^9.21.0",
     "@wdio/local-runner": "^9.21.0",
+    "@wdio/logger": "^9.18.0",
+    "@wdio/runner": "^9.21.0",
     "@wdio/spec-reporter": "^9.20.0",
+    "expect-webdriverio": "^5.5.0",
     "tslib": "^2.8.1",
     "tsx": "^4.20.6",
     "undici": "^7.16.0",
+    "webdriverio": "^9.21.0",
     "zod": "^4.1.11"
   },
   "devDependencies": {
