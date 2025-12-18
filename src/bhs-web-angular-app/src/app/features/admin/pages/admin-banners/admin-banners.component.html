@@ -13,14 +13,12 @@
             <p class="flex gap-2">
               <span
                 class="badge"
-                [ngClass]="{
-                  'badge-info': banner.theme === 'Info' || banner.theme === 'Primary',
-                  'badge-neutral': banner.theme === 'Secondary',
-                  'badge-outline': banner.theme === 'Info' || banner.theme === 'Secondary',
-                  'badge-warning': banner.theme === 'Warning',
-                  'badge-success': banner.theme === 'Success',
-                  'badge-error': banner.theme === 'Danger',
-                }"
+                [class.badge-info]="banner.theme === 'Info' || banner.theme === 'Primary'"
+                [class.badge-neutral]="banner.theme === 'Secondary'"
+                [class.badge-outline]="banner.theme === 'Info' || banner.theme === 'Secondary'"
+                [class.badge-warning]="banner.theme === 'Warning'"
+                [class.badge-success]="banner.theme === 'Success'"
+                [class.badge-error]="banner.theme === 'Danger'"
               >
                 {{ banner.theme }}
               </span>

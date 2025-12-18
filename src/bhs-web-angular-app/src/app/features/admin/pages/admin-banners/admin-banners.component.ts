@@ -1,4 +1,4 @@
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
@@ -12,9 +12,8 @@ import parseErrorMessage from '@shared/parseErrorMessage';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
-    RouterLink,
-    NgClass,
-  ],
+    RouterLink
+],
 })
 export default class AdminBannersComponent {
   private readonly siteBannerService = inject(SiteBannerService);

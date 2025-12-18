@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
@@ -14,9 +14,8 @@ import parseErrorMessage from '@shared/parseErrorMessage';
   imports: [
     RouterLink,
     RouterLinkActive,
-    AsyncPipe,
-    NgClass,
-  ],
+    AsyncPipe
+],
 })
 export class HeaderComponent {
   private readonly bannerService = inject(SiteBannerService);

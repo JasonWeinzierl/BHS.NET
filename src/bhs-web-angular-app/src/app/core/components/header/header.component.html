@@ -13,13 +13,11 @@
       <div
         role="alert"
         class="alert"
-        [ngClass]="{
-          'alert-info': banner.theme === 'Info' || banner.theme === 'Primary',
-          'alert-soft': banner.theme === 'Info' || banner.theme === 'Secondary',
-          'alert-warning': banner.theme === 'Warning',
-          'alert-success': banner.theme === 'Success',
-          'alert-error': banner.theme === 'Danger'
-        }"
+        [class.alert-info]="banner.theme === 'Info' || banner.theme === 'Primary'"
+        [class.alert-soft]="banner.theme === 'Info' || banner.theme === 'Secondary'"
+        [class.alert-warning]="banner.theme === 'Warning'"
+        [class.alert-success]="banner.theme === 'Success'"
+        [class.alert-error]="banner.theme === 'Danger'"
       >
         <i class="bi bi-info-circle" aria-hidden="true"></i>
         <div>
@@ -95,10 +93,8 @@
             Content
             <i
               class="bi ml-2"
-              [ngClass]="{
-                'bi-chevron-down': isContentMenuCollapsed(),
-                'bi-chevron-up': !isContentMenuCollapsed()
-              }"
+              [class.bi-chevron-down]="isContentMenuCollapsed()"
+              [class.bi-chevron-up]="!isContentMenuCollapsed()"
               aria-hidden="true"
             ></i>
           </button>
@@ -159,10 +155,8 @@
             About
             <i
               class="bi ml-2"
-              [ngClass]="{
-                'bi-chevron-down': isAboutMenuCollapsed(),
-                'bi-chevron-up': !isAboutMenuCollapsed()
-              }"
+              [class.bi-chevron-down]="isAboutMenuCollapsed()"
+              [class.bi-chevron-up]="!isAboutMenuCollapsed()"
               aria-hidden="true"
             ></i>
           </button>
