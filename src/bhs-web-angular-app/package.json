@@ -41,12 +41,12 @@
     "@angular/cli": "21.0.4",
     "@angular/compiler-cli": "21.0.6",
     "@stylistic/eslint-plugin": "^5.6.1",
-    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",
-    "@vitest/coverage-v8": "^4.0.15",
+    "@vitest/coverage-v8": "^4.0.16",
     "@vitest/eslint-plugin": "^1.5.2",
     "angular-eslint": "21.1.0",
-    "daisyui": "^5.5.8",
+    "daisyui": "^5.5.14",
     "eslint": "^9.39.2",
     "eslint-config-flat-gitignore": "^2.1.0",
     "eslint-import-resolver-typescript": "^4.4.4",
@@ -58,9 +58,9 @@
     "jsdom": "^27.3.0",
     "merge-partially": "^2.0.2",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.17",
+    "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.50.0",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.16"
   }
 }
