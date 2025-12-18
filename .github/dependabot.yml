@@ -9,7 +9,6 @@ updates:
     ignore:
       - dependency-name: "@angular*"
       - dependency-name: "rxjs"
-      - dependency-name: "zone.js"
       - dependency-name: "typescript"
       - dependency-name: "tslib"
     groups:

@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
@@ -10,7 +10,6 @@ import { BhsTitleStrategy } from '@core/services/bhs-title-strategy';
 
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection(),
     provideBrowserGlobalErrorListeners(),
     provideRouter(
       APP_ROUTES,
