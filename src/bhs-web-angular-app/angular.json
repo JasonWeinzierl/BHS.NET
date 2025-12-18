@@ -5,11 +5,7 @@
   "projects": {
     "bhs-web-angular-app": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "changeDetection": "OnPush"
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -146,7 +142,7 @@
   "cli": {
     "schematicCollections": [
       "@schematics/angular",
-      "@angular-eslint/schematics"
+      "angular-eslint"
     ],
     "packageManager": "yarn",
     "analytics": "cd767fbc-e2d6-4e59-802e-0f5840dd223d"
@@ -159,7 +155,9 @@
       "setParserOptionsProject": true
     },
     "@schematics/angular:component": {
-      "type": "component"
+      "changeDetection": "OnPush",
+      "type": "component",
+      "style": "none"
     },
     "@schematics/angular:directive": {
       "type": "directive"
