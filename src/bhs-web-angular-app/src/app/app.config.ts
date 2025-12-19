@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
@@ -7,9 +7,14 @@ import { provideToastr, ToastNoAnimation } from 'ngx-toastr';
 import { APP_ROUTES } from './app.routes';
 import { provideBhsAuth0Config } from '@core/providers/auth0-config.provider';
 import { BhsTitleStrategy } from '@core/services/bhs-title-strategy';
+import { InsightsService } from '@core/services/insights.service';
 
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
+    provideAppInitializer(() => {
+      const insights = inject(InsightsService);
+      insights.init();
+    }),
     provideBrowserGlobalErrorListeners(),
     provideRouter(
       APP_ROUTES,
