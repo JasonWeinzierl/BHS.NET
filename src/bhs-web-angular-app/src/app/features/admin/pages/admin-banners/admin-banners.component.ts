@@ -12,7 +12,7 @@ import parseErrorMessage from '@shared/parseErrorMessage';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
-    RouterLink
+    RouterLink,
 ],
 })
 export default class AdminBannersComponent {

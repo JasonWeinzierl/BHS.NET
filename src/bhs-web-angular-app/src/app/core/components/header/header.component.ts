@@ -14,7 +14,7 @@ import parseErrorMessage from '@shared/parseErrorMessage';
   imports: [
     RouterLink,
     RouterLinkActive,
-    AsyncPipe
+    AsyncPipe,
 ],
 })
 export class HeaderComponent {
