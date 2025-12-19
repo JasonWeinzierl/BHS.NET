@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { paths } from '@app/app-paths';
+import { APP_PATHS } from '@app/app-paths';
 
 export const resolveClosestPath: ResolveFn<string | null> = (
   route: ActivatedRouteSnapshot,
@@ -7,7 +7,7 @@ export const resolveClosestPath: ResolveFn<string | null> = (
 ) => {
   const typoPath = state.url.replace('/', '');
   const threshold = getThreshold(typoPath);
-  const dictionary = Object.values(paths)
+  const dictionary = Object.values(APP_PATHS)
     .filter(path => Math.abs(path.length - typoPath.length) < threshold);
 
   if (!dictionary.length) {

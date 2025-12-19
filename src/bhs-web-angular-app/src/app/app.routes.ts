@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 import { Routes } from '@angular/router';
 import { authGuardFn } from '@auth0/auth0-angular';
-import { paths } from './app-paths';
+import { APP_PATHS } from './app-paths';
 import { ContentLayoutComponent } from './core/components/content-layout/content-layout.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { resolveClosestPath } from '@core/resolvers/closest-path.resolver';
@@ -9,7 +9,7 @@ import { resolveClosestPath } from '@core/resolvers/closest-path.resolver';
 export const APP_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: paths.home,
+    redirectTo: APP_PATHS.home,
     pathMatch: 'full',
   },
   {
@@ -17,37 +17,37 @@ export const APP_ROUTES: Routes = [
     component: ContentLayoutComponent,
     children: [
       {
-        path: paths.home,
+        path: APP_PATHS.home,
         loadChildren: () =>
           import('@features/home/home.routes'),
       },
       {
-        path: paths.blog,
+        path: APP_PATHS.blog,
         loadChildren: () =>
           import('@features/blog/blog.routes'),
       },
       {
-        path: paths.photos,
+        path: APP_PATHS.photos,
         loadChildren: () =>
           import('@features/photos/photos.routes'),
       },
       {
-        path: paths.location,
+        path: APP_PATHS.location,
         loadChildren: () =>
           import('@features/location/location.routes'),
       },
       {
-        path: paths.profile,
+        path: APP_PATHS.profile,
         loadChildren: () =>
           import('@features/profile/profile.routes'),
       },
       {
-        path: paths.contact,
+        path: APP_PATHS.contact,
         loadChildren: () =>
           import('@features/contact/contact.routes'),
       },
       {
-        path: paths.about,
+        path: APP_PATHS.about,
         loadChildren: () =>
           import('@features/about/about.routes'),
       },

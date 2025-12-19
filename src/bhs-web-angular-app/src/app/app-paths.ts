@@ -1,4 +1,4 @@
-export const paths = {
+export const APP_PATHS = {
   home: 'home',
   about: 'about',
   contact: 'contact',
