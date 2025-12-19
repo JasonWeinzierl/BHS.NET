@@ -5,7 +5,9 @@ import { APP_ENVIRONMENT, APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './en
 import { APP_CONFIG } from '@app/app.config';
 
 // We can't use provideAppInitializer because other app initializers (e.g. auth0) need AppEnvironment and we can't guarantee order.
-fetch('/api/client-app-environment')
+fetch('/api/client-app-environment', {
+  signal: AbortSignal.timeout(3_000),
+})
   .then(async response => {
     const appEnv: AppEnvironment = await parseAppEnvironment(response) ?? {};
 
