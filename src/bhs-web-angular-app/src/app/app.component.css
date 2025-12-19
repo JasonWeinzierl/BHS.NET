@@ -9,7 +9,7 @@
   }
 }
 
-.animate-router-load-indicator {
+.bhs-animate-router-load-indicator {
   /* delay animation for fast network connection */
   animation-delay: 100ms;
   animation-duration: 200ms;

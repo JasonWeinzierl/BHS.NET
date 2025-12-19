@@ -8,6 +8,7 @@ import vitest from '@vitest/eslint-plugin';
 import angular from 'angular-eslint';
 import { defineConfig } from 'eslint/config';
 import gitignore from 'eslint-config-flat-gitignore';
+import tailwindcss from 'eslint-plugin-better-tailwindcss';
 import { importX } from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
 import rxjsAngularX from 'eslint-plugin-rxjs-angular-x';
@@ -318,6 +319,38 @@ export default defineConfig(gitignore(), {
     ],
   },
   // #endregion Angular templates
+}, {
+  // #region Tailwind CSS
+  plugins: {
+    'better-tailwindcss': tailwindcss,
+  },
+  settings: {
+    'better-tailwindcss': {
+      entryPoint: 'src/styles.css',
+    },
+  },
+  rules: {
+    ...tailwindcss.configs['recommended-error'].rules,
+
+    // Specify non-Tailwind classes.
+    'better-tailwindcss/no-unregistered-classes': [
+      'error',
+      {
+        ignore: [
+          // Bootstrap icons.
+          '^bi$',
+          '^bi-',
+
+          // Override prefix.
+          '^bhs-',
+        ],
+      },
+    ],
+
+    // Too disruptive.
+    'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
+  },
+  // #endregion Tailwind CSS
 }, {
   // #region Unit tests
   files: [

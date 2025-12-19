@@ -10,7 +10,7 @@
     @if (vm.album) {
       <div class="card bg-base-100/90">
         <div class="card-body">
-          <div class="text-center flex items-center">
+          <div class="flex items-center text-center">
             <div class="flex-2">
               <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.previousPhotoId]">&laquo; Previous</a>
             </div>
@@ -48,7 +48,7 @@
 
         <hr>
         <div class="card-body">
-          <div class="text-center flex items-center">
+          <div class="flex items-center text-center">
             <div class="flex-2">
               <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.previousPhotoId]">&laquo; Previous</a>
             </div>

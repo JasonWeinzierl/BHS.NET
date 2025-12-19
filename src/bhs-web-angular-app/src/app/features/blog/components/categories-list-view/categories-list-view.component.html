@@ -1,7 +1,7 @@
 @if (!isLoading()) {
   <div class="w-full" data-testid="categories-list-view">
     @if (error()) {
-      <div class="alert alert-error rounded-t-none" role="alert">
+      <div class="alert rounded-t-none alert-error" role="alert">
         {{error()}}
       </div>
     }
@@ -10,12 +10,12 @@
       <hr class="text-neutral">
       <a
         [routerLink]="['/apps/blog/category', category.slug]"
-        class="btn btn-secondary btn-ghost flex justify-between items-center rounded-none"
+        class="btn flex items-center justify-between rounded-none btn-ghost btn-secondary"
         [class.rounded-b]="$last"
       >
         {{category.name}}
         <span
-          class="badge badge-primary rounded"
+          class="badge rounded badge-primary"
         >
           {{category.postsCount}}
         </span>
@@ -24,17 +24,17 @@
   </div>
 } @else {
   <div class="w-full">
-    <div class="m-4 flex justify-between items-center">
-      <div class="skeleton w-9/12 h-4"></div>
-      <div class="skeleton w-1/12 h-4"></div>
+    <div class="m-4 flex items-center justify-between">
+      <div class="h-4 w-9/12 skeleton"></div>
+      <div class="h-4 w-1/12 skeleton"></div>
     </div>
-    <div class="m-4 flex justify-between items-center">
-      <div class="skeleton w-5/12 h-4"></div>
-      <div class="skeleton w-1/12 h-4"></div>
+    <div class="m-4 flex items-center justify-between">
+      <div class="h-4 w-5/12 skeleton"></div>
+      <div class="h-4 w-1/12 skeleton"></div>
     </div>
-    <div class="m-4 flex justify-between items-center">
-      <div class="skeleton w-9/12 h-4"></div>
-      <div class="skeleton w-1/12 h-4"></div>
+    <div class="m-4 flex items-center justify-between">
+      <div class="h-4 w-9/12 skeleton"></div>
+      <div class="h-4 w-1/12 skeleton"></div>
     </div>
   </div>
 }

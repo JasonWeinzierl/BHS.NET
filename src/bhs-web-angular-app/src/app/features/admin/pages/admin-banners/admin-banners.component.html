@@ -8,7 +8,7 @@
     @if (bannersSignal(); as banners) {
       <ul>
         @for (banner of banners; track banner.id) {
-          <li class="not-last:border-b border-base-300 not-last:mb-4 not-last:pb-4">
+          <li class="border-base-300 not-last:mb-4 not-last:border-b not-last:pb-4">
             <h3>Banner {{ banner.id }}</h3>
             <p class="flex gap-2">
               <span
@@ -22,7 +22,11 @@
               >
                 {{ banner.theme }}
               </span>
-              <span [class]="`badge text-bg-${banner.isEnabled ? 'primary' : 'secondary'}`">
+              <span
+                class="badge"
+                [class.text-bg-primary]="banner.isEnabled"
+                [class.text-bg-secondary]="!banner.isEnabled"
+              >
                 {{ banner.isEnabled ? 'Visible' : 'Hidden' }}
               </span>
             </p>
@@ -59,7 +63,7 @@
           <p>{{ error }}</p>
         </div>
       } @else {
-        <div class="loading loading-ring loading-xl" role="status">
+        <div class="loading loading-xl loading-ring" role="status">
           <span class="hidden">Loading...</span>
         </div>
       }

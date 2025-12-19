@@ -1,11 +1,11 @@
-<div class="card bg-base-100 mb-5">
+<div class="card mb-5 bg-base-100">
   <div class="card-body">
     <form>
       <div class="join w-full">
-        <input type="text" class="w-full join-item input" placeholder="Search Posts" aria-label="Search Posts" name="search" [(ngModel)]="searchText">
-        <button type="submit" class="join-item btn btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
+        <input type="text" class="input join-item w-full" placeholder="Search Posts" aria-label="Search Posts" name="search" [(ngModel)]="searchText">
+        <button type="submit" class="btn join-item btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
           @if (isLoading()) {
-            <span class="loading loading-spinner loading-sm" role="status" aria-hidden="true"></span>
+            <span class="loading loading-sm loading-spinner" role="status" aria-hidden="true"></span>
           }
           Search
         </button>
@@ -16,23 +16,23 @@
 
 @if (isLoading()) {
   @for (i of [1, 2, 3]; track i) {
-    <div class="card bg-base-100 mb-5 relative">
-      <div class="z-2 absolute inset-0 flex place-content-center">
-        <div class="loading loading-spinner loading-xl"></div>
+    <div class="card relative mb-5 bg-base-100">
+      <div class="absolute inset-0 z-2 flex place-content-center">
+        <div class="loading loading-xl loading-spinner"></div>
       </div>
       <div class="card-body">
-        <div class="skeleton h-10 w-96"></div>
-        <div class="skeleton h-6 w-50"></div>
-      </div>
-      <hr>
-      <div class="card-body">
-        <div class="skeleton h-6 w-full"></div>
-        <div class="skeleton h-6 w-1/2"></div>
-        <div class="skeleton h-8 w-32"></div>
+        <div class="h-10 w-96 skeleton"></div>
+        <div class="h-6 w-50 skeleton"></div>
       </div>
       <hr>
       <div class="card-body">
-        <div class="skeleton h-6 w-24"></div>
+        <div class="h-6 w-full skeleton"></div>
+        <div class="h-6 w-1/2 skeleton"></div>
+        <div class="h-8 w-32 skeleton"></div>
+      </div>
+      <hr>
+      <div class="card-body">
+        <div class="h-6 w-24 skeleton"></div>
       </div>
     </div>
   }

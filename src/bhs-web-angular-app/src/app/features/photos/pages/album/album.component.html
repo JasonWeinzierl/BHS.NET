@@ -14,7 +14,7 @@
   }
 
   @if (vm.album) {
-    <div class="card bg-base-100 mb-5">
+    <div class="card mb-5 bg-base-100">
       <div class="card-body">
         <h1>
           {{vm.album.name}}
@@ -31,9 +31,9 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-4">
       @for (photo of vm.album.photos; track photo.id) {
-        <div class="card bg-base-100 relative aspect-square" [class.image-full]="photo.description">
+        <div class="card relative aspect-square bg-base-100" [class.image-full]="photo.description">
           <figure>
             <img [ngSrc]="photo.imagePath" alt="image could not load" class="rounded object-cover" fill>
           </figure>

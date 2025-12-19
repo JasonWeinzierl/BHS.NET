@@ -18,6 +18,7 @@
 
 @plugin 'daisyui' {
   themes: corporate --default, business --prefersdark;
+  logs: false;
 }
 @plugin 'daisyui/theme' {
   name: 'corporate';

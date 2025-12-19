@@ -1,4 +1,4 @@
-<div class="card bg-base-100 mb-5" [attr.data-testid]="post().slug">
+<div class="card mb-5 bg-base-100" [attr.data-testid]="post().slug">
   <div class="card-body">
     <h2 [attr.data-testid]="`${post().slug}-Title`">
       <a class="link link-primary link-hover" [routerLink]="['/apps/blog/entry', post().slug]">

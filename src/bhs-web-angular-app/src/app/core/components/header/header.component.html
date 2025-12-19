@@ -1,8 +1,8 @@
 <header class="mb-5">
-  <div id="brand" class="hidden md:block pt-12 pb-4 text-center text-shadow-lg/30 text-7xl text-neutral-content font-serif">
+  <div id="brand" class="hidden pt-12 pb-4 text-center font-serif text-7xl text-neutral-content text-shadow-lg/30 md:block">
     The Belton Historical Society
   </div>
-  <div id="address-bar" class="hidden md:block mb-5 text-center text-shadow-md/30 text-xl text-neutral-content">
+  <div id="address-bar" class="mb-5 hidden text-center text-xl text-neutral-content text-shadow-md/30 md:block">
     <address class="not-italic">
       P.O Box 1144 | Belton, MO 64012 | <a href="tel:+18163223977" class="link">816-322-3977</a>
     </address>
@@ -38,10 +38,10 @@
     }
   </div>
 
-  <nav class="bg-base-100 shadow-md flex flex-wrap items-center justify-between py-2 md:py-0">
-    <div class="w-full flex items-center justify-between px-4 md:hidden">
+  <nav class="flex flex-wrap items-center justify-between bg-base-100 py-2 shadow-md md:py-0">
+    <div class="flex w-full items-center justify-between px-4 md:hidden">
       <a
-        class="font-bold text-xl font-serif tracking-widest"
+        class="font-serif text-xl font-bold tracking-widest"
         [routerLink]="['/']"
         title="Home"
       >
@@ -49,7 +49,7 @@
       </a>
       <button
         type="button"
-        class="btn btn-square btn-ghost text-3xl"
+        class="btn btn-square text-3xl btn-ghost"
         aria-controls="navbarSupportedContent"
         [attr.aria-expanded]="!isCollapsed()"
         aria-label="Toggle navigation"
@@ -63,10 +63,10 @@
       class="grow basis-full md:flex md:basis-auto"
       [class.hidden]="isCollapsed()"
     >
-      <ul class="flex flex-col md:flex-row md:mx-auto tracking-widest">
+      <ul class="flex flex-col tracking-widest md:mx-auto md:flex-row">
         <li>
           <a
-            class="block cursor-pointer py-2 px-4 transition-colors"
+            class="block cursor-pointer px-4 py-2 transition-colors"
             [routerLink]="['/home']"
             [routerLinkActive]="['bg-primary', 'text-primary-content']"
             [routerLinkActiveOptions]="{ exact: true }"
@@ -76,7 +76,7 @@
         </li>
         <li>
           <a
-            class="block cursor-pointer py-2 px-4 transition-colors"
+            class="block cursor-pointer px-4 py-2 transition-colors"
             [routerLink]="['/apps/blog']"
             [routerLinkActive]="['bg-primary', 'text-primary-content']"
           >
@@ -86,7 +86,7 @@
         <li>
           <button
             type="button"
-            class="block w-full text-left cursor-pointer py-2 px-4"
+            class="block w-full cursor-pointer px-4 py-2 text-left"
             aria-haspopup="true"
             (click)="toggleContentMenu()"
           >
@@ -99,13 +99,13 @@
             ></i>
           </button>
           <ul
-            class="py-2 bg-base-200 border-y border-y-neutral md:rounded-b md:absolute md:z-2"
+            class="border-y border-y-neutral bg-base-200 py-2 md:absolute md:z-2 md:rounded-b"
             role="menu"
             [class.hidden]="isContentMenuCollapsed()"
           >
             <li>
               <a
-                class="block cursor-pointer py-2 px-4 transition-colors"
+                class="block cursor-pointer px-4 py-2 transition-colors"
                 [routerLink]="['/apps/photos']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleContentMenu(true)"
@@ -115,7 +115,7 @@
             </li>
             <li>
               <a
-                class="block cursor-pointer py-2 px-4 transition-colors"
+                class="block cursor-pointer px-4 py-2 transition-colors"
                 [routerLink]="['/apps/location']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleContentMenu(true)"
@@ -127,7 +127,7 @@
         </li>
         <li>
           <a
-            class="block cursor-pointer py-2 px-4 transition-colors"
+            class="block cursor-pointer px-4 py-2 transition-colors"
             [routerLink]="['/contact']"
             [routerLinkActive]="['bg-primary', 'text-primary-content']"
           >
@@ -137,7 +137,7 @@
         @if (isAuthenticated$ | async) {
           <li>
             <a
-              class="block cursor-pointer py-2 px-4 transition-colors"
+              class="block cursor-pointer px-4 py-2 transition-colors"
               [routerLink]="['/admin']"
               [routerLinkActive]="['bg-primary', 'text-primary-content']"
             >
@@ -148,7 +148,7 @@
         <li class="">
           <button
             type="button"
-            class="block w-full text-left cursor-pointer py-2 px-4 transition-colors"
+            class="block w-full cursor-pointer px-4 py-2 text-left transition-colors"
             aria-haspopup="true"
             (click)="toggleAboutMenu()"
           >
@@ -161,13 +161,13 @@
             ></i>
           </button>
           <ul
-            class="py-2 bg-base-200 border-y border-y-neutral md:rounded-b md:absolute md:z-2"
+            class="border-y border-y-neutral bg-base-200 py-2 md:absolute md:z-2 md:rounded-b"
             role="menu"
             [class.hidden]="isAboutMenuCollapsed()"
           >
             <li>
               <a
-                class="block cursor-pointer py-2 px-4 transition-colors"
+                class="block cursor-pointer px-4 py-2 transition-colors"
                 [routerLink]="['/about/who-we-are']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
@@ -177,7 +177,7 @@
             </li>
             <li>
               <a
-                class="block cursor-pointer py-2 px-4 transition-colors"
+                class="block cursor-pointer px-4 py-2 transition-colors"
                 [routerLink]="['/about/by-laws-and-leadership']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
@@ -187,7 +187,7 @@
             </li>
             <li>
               <a
-                class="block cursor-pointer py-2 px-4 transition-colors"
+                class="block cursor-pointer px-4 py-2 transition-colors"
                 [routerLink]="['/about/donate']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
@@ -200,7 +200,7 @@
             </li>
             <li>
               <a
-                class="block cursor-pointer py-2 px-4 transition-colors"
+                class="block cursor-pointer px-4 py-2 transition-colors"
                 [routerLink]="['/about/this-site']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
@@ -210,7 +210,7 @@
             </li>
             <li>
               <a
-                class="block cursor-pointer py-2 px-4 transition-colors"
+                class="block cursor-pointer px-4 py-2 transition-colors"
                 [routerLink]="['/about/terms-of-service']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
@@ -220,7 +220,7 @@
             </li>
             <li>
               <a
-                class="block cursor-pointer py-2 px-4 transition-colors"
+                class="block cursor-pointer px-4 py-2 transition-colors"
                 [routerLink]="['/about/privacy-policy']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"

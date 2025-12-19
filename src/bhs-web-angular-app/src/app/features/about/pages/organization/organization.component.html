@@ -1,9 +1,9 @@
-<div class="card bg-base-100 mb-5">
+<div class="card mb-5 bg-base-100">
   <div class="card-body">
     <h1>Leadership</h1>
     @if (vm$ | async; as vm) {
       @if (vm.error) {
-        <div role="alert" class="alert alert-error alert-soft mb-5">
+        <div role="alert" class="mb-5 alert alert-soft alert-error">
           {{vm.error}}
         </div>
       }
