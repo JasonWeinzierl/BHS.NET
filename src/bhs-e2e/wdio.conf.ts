@@ -1,5 +1,4 @@
 import * as core from '@actions/core';
-import registerCustomCommands from './test/wdio-commands/register-custom-commands';
 
 const defaultRunnerEnv: Record<string, string> = {
   E2E_auth0Domain: 'dev-wz656qr7u8q11d84.us.auth0.com',
@@ -51,10 +50,6 @@ export const config: WebdriverIO.Config = {
         cfg.runnerEnv[key] = defaultRunnerEnv[key];
       }
     }
-  },
-
-  before(_capabilities, _specs, browser) {
-    registerCustomCommands(browser as WebdriverIO.Browser);
   },
 
   logLevel: 'info',

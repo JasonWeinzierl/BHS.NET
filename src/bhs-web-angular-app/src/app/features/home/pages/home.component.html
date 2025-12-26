@@ -1,7 +1,7 @@
 <div class="card bg-base-100 text-center">
 
   <figure>
-    <div class="carousel aspect-video w-full" #carousel>
+    <div class="carousel aspect-video w-full" #carousel data-testid="Home-Carousel">
       <div id="slide1" class="relative carousel-item w-full" #carouselItem>
         <img ngSrc="assets/img/2017/DSCF0001.JPG" alt="" class="object-cover" fill priority>
         <div class="absolute top-1/2 right-5 flex -translate-y-1/2 transform justify-between">
@@ -33,7 +33,7 @@
   </figure>
 
   <div class="card-body">
-    <h1>
+    <h1 data-testid="Home-Title">
       The City Hall Museum <small>sponsored by the Belton Historical Society</small>
     </h1>
     <p>
