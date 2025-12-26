@@ -30,7 +30,7 @@ describe('news', () => {
       }),
     });
 
-    await expect(response.status).toBe(200);
+    expect(response.status).toBe(200);
 
     const posts = postPreviewSchema.array().parse(await response.json());
     if (!posts.length) {

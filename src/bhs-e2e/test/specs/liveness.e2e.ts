@@ -15,11 +15,11 @@ describe('liveness', () => {
       }),
     });
 
-    await expect(response.status).toBe(200);
+    expect(response.status).toBe(200);
 
     const body = await response.text();
 
-    await expect(['Healthy', 'Degraded']).toContain(body);
+    expect(['Healthy', 'Degraded']).toContain(body);
 
     if (body === 'Degraded') {
       core.warning('The health check reports Degraded.');
