@@ -59,6 +59,13 @@ export default defineConfig(gitignore(), {
         },
       },
     ],
+
+    'n/no-unsupported-features/node-builtins': [
+      'error',
+      {
+        version: '24',
+      },
+    ],
   },
 }, {
   files: [
