@@ -1,5 +1,8 @@
 import * as core from '@actions/core';
 import { Agent, fetch } from 'undici';
+import adminPage from '../pageobjects/admin.page';
+import homePage from '../pageobjects/home.page';
+import loginRobot from '../robots/login.robot';
 
 describe('liveness', () => {
   it('should pass the health check', async () => {
@@ -24,22 +27,18 @@ describe('liveness', () => {
     if (body === 'Degraded') {
       core.warning('The health check reports Degraded.');
     }
-  });
+  }, 61_000); // The site can take a while to start up.
 
   it('should authenticate with Auth0', async () => {
-    if (!browser.options.baseUrl) {
-      throw new Error('baseUrl is not set.');
-    }
+    await homePage.open();
 
-    await browser.url('/');
-
-    await browser.login();
+    await loginRobot.loginFromEnvironmentVariables();
 
     // Go to Admin page after login.
-    await browser.url('/admin');
+    await adminPage.open();
 
-    await $('[data-testid="logout"]').click();
+    await adminPage.logoutLink.click();
 
-    await expect(browser).toHaveUrl(expect.stringContaining(browser.options.baseUrl));
+    await expect(homePage.self).toBeDisplayed();
   });
 });

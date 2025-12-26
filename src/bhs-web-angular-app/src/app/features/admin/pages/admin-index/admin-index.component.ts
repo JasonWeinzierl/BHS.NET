@@ -17,6 +17,7 @@ import parseErrorMessage from '@shared/parseErrorMessage';
     NgOptimizedImage,
     DatePipe,
   ],
+  host: { 'data-testid': 'AdminIndex' },
 })
 export class AdminIndexComponent {
   private readonly auth = inject(AuthService);

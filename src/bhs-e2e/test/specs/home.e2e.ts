@@ -1,7 +1,10 @@
+import homePage from '../pageobjects/home.page';
+
 describe('home', () => {
   it('should display welcome message', async () => {
-    await browser.url('/');
+    await homePage.open();
 
-    await expect($('app-root h1')).toHaveText('The City Hall Museum sponsored by the Belton Historical Society');
+    await expect(homePage.self).toBeDisplayed();
+    await expect(homePage.title).toHaveText('The City Hall Museum sponsored by the Belton Historical Society');
   });
 });

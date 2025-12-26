@@ -6,6 +6,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, view
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgOptimizedImage],
+  host: { 'data-testid': 'Home' },
 })
 export class HomeComponent implements OnInit, OnDestroy {
   readonly carouselElement = viewChild.required<ElementRef<HTMLElement>>('carousel');
