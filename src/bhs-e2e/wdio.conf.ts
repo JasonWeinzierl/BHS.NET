@@ -15,7 +15,7 @@ export const config: WebdriverIO.Config = {
   ],
 
   // This will be overridden by wdio --baseUrl=http://example.com
-  baseUrl: 'https://localhost:5001', // When running locally, requires the backend api and mongo database to be running.
+  baseUrl: 'https://localhost:4200', // When running locally, requires the backend api and mongo database to be running.
 
   maxInstances: 10,
   capabilities: [{
