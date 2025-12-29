@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import { SimpleGitHubActionsSummaryReporter } from './test/wdio-reporters/SimpleGitHubActionsSummaryReporter';
 
 const defaultRunnerEnv: Record<string, string> = {
   E2E_auth0Domain: 'dev-wz656qr7u8q11d84.us.auth0.com',
@@ -56,7 +57,7 @@ export const config: WebdriverIO.Config = {
   bail: 0,
   reporters: [
     'spec',
-    // TODO: consider adding wdio-video-reporter
+    SimpleGitHubActionsSummaryReporter,
   ],
   waitforTimeout: 10_000,
 

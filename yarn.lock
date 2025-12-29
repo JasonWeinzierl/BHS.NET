@@ -4066,7 +4066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/reporter@npm:9.20.0":
+"@wdio/reporter@npm:9.20.0, @wdio/reporter@npm:^9.20.0":
   version: 9.20.0
   resolution: "@wdio/reporter@npm:9.20.0"
   dependencies:
@@ -4118,7 +4118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/types@npm:9.20.0":
+"@wdio/types@npm:9.20.0, @wdio/types@npm:^9.20.0":
   version: 9.20.0
   resolution: "@wdio/types@npm:9.20.0"
   dependencies:
@@ -4579,8 +4579,10 @@ __metadata:
     "@wdio/jasmine-framework": "npm:^9.22.0"
     "@wdio/local-runner": "npm:^9.22.0"
     "@wdio/logger": "npm:^9.18.0"
+    "@wdio/reporter": "npm:^9.20.0"
     "@wdio/runner": "npm:^9.22.0"
     "@wdio/spec-reporter": "npm:^9.20.0"
+    "@wdio/types": "npm:^9.20.0"
     eslint: "npm:^9.39.2"
     eslint-config-flat-gitignore: "npm:^2.1.0"
     eslint-import-resolver-typescript: "npm:^4.4.4"
@@ -4588,6 +4590,7 @@ __metadata:
     eslint-plugin-n: "npm:^17.23.1"
     eslint-plugin-wdio: "npm:^9.16.2"
     expect-webdriverio: "npm:^5.6.1"
+    pretty-ms: "npm:^9.3.0"
     tslib: "npm:^2.8.1"
     tsx: "npm:^4.20.6"
     typescript: "npm:~5.9.3"
@@ -9407,12 +9410,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-ms@npm:^9.0.0, pretty-ms@npm:^9.2.0":
-  version: 9.2.0
-  resolution: "pretty-ms@npm:9.2.0"
+"pretty-ms@npm:^9.0.0, pretty-ms@npm:^9.2.0, pretty-ms@npm:^9.3.0":
+  version: 9.3.0
+  resolution: "pretty-ms@npm:9.3.0"
   dependencies:
     parse-ms: "npm:^4.0.0"
-  checksum: 10c0/ab6d066f90e9f77020426986e1b018369f41575674544c539aabec2e63a20fec01166d8cf6571d0e165ad11cfe5a8134a2a48a36d42ab291c59c6deca5264cbb
+  checksum: 10c0/555ea39a1de48a30601938aedb76d682871d33b6dee015281c37108921514b11e1792928b1648c2e5589acc73c8ef0fb5e585fb4c718e340a28b86799e90fb34
   languageName: node
   linkType: hard
 
