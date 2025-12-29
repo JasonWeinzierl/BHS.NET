@@ -1,8 +1,14 @@
 <header class="mb-5">
-  <div id="brand" class="hidden pt-12 pb-4 text-center font-serif text-7xl text-neutral-content text-shadow-lg/30 md:block">
+  <div
+    id="brand"
+    class="hidden pt-12 pb-4 text-center font-serif text-7xl text-neutral-content text-shadow-lg/30 md:block"
+  >
     The Belton Historical Society
   </div>
-  <div id="address-bar" class="mb-5 hidden text-center text-xl text-neutral-content text-shadow-md/30 md:block">
+  <div
+    id="address-bar"
+    class="mb-5 hidden text-center text-xl text-neutral-content text-shadow-md/30 md:block"
+  >
     <address class="not-italic">
       P.O Box 1144 | Belton, MO 64012 | <a href="tel:+18163223977" class="link">816-322-3977</a>
     </address>
@@ -38,7 +44,10 @@
     }
   </div>
 
-  <nav class="flex flex-wrap items-center justify-between bg-base-100 py-2 shadow-md md:py-0">
+  <nav
+    class="flex flex-wrap items-center justify-between bg-base-100 py-2 shadow-md md:py-0"
+    data-testid="AppHeader-Navbar"
+  >
     <div class="flex w-full items-center justify-between px-4 md:hidden">
       <a
         class="font-serif text-xl font-bold tracking-widest"
@@ -54,6 +63,7 @@
         [attr.aria-expanded]="!isCollapsed()"
         aria-label="Toggle navigation"
         (click)="toggleNavbar()"
+        data-testid="AppHeader-Navbar-ToggleButton"
       >
         <i class="bi bi-list" aria-hidden="true"></i>
       </button>
@@ -62,6 +72,7 @@
       id="navbarSupportedContent"
       class="grow basis-full md:flex md:basis-auto"
       [class.hidden]="isCollapsed()"
+      data-testid="AppHeader-Navbar-Content"
     >
       <ul class="flex flex-col tracking-widest md:mx-auto md:flex-row">
         <li>
@@ -70,6 +81,7 @@
             [routerLink]="['/home']"
             [routerLinkActive]="['bg-primary', 'text-primary-content']"
             [routerLinkActiveOptions]="{ exact: true }"
+            data-testid="AppHeader-Navbar-HomeLink"
           >
             Home
           </a>
@@ -79,6 +91,7 @@
             class="block cursor-pointer px-4 py-2 transition-colors"
             [routerLink]="['/apps/blog']"
             [routerLinkActive]="['bg-primary', 'text-primary-content']"
+            data-testid="AppHeader-Navbar-NewsLink"
           >
             News
           </a>
@@ -89,6 +102,7 @@
             class="block w-full cursor-pointer px-4 py-2 text-left"
             aria-haspopup="true"
             (click)="toggleContentMenu()"
+            data-testid="AppHeader-Navbar-ContentMenuButton"
           >
             Content
             <i
@@ -109,6 +123,7 @@
                 [routerLink]="['/apps/photos']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleContentMenu(true)"
+                data-testid="AppHeader-Navbar-PhotosLink"
               >
                 Photos
               </a>
@@ -119,6 +134,7 @@
                 [routerLink]="['/apps/location']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleContentMenu(true)"
+                data-testid="AppHeader-Navbar-LocationLink"
               >
                 The Museum
               </a>
@@ -130,6 +146,7 @@
             class="block cursor-pointer px-4 py-2 transition-colors"
             [routerLink]="['/contact']"
             [routerLinkActive]="['bg-primary', 'text-primary-content']"
+            data-testid="AppHeader-Navbar-ContactLink"
           >
             Contact Us
           </a>
@@ -140,6 +157,7 @@
               class="block cursor-pointer px-4 py-2 transition-colors"
               [routerLink]="['/admin']"
               [routerLinkActive]="['bg-primary', 'text-primary-content']"
+              data-testid="AppHeader-Navbar-AdminLink"
             >
               Admin
             </a>
@@ -151,6 +169,7 @@
             class="block w-full cursor-pointer px-4 py-2 text-left transition-colors"
             aria-haspopup="true"
             (click)="toggleAboutMenu()"
+            data-testid="AppHeader-Navbar-AboutMenuButton"
           >
             About
             <i
@@ -171,6 +190,7 @@
                 [routerLink]="['/about/who-we-are']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
+                data-testid="AppHeader-Navbar-WhoWeAreLink"
               >
                 Who We Are
               </a>
@@ -181,6 +201,7 @@
                 [routerLink]="['/about/by-laws-and-leadership']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
+                data-testid="AppHeader-Navbar-ByLawsAndLeadershipLink"
               >
                 By-laws and Leadership
               </a>
@@ -191,6 +212,7 @@
                 [routerLink]="['/about/donate']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
+                data-testid="AppHeader-Navbar-DonateLink"
               >
                 Donate
               </a>
@@ -204,6 +226,7 @@
                 [routerLink]="['/about/this-site']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
+                data-testid="AppHeader-Navbar-AboutThisSiteLink"
               >
                 About this Site
               </a>
@@ -214,6 +237,7 @@
                 [routerLink]="['/about/terms-of-service']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
+                data-testid="AppHeader-Navbar-TermsOfServiceLink"
               >
                 Terms of Service
               </a>
@@ -224,6 +248,7 @@
                 [routerLink]="['/about/privacy-policy']"
                 [routerLinkActive]="['bg-primary', 'text-primary-content']"
                 (click)="toggleAboutMenu(true)"
+                data-testid="AppHeader-Navbar-PrivacyPolicyLink"
               >
                 Privacy Policy
               </a>

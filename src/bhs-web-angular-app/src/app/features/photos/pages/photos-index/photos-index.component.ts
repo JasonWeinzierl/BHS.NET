@@ -16,6 +16,7 @@ import { SnippetPipe } from '@shared/pipes/snippet.pipe';
     SnippetPipe,
     AsyncPipe,
   ],
+  host: { 'data-testid': 'PhotosIndex' },
 })
 export class PhotosIndexComponent {
   private readonly photosService = inject(PhotosService);

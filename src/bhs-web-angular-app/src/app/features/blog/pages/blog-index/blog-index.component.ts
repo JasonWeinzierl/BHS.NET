@@ -17,6 +17,7 @@ import parseErrorMessage from '@shared/parseErrorMessage';
     CategoriesListViewComponent,
     RouterLink,
   ],
+  host: { 'data-testid': 'BlogIndex' },
 })
 export class BlogIndexComponent {
   private readonly blogService = inject(BlogService);

@@ -1,11 +1,11 @@
-<div class="card mb-5 bg-base-100" [attr.data-testid]="post().slug">
+<div class="card mb-5 bg-base-100" [attr.data-testid]="`PostCard-${post().slug}`">
   <div class="card-body">
-    <h2 [attr.data-testid]="`${post().slug}-Title`">
+    <h2 [attr.data-testid]="`PostCard-${post().slug}-Title`">
       <a class="link link-primary link-hover" [routerLink]="['/apps/blog/entry', post().slug]">
         {{post().title}}
       </a>
     </h2>
-    <p class="text-sm" [attr.data-testid]="`${post().slug}-Posted`">
+    <p class="text-sm" [attr.data-testid]="`PostCard-${post().slug}-Posted`">
       Posted
       @let author = post().author;
       @if (author) {
@@ -18,11 +18,16 @@
   </div>
   <hr>
   <div class="card-body">
-    <p [attr.data-testid]="`${post().slug}-ContentPreview`">
+    <p [attr.data-testid]="`PostCard-${post().slug}-ContentPreview`">
       {{post().contentPreview}}
     </p>
     <p>
-      <a class="btn btn-secondary" role="button" [routerLink]="['/apps/blog/entry', post().slug]">
+      <a
+        class="btn btn-secondary"
+        role="button"
+        [routerLink]="['/apps/blog/entry', post().slug]"
+        [attr.data-testid]="`PostCard-${post().slug}-ReadFullPostButton`"
+      >
         Read Full Post
         <i class="bi bi-chevron-double-right"></i>
       </a>
@@ -30,7 +35,7 @@
   </div>
   <hr>
   <div class="card-body">
-    <div class="card-actions">
+    <div class="card-actions" [attr.data-testid]="`PostCard-${post().slug}-Categories`">
       @for (cat of post().categories; track cat.slug) {
         <span>{{cat.name}}</span>
       }

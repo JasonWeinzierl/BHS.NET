@@ -59,13 +59,20 @@ jobs:
     - run: yarn workspaces focus bhs-e2e
       working-directory: ${{ env.E2E_DIRECTORY }}
 
-    - name: Run E2E
-      run: |
-        if [ "${{ inputs.smoke }}" = "true" ]; then
-          yarn e2e --baseUrl=${{ vars.CYPRESS_BASE_URL }} --spec=liveness
-        else
-          yarn e2e --baseUrl=${{ vars.CYPRESS_BASE_URL }}
-        fi
+    # Run smoke first to wait for site startup.
+    - name: Run Smoke E2E
+      run: yarn e2e --baseUrl=${{ vars.CYPRESS_BASE_URL }} --spec=liveness
+      working-directory: ${{ env.E2E_DIRECTORY }}
+      env:
+        E2E_auth0Domain: ${{ vars.CYPRESS_AUTH0_DOMAIN }}
+        E2E_auth0ClientId: ${{ vars.CYPRESS_AUTH0_CLIENT_ID }}
+        E2E_auth0TestUsername: ${{ vars.CYPRESS_AUTH0_TEST_USERNAME }}
+        E2E_auth0TestPassword: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
+
+    # Run full E2E unless smoke-only is specified.
+    - name: Run Full E2E
+      if: ${{ inputs.smoke != true }}
+      run: yarn e2e --baseUrl=${{ vars.CYPRESS_BASE_URL }}
       working-directory: ${{ env.E2E_DIRECTORY }}
       env:
         E2E_auth0Domain: ${{ vars.CYPRESS_AUTH0_DOMAIN }}
@@ -74,6 +81,7 @@ jobs:
         E2E_auth0TestPassword: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
         BAIL_COUNT: ${{ inputs.bail && '1' || '0' }}
 
+    # TODO: consider adding wdio video reporter and capture here. Leftover cypress commented out.
     # - uses: actions/upload-artifact@v4
     #   if: failure()
     #   with:

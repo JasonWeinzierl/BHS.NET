@@ -2,8 +2,22 @@
   <div class="card-body">
     <form>
       <div class="join w-full">
-        <input type="text" class="input join-item w-full" placeholder="Search Posts" aria-label="Search Posts" name="search" [(ngModel)]="searchText">
-        <button type="submit" class="btn join-item btn-secondary" aria-label="Search" (click)="onSearch(searchText)">
+        <input
+          type="text"
+          class="input join-item w-full"
+          placeholder="Search Posts"
+          aria-label="Search Posts"
+          name="search"
+          [(ngModel)]="searchText"
+          data-testid="PostsSearch-SearchInput"
+        >
+        <button
+          type="submit"
+          class="btn join-item btn-secondary"
+          aria-label="Search"
+          (click)="onSearch(searchText)"
+          data-testid="PostsSearch-SearchButton"
+        >
           @if (isLoading()) {
             <span class="loading loading-sm loading-spinner" role="status" aria-hidden="true"></span>
           }

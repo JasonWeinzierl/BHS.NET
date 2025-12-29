@@ -15,7 +15,8 @@ import parseErrorMessage from '@shared/parseErrorMessage';
     RouterLink,
     RouterLinkActive,
     AsyncPipe,
-],
+  ],
+  host: { 'data-testid': 'AppHeader' },
 })
 export class HeaderComponent {
   private readonly bannerService = inject(SiteBannerService);

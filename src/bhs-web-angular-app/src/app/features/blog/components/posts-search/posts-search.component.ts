@@ -15,6 +15,7 @@ import parseErrorMessage from '@shared/parseErrorMessage';
     PostCardComponent,
     AsyncPipe,
   ],
+  host: { 'data-testid': 'PostsSearch' },
 })
 export class PostsSearchComponent {
   private readonly blogService = inject(BlogService);

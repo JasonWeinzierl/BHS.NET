@@ -1,5 +1,8 @@
 import { Agent, fetch } from 'undici';
 import { z } from 'zod';
+import appHeaderPage from '../pageobjects/appHeader.page';
+import blogPage from '../pageobjects/blog.page';
+import homePage from '../pageobjects/home.page';
 
 // TODO: dedupe with web app, define models in a separate package.
 const postPreviewSchema = z.object({
@@ -16,6 +19,7 @@ type PostPreview = z.infer<typeof postPreviewSchema>;
 
 describe('news', () => {
   let firstPost: PostPreview;
+  let postsCount: number;
 
   beforeAll(async () => {
     if (!browser.options.baseUrl) {
@@ -39,23 +43,37 @@ describe('news', () => {
     posts.sort((a, b) => b.datePublished.getTime() - a.datePublished.getTime());
 
     firstPost = posts[0];
+    postsCount = posts.length;
   });
 
   it('should navigate to News', async () => {
-    await browser.url('/');
-    await $('a=News').click();
-    await expect($('h1')).toHaveText('News');
+    await homePage.open();
+
+    await appHeaderPage.navbarNewsLink.click();
+
+    await expect(blogPage.title).toHaveText('News');
   });
 
-  it('should display each post preview', async () => {
-    await browser.url('/apps/blog');
+  it('should first post', async () => {
+    await blogPage.open();
 
-    await expect($('app-post-card')).toExist();
-    await expect($(`[data-testid="${firstPost.slug}-Title"]`)).toHaveText(firstPost.title);
-    await expect($(`[data-testid="${firstPost.slug}-ContentPreview"]`)).toHaveText(expect.stringContaining(firstPost.contentPreview.replace(/\n\n*/g, ' ')));
-    await expect($(`[data-testid="${firstPost.slug}-Posted"]`)).toHaveText(expect.stringContaining(firstPost.datePublished.getFullYear().toString()));
+    const firstPostPage = await blogPage.getFirstPost();
+
+    await expect(firstPostPage.self).toBeDisplayed();
+
+    await expect(firstPostPage.title).toHaveText(firstPost.title);
+    await expect(firstPostPage.contentPreview).toHaveText(expect.stringContaining(firstPost.contentPreview.replace(/\n\n*/g, ' ')));
+    await expect(firstPostPage.postedInfo).toHaveText(expect.stringContaining(firstPost.datePublished.getFullYear().toString()));
     if (firstPost.author?.name) {
-      await expect($(`[data-testid="${firstPost.slug}-Posted"]`)).toHaveText(expect.stringContaining(firstPost.author.name));
+      await expect(firstPostPage.postedInfo).toHaveText(expect.stringContaining(firstPost.author.name));
     }
+  });
+
+  it('should list all posts', async () => {
+    await blogPage.open();
+
+    const posts = await blogPage.getPostsList();
+
+    expect(posts).toHaveLength(postsCount);
   });
 });

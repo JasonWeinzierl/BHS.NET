@@ -66,7 +66,7 @@ describe('CategoriesListViewComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
 
     expect(component.categories()).toHaveLength(2);
-    expect(element.querySelector('[data-testid=categories-list-view]')?.children).toHaveLength(2 + 2); // hr
+    expect(element.querySelector('[data-testid="CategoriesListView"]')?.children).toHaveLength(2 + 2); // hr
 
     const linkDebugElements = fixture.debugElement.queryAll(By.directive(RouterLink));
     const routerLinks = linkDebugElements.map(de => de.injector.get(RouterLink));

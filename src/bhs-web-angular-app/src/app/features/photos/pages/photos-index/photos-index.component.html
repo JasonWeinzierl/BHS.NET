@@ -1,13 +1,13 @@
 <div class="card mb-5 bg-base-100">
   <div class="card-body">
-    <h1>Photo Albums</h1>
+    <h1 data-testid="PhotosIndex-Title">Photo Albums</h1>
     <p>Photos from the society.</p>
   </div>
 </div>
 
 @if (vm$ | async; as vm) {
   @if (vm.isLoading) {
-    <div class="card bg-base-100">
+    <div class="card bg-base-100" data-testid="PhotosIndex-Loading">
       <div class="card-body skeleton" role="status">
         <span class="hidden">Loading photos...</span>
       </div>
@@ -15,13 +15,13 @@
   }
 
   @if (vm.error) {
-    <div class="alert alert-error" role="alert">
+    <div class="alert alert-error" role="alert" data-testid="PhotosIndex-Error">
       {{vm.error}}
     </div>
   }
 
   @if (!vm.error && !vm.isLoading) {
-    <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-3" data-testid="PhotosIndex-Albums">
       @for (album of vm.albums; track album.slug) {
         <div class="card relative aspect-square bg-base-100" [class.image-full]="album.bannerPhoto">
           @if (album.bannerPhoto) {
