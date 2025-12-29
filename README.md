@@ -89,3 +89,12 @@ Repeat this step for every other resource of type `azurerm_app_configuration_key
 
 If using Azure App Configuration locally, each key must be labeled with nothing or else `development`.
 Add the App Configuration's connection string to a setting named `ConnectionStrings:AppConfig`.
+
+### E2E
+
+To run E2E locally, you need the app running per previous instructions.
+
+1. `cd src/bhs-e2e`
+2. `yarn e2e`
+
+If you are running on macOS, you must first run `safaridriver --enable` to enable Safari's WebDriver support.
