@@ -17,9 +17,24 @@ class LoginRobot {
 
     await browser.url(baseUrl + '/admin');
 
-    await browser.waitUntil(async () => {
-      return (await browser.getUrl()).startsWith(`https://${runnerEnv.E2E_auth0Domain}/`);
-    }, { timeout: 30_000, timeoutMsg: 'Timed out waiting for redirect to Auth0 login page.' });
+    const result = await browser.waitUntil(async () => {
+      if ((await browser.getUrl()).startsWith(`https://${runnerEnv.E2E_auth0Domain}/`)) {
+        return 'ready-for-login';
+      } else if (await this.isUserLoggedIn(runnerEnv.E2E_auth0ClientId)) {
+        return 'logged-in';
+      } else {
+        return false;
+      }
+    }, {
+      timeout: 30_000,
+      interval: 1000,
+      timeoutMsg: 'Timed out waiting for Auth0 redirect or already logged in.',
+    });
+
+    if (result === 'logged-in') {
+      core.notice('User is already logged in; skipping.');
+      return;
+    }
 
     await $('input#username').setValue(runnerEnv.E2E_auth0TestUsername);
     await $('input#password').setValue(runnerEnv.E2E_auth0TestPassword);
