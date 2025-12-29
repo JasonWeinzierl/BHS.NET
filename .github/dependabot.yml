@@ -1,43 +1,5 @@
 version: 2
 updates:
-  - package-ecosystem: npm
-    directory: "/src/bhs-web-angular-app"
-    schedule:
-      interval: weekly
-      day: saturday
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "@angular*"
-      - dependency-name: "rxjs"
-      - dependency-name: "typescript"
-      - dependency-name: "tslib"
-    groups:
-      lint:
-        patterns:
-          - "@typescript-eslint/*"
-          - "eslint*"
-      vitest:
-        patterns:
-          - "vitest*"
-          - "@vitest/*"
-
-  - package-ecosystem: nuget
-    directory: "/"
-    schedule:
-      interval: weekly
-      day: saturday
-    open-pull-requests-limit: 10
-    groups:
-      microsoft:
-        patterns:
-          - "Microsoft.*"
-        update-types:
-          - "minor"
-          - "patch"
-      xunit:
-        patterns:
-          - "xunit*"
-
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
