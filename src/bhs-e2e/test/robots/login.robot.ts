@@ -15,7 +15,7 @@ class LoginRobot {
 
     await $('input#username').setValue(runnerEnv.E2E_auth0TestUsername);
     await $('input#password').setValue(runnerEnv.E2E_auth0TestPassword);
-    await $('button[value=default], button[type=submit').click();
+    await $('button[value=default], button[type=submit]').click();
 
     await expect(browser).toHaveUrl(expect.stringContaining(browser.options.baseUrl));
 
