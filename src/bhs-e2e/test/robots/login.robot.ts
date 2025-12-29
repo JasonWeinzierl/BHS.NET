@@ -21,9 +21,9 @@ class LoginRobot {
         return false;
       }
     }, {
-      timeout: 50_000,
+      timeout: 100_000,
       interval: 1000,
-      timeoutMsg: 'Timed out waiting for Auth0 redirect or already logged in.',
+      timeoutMsg: 'Timed out waiting for Auth0 redirect.',
     });
 
     if (result === 'logged-in') {

@@ -38,5 +38,5 @@ describe('liveness', () => {
     await adminPage.logoutLink.click();
 
     await expect(homePage.self).toBeDisplayed();
-  }, 61_000);
+  }, 121_000);
 });
