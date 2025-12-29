@@ -23,7 +23,7 @@ class LoginRobot {
       return (await browser.execute(clientId => {
         return localStorage.getItem(`@@auth0spajs@@::${clientId}::@@user@@`);
       }, runnerEnv.E2E_auth0ClientId)) !== null;
-    });
+    }, { timeoutMsg: 'Timed out waiting for Auth0 to persist to storage.' });
   }
 }
 export default new LoginRobot();
