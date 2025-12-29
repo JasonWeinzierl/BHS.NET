@@ -6,6 +6,7 @@
     "endregion",
     "healthcheck",
     "pageobjects",
+    "Swashbuckle",
     "testid",
     "toastr",
     "tseslint",

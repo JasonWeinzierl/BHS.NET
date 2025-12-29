@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
@@ -15,14 +16,17 @@ internal static class SwaggerConfig
     {
         services.AddSwaggerGen(opt =>
         {
+            // Specify metadata for the OpenAPI document.
             opt.SwaggerDoc(GetDocumentName(), GetApiInfo());
             opt.IncludeXmlComments(Assembly.GetExecutingAssembly(), includeControllerXmlComments: true);
 
-            // Defines a Bearer security scheme.
-            // Swagger UI will add the Authorize button to the UI and accept a Bearer token.
-            opt.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+            // Define a Bearer security scheme.
+            // Swashbuckle will add the Authorize button to the UI and accept a Bearer token.
+            var definitionName = "bearerAuth";
+            opt.AddSecurityDefinition(definitionName, new OpenApiSecurityScheme
             {
                 Type = SecuritySchemeType.Http,
+                Name = IdentityConstants.BearerScheme,
                 Description = "JWT Authorization header using the Bearer scheme.",
                 Scheme = JwtBearerDefaults.AuthenticationScheme, // The name to put in the Authorization header before the bearer token.
                 BearerFormat = "JWT", // Documentation purposes; indicates how the bearer token is formatted.
@@ -31,11 +35,11 @@ internal static class SwaggerConfig
             // Selectively applies the Bearer security scheme to endpoints.
             // Swagger UI will send the Bearer token with each request if the scheme is applied.
             // This is more accurate than opt.AddSecurityRequirement() which applies the scheme globally.
-            opt.OperationFilter<SecurityRequirementsOperationFilter>();
+            opt.OperationFilter<SecurityRequirementsOperationFilter>(definitionName);
         });
     }
 
-    public class SecurityRequirementsOperationFilter : IOperationFilter
+    public class SecurityRequirementsOperationFilter(string definitionName) : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
@@ -51,18 +55,14 @@ internal static class SwaggerConfig
                 return;
 
             // Add possible auth response codes.
+            operation.Responses ??= [];
             operation.Responses.Add(StatusCodes.Status401Unauthorized.ToString(), new OpenApiResponse { Description = "Unauthorized" });
             operation.Responses.Add(StatusCodes.Status403Forbidden.ToString(), new OpenApiResponse { Description = "Forbidden" });
 
-            // Create reference to the scheme definition.
-            var schemeReference = new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Id = "bearerAuth", // Dictionary key pointing to the definition's name.
-                    Type = ReferenceType.SecurityScheme,
-                },
-            };
+            // Create reference to the security scheme definition.
+            var schemeReference = new OpenApiSecuritySchemeReference(
+                definitionName,
+                context.Document);
 
             // Add the scheme as a security requirement.
             operation.Security =
@@ -92,7 +92,7 @@ internal static class SwaggerConfig
             {
                 Name = "GNU General Public License v3.0 or later",
                 Url = new Uri("https://www.gnu.org/licenses/gpl-3.0.en.html"),
-                // TODO: Add Identifier "GPL-3.0-or-later" when microsoft/OpenAPI.NET#1042 is published.
+                Identifier = "GPL-3.0-or-later",
             },
         };
 
@@ -107,10 +107,13 @@ internal static class SwaggerConfig
     /// </summary>
     public static void UseBhsSwagger(this IApplicationBuilder app)
     {
+        // Serve the OpenAPI document.
         app.UseSwagger(swaggerOptions =>
         {
             swaggerOptions.RouteTemplate = "api/swagger/{documentName}/swagger.json";
+            swaggerOptions.OpenApiVersion = OpenApiSpecVersion.OpenApi3_1;
         });
+        // Serve the Swagger UI.
         app.UseSwaggerUI(swaggerUIOptions =>
         {
             swaggerUIOptions.DocumentTitle = "BHS API";
