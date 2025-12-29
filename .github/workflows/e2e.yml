@@ -61,7 +61,7 @@ jobs:
 
     # Run smoke first to wait for site startup.
     - name: Run Smoke E2E
-      run: yarn e2e --baseUrl=${{ vars.CYPRESS_BASE_URL }} --spec=liveness
+      run: yarn e2e --baseUrl=${{ vars.CYPRESS_BASE_URL }} --spec=liveness ${{ inputs.smoke != true && '--reporters=spec' || '' }}
       working-directory: ${{ env.E2E_DIRECTORY }}
       env:
         E2E_auth0Domain: ${{ vars.CYPRESS_AUTH0_DOMAIN }}
