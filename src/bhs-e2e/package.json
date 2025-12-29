@@ -20,7 +20,7 @@
     "tsx": "^4.20.6",
     "undici": "^7.16.0",
     "webdriverio": "^9.22.0",
-    "zod": "^4.1.11"
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
