@@ -52,13 +52,13 @@ async function writeSummary(
   await core.summary
     .addHeading(`${suiteCapLabel}: ${suiteStats.title}`, 2)
     .addList([
-      suiteStats.description ? `**Description:** ${suiteStats.description}` : null,
-      `**Duration:** ${prettyMilliseconds(suiteStats.duration)}`,
-      suiteStats.cid ? `**Log Prefix (Capability ID)**: ${suiteStats.cid}` : null,
-      capabilities?.browserName ? `**Browser:** ${capabilities.browserName as string}` : null,
-      capabilities?.browserVersion ? `**Browser Version:** ${capabilities.browserVersion as string}` : null,
-      capabilities?.platformName ? `**Platform:** ${capabilities.platformName as string}` : null,
-      capabilities?.['appium:platformVersion'] ? `**Platform Version:** ${capabilities['appium:platformVersion'] as string}` : null,
+      suiteStats.description ? `<b>Description:</b> ${suiteStats.description}` : null,
+      `<b>Duration:</b> ${prettyMilliseconds(suiteStats.duration)}`,
+      suiteStats.cid ? `<b>Log Prefix (Capability ID):</b> ${suiteStats.cid}` : null,
+      capabilities?.browserName ? `<b>Browser:</b> ${capabilities.browserName as string}` : null,
+      capabilities?.browserVersion ? `<b>Browser Version:</b> ${capabilities.browserVersion as string}` : null,
+      capabilities?.platformName ? `<b>Platform:</b> ${capabilities.platformName as string}` : null,
+      capabilities?.['appium:platformVersion'] ? `<b>Platform Version:</b> ${capabilities['appium:platformVersion'] as string}` : null,
     ].filter(x => x !== null))
     .addTable([
       [
