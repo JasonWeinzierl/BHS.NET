@@ -19,6 +19,9 @@ export class InsightsService {
       enableCorsCorrelation: true,
       enableRequestHeaderTracking: true,
       enableResponseHeaderTracking: true,
+      correlationHeaderExcludedDomains: [
+        this.env.auth0?.domain,
+      ].filter(x => x !== undefined),
 
       extensions: [this.angularPlugin],
       extensionConfig: {
