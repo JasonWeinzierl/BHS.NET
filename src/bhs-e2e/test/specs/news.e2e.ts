@@ -74,6 +74,6 @@ describe('news', () => {
 
     const posts = await blogPage.getPostsList();
 
-    expect(posts).toHaveLength(postsCount);
+    expect(posts.length).toBe(postsCount);
   });
 });
