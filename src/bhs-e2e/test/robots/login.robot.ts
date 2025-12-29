@@ -19,7 +19,7 @@ class LoginRobot {
 
     await browser.waitUntil(async () => {
       return (await browser.getUrl()).startsWith(`https://${runnerEnv.E2E_auth0Domain}/`);
-    }, { timeoutMsg: 'Timed out waiting for redirect to Auth0 login page.' });
+    }, { timeout: 30_000, timeoutMsg: 'Timed out waiting for redirect to Auth0 login page.' });
 
     await $('input#username').setValue(runnerEnv.E2E_auth0TestUsername);
     await $('input#password').setValue(runnerEnv.E2E_auth0TestPassword);
