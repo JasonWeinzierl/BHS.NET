@@ -1,58 +1,65 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 namespace BHS.Web;
 
 internal static class SwaggerConfig
 {
+    private const string DefinitionName = "bearerAuth";
+
     /// <summary>
     /// Adds the Swagger generator.
     /// </summary>
     public static void AddBhsSwagger(this IServiceCollection services)
     {
-        services.AddSwaggerGen(opt =>
+        services.AddOpenApi(GetDocumentName(), opt =>
         {
-            // Specify metadata for the OpenAPI document.
-            opt.SwaggerDoc(GetDocumentName(), GetApiInfo());
-            opt.IncludeXmlComments(Assembly.GetExecutingAssembly(), includeControllerXmlComments: true);
-
-            // Define a Bearer security scheme.
-            // Swashbuckle will add the Authorize button to the UI and accept a Bearer token.
-            var definitionName = "bearerAuth";
-            opt.AddSecurityDefinition(definitionName, new OpenApiSecurityScheme
+            opt.AddDocumentTransformer((document, context, cancellationToken) =>
             {
-                Type = SecuritySchemeType.Http,
-                Name = IdentityConstants.BearerScheme,
-                Description = "JWT Authorization header using the Bearer scheme.",
-                Scheme = JwtBearerDefaults.AuthenticationScheme, // The name to put in the Authorization header before the bearer token.
-                BearerFormat = "JWT", // Documentation purposes; indicates how the bearer token is formatted.
+                // Specify metadata for the OpenAPI document.
+                document.Info = GetApiInfo();
+                // XML comments are automatically included.
+
+                // Define a Bearer security scheme.
+                // Swagger UI will add the Authorize button to the UI and accept a Bearer token.
+                document.Components ??= new();
+                document.Components.SecuritySchemes = new Dictionary<string, IOpenApiSecurityScheme>
+                {
+                    [DefinitionName] = new OpenApiSecurityScheme
+                    {
+                        Type = SecuritySchemeType.Http,
+                        Description = "JWT Authorization header using the Bearer scheme.",
+                        Scheme = JwtBearerDefaults.AuthenticationScheme, // The name to put in the Authorization header before the bearer token.
+                        BearerFormat = "JWT", // Documentation purposes; indicates how the bearer token is formatted.
+                    }
+                };
+
+                return Task.CompletedTask;
             });
 
-            // Selectively applies the Bearer security scheme to endpoints.
-            // Swagger UI will send the Bearer token with each request if the scheme is applied.
-            // This is more accurate than opt.AddSecurityRequirement() which applies the scheme globally.
-            opt.OperationFilter<SecurityRequirementsOperationFilter>(definitionName);
+            // Selectively apply the Bearer security scheme to operations.
+            // Swagger UI will send the Bearer token with each request, if the scheme is applied.
+            opt.AddOperationTransformer<SecurityRequirementsOperationFilter>();
         });
     }
 
-    public class SecurityRequirementsOperationFilter(string definitionName) : IOperationFilter
+    public class SecurityRequirementsOperationFilter : IOpenApiOperationTransformer
     {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
         {
             // Skip endpoints with [AllowAnonymous].
-            bool hasAllowAnonymous = context.ApiDescription.CustomAttributes().OfType<AllowAnonymousAttribute>().Any();
+            bool hasAllowAnonymous = context.Description.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
             if (hasAllowAnonymous)
-                return;
+                return Task.CompletedTask;
 
             // Only apply to method endpoints with [Authorize].
             // This is necessary if not applying auth by default with app.MapControllers().RequireAuthorization().
-            bool authorize = context.ApiDescription.CustomAttributes().OfType<AuthorizeAttribute>().Any();
+            bool authorize = context.Description.ActionDescriptor.EndpointMetadata.OfType<AuthorizeAttribute>().Any();
             if (!authorize)
-                return;
+                return Task.CompletedTask;
 
             // Add possible auth response codes.
             operation.Responses ??= [];
@@ -61,7 +68,7 @@ internal static class SwaggerConfig
 
             // Create reference to the security scheme definition.
             var schemeReference = new OpenApiSecuritySchemeReference(
-                definitionName,
+                DefinitionName,
                 context.Document);
 
             // Add the scheme as a security requirement.
@@ -72,6 +79,8 @@ internal static class SwaggerConfig
                     [schemeReference] = [], // Empty because the array is only used for OAuth2 scopes.
                 }
             ];
+            
+            return Task.CompletedTask;
         }
     }
 
@@ -105,14 +114,11 @@ internal static class SwaggerConfig
     /// <summary>
     /// Registers middleware for Swagger and SwaggerUI.
     /// </summary>
-    public static void UseBhsSwagger(this IApplicationBuilder app)
+    public static void UseBhsSwagger(this WebApplication app)
     {
         // Serve the OpenAPI document.
-        app.UseSwagger(swaggerOptions =>
-        {
-            swaggerOptions.RouteTemplate = "api/swagger/{documentName}/swagger.json";
-            swaggerOptions.OpenApiVersion = OpenApiSpecVersion.OpenApi3_1;
-        });
+        app.MapOpenApi("api/swagger/{documentName}/swagger.json");
+
         // Serve the Swagger UI.
         app.UseSwaggerUI(swaggerUIOptions =>
         {
