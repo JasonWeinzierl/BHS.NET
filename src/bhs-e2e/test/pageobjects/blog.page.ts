@@ -1,8 +1,6 @@
 import Page from './page';
 import { PostCardPage } from './postCard.page';
 
-const POST_CARD_XPATH_QUERY = 'app-post-card[starts-with(@data-testid, "PostCard-")]';
-
 class BlogPage extends Page {
   override open() {
     return super.open('/apps/blog');
@@ -21,7 +19,7 @@ class BlogPage extends Page {
   }
 
   async getFirstPost(): Promise<PostCardPage> {
-    const firstPostTestId = await $(POST_CARD_XPATH_QUERY)
+    const firstPostTestId = await $('app-post-card')
       .getAttribute('data-testid');
 
     const postSlug = firstPostTestId
@@ -31,7 +29,7 @@ class BlogPage extends Page {
   }
 
   async getPostsList(): Promise<PostCardPage[]> {
-    const postTestIds = await $$(POST_CARD_XPATH_QUERY)
+    const postTestIds = await $$('app-post-card')
       .map(el => el.getAttribute('data-testid'));
 
     const postSlugs = postTestIds
