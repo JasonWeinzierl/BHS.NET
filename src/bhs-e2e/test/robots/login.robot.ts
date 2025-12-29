@@ -5,11 +5,6 @@ class LoginRobot {
   async loginFromEnvironmentVariables() {
     const runnerEnv = getRunnerEnv();
 
-    if (await this.isUserLoggedIn(runnerEnv.E2E_auth0ClientId)) {
-      core.notice('User is already logged in; skipping.');
-      return;
-    }
-
     const baseUrl = browser.options.baseUrl;
     if (!baseUrl) {
       throw new Error('baseUrl is not set.');
