@@ -10,13 +10,17 @@ class LoginRobot {
       throw new Error('baseUrl is not set.');
     }
 
-    await browser.url(baseUrl + '/admin');
+    let browseResponse = await browser.url(baseUrl + '/admin') as WebdriverIO.Request | undefined;
 
     const result = await browser.waitUntil(async () => {
       if ((await browser.getUrl()).startsWith(`https://${runnerEnv.E2E_auth0Domain}/`)) {
         return 'ready-for-login';
       } else if (await this.isUserLoggedIn(runnerEnv.E2E_auth0ClientId)) {
         return 'logged-in';
+      } else if (browseResponse?.error) {
+        core.warning(`Error while browsing to /admin: ${browseResponse.error}`);
+        browseResponse = await browser.url(baseUrl + '/admin') as WebdriverIO.Request | undefined;
+        return false;
       } else {
         return false;
       }
