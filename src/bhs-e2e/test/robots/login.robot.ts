@@ -1,5 +1,4 @@
 import getRunnerEnv from '../get-runner-env';
-import adminPage from '../pageobjects/admin.page';
 
 class LoginRobot {
   async loginFromEnvironmentVariables() {
@@ -10,7 +9,7 @@ class LoginRobot {
       throw new Error('baseUrl is not set.');
     }
 
-    await adminPage.open();
+    await browser.url(baseUrl + '/admin');
 
     await browser.waitUntil(async () => {
       return (await browser.getUrl()).startsWith(`https://${runnerEnv.E2E_auth0Domain}/`);
