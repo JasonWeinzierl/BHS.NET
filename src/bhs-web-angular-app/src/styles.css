@@ -8,10 +8,10 @@
   /*
   HTML has this neat trick where if the root element (`html`) has no background,
   then `body`'s background will be applied to the whole canvas and not the `body`.
-  Tailwind turns that off probably because it's unexpected,
+  DaisyUI turns that off probably because it's unexpected,
   but we want to opt back in.
   */
-  --root-bg: transparent !important;
+  --page-scroll-bg: transparent !important;
 }
 
 @plugin '@tailwindcss/typography';
