@@ -54,7 +54,8 @@ export const config: WebdriverIO.Config = {
   },
 
   logLevel: 'info',
-  bail: 0,
+  // eslint-disable-next-line n/no-process-env
+  bail: Number(process.env['BAIL_COUNT'] ?? '0'),
   reporters: [
     'spec',
     SimpleGitHubActionsSummaryReporter,

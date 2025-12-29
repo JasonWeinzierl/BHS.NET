@@ -16,12 +16,20 @@ on:
         required: false
         type: boolean
         default: false
+      bail:
+        description: Bail on first test failure.
+        required: false
+        type: boolean
+        default: false
   workflow_call:
     inputs:
       environment:
         required: true
         type: string
       smoke:
+        required: false
+        type: boolean
+      bail:
         required: false
         type: boolean
     secrets:
@@ -64,6 +72,7 @@ jobs:
         E2E_auth0ClientId: ${{ vars.CYPRESS_AUTH0_CLIENT_ID }}
         E2E_auth0TestUsername: ${{ vars.CYPRESS_AUTH0_TEST_USERNAME }}
         E2E_auth0TestPassword: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
+        BAIL_COUNT: ${{ inputs.bail && '1' || '0' }}
 
     # - uses: actions/upload-artifact@v4
     #   if: failure()

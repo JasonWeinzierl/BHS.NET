@@ -135,6 +135,7 @@ jobs:
     uses: ./.github/workflows/e2e.yml
     with:
       environment: staging
+      bail: true
     secrets: inherit
 
 
@@ -175,4 +176,5 @@ jobs:
     uses: ./.github/workflows/e2e.yml
     with:
       environment: production
+      bail: true
     secrets: inherit
