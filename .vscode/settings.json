@@ -5,6 +5,7 @@
     "datetime",
     "endregion",
     "healthcheck",
+    "pageobjects",
     "testid",
     "toastr",
     "tseslint",
