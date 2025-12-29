@@ -7,7 +7,7 @@
     "lint": "tsc --noEmit && eslint"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^2.0.1",
     "@wdio/cli": "^9.22.0",
     "@wdio/globals": "^9.17.0",
     "@wdio/jasmine-framework": "^9.22.0",
