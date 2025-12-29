@@ -27,16 +27,5 @@ class BlogPage extends Page {
 
     return new PostCardPage(postSlug);
   }
-
-  async getPostsList(): Promise<PostCardPage[]> {
-    const postTestIds = await $$('app-post-card')
-      .map(el => el.getAttribute('data-testid'));
-
-    const postSlugs = postTestIds
-      .map(id => id.replace('PostCard-', ''));
-
-    return postSlugs
-      .map(slug => new PostCardPage(slug));
-  }
 }
 export default new BlogPage();

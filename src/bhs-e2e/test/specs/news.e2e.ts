@@ -72,8 +72,6 @@ describe('news', () => {
   it('should list all posts', async () => {
     await blogPage.open();
 
-    const posts = await blogPage.getPostsList();
-
-    expect(posts.length).toBe(postsCount);
+    expect(await $$('app-post-card').length).toBe(postsCount);
   });
 });
