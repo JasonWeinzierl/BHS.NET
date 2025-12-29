@@ -21,7 +21,7 @@ class LoginRobot {
         return false;
       }
     }, {
-      timeout: 30_000,
+      timeout: 50_000,
       interval: 1000,
       timeoutMsg: 'Timed out waiting for Auth0 redirect or already logged in.',
     });
