@@ -62,7 +62,7 @@
     "run-script-os": "^1.1.6",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.50.1",
+    "typescript-eslint": "^8.51.0",
     "vitest": "^4.0.16"
   }
 }
