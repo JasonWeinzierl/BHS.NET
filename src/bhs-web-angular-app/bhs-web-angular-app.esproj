@@ -3,6 +3,7 @@
   <PropertyGroup>
     <!-- Omit this project from PackageReference-based restore. -->
     <RestoreProjectStyle>None</RestoreProjectStyle>
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
 
     <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
 
