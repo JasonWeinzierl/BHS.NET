@@ -29,9 +29,7 @@ describe('liveness', () => {
     }
   }, 61_000); // The site can take a while to start up.
 
-  it('should authenticate with Auth0', async () => {
-    await homePage.open();
-
+  it('should login and logout', async () => {
     await loginRobot.loginFromEnvironmentVariables();
 
     // Go to Admin page after login.
