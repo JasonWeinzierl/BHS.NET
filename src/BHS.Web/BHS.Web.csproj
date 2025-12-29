@@ -11,7 +11,7 @@
     <Copyright>© 2020-2025 Jason Weinzierl</Copyright>
 
     <SpaRoot>../bhs-web-angular-app</SpaRoot>
-    <SpaProxyLaunchCommand>yarn start-proxy</SpaProxyLaunchCommand>
+    <SpaProxyLaunchCommand>npm run start-proxy</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:4200</SpaProxyServerUrl>
 
     <UserSecretsId>b4c54d2c-26e1-4402-b773-4cf3cb2835ab</UserSecretsId>

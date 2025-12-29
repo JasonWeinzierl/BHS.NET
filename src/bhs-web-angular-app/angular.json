@@ -69,18 +69,10 @@
             "debug": {
               "buildTarget": "::debug"
             },
-            "proxy-windows": {
+            "proxy": {
               "buildTarget": "::debug",
               "proxyConfig": "src/proxy.conf.js",
-              "sslCert": "%APPDATA%\\ASP.NET\\https\\bhs-web-angular-app.pem",
-              "sslKey": "%APPDATA%\\ASP.NET\\https\\bhs-web-angular-app.key",
-              "host": "127.0.0.1"
-            },
-            "proxy-default": {
-              "buildTarget": "::debug",
-              "proxyConfig": "src/proxy.conf.js",
-              "sslCert": "$HOME/.aspnet/https/bhs-web-angular-app.pem",
-              "sslKey": "$HOME/.aspnet/https/bhs-web-angular-app.key",
+              "ssl": true,
               "host": "127.0.0.1"
             }
           },

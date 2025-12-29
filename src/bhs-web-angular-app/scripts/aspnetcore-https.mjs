@@ -1,7 +1,7 @@
 // @ts-check
-import { spawn } from 'child_process';
-import { existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { spawn } from 'node:child_process';
+import { existsSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 // This script sets up HTTPS for the application using the ASP.NET Core HTTPS certificate
 

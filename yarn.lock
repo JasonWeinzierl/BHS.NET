@@ -628,9 +628,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@auth0/auth0-angular@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@auth0/auth0-angular@npm:2.4.0"
+"@auth0/auth0-angular@npm:~2.3.0":
+  version: 2.3.0
+  resolution: "@auth0/auth0-angular@npm:2.3.0"
   dependencies:
     "@auth0/auth0-spa-js": "npm:^2.0.1"
     tslib: "npm:^2.0.0"
@@ -638,7 +638,7 @@ __metadata:
     "@angular/common": ">=13"
     "@angular/core": ">=13"
     "@angular/router": ">=13"
-  checksum: 10c0/8d4e0924a62798461da04d9eff5ed16d307083a7bd35e36ec701dd336b3baa5fbaa452c24fb553b070fbc68c6b7256d902e83773c281c832ed65244a784346af
+  checksum: 10c0/15896ac1d2d620e6929e2b5803504d2bf26101f09f5fbfba63efb8676b338426e2b92251d204b6b309e2bae28affce5b79acd396b92507a94dea18631ce935f9
   languageName: node
   linkType: hard
 
@@ -4615,7 +4615,7 @@ __metadata:
     "@angular/forms": "npm:21.0.6"
     "@angular/platform-browser": "npm:21.0.6"
     "@angular/router": "npm:21.0.6"
-    "@auth0/auth0-angular": "npm:^2.4.0"
+    "@auth0/auth0-angular": "npm:~2.3.0"
     "@microsoft/applicationinsights-analytics-js": "npm:3.3.10"
     "@microsoft/applicationinsights-angularplugin-js": "npm:^15.3.8"
     "@microsoft/applicationinsights-web": "npm:^3.3.10"
@@ -4643,6 +4643,7 @@ __metadata:
     merge-partially: "npm:^2.0.2"
     ngx-toastr: "npm:^19.1.0"
     postcss: "npm:^8.5.6"
+    run-script-os: "npm:^1.1.6"
     rxjs: "npm:^7.8.2"
     tailwindcss: "npm:^4.1.18"
     tslib: "npm:^2.8.1"
@@ -9926,6 +9927,16 @@ __metadata:
     oxlint: "npm:^1.2.0"
     prettier: "npm:^3.5.3"
   checksum: 10c0/f0bb389ded2e4ed38ecbb7a277f4cd150b9a8c457b9cffc7ea8d2db27c1452f81b4900be2ea61582a9bb040fbbae7701bfdc023a3a27ef8f3413781fc1aa0ad0
+  languageName: node
+  linkType: hard
+
+"run-script-os@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "run-script-os@npm:1.1.6"
+  bin:
+    run-os: index.js
+    run-script-os: index.js
+  checksum: 10c0/620e240a650c666bb8e3f5437680d88c522366e6c68d4867300caf6cad010c85ff36a016de2c71010debaf10e968966b2c6aaa8816bab8298381e5620d41d8aa
   languageName: node
   linkType: hard
 
