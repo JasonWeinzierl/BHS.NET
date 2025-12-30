@@ -4638,7 +4638,7 @@ __metadata:
     eslint-plugin-better-tailwindcss: "npm:^3.8.0"
     eslint-plugin-import-x: "npm:^4.16.1"
     eslint-plugin-jsdoc: "npm:^61.5.0"
-    eslint-plugin-rxjs-angular-x: "npm:^0.1.0"
+    eslint-plugin-rxjs-angular-x: "npm:^0.1.1"
     eslint-plugin-rxjs-x: "npm:~0.8.4"
     globals: "npm:^16.5.0"
     jsdom: "npm:^27.3.0"
@@ -6125,9 +6125,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-rxjs-angular-x@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "eslint-plugin-rxjs-angular-x@npm:0.1.0"
+"eslint-plugin-rxjs-angular-x@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "eslint-plugin-rxjs-angular-x@npm:0.1.1"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.19.1"
     common-tags: "npm:^1.8.0"
@@ -6140,7 +6140,7 @@ __metadata:
   peerDependenciesMeta:
     rxjs:
       optional: true
-  checksum: 10c0/9944201c1e2ffab305c3b66736929d8560ba913a1ab6c4c0f6bfdcb43422e6dea190868a1dd94f2c7f942cac60b1764139ee930c09a59985f4be8240033c9429
+  checksum: 10c0/4e22a3a2667d76624502dc914a52af272513989c1f9800b43f8b573202132308f6a56243832e7839d6e4f3e7fd988955517bb53914fc69d17c645b02d52070c5
   languageName: node
   linkType: hard
 
