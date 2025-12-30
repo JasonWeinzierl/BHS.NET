@@ -16,7 +16,7 @@
           } @else {
             <p id="location-museum-schedule" data-testid="Location-Schedule-Container">
               @for (day of schedule.days; track day) {
-                {{ day.dayOfWeek }} from <time [dateTime]="day.fromTime">{{ day.fromTimeStandard }}</time>&#8211;<time [dateTime]="day.toTime">{{ day.toTimeStandard }}</time>
+                {{ day.dayOfWeek }} from <time [dateTime]="day.fromTime">{{ day.fromTimeDisplay }}</time>&#8211;<time [dateTime]="day.toTime">{{ day.toTimeDisplay }}</time>
                 <br>
               }
               Open <time>{{ schedule.months.startMonth }}</time> to <time>{{ schedule.months.endMonth }}</time>

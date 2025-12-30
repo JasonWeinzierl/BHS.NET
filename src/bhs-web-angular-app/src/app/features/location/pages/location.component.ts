@@ -1,39 +1,23 @@
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
 import { catchError, map, of, startWith } from 'rxjs';
 import { MuseumService } from '@data/museum';
 
-const ZERO_INDEXED_DAYS = [
-  'Sundays',
-  'Mondays',
-  'Tuesdays',
-  'Wednesdays',
-  'Thursdays',
-  'Fridays',
-  'Saturdays',
-];
-
-const ONE_INDEXED_MONTHS = [
-  '',
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
-function toStandardTime(militaryTime: string): string {
+function formatTime(militaryTime: string, formatter: Intl.DateTimeFormat): string {
   const [hours, minutes] = militaryTime.split(':').map(Number);
-  const period = hours < 12 ? 'AM' : 'PM';
-  const standardHours = hours % 12 || 12;
-  return `${standardHours.toString()}:${String(minutes).padStart(2, '0')} ${period}`;
+  return formatter.format(new Date(Date.UTC(1970, 0, 1, hours, minutes)));
+}
+
+function formatWeekday(zeroIndexedDay: number, formatter: Intl.DateTimeFormat): string {
+  // 1970-01-04 is a Sunday in UTC.
+  const referenceDate = new Date(Date.UTC(1970, 0, 4 + zeroIndexedDay));
+  return formatter.format(referenceDate);
+}
+
+function formatMonth(oneIndexedMonth: number, formatter: Intl.DateTimeFormat): string {
+  // 1970-(zero-indexed month)-01
+  const referenceDate = new Date(Date.UTC(1970, oneIndexedMonth - 1, 1));
+  return formatter.format(referenceDate);
 }
 
 @Component({
@@ -48,19 +32,36 @@ function toStandardTime(militaryTime: string): string {
 })
 export class LocationComponent {
   private readonly museumService = inject(MuseumService);
+  private readonly documentLang = inject(DOCUMENT).documentElement.lang || 'en-US';
+
+  private readonly timeFormatter = new Intl.DateTimeFormat(this.documentLang, {
+    timeZone: 'UTC',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+
+  private readonly weekdayFormatter = new Intl.DateTimeFormat(this.documentLang, {
+    timeZone: 'UTC',
+    weekday: 'long',
+  });
+
+  private readonly monthFormatter = new Intl.DateTimeFormat(this.documentLang, {
+    timeZone: 'UTC',
+    month: 'long',
+  });
 
   readonly schedule$ = this.museumService.getSchedule().pipe(
     map(schedule => schedule ? {
       days: schedule.days.map(day => ({
-        dayOfWeek: ZERO_INDEXED_DAYS[day.dayOfWeek],
+        dayOfWeek: formatWeekday(day.dayOfWeek, this.weekdayFormatter) + 's', // Assuming English, pluralizing is hard.
         fromTime: day.fromTime,
-        fromTimeStandard: toStandardTime(day.fromTime),
+        fromTimeDisplay: formatTime(day.fromTime, this.timeFormatter),
         toTime: day.toTime,
-        toTimeStandard: toStandardTime(day.toTime),
+        toTimeDisplay: formatTime(day.toTime, this.timeFormatter),
       })),
       months: {
-        startMonth: ONE_INDEXED_MONTHS[schedule.months.startMonth],
-        endMonth: ONE_INDEXED_MONTHS[schedule.months.endMonth],
+        startMonth: formatMonth(schedule.months.startMonth, this.monthFormatter),
+        endMonth: formatMonth(schedule.months.endMonth, this.monthFormatter),
       },
       isLoading: false as const,
     } : null),
