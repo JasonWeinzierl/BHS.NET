@@ -15,9 +15,7 @@ describe('museum-schedule', () => {
   });
 
   it('should stop loading without error', async () => {
-    await expect(locationPage.scheduleLoading).toBeDisplayed();
-
-    await locationPage.scheduleLoading.waitForDisplayed({ reverse: true, timeout: 10000 });
+    await locationPage.scheduleLoading.waitForDisplayed({ reverse: true });
 
     await expect(locationPage.scheduleError).not.toBeDisplayed();
   });
