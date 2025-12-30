@@ -21,19 +21,28 @@ export const config: WebdriverIO.Config = {
   capabilities: [{
     browserName: 'chrome',
     'goog:chromeOptions': {
-      args: ['headless', 'disable-gpu'],
+      args: [
+        'headless',
+        'disable-gpu',
+        'window-size=1920,1080',
+      ],
     },
   }, {
     browserName: 'firefox',
     'moz:firefoxOptions': {
-      args: ['-headless'],
+      args: [
+        '-headless',
+      ],
     },
   }, {
     browserName: 'safari',
   }, {
     browserName: 'edge',
     'ms:edgeOptions': {
-      args: ['--headless'],
+      args: [
+        'headless',
+        'window-size=1920,1080',
+      ],
     },
   }],
 
