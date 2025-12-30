@@ -23,7 +23,6 @@ export const config: WebdriverIO.Config = {
     'goog:chromeOptions': {
       args: [
         'headless',
-        'disable-gpu',
         'window-size=1920,1080',
       ],
     },
