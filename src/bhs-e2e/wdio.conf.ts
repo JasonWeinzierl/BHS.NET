@@ -65,5 +65,7 @@ export const config: WebdriverIO.Config = {
   framework: 'jasmine',
   jasmineOpts: {
     defaultTimeoutInterval: 120_000,
+    stopOnSpecFailure: true,
+    stopSpecOnExpectationFailure: true,
   },
 };
