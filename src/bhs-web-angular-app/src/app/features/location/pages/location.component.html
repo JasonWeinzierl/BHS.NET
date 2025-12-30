@@ -10,11 +10,11 @@
         <h3>Hours of operation</h3>
         @if (schedule$ | async; as schedule) {
           @if (schedule.isLoading) {
-            <div class="loading loading-ring" role="status">
+            <div class="loading loading-ring" role="status" data-testid="Location-Schedule-Loading">
               <span class="hidden">Loading...</span>
             </div>
           } @else {
-            <p id="location-museum-schedule">
+            <p id="location-museum-schedule" data-testid="Location-Schedule-Container">
               @for (day of schedule.days; track day) {
                 {{ day.dayOfWeek }} from <time [dateTime]="day.fromTime">{{ day.fromTimeStandard }}</time>&#8211;<time [dateTime]="day.toTime">{{ day.toTimeStandard }}</time>
                 <br>
@@ -23,7 +23,9 @@
             </p>
           }
         } @else {
-          <p id="location-museum-schedule-error">Hours of operation are not available at this time.</p>
+          <p id="location-museum-schedule-error" data-testid="Location-Schedule-Error">
+            Hours of operation are not available at this time.
+          </p>
         }
       </div>
       <div class="flex-1">

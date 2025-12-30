@@ -44,6 +44,7 @@ function toStandardTime(militaryTime: string): string {
     AsyncPipe,
     NgOptimizedImage,
   ],
+  host: { 'data-testid': 'Location' },
 })
 export class LocationComponent {
   private readonly museumService = inject(MuseumService);
