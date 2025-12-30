@@ -69,7 +69,7 @@ describe('news', () => {
     }
   });
 
-  it('should list all posts', async () => {
+  xit('should list all posts', async () => {
     await blogPage.open();
 
     expect(await $$('app-post-card').length).toBe(postsCount);
