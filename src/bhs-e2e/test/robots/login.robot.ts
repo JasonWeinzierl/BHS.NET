@@ -10,23 +10,20 @@ class LoginRobot {
       throw new Error('baseUrl is not set.');
     }
 
-    let browseResponse = await browser.url(baseUrl + '/admin') as WebdriverIO.Request | undefined;
+    await browser.url(baseUrl + '/admin');
 
     const result = await browser.waitUntil(async () => {
       if ((await browser.getUrl()).startsWith(`https://${runnerEnv.E2E_auth0Domain}/`)) {
         return 'ready-for-login';
       } else if (await this.isUserLoggedIn(runnerEnv.E2E_auth0ClientId)) {
         return 'logged-in';
-      } else if (browseResponse?.error) {
-        core.warning(`Error while browsing to /admin: ${browseResponse.error}`);
-        browseResponse = await browser.url(baseUrl + '/admin') as WebdriverIO.Request | undefined;
-        return false;
       } else {
+        await browser.url(baseUrl + '/admin');
         return false;
       }
     }, {
       timeout: 100_000,
-      interval: 1000,
+      interval: 2_000,
       timeoutMsg: 'Timed out waiting for Auth0 redirect.',
     });
 
