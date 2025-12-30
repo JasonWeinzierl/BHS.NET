@@ -24,7 +24,7 @@ describe('LocationComponent', () => {
     fixture = TestBed.createComponent(LocationComponent);
     nativeElement = fixture.nativeElement as HTMLElement;
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {
@@ -35,7 +35,7 @@ describe('LocationComponent', () => {
     expect(nativeElement.querySelector('.loading')).toBeTruthy();
   });
 
-  it('should show schedule if loaded', () => {
+  it('should show schedule if loaded', async () => {
     scheduleSubject$.next({
       days: [
         { dayOfWeek: 0, fromTime: '09:00', toTime: '17:00' },
@@ -46,19 +46,24 @@ describe('LocationComponent', () => {
       },
     });
 
-    fixture.detectChanges();
+    await fixture.whenStable();
     const scheduleEl = nativeElement.querySelector('#location-museum-schedule');
+    const timeEls = scheduleEl?.querySelectorAll('time');
 
     expect(nativeElement.querySelector('.spinner-grow')).toBeFalsy();
     expect(scheduleEl).toBeTruthy();
     expect(scheduleEl?.textContent).toContain('Sundays from 9:00 AM\u20135:00 PM');
     expect(scheduleEl?.textContent).toContain('Open January to December');
+
+    expect(timeEls?.length).toBe(4);
+    expect(timeEls?.[0].dateTime).toBe('09:00');
+    expect(timeEls?.[1].dateTime).toBe('17:00');
   });
 
-  it('should show unavailable on error', () => {
+  it('should show unavailable on error', async () => {
     scheduleSubject$.error(new Error('Test failure to load schedule.'));
 
-    fixture.detectChanges();
+    await fixture.whenStable();
     const errorEl = nativeElement.querySelector('#location-museum-schedule-error');
 
     expect(nativeElement.querySelector('.spinner-grow')).toBeFalsy();
