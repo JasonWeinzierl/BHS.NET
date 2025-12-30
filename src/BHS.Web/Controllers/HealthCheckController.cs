@@ -26,6 +26,7 @@ public class HealthCheckController : ControllerBase
     /// </summary>
     [HttpGet("status")]
     [AllowAnonymous]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<ActionResult<string>> CheckHealthAsync(CancellationToken cancellationToken = default)
     {
         var report = await _healthCheckService.CheckHealthAsync(_options.Predicate, cancellationToken);
