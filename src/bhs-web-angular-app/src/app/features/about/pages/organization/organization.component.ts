@@ -12,6 +12,7 @@ import parseErrorMessage from '@shared/parseErrorMessage';
     AsyncPipe,
     DatePipe,
   ],
+  host: { 'data-testid': 'Organization' },
 })
 export default class OrganizationComponent {
   private readonly leadershipService = inject(LeadershipService);

@@ -13,15 +13,26 @@
           <h2>Officers</h2>
 
           @if (vm.isLoading) {
-            <div class="loading loading-ring" role="status">
+            <div class="loading loading-ring" role="status" data-testid="Organization-Leadership-Officers-Loading">
               <span class="hidden">Loading...</span>
             </div>
           }
 
-          <dl>
+          <dl data-testid="Organization-Leadership-Officers-Container">
             @for (officer of vm.officers; track officer) {
-              <dt class="font-bold">{{officer.title}}</dt>
-              <dd [title]="officer.dateStarted | date:'\'since\' yyyy'" class="mb-2">{{officer.name}}</dd>
+              <dt
+                class="font-bold"
+                [attr.data-testid]="`Organization-Leadership-Officers-${officer.title}-Title`"
+              >
+                {{officer.title}}
+              </dt>
+              <dd
+                [title]="officer.dateStarted | date:'\'since\' yyyy'"
+                class="mb-2"
+                [attr.data-testid]="`Organization-Leadership-Officers-${officer.title}-Name`"
+              >
+                {{officer.name}}
+              </dd>
             }
           </dl>
         </div>
@@ -30,14 +41,14 @@
           <h2>Directors</h2>
 
           @if (vm.isLoading) {
-            <div class="loading loading-ring" role="status">
+            <div class="loading loading-ring" role="status" data-testid="Organization-Leadership-Directors-Loading">
               <span class="hidden">Loading...</span>
             </div>
           }
 
-          <ul>
+          <ul data-testid="Organization-Leadership-Directors-Container">
             @for (director of vm.directors; track director) {
-              <li>
+              <li [attr.data-testid]="`Organization-Leadership-Directors-${director.year}-${director.name}-Item`">
                 {{director.name}} ({{director.year}})
               </li>
             }
@@ -52,7 +63,7 @@
 <div class="card bg-base-100">
   <div class="card-body">
     <h1>By-laws</h1>
-    <div class="aspect-video">
+    <div class="aspect-video" data-testid="Organization-Bylaws-Container">
       <iframe class="size-full" src="https://drive.google.com/file/d/11s1RHMoIfVjBQrpAXXn5Qh6ZwH_Bejw_/preview"></iframe>
     </div>
   </div>
