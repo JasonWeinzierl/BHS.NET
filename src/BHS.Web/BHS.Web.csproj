@@ -1,14 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
 
     <NoWarn>$(NoWarn);1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Copyright>© 2020-2025 Jason Weinzierl</Copyright>
 
     <SpaRoot>../bhs-web-angular-app</SpaRoot>
     <SpaProxyLaunchCommand>npm run start-proxy</SpaProxyLaunchCommand>

@@ -1,13 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Exe</OutputType>
 
     <IsPackable>false</IsPackable>
-    <Copyright>© 2020-2025 Jason Weinzierl</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

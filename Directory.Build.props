@@ -1,5 +1,11 @@
 <Project>
   <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <UseArtifactsOutput>true</UseArtifactsOutput>
+
+    <Authors>Jason Weinzierl</Authors>
+    <Copyright>© 2020-2025 Jason Weinzierl</Copyright>
   </PropertyGroup>
 </Project>

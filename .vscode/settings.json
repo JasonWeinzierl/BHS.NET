@@ -10,7 +10,8 @@
     "testid",
     "toastr",
     "tseslint",
-    "wdio"
+    "wdio",
+    "Weinzierl"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
