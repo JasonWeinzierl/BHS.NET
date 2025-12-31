@@ -35,7 +35,7 @@
       @for (photo of vm.album.photos; track photo.id) {
         <div class="card relative aspect-square bg-base-100" [class.image-full]="photo.description">
           <figure>
-            <img [ngSrc]="photo.imagePath" alt="image could not load" class="rounded object-cover" fill>
+            <img [ngSrc]="photo.imagePath" alt="image could not load" class="rounded-sm object-cover" fill>
           </figure>
           <div class="card-body">
             <h2>

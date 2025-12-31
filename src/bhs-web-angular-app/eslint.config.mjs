@@ -333,7 +333,7 @@ export default defineConfig(gitignore(), {
     ...tailwindcss.configs['recommended-error'].rules,
 
     // Specify non-Tailwind classes.
-    'better-tailwindcss/no-unregistered-classes': [
+    'better-tailwindcss/no-unknown-classes': [
       'error',
       {
         ignore: [

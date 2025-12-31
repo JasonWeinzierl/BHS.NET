@@ -26,7 +26,7 @@
         <div class="card relative aspect-square bg-base-100" [class.image-full]="album.bannerPhoto">
           @if (album.bannerPhoto) {
             <figure>
-              <img [ngSrc]="album.bannerPhoto.imagePath" [alt]="album.bannerPhoto.name" class="rounded object-cover" fill>
+              <img [ngSrc]="album.bannerPhoto.imagePath" [alt]="album.bannerPhoto.name" class="rounded-sm object-cover" fill>
             </figure>
           }
           <div class="card-body">

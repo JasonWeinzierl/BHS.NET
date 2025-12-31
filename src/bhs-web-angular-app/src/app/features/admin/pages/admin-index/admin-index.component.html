@@ -5,7 +5,7 @@
 
     @if (user$ | async; as user) {
       @if (user.picture) {
-        <img [ngSrc]="user.picture" alt="Profile Picture" width="100" height="100" class="rounded">
+        <img [ngSrc]="user.picture" alt="Profile Picture" width="100" height="100" class="rounded-sm">
       }
 
       <p>

@@ -7,7 +7,7 @@
 
   <fieldset class="fieldset">
     <label for="inputCategories" class="fieldset-legend">Categories</label>
-    <div class="w-80 rounded outline outline-base-content/20">
+    <div class="w-80 rounded-sm outline outline-base-content/20">
       <select multiple class="w-full" id="inputCategories" name="categories" formControlName="categories">
         @for (c of allCategories(); track c.slug) {
           <option class="p-1" [ngValue]="c.slug">{{c.name}}</option>
@@ -47,7 +47,7 @@
       ></textarea>
       <app-markdown
         [data]="contentSignal()"
-        class="flex-1 overflow-auto rounded p-3 outline outline-base-content/20"
+        class="flex-1 overflow-auto rounded-sm p-3 outline outline-base-content/20"
         #scrollable
       />
     </div>
