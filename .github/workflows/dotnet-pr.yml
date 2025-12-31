@@ -6,7 +6,7 @@ on:
     branches:
     - main
     paths:
-    - BHS.sln
+    - BHS.slnx
     - src/**
     - '!src/bhs-web-angular-app/**'
     - tests/**
