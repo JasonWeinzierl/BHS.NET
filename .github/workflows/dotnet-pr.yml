@@ -4,12 +4,14 @@ on:
   workflow_dispatch: {}
   pull_request:
     branches:
-    - main
+      - main
     paths:
-    - BHS.slnx
-    - src/**
-    - '!src/bhs-web-angular-app/**'
-    - tests/**
+      - Directory.Build.props
+      - Directory.Packages.props
+      - BHS.slnx
+      - src/**
+      - '!src/bhs-web-angular-app/**'
+      - tests/**
 
 jobs:
   build-and-test:
