@@ -27,5 +27,34 @@
             ],
             "problemMatcher": "$msCompile"
         },
+        {
+            "label": "fnm",
+            "type": "shell",
+            "command": "fnm use",
+            "problemMatcher": [],
+        },
+        {
+            "label": "build (Angular)",
+            "group": "build",
+            "type": "npm",
+            "script": "build",
+            "path": "src/bhs-web-angular-app",
+            "dependsOn": ["fnm"],
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$tsc"
+        },
+        {
+            "label": "test (Angular)",
+            "group": "test",
+            "type": "npm",
+            "script": "test-ci",
+            "path": "src/bhs-web-angular-app",
+            "dependsOn": ["fnm"],
+            "presentation": {
+                "reveal": "always"
+            },
+        },
     ]
 }
