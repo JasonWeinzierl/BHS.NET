@@ -4867,7 +4867,7 @@ __metadata:
     eslint: "npm:^9.39.2"
     eslint-config-flat-gitignore: "npm:^2.1.0"
     eslint-import-resolver-typescript: "npm:^4.4.4"
-    eslint-plugin-better-tailwindcss: "npm:4.0.0-rc.0"
+    eslint-plugin-better-tailwindcss: "npm:4.0.0"
     eslint-plugin-import-x: "npm:^4.16.1"
     eslint-plugin-jsdoc: "npm:^61.5.0"
     eslint-plugin-rxjs-angular-x: "npm:^0.1.1"
@@ -6345,9 +6345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-better-tailwindcss@npm:4.0.0-rc.0":
-  version: 4.0.0-rc.0
-  resolution: "eslint-plugin-better-tailwindcss@npm:4.0.0-rc.0"
+"eslint-plugin-better-tailwindcss@npm:4.0.0":
+  version: 4.0.0
+  resolution: "eslint-plugin-better-tailwindcss@npm:4.0.0"
   dependencies:
     "@eslint/css-tree": "npm:^3.6.8"
     "@valibot/to-json-schema": "npm:^1.5.0"
@@ -6366,7 +6366,7 @@ __metadata:
       optional: true
     oxlint:
       optional: true
-  checksum: 10c0/91b733c1d8be28ead028e1e35d3e3763a2ab82805ca3f15894fb1b91ffb465c240bc8dbc489910b99f64a246ee5fc452691f7dbec84d8f26c6254e23e5c47306
+  checksum: 10c0/b0fd223814eb6b2ffcda3862af36dd268923ccca4915cdd9cfb8d23b2625a4e9b02cebf1f44299419b5b04d4395210e074fcde6b236cbd88f36a5e8468172d15
   languageName: node
   linkType: hard
 

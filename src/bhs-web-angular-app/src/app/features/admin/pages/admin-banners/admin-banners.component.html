@@ -11,7 +11,6 @@
           <li class="border-base-300 not-last:mb-4 not-last:border-b not-last:pb-4">
             <h3>Banner {{ banner.id }}</h3>
             <p class="flex gap-2">
-              <!-- eslint-disable better-tailwindcss/no-unknown-classes -- we're using a release candidate -->
               <span
                 class="badge"
                 [class.badge-info]="banner.theme === 'Info' || banner.theme === 'Primary'"
@@ -23,7 +22,6 @@
               >
                 {{ banner.theme }}
               </span>
-              <!-- eslint-enable better-tailwindcss/no-unknown-classes -->
               <span
                 class="badge"
                 [class.bg-primary]="banner.isEnabled"

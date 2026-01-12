@@ -16,7 +16,6 @@
 
   <div class="container mx-auto mb-5 sm:px-20">
     @for (banner of banners$ | async; track banner.id) {
-      <!-- eslint-disable better-tailwindcss/no-unknown-classes -- we're using a release candidate -->
       <div
         role="alert"
         class="alert"
@@ -26,7 +25,6 @@
         [class.alert-success]="banner.theme === 'Success'"
         [class.alert-error]="banner.theme === 'Danger'"
       >
-        <!-- eslint-enable better-tailwindcss/no-unknown-classes -->
         <i class="bi bi-info-circle" aria-hidden="true"></i>
         <div>
           @if (banner.lead) {
