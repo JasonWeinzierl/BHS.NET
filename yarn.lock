@@ -4492,7 +4492,7 @@ __metadata:
     globals: "npm:^17.0.0"
     jsdom: "npm:^27.4.0"
     jwt-decode: "npm:^4.0.0"
-    marked: "npm:^15.0.12"
+    marked: "npm:^17.0.1"
     merge-partially: "npm:^2.0.2"
     ngx-toastr: "npm:^19.1.0"
     postcss: "npm:^8.5.6"
@@ -8013,12 +8013,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^15.0.12":
-  version: 15.0.12
-  resolution: "marked@npm:15.0.12"
+"marked@npm:^17.0.1":
+  version: 17.0.1
+  resolution: "marked@npm:17.0.1"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/e09da211544b787ecfb25fed07af206060bf7cd6d9de6cb123f15c496a57f83b7aabea93340aaa94dae9c94e097ae129377cad6310abc16009590972e85f4212
+  checksum: 10c0/0197337aad33882308cea52d2c86d7b830a89be729a4010a26a488ae1c224cdc7520b8cce056832a81a127fc39a3827f45e3865c1ff257324cb553cb06ce0e57
   languageName: node
   linkType: hard
 
