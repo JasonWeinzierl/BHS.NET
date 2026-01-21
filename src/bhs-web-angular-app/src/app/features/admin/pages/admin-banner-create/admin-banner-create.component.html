@@ -77,7 +77,13 @@
             [formField]="bannerForm.endDate"
             class="input w-full"
           />
-          <span class="fieldset-label">Banner will hide at this date and time</span>
+          @if (bannerRunTimeDescription()) {
+            <span class="fieldset-label text-primary">
+              {{ bannerRunTimeDescription() }}
+            </span>
+          } @else {
+            <span class="fieldset-label">Banner will hide at this date and time.</span>
+          }
         }
       </fieldset>
 

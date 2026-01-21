@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { form, FormField, required, validate } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
+import prettyMs from 'pretty-ms';
 import { SiteBannerService } from '@data/banners';
 import { AlertTheme } from '@data/banners/models/alert-theme';
 
@@ -22,6 +23,23 @@ export default class AdminBannerCreateComponent {
   readonly successSignal = signal(false);
 
   readonly themeOptions = Object.values(AlertTheme);
+
+  readonly bannerRunTimeDescription = computed(() => {
+    const model = this.bannerModel();
+    if (!model.hasEndDate || !model.endDate) {
+      return '';
+    }
+
+    const endDate = new Date(model.endDate);
+    const now = Date.now();
+    const diff = endDate.getTime() - now;
+
+    if (diff <= 0) {
+      return 'Banner will be disabled immediately.';
+    }
+
+    return `Banner will hide in ${prettyMs(diff, { verbose: true, hideSeconds: true })}`;
+  });
 
   readonly bannerModel = signal({
     theme: AlertTheme.Primary as AlertTheme,

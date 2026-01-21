@@ -4497,6 +4497,7 @@ __metadata:
     merge-partially: "npm:^2.0.2"
     ngx-toastr: "npm:^20.0.3"
     postcss: "npm:^8.5.6"
+    pretty-ms: "npm:^9.3.0"
     run-script-os: "npm:^1.1.6"
     rxjs: "npm:^7.8.2"
     tailwindcss: "npm:^4.1.18"
