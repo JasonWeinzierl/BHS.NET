@@ -4443,7 +4443,7 @@ __metadata:
     eslint-plugin-import-x: "npm:^4.16.1"
     eslint-plugin-n: "npm:^17.23.2"
     eslint-plugin-wdio: "npm:^9.23.0"
-    expect-webdriverio: "npm:^5.6.2"
+    expect-webdriverio: "npm:^5.6.3"
     pretty-ms: "npm:^9.3.0"
     tslib: "npm:^2.8.1"
     tsx: "npm:^4.21.0"
@@ -6199,9 +6199,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expect-webdriverio@npm:^5.3.4, expect-webdriverio@npm:^5.6.2":
-  version: 5.6.2
-  resolution: "expect-webdriverio@npm:5.6.2"
+"expect-webdriverio@npm:^5.3.4, expect-webdriverio@npm:^5.6.3":
+  version: 5.6.3
+  resolution: "expect-webdriverio@npm:5.6.3"
   dependencies:
     "@vitest/snapshot": "npm:^4.0.16"
     deep-eql: "npm:^5.0.2"
@@ -6218,7 +6218,7 @@ __metadata:
       optional: false
     webdriverio:
       optional: false
-  checksum: 10c0/33bfa7e712bec6d7859a754200ff02e87c0c0389e43833f78bbe357ffe709b8d6e71699eb6f92ae62443c856917f6b6423908563a32de48198bebc2b74eb4aa0
+  checksum: 10c0/3f830af55dcd725a9708256007d236c110171a307273124820d885fe4ebf2932da43b470c02f1faa2e86683df919650db8f042c2ac71c606101df3981f76c45e
   languageName: node
   linkType: hard
 
