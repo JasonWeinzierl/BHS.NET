@@ -14,4 +14,9 @@ export default [
     loadComponent: () => import('./pages/admin-banners/admin-banners.component'),
     title: 'Edit Banners',
   },
+  {
+    path: 'banners/create',
+    loadComponent: () => import('./pages/admin-banner-create/admin-banner-create.component'),
+    title: 'Create Banner',
+  },
 ] satisfies Routes;

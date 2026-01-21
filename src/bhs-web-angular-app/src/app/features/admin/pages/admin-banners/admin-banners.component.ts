@@ -13,7 +13,7 @@ import parseErrorMessage from '@shared/parseErrorMessage';
   imports: [
     DatePipe,
     RouterLink,
-],
+  ],
 })
 export default class AdminBannersComponent {
   private readonly siteBannerService = inject(SiteBannerService);

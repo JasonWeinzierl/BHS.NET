@@ -4,7 +4,13 @@
       <a class="link link-primary" [routerLink]="['/home']">Home</a>
       <a class="link link-primary" [routerLink]="['/admin']">Admin</a>
     </div>
-    <h2>Banners</h2>
+    <div class="mb-2 flex items-center justify-between border-b-2 border-b-primary pb-2">
+      <h2>Banners</h2>
+      <a class="btn btn-primary" [routerLink]="['/admin/banners/create']">
+        <i class="bi bi-plus-circle"></i>
+        Create Banner
+      </a>
+    </div>
     @if (bannersSignal(); as banners) {
       <ul>
         @for (banner of banners; track banner.id) {
@@ -12,7 +18,7 @@
             <h3>Banner {{ banner.id }}</h3>
             <p class="flex gap-2">
               <span
-                class="badge"
+                class="badge rounded-xs border-0"
                 [class.badge-info]="banner.theme === 'Info' || banner.theme === 'Primary'"
                 [class.badge-neutral]="banner.theme === 'Secondary'"
                 [class.badge-outline]="banner.theme === 'Info' || banner.theme === 'Secondary'"
@@ -23,7 +29,7 @@
                 {{ banner.theme }}
               </span>
               <span
-                class="badge"
+                class="badge rounded-xs border-0"
                 [class.bg-primary]="banner.isEnabled"
                 [class.text-primary-content]="banner.isEnabled"
                 [class.bg-secondary]="!banner.isEnabled"

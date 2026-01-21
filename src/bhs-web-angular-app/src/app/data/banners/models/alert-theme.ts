@@ -11,3 +11,4 @@ export const alertThemeScheme = z.enum([
 ]);
 
 export type AlertTheme = z.infer<typeof alertThemeScheme>;
+export const AlertTheme = alertThemeScheme.enum;

@@ -1,0 +1,94 @@
+<div class="card bg-base-100">
+  <div class="card-body">
+    <div class="card-actions">
+      <a class="link link-primary" [routerLink]="['/home']">Home</a>
+      <a class="link link-primary" [routerLink]="['/admin']">Admin</a>
+      <a class="link link-primary" [routerLink]="['/admin/banners']">Banners</a>
+    </div>
+    <h2>Create New Banner</h2>
+
+    @if (successSignal()) {
+      <div class="alert alert-success" role="alert">
+        <i class="bi bi-check-circle"></i>
+        <p>Banner created successfully! Redirecting...</p>
+      </div>
+    }
+
+    @if (errorSignal(); as error) {
+      <div class="alert alert-error" role="alert">
+        <i class="bi bi-exclamation-triangle"></i>
+        <p>{{ error }}</p>
+      </div>
+    }
+
+    <form (submit)="onSubmit($event)" class="space-y-4">
+      <fieldset class="fieldset">
+        <label class="fieldset-legend" for="theme">
+          Theme
+        </label>
+        <select
+          id="theme"
+          [formField]="bannerForm.theme"
+          class="select w-full"
+        >
+          @for (option of themeOptions; track option) {
+            <option [value]="option">{{ option }}</option>
+          }
+        </select>
+      </fieldset>
+
+      <fieldset class="fieldset">
+        <label class="fieldset-legend" for="lead">Lead Text</label>
+        <input
+          id="lead"
+          type="text"
+          [formField]="bannerForm.lead"
+          class="input w-full"
+          placeholder="Enter lead text..."
+        />
+        <span class="fieldset-label">Optional, appears in bold</span>
+      </fieldset>
+
+      <fieldset class="fieldset">
+        <label class="fieldset-legend" for="body">Body Text</label>
+        <textarea
+          id="body"
+          [formField]="bannerForm.body"
+          class="textarea w-full"
+          placeholder="Enter body text..."
+        ></textarea>
+        <span class="fieldset-label">Optional</span>
+      </fieldset>
+
+      <div class="card-actions justify-end">
+        <button
+          type="button"
+          class="btn btn-outline"
+          (click)="onCancel()"
+          [disabled]="isSubmittingSignal()"
+        >
+          Cancel
+        </button>
+        <div
+          [class.tooltip]="bannerForm().invalid()"
+          [class.tooltip-error]="bannerForm().invalid()"
+          [attr.data-tip]="bannerForm().errors()[0]?.message"
+        >
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="bannerForm().invalid() || isSubmittingSignal()"
+          >
+            @if (isSubmittingSignal()) {
+              <span class="loading loading-spinner"></span>
+              Creating...
+            } @else {
+              <i class="bi bi-plus-circle"></i>
+              Create Banner
+            }
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
