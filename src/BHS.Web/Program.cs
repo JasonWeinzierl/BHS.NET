@@ -3,7 +3,10 @@ using BHS.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddAzureAppConfiguration();
+if (!AssemblyUtil.IsOpenApiGenerator)
+{
+    builder.AddAzureAppConfiguration();
+}
 
 builder.Services.AddBhsAuth();
 

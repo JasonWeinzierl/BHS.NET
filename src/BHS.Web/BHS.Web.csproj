@@ -6,6 +6,9 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
+    <OpenApiDocumentsDirectory>$(ArtifactsPath)</OpenApiDocumentsDirectory>
+    <OpenApiGenerateDocumentsOptions>--file-name openapi</OpenApiGenerateDocumentsOptions>
+
     <SpaRoot>../bhs-web-angular-app</SpaRoot>
     <SpaProxyLaunchCommand>npm run start-proxy</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:4200</SpaProxyServerUrl>
@@ -20,6 +23,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" />
     <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" PrivateAssets="All" />
     <PackageReference Include="Microsoft.OpenApi" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" />
   </ItemGroup>

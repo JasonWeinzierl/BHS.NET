@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
-using System.Reflection;
 
 namespace BHS.Web;
 
@@ -106,10 +105,10 @@ internal static class SwaggerConfig
         };
 
     private static string GetDocumentName()
-        => $"v{Assembly.GetExecutingAssembly().GetName().Version?.Major.ToString() ?? "next"}";
+        => $"v{AssemblyUtil.MajorVersion}";
 
     private static string GetDocumentVersion()
-        => $"v{Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "next"}";
+        => $"v{AssemblyUtil.SemVer}";
 
     /// <summary>
     /// Registers middleware for Swagger and SwaggerUI.
