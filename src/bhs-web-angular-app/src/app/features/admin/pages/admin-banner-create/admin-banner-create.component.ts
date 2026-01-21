@@ -101,6 +101,10 @@ export default class AdminBannerCreateComponent {
     this.successSignal.set(false);
 
     const formValue = this.bannerModel();
+    if (formValue.hasEndDate && formValue.endDate) {
+      // datetime-local needs timezone info and seconds.
+      formValue.endDate = new Date(formValue.endDate + ':00').toISOString();
+    }
 
     // Create the banner request
     this.siteBannerService.createBanner$({
