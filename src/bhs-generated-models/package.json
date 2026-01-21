@@ -1,0 +1,17 @@
+{
+  "name": "bhs-generated-models",
+  "private": true,
+  "type": "module",
+  "main": "dist/zod.gen.ts",
+  "types": "dist/zod.gen.ts",
+  "scripts": {
+    "models:build": "openapi-ts"
+  },
+  "dependencies": {
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.90.8",
+    "typescript": "~5.9.3"
+  }
+}

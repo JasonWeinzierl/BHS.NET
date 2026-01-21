@@ -17,6 +17,7 @@
     "@wdio/runner": "^9.23.2",
     "@wdio/spec-reporter": "^9.23.2",
     "@wdio/types": "^9.23.2",
+    "bhs-generated-models": "workspace:^",
     "expect-webdriverio": "^5.6.3",
     "pretty-ms": "^9.3.0",
     "tslib": "^2.8.1",

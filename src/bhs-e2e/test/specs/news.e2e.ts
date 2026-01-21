@@ -1,24 +1,11 @@
+import { PostPreviewZodType, zPostPreview } from 'bhs-generated-models';
 import { Agent, fetch } from 'undici';
-import { z } from 'zod';
 import appHeaderPage from '../pageobjects/appHeader.page';
 import blogPage from '../pageobjects/blog.page';
 import homePage from '../pageobjects/home.page';
 
-// TODO: dedupe with web app, define models in a separate package.
-const postPreviewSchema = z.object({
-  slug: z.string(),
-  title: z.string(),
-  contentPreview: z.string(),
-  author: z.object({
-    username: z.string(),
-    name: z.string().nullish(),
-  }).nullish(),
-  datePublished: z.coerce.date(),
-});
-type PostPreview = z.infer<typeof postPreviewSchema>;
-
 describe('news', () => {
-  let firstPost: PostPreview;
+  let firstPost: PostPreviewZodType;
   let postsCount: number;
 
   beforeAll(async () => {
@@ -36,7 +23,7 @@ describe('news', () => {
 
     expect(response.status).toBe(200);
 
-    const posts = postPreviewSchema.array().parse(await response.json());
+    const posts = zPostPreview.array().parse(await response.json());
     if (!posts.length) {
       throw new Error('No posts found. Cannot test UI without sample data.');
     }
