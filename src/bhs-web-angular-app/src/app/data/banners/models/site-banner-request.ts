@@ -4,4 +4,5 @@ export interface SiteBannerRequest {
   theme: AlertTheme;
   lead?: string;
   body?: string;
+  endDate?: string;
 }

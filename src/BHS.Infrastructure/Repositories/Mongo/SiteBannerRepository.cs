@@ -44,7 +44,7 @@ public class SiteBannerRepository(IMongoClient mongoClient, TimeProvider timePro
     public async Task<SiteBanner> Insert(SiteBannerRequest request, CancellationToken cancellationToken = default)
     {
         var now = _timeProvider.GetUtcNow();
-        var banner = SiteBannerDto.New(now, request.Theme, request.Lead, request.Body, now);
+        var banner = SiteBannerDto.New(now, request.Theme, request.Lead, request.Body, now, request.EndDate);
 
         await _mongoClient.GetBhsCollection<SiteBannerDto>("banners")
             .InsertOneAsync(banner, cancellationToken: cancellationToken);

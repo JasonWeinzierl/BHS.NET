@@ -60,6 +60,27 @@
         <span class="fieldset-label">Optional</span>
       </fieldset>
 
+      <fieldset class="fieldset">
+        <span class="label">
+          Set End Date
+          <input
+            type="checkbox"
+            [formField]="bannerForm.hasEndDate"
+            class="checkbox"
+          />
+        </span>
+        @if (bannerModel().hasEndDate) {
+          <label class="fieldset-legend" for="endDate">End Date & Time</label>
+          <input
+            id="endDate"
+            type="datetime-local"
+            [formField]="bannerForm.endDate"
+            class="input w-full"
+          />
+          <span class="fieldset-label">Banner will hide at this date and time</span>
+        }
+      </fieldset>
+
       <div class="card-actions justify-end">
         <button
           type="button"
@@ -72,7 +93,7 @@
         <div
           [class.tooltip]="bannerForm().invalid()"
           [class.tooltip-error]="bannerForm().invalid()"
-          [attr.data-tip]="bannerForm().errors()[0]?.message"
+          [attr.data-tip]="bannerForm().errorSummary()[0]?.message"
         >
           <button
             type="submit"

@@ -27,6 +27,8 @@ export default class AdminBannerCreateComponent {
     theme: AlertTheme.Primary as AlertTheme,
     lead: '',
     body: '',
+    hasEndDate: false,
+    endDate: '',
   });
 
   readonly bannerForm = form(this.bannerModel, schemaPath => {
@@ -39,6 +41,30 @@ export default class AdminBannerCreateComponent {
         return {
           kind: 'atLeastOneRequired',
           message: 'At least one of Lead Text or Body Text must be provided.',
+        };
+      }
+      return null;
+    });
+
+    validate(schemaPath.endDate, ctx => {
+      const hasEndDate = ctx.valueOf(schemaPath.hasEndDate);
+      const endDate = ctx.valueOf(schemaPath.endDate);
+      if (hasEndDate && !endDate) {
+        return {
+          kind: 'required',
+          message: 'End date is required when "Set End Date" is checked.',
+        };
+      }
+      if (endDate && isNaN(Date.parse(endDate))) {
+        return {
+          kind: 'invalidDate',
+          message: 'End date must be a valid date.',
+        };
+      }
+      if (endDate && new Date(endDate) <= new Date()) {
+        return {
+          kind: 'futureDate',
+          message: 'End date must be in the future.',
         };
       }
       return null;
@@ -63,6 +89,7 @@ export default class AdminBannerCreateComponent {
       theme: formValue.theme,
       lead: formValue.lead || undefined,
       body: formValue.body || undefined,
+      endDate: formValue.hasEndDate ? formValue.endDate : undefined,
     // eslint-disable-next-line rxjs-angular-x/prefer-async-pipe, rxjs-x/no-ignored-subscription
     }).subscribe({
       next: () => {
