@@ -11,11 +11,38 @@
         Create Banner
       </a>
     </div>
+
+    @if (successMessageSignal(); as message) {
+      <div class="mb-4 alert alert-success" role="alert">
+        <i class="bi bi-check-circle"></i>
+        <p>{{ message }}</p>
+      </div>
+    }
+
     @if (bannersSignal(); as banners) {
       <ul>
         @for (banner of banners; track banner.id) {
           <li class="border-base-300 not-last:mb-4 not-last:border-b not-last:pb-4">
-            <h3>Banner {{ banner.id }}</h3>
+            <div class="flex items-center justify-between">
+              <h3>Banner {{ banner.id }}</h3>
+              @if (banner.isEnabled) {
+                <button
+                  type="button"
+                  class="btn btn-outline btn-sm btn-error"
+                  [disabled]="deletingBannerIdSignal()"
+                  (click)="onDeleteBanner(banner.id, $event)"
+                  title="Hide this banner (disable immediately)"
+                >
+                  @if (deletingBannerIdSignal() === banner.id) {
+                    <span class="loading loading-sm loading-spinner"></span>
+                    Hiding...
+                  } @else {
+                    <i class="bi bi-trash"></i>
+                    Hide
+                  }
+                </button>
+              }
+            </div>
             <p class="flex gap-2">
               <span
                 class="badge rounded-xs border-0"

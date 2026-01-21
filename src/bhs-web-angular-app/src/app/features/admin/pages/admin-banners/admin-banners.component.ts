@@ -19,6 +19,9 @@ export default class AdminBannersComponent {
   private readonly siteBannerService = inject(SiteBannerService);
 
   readonly errorSignal = signal<string | null>(null);
+  readonly deletingBannerIdSignal = signal<string | null>(null);
+  readonly successMessageSignal = signal<string | null>(null);
+
   readonly bannersSignal = toSignal(this.siteBannerService.getHistory$().pipe(
     map(banners => banners.toReversed().map(banner => {
       const sortedChanges = banner.statusChanges
@@ -38,4 +41,35 @@ export default class AdminBannersComponent {
       return of(null);
     }),
   ), { initialValue: null });
+
+  onDeleteBanner(bannerId: string, event: Event): void {
+    event.preventDefault();
+
+    if (this.deletingBannerIdSignal()) {
+      return;
+    }
+
+    if (!confirm('Are you sure you want to hide this banner? This will disable it immediately but preserve its history.')) {
+      return;
+    }
+
+    this.deletingBannerIdSignal.set(bannerId);
+
+    // eslint-disable-next-line rxjs-angular-x/prefer-async-pipe, rxjs-x/no-ignored-subscription
+    this.siteBannerService.deleteBanner$(bannerId).subscribe({
+      next: () => {
+        this.successMessageSignal.set('Banner hidden successfully.');
+        this.deletingBannerIdSignal.set(null);
+
+        // Reload page.
+        window.location.reload();
+      },
+      error: (err: unknown) => {
+        const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
+        console.error('Failed to delete banner.', err);
+        this.errorSignal.set('Failed to hide banner. ' + msg);
+        this.deletingBannerIdSignal.set(null);
+      },
+    });
+  }
 }
