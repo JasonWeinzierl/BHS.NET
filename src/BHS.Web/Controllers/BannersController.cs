@@ -31,7 +31,7 @@ public class BannersController(ISiteBannerRepository bannerRepo) : ControllerBas
     /// </summary>
     [HttpPost("")]
     [Authorize(AuthConfig.BannerWriteAccess)]
-    public async Task<ActionResult<SiteBannerHistory>> Create(SiteBannerRequest request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<SiteBanner>> Create(SiteBannerRequest request, CancellationToken cancellationToken = default)
     {
         var banner = await _bannerRepo.Insert(request, cancellationToken);
         return Ok(banner);
@@ -45,7 +45,7 @@ public class BannersController(ISiteBannerRepository bannerRepo) : ControllerBas
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<SiteBannerHistory>> Delete(string id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult> Delete(string id, CancellationToken cancellationToken = default)
     {
         var exists = await _bannerRepo.Delete(id, cancellationToken);
         if (!exists) return NotFound();
