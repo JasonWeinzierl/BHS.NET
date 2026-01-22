@@ -106,7 +106,7 @@ Tailwind classes must be sorted according to the ESLint plugin.
 
 #### Angular
 
-This is a bleeding-edge Angular app, which is always uses the latest versions.
+This is a bleeding-edge Angular app, which always uses the latest versions.
 
 All modern Angular features are preferred, including:
 
