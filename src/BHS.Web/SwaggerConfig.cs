@@ -105,7 +105,8 @@ internal static class SwaggerConfig
         };
 
     private static string GetDocumentName()
-        => $"v{AssemblyUtil.MajorVersion}";
+        // v1 will result in `openapi.json` so `openapi-ts.config.js` can find it.
+        => AssemblyUtil.IsOpenApiGenerator ? "v1" : $"v{AssemblyUtil.MajorVersion}";
 
     private static string GetDocumentVersion()
         => $"v{AssemblyUtil.SemVer}";
