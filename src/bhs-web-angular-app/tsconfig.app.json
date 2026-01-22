@@ -6,6 +6,8 @@
   },
   "include": [
     "src/**/*.ts",
+    // Angular compiler is currently unable to type-check via TypeScript project references.
+    "../bhs-generated-models/dist/zod.gen.ts",
   ],
   "exclude": [
     "src/**/*.spec.ts",

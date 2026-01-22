@@ -1,8 +1,5 @@
-import { z } from 'zod';
+import { CategoryZodType, zCategory } from 'bhs-generated-models';
 
-export const categorySchema = z.object({
-  slug: z.string(),
-  name: z.string(),
-});
+export const categorySchema = zCategory;
 
-export type Category = z.infer<typeof categorySchema>;
+export type Category = CategoryZodType;

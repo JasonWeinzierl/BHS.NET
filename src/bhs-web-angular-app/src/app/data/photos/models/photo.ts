@@ -1,13 +1,5 @@
-import { z } from 'zod';
-import { authorSchema } from '@data/authors';
+import { PhotoZodType, zPhoto } from 'bhs-generated-models';
 
-export const photoSchema = z.object({
-  id: z.string(),
-  name: z.string().nullish(),
-  imagePath: z.string(),
-  datePosted: z.coerce.date(),
-  author: authorSchema.nullish(),
-  description: z.string().nullish(),
-});
+export const photoSchema = zPhoto;
 
-export type Photo = z.infer<typeof photoSchema>;
+export type Photo = PhotoZodType;

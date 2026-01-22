@@ -23,7 +23,10 @@ const createAlbum = (): AlbumPhotos => ({
     id: 'photo-six',
     imagePath: '/assets/img/2017/oldcityhall.jpg',
     datePosted: new Date(),
-  }],
+  }].map(x => ({ ...x, name: null, author: null, description: null })),
+  description: null,
+  bannerPhoto: null,
+  author: null,
 });
 
 describe('AlbumPageComponent', () => {

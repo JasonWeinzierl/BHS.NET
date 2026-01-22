@@ -1,8 +1,5 @@
-import { z } from 'zod';
+import { DirectorZodType, zDirector } from 'bhs-generated-models';
 
-export const directorSchema = z.object({
-  name: z.string(),
-  year: z.string(),
-});
+export const directorSchema = zDirector;
 
-export type Director = z.infer<typeof directorSchema>;
+export type Director = DirectorZodType;

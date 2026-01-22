@@ -1,8 +1,3 @@
-import { AlertTheme } from './alert-theme';
+import { SiteBannerRequestZodType } from 'bhs-generated-models';
 
-export interface SiteBannerRequest {
-  theme: AlertTheme;
-  lead?: string;
-  body?: string;
-  endDate?: string;
-}
+export type SiteBannerRequest = SiteBannerRequestZodType;

@@ -1,12 +1,3 @@
-import { Category } from './category';
-import { Author } from '@data/authors';
+import { PostRequestZodType } from 'bhs-generated-models';
 
-export interface PostRequest {
-  title: string;
-  contentMarkdown: string;
-  filePath: string | null;
-  photosAlbumSlug: string | null;
-  author: Author | null;
-  datePublished: Date;
-  categories: Array<Category>;
-}
+export type PostRequest = PostRequestZodType;

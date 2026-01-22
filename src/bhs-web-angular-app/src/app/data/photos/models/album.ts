@@ -1,14 +1,5 @@
-import { z } from 'zod';
-import { photoSchema } from './photo';
-import { authorSchema } from '@data/authors';
+import { AlbumZodType, zAlbum } from 'bhs-generated-models';
 
-export const albumSchema = z.object({
-  slug: z.string(),
-  name: z.string().nullish(),
-  description: z.string().nullish(),
-  bannerPhoto: photoSchema.nullish(),
-  blogPostSlug: z.string().nullish(),
-  author: authorSchema.nullish(),
-});
+export const albumSchema = zAlbum;
 
-export type Album = z.infer<typeof albumSchema>;
+export type Album = AlbumZodType;

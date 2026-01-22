@@ -1,9 +1,5 @@
-import { z } from 'zod';
-import { categorySchema } from './category';
-import { postPreviewSchema } from './post-preview';
+import { CategoryPostsZodType, zCategoryPosts } from 'bhs-generated-models';
 
-export const categoryPostsSchema = categorySchema.extend({
-  posts: postPreviewSchema.array(),
-});
+export const categoryPostsSchema = zCategoryPosts;
 
-export type CategoryPosts = z.infer<typeof categoryPostsSchema>;
+export type CategoryPosts = CategoryPostsZodType;

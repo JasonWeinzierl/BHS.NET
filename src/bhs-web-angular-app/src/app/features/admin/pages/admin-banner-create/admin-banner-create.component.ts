@@ -109,9 +109,9 @@ export default class AdminBannerCreateComponent {
     // Create the banner request
     this.siteBannerService.createBanner$({
       theme: formValue.theme,
-      lead: formValue.lead || undefined,
-      body: formValue.body || undefined,
-      endDate: formValue.hasEndDate ? formValue.endDate : undefined,
+      lead: formValue.lead || null,
+      body: formValue.body || null,
+      endDate: formValue.hasEndDate ? new Date(formValue.endDate) : undefined,
     // eslint-disable-next-line rxjs-angular-x/prefer-async-pipe, rxjs-x/no-ignored-subscription
     }).subscribe({
       next: () => {

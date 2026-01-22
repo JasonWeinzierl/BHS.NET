@@ -1,21 +1,11 @@
-import { z } from 'zod';
+import { MuseumDayZodType, MuseumMonthRangeZodType, MuseumScheduleZodType, zMuseumDay, zMuseumMonthRange, zMuseumSchedule } from 'bhs-generated-models';
 
-export const museumDaySchema = z.object({
-  dayOfWeek: z.number().min(0).max(6),
-  fromTime: z.string(),
-  toTime: z.string(),
-});
+export const museumDaySchema = zMuseumDay;
 
-export const museumMonthRangeSchema = z.object({
-  startMonth: z.number(),
-  endMonth: z.number(),
-});
+export const museumMonthRangeSchema = zMuseumMonthRange;
 
-export const museumScheduleSchema = z.object({
-  days: z.array(museumDaySchema),
-  months: museumMonthRangeSchema,
-});
+export const museumScheduleSchema = zMuseumSchedule;
 
-export type MuseumDay = z.infer<typeof museumDaySchema>;
-export type MuseumMonthRange = z.infer<typeof museumMonthRangeSchema>;
-export type MuseumSchedule = z.infer<typeof museumScheduleSchema>;
+export type MuseumDay = MuseumDayZodType;
+export type MuseumMonthRange = MuseumMonthRangeZodType;
+export type MuseumSchedule = MuseumScheduleZodType;

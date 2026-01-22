@@ -1,14 +1,6 @@
-import { z } from 'zod';
+import { AlertThemeZodType, zAlertTheme } from 'bhs-generated-models';
 
-export const alertThemeScheme = z.enum([
-  'None',
-  'Primary',
-  'Secondary',
-  'Success',
-  'Danger',
-  'Warning',
-  'Info',
-]);
+export const alertThemeScheme = zAlertTheme;
 
-export type AlertTheme = z.infer<typeof alertThemeScheme>;
-export const AlertTheme = alertThemeScheme.enum;
+export type AlertTheme = AlertThemeZodType;
+export const AlertTheme = zAlertTheme.enum;

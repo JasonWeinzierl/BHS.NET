@@ -1,14 +1,5 @@
-import { z } from 'zod';
-import { categorySchema } from './category';
-import { authorSchema } from '@data/authors';
+import { PostPreviewZodType, zPostPreview } from 'bhs-generated-models';
 
-export const postPreviewSchema = z.object({
-  slug: z.string(),
-  title: z.string(),
-  contentPreview: z.string(),
-  author: authorSchema.nullish(),
-  datePublished: z.coerce.date(),
-  categories: categorySchema.array(),
-});
+export const postPreviewSchema = zPostPreview;
 
-export type PostPreview = z.infer<typeof postPreviewSchema>;
+export type PostPreview = PostPreviewZodType;

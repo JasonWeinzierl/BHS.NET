@@ -44,12 +44,13 @@ export class ContactFormComponent {
       inline: 'nearest',
     });
 
+    const formValue = this.contactForm.getRawValue();
     const request: ContactAlertRequest = {
-      name: this.contactForm.value.name,
-      emailAddress: this.contactForm.value.emailAddress,
-      message: this.contactForm.value.message,
+      name: formValue.name,
+      emailAddress: formValue.emailAddress,
+      message: formValue.message,
       dateRequested: new Date(),
-      body: this.contactForm.value.body,
+      body: formValue.body,
     };
 
     this.contactService.sendMessage(request).pipe(

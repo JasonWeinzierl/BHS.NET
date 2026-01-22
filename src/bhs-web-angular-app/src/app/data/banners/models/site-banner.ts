@@ -1,11 +1,5 @@
-import { z } from 'zod';
-import { alertThemeScheme } from './alert-theme';
+import { SiteBannerZodType, zSiteBanner } from 'bhs-generated-models';
 
-export const siteBannerSchema = z.object({
-  id: z.string(),
-  theme: alertThemeScheme,
-  lead: z.string().nullish(),
-  body: z.string().nullish(),
-});
+export const siteBannerSchema = zSiteBanner;
 
-export type SiteBanner = z.infer<typeof siteBannerSchema>;
+export type SiteBanner = SiteBannerZodType;

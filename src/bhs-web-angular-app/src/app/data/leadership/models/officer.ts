@@ -1,9 +1,5 @@
-import { z } from 'zod';
+import { OfficerZodType, zOfficer } from 'bhs-generated-models';
 
-export const officerSchema = z.object({
-  title: z.string(),
-  name: z.string(),
-  dateStarted: z.coerce.date(),
-});
+export const officerSchema = zOfficer;
 
-export type Officer = z.infer<typeof officerSchema>;
+export type Officer = OfficerZodType;

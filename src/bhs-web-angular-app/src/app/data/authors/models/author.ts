@@ -1,8 +1,5 @@
-import { z } from 'zod';
+import { AuthorZodType, zAuthor } from 'bhs-generated-models';
 
-export const authorSchema = z.object({
-  username: z.string(),
-  name: z.string().nullish(),
-});
+export const authorSchema = zAuthor;
 
-export type Author = z.infer<typeof authorSchema>;
+export type Author = AuthorZodType;

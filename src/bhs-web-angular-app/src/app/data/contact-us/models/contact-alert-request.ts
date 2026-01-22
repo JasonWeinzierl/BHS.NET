@@ -1,7 +1,3 @@
-export interface ContactAlertRequest {
-  name?: string | null;
-  emailAddress?: string;
-  message?: string | null;
-  dateRequested?: Date | null;
-  body?: string | null;
-}
+import { ContactAlertRequestZodType } from 'bhs-generated-models';
+
+export type ContactAlertRequest = ContactAlertRequestZodType;

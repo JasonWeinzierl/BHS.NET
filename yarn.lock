@@ -4558,6 +4558,7 @@ __metadata:
     "@vitest/coverage-v8": "npm:^4.0.17"
     "@vitest/eslint-plugin": "npm:^1.6.6"
     angular-eslint: "npm:21.1.0"
+    bhs-generated-models: "workspace:^"
     bootstrap-icons: "npm:1.13.1"
     daisyui: "npm:^5.5.14"
     eslint: "npm:^9.39.2"

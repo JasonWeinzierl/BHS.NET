@@ -1,8 +1,5 @@
-import { z } from 'zod';
-import { categorySchema } from './category';
+import { CategorySummaryZodType, zCategorySummary } from 'bhs-generated-models';
 
-export const categorySummarySchema = categorySchema.extend({
-  postsCount: z.number(),
-});
+export const categorySummarySchema = zCategorySummary;
 
-export type CategorySummary = z.infer<typeof categorySummarySchema>;
+export type CategorySummary = CategorySummaryZodType;

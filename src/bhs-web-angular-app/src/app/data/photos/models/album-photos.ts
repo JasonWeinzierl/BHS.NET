@@ -1,9 +1,5 @@
-import { z } from 'zod';
-import { albumSchema } from './album';
-import { photoSchema } from './photo';
+import { AlbumPhotosZodType, zAlbumPhotos } from 'bhs-generated-models';
 
-export const albumPhotosSchema = albumSchema.extend({
-  photos: photoSchema.array(),
-});
+export const albumPhotosSchema = zAlbumPhotos;
 
-export type AlbumPhotos = z.infer<typeof albumPhotosSchema>;
+export type AlbumPhotos = AlbumPhotosZodType;

@@ -28,6 +28,7 @@
     "@microsoft/applicationinsights-angularplugin-js": "^15.3.8",
     "@microsoft/applicationinsights-web": "^3.3.11",
     "@standard-schema/spec": "^1.1.0",
+    "bhs-generated-models": "workspace:^",
     "bootstrap-icons": "1.13.1",
     "jwt-decode": "^4.0.0",
     "marked": "^17.0.1",

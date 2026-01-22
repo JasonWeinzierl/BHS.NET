@@ -1,15 +1,9 @@
-import { z } from 'zod';
-import { siteBannerSchema } from './site-banner';
+import { SiteBannerHistoryZodType, SiteBannerStatusChangeZodType, zSiteBannerHistory, zSiteBannerStatusChange } from 'bhs-generated-models';
 
-export const SITE_BANNER_STATUS_CHANGE_SCHEMA = z.object({
-  dateModified: z.coerce.date(),
-  isEnabled: z.boolean(),
-});
+export const SITE_BANNER_STATUS_CHANGE_SCHEMA = zSiteBannerStatusChange;
 
-export type SiteBannerStatusChange = z.infer<typeof SITE_BANNER_STATUS_CHANGE_SCHEMA>;
+export type SiteBannerStatusChange = SiteBannerStatusChangeZodType;
 
-export const SITE_BANNER_HISTORY_SCHEMA = siteBannerSchema.extend({
-  statusChanges: z.array(SITE_BANNER_STATUS_CHANGE_SCHEMA),
-});
+export const SITE_BANNER_HISTORY_SCHEMA = zSiteBannerHistory;
 
-export type SiteBannerHistory = z.infer<typeof SITE_BANNER_HISTORY_SCHEMA>;
+export type SiteBannerHistory = SiteBannerHistoryZodType;
