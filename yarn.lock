@@ -4574,7 +4574,7 @@ __metadata:
     jwt-decode: "npm:^4.0.0"
     marked: "npm:^17.0.1"
     merge-partially: "npm:^2.0.2"
-    ngx-toastr: "npm:^20.0.3"
+    ngx-toastr: "npm:^20.0.4"
     postcss: "npm:^8.5.6"
     pretty-ms: "npm:^9.3.0"
     run-script-os: "npm:^1.1.6"
@@ -8635,16 +8635,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ngx-toastr@npm:^20.0.3":
-  version: 20.0.3
-  resolution: "ngx-toastr@npm:20.0.3"
+"ngx-toastr@npm:^20.0.4":
+  version: 20.0.4
+  resolution: "ngx-toastr@npm:20.0.4"
   dependencies:
     tslib: "npm:^2.8.1"
   peerDependencies:
     "@angular/common": ^21.0.0
     "@angular/core": ^21.0.0
     rxjs: ^7.8.2
-  checksum: 10c0/09d861e66ce9039658b5072ffdf243495b4ec53afb6a52262b8baa061d50d7bb8e15d4a8ec4f9d52db0f4b95eee7d8f6a245f5cce749dae9cba8dcca9d2b9df2
+  checksum: 10c0/075b16637e2d11c5eba0e0a026f4e29530d90b8d72b5b07fe7e9cf0503108115073957c1b8524243ff94c420c6fa1a085143a7da313ee5944d881225b659c5a0
   languageName: node
   linkType: hard
 
