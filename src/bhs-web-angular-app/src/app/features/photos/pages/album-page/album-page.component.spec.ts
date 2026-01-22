@@ -15,16 +15,18 @@ const createAlbum = (): AlbumPhotos => ({
     id: 'photo-four',
     imagePath: '/assets/img/2017/oldcityhall.jpg',
     datePosted: new Date(),
+    author: null,
   }, {
     id: 'photo-five',
     imagePath: '/assets/img/2017/oldcityhall.jpg',
     datePosted: new Date(),
+    author: null,
   }, {
     id: 'photo-six',
     imagePath: '/assets/img/2017/oldcityhall.jpg',
     datePosted: new Date(),
-  }].map(x => ({ ...x, name: null, author: null, description: null })),
-  description: null,
+    author: null,
+  }],
   bannerPhoto: null,
   author: null,
 });

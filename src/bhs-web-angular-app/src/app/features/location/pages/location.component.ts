@@ -61,8 +61,8 @@ export class LocationComponent {
       })),
       months: {
         // Auto-generated types think this could be a string.
-        startMonth: formatMonth(Number(schedule.months.startMonth), this.monthFormatter),
-        endMonth: formatMonth(Number(schedule.months.endMonth), this.monthFormatter),
+        startMonth: formatMonth(schedule.months.startMonth, this.monthFormatter),
+        endMonth: formatMonth(schedule.months.endMonth, this.monthFormatter),
       },
       isLoading: false as const,
     } : null),

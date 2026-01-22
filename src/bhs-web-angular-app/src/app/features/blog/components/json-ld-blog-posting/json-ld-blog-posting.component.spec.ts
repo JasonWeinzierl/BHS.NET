@@ -25,8 +25,6 @@ describe('JsonLdBlogPostingComponent', () => {
         name: 'Test Author',
         username: 'testauthor',
       },
-      filePath: null,
-      photosAlbumSlug: null,
     } satisfies Post);
     fixture.detectChanges();
   });

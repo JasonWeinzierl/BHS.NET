@@ -11,7 +11,7 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "^0.90.8",
+    "@hey-api/openapi-ts": "^0.90.9",
     "typescript": "~5.9.3"
   }
 }
