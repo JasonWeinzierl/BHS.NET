@@ -190,7 +190,7 @@ as the agent does not have access to the infrastructure repository.
 ## Meaningful git history
 
 The git history of this project is well-maintained and meaningful.
-Commit messages use standard semantic prefixes like `feat`, 'fix`, `chore`, etc.
+Commit messages use standard semantic prefixes like `feat`, `fix`, `chore`, etc.
 Agents may choose to look back on previous commits for historical context.
 
 As a caveat, commits marked with `chore(deps)` or `chore(deps-dev)` may be filtered out
