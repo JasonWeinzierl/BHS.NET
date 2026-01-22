@@ -187,6 +187,15 @@ When making infrastructure changes,
 Agents must provide explicit instructions to the supervising developer,
 as the agent does not have access to the infrastructure repository.
 
+## Meaningful git history
+
+The git history of this project is well-maintained and meaningful.
+Commit messages use standard semantic prefixes like `feat`, 'fix`, `chore`, etc.
+Agents may choose to look back on previous commits for historical context.
+
+As a caveat, commits marked with `chore(deps)` or `chore(deps-dev)` may be filtered out
+because those commits rarely contain useful context and are pure dependency bumps.
+
 ## References
 
 - DaisyUI llms.txt: [https://daisyui.com/llms.txt]
