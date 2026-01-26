@@ -1,10 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { timeout, TimeoutError } from 'rxjs';
 import { InsightsService } from '@core/services/insights.service';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
+import parseErrorMessage from '@shared/parseErrorMessage';
 
 @Component({
   selector: 'app-contact-form',
@@ -62,19 +62,11 @@ export class ContactFormComponent {
           this.contactForm.reset();
         },
         error: (err: unknown) => {
-          if (err instanceof HttpErrorResponse) {
-            // TODO: merge with logic in edit-entry's TODO too.
-            const errorBody = err.error as unknown;
-            if (typeof errorBody === 'object' && errorBody && 'title' in errorBody && typeof errorBody.title === 'string') {
-              const errorBodyTitle = errorBody.title;
-              this.errors.update(errors => [...errors, { id: errors.length, msg: errorBodyTitle }]);
-            } else {
-              this.errors.update(errors => [...errors, { id: errors.length, msg: err.message }]);
-            }
-          } else if (err instanceof TimeoutError) {
+          if (err instanceof TimeoutError) {
             this.errors.update(errors => [...errors, { id: errors.length, msg: 'Something took too long...' }]);
           } else {
-            this.errors.update(errors => [...errors, { id: errors.length, msg: '' }]);
+            const msg = parseErrorMessage(err) ?? 'An unexpected error occurred.';
+            this.errors.update(errors => [...errors, { id: errors.length, msg }]);
           }
           this.isSubmitted.set(false);
         },
