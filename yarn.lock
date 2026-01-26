@@ -4564,7 +4564,7 @@ __metadata:
     eslint: "npm:^9.39.2"
     eslint-config-flat-gitignore: "npm:^2.1.0"
     eslint-import-resolver-typescript: "npm:^4.4.4"
-    eslint-plugin-better-tailwindcss: "npm:4.0.1"
+    eslint-plugin-better-tailwindcss: "npm:4.0.2"
     eslint-plugin-import-x: "npm:^4.16.1"
     eslint-plugin-jsdoc: "npm:^62.0.0"
     eslint-plugin-rxjs-angular-x: "npm:^0.1.1"
@@ -5985,15 +5985,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-better-tailwindcss@npm:4.0.1":
-  version: 4.0.1
-  resolution: "eslint-plugin-better-tailwindcss@npm:4.0.1"
+"eslint-plugin-better-tailwindcss@npm:4.0.2":
+  version: 4.0.2
+  resolution: "eslint-plugin-better-tailwindcss@npm:4.0.2"
   dependencies:
     "@eslint/css-tree": "npm:^3.6.8"
     "@valibot/to-json-schema": "npm:^1.5.0"
     enhanced-resolve: "npm:^5.18.4"
     jiti: "npm:^2.6.1"
-    synckit: "npm:^0.11.11"
+    synckit: "npm:^0.11.12"
     tailwind-csstree: "npm:^0.1.4"
     tsconfig-paths-webpack-plugin: "npm:^4.2.0"
     valibot: "npm:^1.2.0"
@@ -6006,7 +6006,7 @@ __metadata:
       optional: true
     oxlint:
       optional: true
-  checksum: 10c0/5e676d12dd1e1039a7e0ded7b0994c2e89009dfd739ea6b96428ec5e43436f58b9e451b7936277162e37a531c12146ab8f366eb5791700903c0f38543cccca6b
+  checksum: 10c0/827ee4f826163f56829cb9c7ecc4eacda66e50d66511ad28223f66138eb61eccb2af8f3692fc277496ba219a8a5c9cbcbebff40614298c3cee31d768c360cac5
   languageName: node
   linkType: hard
 
@@ -10621,12 +10621,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synckit@npm:^0.11.11":
-  version: 0.11.11
-  resolution: "synckit@npm:0.11.11"
+"synckit@npm:^0.11.12":
+  version: 0.11.12
+  resolution: "synckit@npm:0.11.12"
   dependencies:
     "@pkgr/core": "npm:^0.2.9"
-  checksum: 10c0/f0761495953d12d94a86edf6326b3a565496c72f9b94c02549b6961fb4d999f4ca316ce6b3eb8ed2e4bfc5056a8de65cda0bd03a233333a35221cd2fdc0e196b
+  checksum: 10c0/cc4d446806688ae0d728ae7bb3f53176d065cf9536647fb85bdd721dcefbd7bf94874df6799ff61580f2b03a392659219b778a9254ad499f9a1f56c34787c235
   languageName: node
   linkType: hard
 
