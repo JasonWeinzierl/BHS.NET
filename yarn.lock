@@ -1295,9 +1295,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hey-api/openapi-ts@npm:^0.90.9":
-  version: 0.90.9
-  resolution: "@hey-api/openapi-ts@npm:0.90.9"
+"@hey-api/openapi-ts@npm:^0.90.10":
+  version: 0.90.10
+  resolution: "@hey-api/openapi-ts@npm:0.90.10"
   dependencies:
     "@hey-api/codegen-core": "npm:^0.5.5"
     "@hey-api/json-schema-ref-parser": "npm:1.2.2"
@@ -1311,7 +1311,7 @@ __metadata:
     typescript: ">=5.5.3"
   bin:
     openapi-ts: bin/run.js
-  checksum: 10c0/045a86a7c92f7fbf8efe04ec000ab66c2c23f648bfb9005f7409d5516625e8aa933f3eda9636296b87078d3904e6e2b3b45a5a5a603c186d3344802fede28c6b
+  checksum: 10c0/2e8139a01d5ea3914779fdfdf9e097647037082b35b00769ee03d9c13a84d9273fb962e76b753e2fb1c52ddb516d8860a05d23656e5582ead61cdae435591f31
   languageName: node
   linkType: hard
 
@@ -4527,7 +4527,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bhs-generated-models@workspace:src/bhs-generated-models"
   dependencies:
-    "@hey-api/openapi-ts": "npm:^0.90.9"
+    "@hey-api/openapi-ts": "npm:^0.90.10"
     typescript: "npm:~5.9.3"
     zod: "npm:^4.3.5"
   languageName: unknown

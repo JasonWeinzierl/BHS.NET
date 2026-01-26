@@ -7,7 +7,7 @@
     "start-proxy": "node scripts/aspnetcore-https.mjs && run-script-os",
     "start-proxy:windows": "ng serve --configuration proxy --ssl-cert \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem\" --ssl-key \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.key\"",
     "start-proxy:default": "ng serve --configuration proxy --ssl-cert \"$HOME/.aspnet/https/$npm_package_name.pem\" --ssl-key \"$HOME/.aspnet/https/$npm_package_name.key\"",
-    "build": "ng build",
+    "build": "node ../bhs-generated-models/check-codegen.mjs && ng build",
     "build-release": "ng build --configuration release",
     "transform-release": "node scripts/transform-release.mjs",
     "lint": "ng lint",

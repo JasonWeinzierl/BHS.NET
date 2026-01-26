@@ -2,6 +2,7 @@
 import { defineConfig } from '@hey-api/openapi-ts';
 
 export default defineConfig({
+  interactive: false,
   input: '../../artifacts/openapi.json',
   output: 'dist',
   plugins: [

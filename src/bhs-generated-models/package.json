@@ -5,13 +5,14 @@
   "main": "dist/zod.gen.ts",
   "types": "dist/zod.gen.ts",
   "scripts": {
-    "models:build": "openapi-ts"
+    "models:build": "openapi-ts",
+    "models:check": "node check-codegen.mjs"
   },
   "dependencies": {
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "^0.90.9",
+    "@hey-api/openapi-ts": "^0.90.10",
     "typescript": "~5.9.3"
   }
 }
