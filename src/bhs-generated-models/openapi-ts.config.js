@@ -1,10 +1,13 @@
 // @ts-check
 import { defineConfig } from '@hey-api/openapi-ts';
+import path from 'node:path';
+
+const __dirname = import.meta.dirname;
 
 export default defineConfig({
   interactive: false,
-  input: '../../artifacts/openapi.json',
-  output: 'dist',
+  input: path.join(__dirname, '../../artifacts/openapi.json'),
+  output: path.join(__dirname, 'dist'),
   plugins: [
     {
       name: 'zod',
