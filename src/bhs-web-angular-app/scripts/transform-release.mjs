@@ -1,11 +1,9 @@
 // @ts-check
 import { readFile, writeFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import { z } from 'zod';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = import.meta.dirname;
 
 // app-version.ts contains version information about
 // a particular build snapshot of this application.
@@ -25,7 +23,7 @@ const {
 } = releaseEnvScheme.parse(process.env);
 
 // Value must match angular.json's `fileReplacements.with`.
-const filePath = join(__dirname, '..', 'src/environments/app-version.release.ts');
+const filePath = path.join(__dirname, '..', 'src/environments/app-version.release.ts');
 
 console.debug(`WRITE: ${filePath}`);
 
