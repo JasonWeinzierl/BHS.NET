@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@stylistic/eslint-plugin": "^5.7.0",
+    "@stylistic/eslint-plugin": "^5.7.1",
     "@types/jasmine": "^5.1.15",
     "@types/node": "^24.10.9",
     "eslint": "^9.39.2",
@@ -38,6 +38,6 @@
     "eslint-plugin-n": "^17.23.2",
     "eslint-plugin-wdio": "^9.23.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.53.0"
+    "typescript-eslint": "^8.54.0"
   }
 }
