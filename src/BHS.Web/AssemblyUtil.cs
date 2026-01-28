@@ -12,10 +12,10 @@ static class AssemblyUtil
     /// <summary>
     /// Gets the major version of the current assembly.
     /// </summary>
-    public static string MajorVersion => Assembly.GetExecutingAssembly().GetName().Version?.Major.ToString() ?? "next";
+    public static string? MajorVersion => Assembly.GetExecutingAssembly().GetName().Version?.Major.ToString();
 
     /// <summary>
     /// Gets the semantic version of the current assembly.
     /// </summary>
-    public static string SemVer => Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "next";
+    public static string? SemVer => Assembly.GetExecutingAssembly().GetName().Version?.ToString(3);
 }

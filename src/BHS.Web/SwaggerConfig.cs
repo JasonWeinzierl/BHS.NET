@@ -106,10 +106,10 @@ internal static class SwaggerConfig
 
     private static string GetDocumentName()
         // v1 will result in `openapi.json` so `openapi-ts.config.js` can find it.
-        => AssemblyUtil.IsOpenApiGenerator ? "v1" : $"v{AssemblyUtil.MajorVersion}";
+        => AssemblyUtil.IsOpenApiGenerator ? "v1" : $"v{AssemblyUtil.MajorVersion ?? "next"}";
 
     private static string GetDocumentVersion()
-        => $"v{AssemblyUtil.SemVer}";
+        => $"v{AssemblyUtil.SemVer ?? "next"}";
 
     /// <summary>
     /// Registers middleware for Swagger and SwaggerUI.
