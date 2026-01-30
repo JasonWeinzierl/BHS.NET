@@ -202,6 +202,7 @@ export default defineConfig(gitignore(), {
     'rxjs-x/no-ignored-subscribe': 'warn',
     'rxjs-x/no-ignored-subscription': 'warn',
     'rxjs-x/no-subject-value': 'error',
+    'rxjs-x/no-explicit-generics': 'error',
 
     'rxjs-angular-x/prefer-async-pipe': 'error',
     // #endregion RxJS
