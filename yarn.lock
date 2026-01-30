@@ -4517,7 +4517,7 @@ __metadata:
     tsx: "npm:^4.21.0"
     typescript: "npm:~5.9.3"
     typescript-eslint: "npm:^8.54.0"
-    undici: "npm:^7.18.2"
+    undici: "npm:^7.19.0"
     webdriverio: "npm:^9.23.2"
     zod: "npm:^4.3.5"
   languageName: unknown
@@ -11011,7 +11011,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:7.18.2, undici@npm:^7.18.2":
+"undici@npm:7.18.2":
   version: 7.18.2
   resolution: "undici@npm:7.18.2"
   checksum: 10c0/4ff0722799f5e06fde5d1e58d318b1d78ba9a477836ad3e7374e9ac30ca20d1ab3282952d341635bf69b8e74b5c1cf366e595b3a96810e0dbf74e622dad7b5f9
@@ -11031,6 +11031,13 @@ __metadata:
   version: 6.21.3
   resolution: "undici@npm:6.21.3"
   checksum: 10c0/294da109853fad7a6ef5a172ad0ca3fb3f1f60cf34703d062a5ec967daf69ad8c03b52e6d536c5cba3bb65615769bf08e5b30798915cbccdddaca01045173dda
+  languageName: node
+  linkType: hard
+
+"undici@npm:^7.19.0":
+  version: 7.19.2
+  resolution: "undici@npm:7.19.2"
+  checksum: 10c0/2fdd9a2f6f2cf4c333531c631844350a6b1dbbd4b91022a2a7c293db5aea470ce293ea888987912f1cb2e896a99a4fae5dca9987ea71661cdcf7555f57ed2975
   languageName: node
   linkType: hard
 
