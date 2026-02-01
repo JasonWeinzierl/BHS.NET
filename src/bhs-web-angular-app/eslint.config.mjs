@@ -168,8 +168,8 @@ export default defineConfig(gitignore(), {
     '**/*.ts',
   ],
   extends: [
-    ...tseslint.configs.strictTypeChecked,
-    ...tseslint.configs.stylisticTypeChecked,
+    tseslint.configs.strictTypeChecked,
+    tseslint.configs.stylisticTypeChecked,
     rxjsX.configs.strict,
   ],
   settings: {
@@ -191,6 +191,7 @@ export default defineConfig(gitignore(), {
       'warn',
       {
         methods: false,
+        properties: false,
         strict: true,
         names: {
           // Add paramMap|data to defaults for ActivatedRoute.

@@ -72,8 +72,8 @@ export default defineConfig(gitignore(), {
     '**/*.ts',
   ],
   extends: [
-    ...tseslint.configs.strictTypeChecked,
-    ...tseslint.configs.stylisticTypeChecked,
+    tseslint.configs.strictTypeChecked,
+    tseslint.configs.stylisticTypeChecked,
   ],
   settings: {
     'import-x/resolver': {

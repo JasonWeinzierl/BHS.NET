@@ -3429,7 +3429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/scope-manager@npm:8.54.0, @typescript-eslint/scope-manager@npm:^8.19.1, @typescript-eslint/scope-manager@npm:^8.51.0":
+"@typescript-eslint/scope-manager@npm:8.54.0, @typescript-eslint/scope-manager@npm:^8.32.0, @typescript-eslint/scope-manager@npm:^8.51.0":
   version: 8.54.0
   resolution: "@typescript-eslint/scope-manager@npm:8.54.0"
   dependencies:
@@ -3490,7 +3490,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:8.54.0, @typescript-eslint/utils@npm:^8.0.0, @typescript-eslint/utils@npm:^8.19.1, @typescript-eslint/utils@npm:^8.51.0":
+"@typescript-eslint/utils@npm:8.54.0, @typescript-eslint/utils@npm:^8.0.0, @typescript-eslint/utils@npm:^8.19.1, @typescript-eslint/utils@npm:^8.32.0, @typescript-eslint/utils@npm:^8.51.0":
   version: 8.54.0
   resolution: "@typescript-eslint/utils@npm:8.54.0"
   dependencies:
@@ -4568,7 +4568,7 @@ __metadata:
     eslint-plugin-import-x: "npm:^4.16.1"
     eslint-plugin-jsdoc: "npm:^62.4.1"
     eslint-plugin-rxjs-angular-x: "npm:^0.1.1"
-    eslint-plugin-rxjs-x: "npm:~0.8.5"
+    eslint-plugin-rxjs-x: "npm:~0.9.0"
     globals: "npm:^17.2.0"
     jsdom: "npm:^27.4.0"
     jwt-decode: "npm:^4.0.0"
@@ -6111,15 +6111,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-rxjs-x@npm:~0.8.5":
-  version: 0.8.5
-  resolution: "eslint-plugin-rxjs-x@npm:0.8.5"
+"eslint-plugin-rxjs-x@npm:~0.9.0":
+  version: 0.9.0
+  resolution: "eslint-plugin-rxjs-x@npm:0.9.0"
   dependencies:
-    "@typescript-eslint/scope-manager": "npm:^8.19.1"
-    "@typescript-eslint/utils": "npm:^8.19.1"
+    "@typescript-eslint/scope-manager": "npm:^8.32.0"
+    "@typescript-eslint/utils": "npm:^8.32.0"
     common-tags: "npm:^1.8.0"
     decamelize: "npm:^5.0.1"
-    ts-api-utils: "npm:^2.0.0"
+    ts-api-utils: "npm:^2.1.0"
     tslib: "npm:^2.1.0"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
@@ -6128,7 +6128,7 @@ __metadata:
   peerDependenciesMeta:
     rxjs:
       optional: true
-  checksum: 10c0/ddc82c70c6cf53857c83b18c14de6c6c89533e987db32cfa9b028d0d14e9a84a6b19c2be99919f9dced48b9818eb1c30798c0093c2341efc829151c3cabb8ba9
+  checksum: 10c0/b72107727b495771fce186a5647bc4877da842ef9c80a452cb174441c399e827e9940ec1a8c45e917213fead8fbecc2c848eee0f44baba2837a0e7f13b0105ef
   languageName: node
   linkType: hard
 
