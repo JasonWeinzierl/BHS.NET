@@ -29,7 +29,7 @@ export class AlbumComponent {
       }
       return slug;
     }),
-    switchMap(slug => this.photosService.getAlbum(slug)),
+    switchMap(slug => this.photosService.getAlbum$(slug)),
     map(album => ({ album, isLoading: false, error: null })),
     startWith({ album: null, isLoading: true, error: null }),
     catchError((err: unknown) => {

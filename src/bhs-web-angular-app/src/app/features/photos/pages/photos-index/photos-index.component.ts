@@ -21,7 +21,7 @@ import { SnippetPipe } from '@shared/pipes/snippet.pipe';
 export class PhotosIndexComponent {
   private readonly photosService = inject(PhotosService);
 
-  vm$ = this.photosService.getAlbums().pipe(
+  vm$ = this.photosService.getAlbums$().pipe(
     map(albums => ({ albums, isLoading: false, error: null })),
     startWith({ albums: [], isLoading: true, error: null }),
     catchError((error: unknown) => {

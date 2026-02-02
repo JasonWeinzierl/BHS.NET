@@ -14,7 +14,7 @@ describe('ProfileIndexComponent', () => {
       imports: [ProfileIndexComponent],
       providers: [
         MockProvider(AuthorService, {
-          getAuthorPosts: () => EMPTY,
+          getAuthorPosts$: () => EMPTY,
         }),
         MockProvider(ActivatedRoute, {
           paramMap: of(convertToParamMap({

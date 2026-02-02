@@ -19,13 +19,13 @@ describe('EntryNewComponent', () => {
       ],
       providers: [
         MockProvider(BlogService, {
-          getCategories: () => EMPTY,
+          getCategories$: () => EMPTY,
         }),
         MockProvider(AuthService, {
           user$: EMPTY,
         }),
         MockProvider(AuthorService, {
-          getAuthors: () => EMPTY,
+          getAuthors$: () => EMPTY,
         }),
       ],
     });

@@ -23,7 +23,7 @@ export class BlogIndexComponent {
   private readonly blogService = inject(BlogService);
   private readonly auth = inject(AuthService);
 
-  readonly categoriesVmSignal = toSignal(this.blogService.getCategories().pipe(
+  readonly categoriesVmSignal = toSignal(this.blogService.getCategories$().pipe(
     map(categories => ({ categories, isLoading: false, error: null })),
     startWith({ categories: [], isLoading: true, error: null }),
     catchError((err: unknown) => {

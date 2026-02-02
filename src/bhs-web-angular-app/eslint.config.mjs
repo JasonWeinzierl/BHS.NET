@@ -190,8 +190,6 @@ export default defineConfig(gitignore(), {
     'rxjs-x/finnish': [
       'warn',
       {
-        methods: false,
-        properties: false,
         strict: true,
         names: {
           // Add paramMap|data to defaults for ActivatedRoute.

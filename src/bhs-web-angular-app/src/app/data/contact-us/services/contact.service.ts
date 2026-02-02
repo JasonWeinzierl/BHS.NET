@@ -13,7 +13,7 @@ export class ContactService {
   /**
    * @returns No Content
    */
-  sendMessage(request: ContactAlertRequest): Observable<void> {
+  sendMessage$(request: ContactAlertRequest): Observable<void> {
     return this.http.post<undefined>(this.baseUrl, request);
   }
 }

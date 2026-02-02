@@ -16,7 +16,7 @@ describe('CategoryPostsComponent', () => {
       ],
       providers: [
         MockProvider(BlogService, {
-          getCategory: () => EMPTY,
+          getCategory$: () => EMPTY,
         }),
         MockProvider(ActivatedRoute, {
           paramMap: of(convertToParamMap({

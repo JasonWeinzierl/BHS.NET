@@ -22,7 +22,7 @@ export class PostsSearchComponent {
 
   private readonly searchTextSubject$ = new BehaviorSubject('');
   readonly postsVm$ = this.searchTextSubject$.pipe(
-    switchMap(searchText => this.blogService.searchPosts(searchText).pipe(
+    switchMap(searchText => this.blogService.searchPosts$(searchText).pipe(
       map(posts => ({
         posts: posts.toSorted((a, b) => b.datePublished.getTime() - a.datePublished.getTime()),
         error: null,

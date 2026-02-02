@@ -11,7 +11,7 @@ export class BlogService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/blog';
 
-  searchPosts(q?: string, from?: Date, to?: Date): Observable<Array<PostPreview>> {
+  searchPosts$(q?: string, from?: Date, to?: Date): Observable<Array<PostPreview>> {
     let params = new HttpParams();
     if (q) {
       params = params.set('q', q);
@@ -27,31 +27,31 @@ export class BlogService {
       .pipe(parseSchemaArray(postPreviewSchema));
   }
 
-  createPost(request: PostRequest): Observable<Post> {
+  createPost$(request: PostRequest): Observable<Post> {
     return this.http.post(this.baseUrl + '/posts', request) // TODO: investigate withCredentials option. does Auth0 honor it?
       .pipe(parseSchema(postSchema));
   }
 
-  getPost(slug: string): Observable<Post> {
+  getPost$(slug: string): Observable<Post> {
     return this.http.get(this.baseUrl + '/posts/' + slug)
       .pipe(parseSchema(postSchema));
   }
 
-  updatePost(slug: string, request: PostRequest): Observable<Post> {
+  updatePost$(slug: string, request: PostRequest): Observable<Post> {
     return this.http.put(this.baseUrl + '/posts/' + slug, request)
       .pipe(parseSchema(postSchema));
   }
 
-  deletePost(slug: string): Observable<void> {
+  deletePost$(slug: string): Observable<void> {
     return this.http.delete<undefined>(this.baseUrl + '/posts/' + slug);
   }
 
-  getCategories(): Observable<Array<CategorySummary>> {
+  getCategories$(): Observable<Array<CategorySummary>> {
     return this.http.get(this.baseUrl + '/categories')
       .pipe(parseSchemaArray(categorySummarySchema));
   }
 
-  getCategory(slug: string): Observable<CategoryPosts> {
+  getCategory$(slug: string): Observable<CategoryPosts> {
     return this.http.get(this.baseUrl + '/categories/' + slug)
       .pipe(parseSchema(categoryPostsSchema));
   }

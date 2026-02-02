@@ -27,7 +27,7 @@ export class ProfileIndexComponent {
       }
       return username;
     }),
-    switchMap(username => this.authorService.getAuthorPosts(username)),
+    switchMap(username => this.authorService.getAuthorPosts$(username)),
     map(posts => ({ author: posts[0].author, posts, isLoading: false, error: null })),
     startWith({ author: null, posts: [], isLoading: true, error: null }),
     catchError((error: unknown) => {

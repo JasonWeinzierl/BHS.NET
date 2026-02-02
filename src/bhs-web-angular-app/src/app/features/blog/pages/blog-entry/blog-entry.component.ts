@@ -40,10 +40,10 @@ export class BlogEntryComponent {
       }
       return slug;
     }),
-    switchMap(slug => this.blogService.getPost(slug)),
+    switchMap(slug => this.blogService.getPost$(slug)),
     switchMap(post => {
       if (post.photosAlbumSlug) {
-        return this.photosService.getAlbum(post.photosAlbumSlug).pipe(
+        return this.photosService.getAlbum$(post.photosAlbumSlug).pipe(
           // Alert but don't prevent the entire post from loading.
           catchError((err: unknown) => {
             const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';

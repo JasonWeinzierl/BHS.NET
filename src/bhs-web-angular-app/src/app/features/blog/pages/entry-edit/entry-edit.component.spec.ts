@@ -17,9 +17,9 @@ describe('EntryEditComponent', () => {
       ],
       providers: [
         MockProvider(BlogService, {
-          getPost: () => EMPTY,
-          getCategories: () => EMPTY,
-          updatePost: () => EMPTY,
+          getPost$: () => EMPTY,
+          getCategories$: () => EMPTY,
+          updatePost$: () => EMPTY,
         }),
         MockProvider(ActivatedRoute, {
           paramMap: of(convertToParamMap({

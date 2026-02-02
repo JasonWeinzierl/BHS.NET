@@ -17,7 +17,7 @@ import parseErrorMessage from '@shared/parseErrorMessage';
 export default class OrganizationComponent {
   private readonly leadershipService = inject(LeadershipService);
 
-  vm$ = combineLatest([this.leadershipService.getOfficers(), this.leadershipService.getDirectors()]).pipe(
+  vm$ = combineLatest([this.leadershipService.getOfficers$(), this.leadershipService.getDirectors$()]).pipe(
     map(value => ({ officers: value[0], directors: value[1], isLoading: false, error: null })),
     startWith({ officers: [], directors: [], isLoading: true, error: null }),
     catchError((error: unknown) => {

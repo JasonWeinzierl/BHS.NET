@@ -13,8 +13,8 @@ describe('OrganizationComponent', () => {
       imports: [OrganizationComponent],
       providers: [
         MockProvider(LeadershipService, {
-          getDirectors: () => EMPTY,
-          getOfficers: () => EMPTY,
+          getDirectors$: () => EMPTY,
+          getOfficers$: () => EMPTY,
         }),
       ],
     })

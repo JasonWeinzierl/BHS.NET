@@ -43,7 +43,7 @@ describe('AlbumPageComponent', () => {
       ],
       providers: [
         MockProvider(PhotosService, {
-          getAlbum: () => of(createAlbum()),
+          getAlbum$: () => of(createAlbum()),
         }),
         MockProvider(ActivatedRoute, {
           paramMap: of(convertToParamMap({

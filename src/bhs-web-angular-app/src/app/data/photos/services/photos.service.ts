@@ -13,17 +13,17 @@ export class PhotosService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/photos';
 
-  getAlbums(): Observable<Array<Album>> {
+  getAlbums$(): Observable<Array<Album>> {
     return this.http.get(this.baseUrl + '/albums')
       .pipe(parseSchemaArray(albumSchema));
   }
 
-  getAlbum(slug: string): Observable<AlbumPhotos> {
+  getAlbum$(slug: string): Observable<AlbumPhotos> {
     return this.http.get(this.baseUrl + '/albums/' + slug)
       .pipe(parseSchema(albumPhotosSchema));
   }
 
-  getPhoto(albumSlug: string, photoId: string): Observable<Photo> {
+  getPhoto$(albumSlug: string, photoId: string): Observable<Photo> {
     return this.http.get(this.baseUrl + '/albums/' + albumSlug + '/photos/' + photoId)
       .pipe(parseSchema(photoSchema));
   }

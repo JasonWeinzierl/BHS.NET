@@ -19,7 +19,7 @@ describe('ContactFormComponent', () => {
       providers: [
         provideRouter([]),
         MockProvider(ContactService, {
-          sendMessage: () => EMPTY,
+          sendMessage$: () => EMPTY,
         }),
         MockProvider(InsightsService, {
           submitContactForm: vi.fn(),

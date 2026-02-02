@@ -27,7 +27,7 @@ export class CategoryPostsComponent {
       }
       return slug;
     }),
-    switchMap(slug => this.blogService.getCategory(slug)),
+    switchMap(slug => this.blogService.getCategory$(slug)),
     map(category => ({
       category: {
         ...category,

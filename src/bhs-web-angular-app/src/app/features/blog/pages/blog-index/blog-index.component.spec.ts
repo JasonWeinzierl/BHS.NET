@@ -43,7 +43,7 @@ describe('BlogIndexComponent', () => {
       providers: [
         provideRouter([]),
         MockProvider(BlogService, {
-          getCategories: () => categoriesSubject$,
+          getCategories$: () => categoriesSubject$,
         }),
         MockProvider(AuthService, {
           isAuthenticated$: isAuthenticatedSubject$.asObservable(),

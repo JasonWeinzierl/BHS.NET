@@ -57,9 +57,9 @@ export class EntryEditComponent {
         return slug;
       }),
       // Fetch the blog post.
-      switchMap(slug => this.blogService.getPost(slug)),
+      switchMap(slug => this.blogService.getPost$(slug)),
       // Fetch all possible categories.
-      switchMap(post => this.blogService.getCategories().pipe(
+      switchMap(post => this.blogService.getCategories$().pipe(
         // Combine the results of both fetches.
         map(allCategories => ({ post, allCategories })),
       )),
@@ -90,9 +90,9 @@ export class EntryEditComponent {
     // Listen to the stream of submitted requests.
     return this.submittedRequestSubject$.pipe(
       // Submit the first update and wait. All other requests are discarded.
-      exhaustMap(request => this.blogService.updatePost(request.slug, request.body)),
+      exhaustMap(request => this.blogService.updatePost$(request.slug, request.body)),
       // When update is complete, re-fetch all possible categories.
-      switchMap(updatedPost => this.blogService.getCategories().pipe(
+      switchMap(updatedPost => this.blogService.getCategories$().pipe(
         map(allCategories => ({ updatedPost, allCategories })),
       )),
       // Re-fetch user too.

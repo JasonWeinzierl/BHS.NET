@@ -12,12 +12,12 @@ export class LeadershipService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/leadership';
 
-  getOfficers(): Observable<Array<Officer>> {
+  getOfficers$(): Observable<Array<Officer>> {
     return this.http.get(this.baseUrl + '/officers')
       .pipe(parseSchemaArray(officerSchema));
   }
 
-  getDirectors(): Observable<Array<Director>> {
+  getDirectors$(): Observable<Array<Director>> {
     return this.http.get(this.baseUrl + '/directors')
       .pipe(parseSchemaArray(directorSchema));
   }

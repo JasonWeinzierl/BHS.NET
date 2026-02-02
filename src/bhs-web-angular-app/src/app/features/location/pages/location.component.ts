@@ -50,7 +50,7 @@ export class LocationComponent {
     month: 'long',
   });
 
-  readonly schedule$ = this.museumService.getSchedule().pipe(
+  readonly schedule$ = this.museumService.getSchedule$().pipe(
     map(schedule => schedule ? {
       days: schedule.days.map(day => ({
         dayOfWeek: formatWeekday(day.dayOfWeek, this.weekdayFormatter) + 's', // Assuming English, pluralizing is hard.

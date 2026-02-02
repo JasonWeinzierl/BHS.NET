@@ -15,7 +15,7 @@ describe('PhotosIndexComponent', () => {
       ],
       providers: [
         MockProvider(PhotosService, {
-          getAlbums: () => EMPTY,
+          getAlbums$: () => EMPTY,
         }),
       ],
     })

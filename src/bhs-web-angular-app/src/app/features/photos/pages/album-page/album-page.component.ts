@@ -43,7 +43,7 @@ export class AlbumPageComponent {
 
       return { albumSlug, photoId };
     }),
-    switchMap(({ albumSlug, photoId }) => this.photosService.getAlbum(albumSlug).pipe(
+    switchMap(({ albumSlug, photoId }) => this.photosService.getAlbum$(albumSlug).pipe(
       map(album => {
         const currentIndex = album.photos.findIndex(p => p.id === photoId);
 

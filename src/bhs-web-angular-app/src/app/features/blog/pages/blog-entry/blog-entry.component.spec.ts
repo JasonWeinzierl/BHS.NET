@@ -29,7 +29,7 @@ describe('BlogEntryComponent', () => {
           })),
         }),
         MockProvider(BlogService, {
-          getPost: () => of({
+          getPost$: () => of({
             slug: '1-test',
             title: 'Hello!',
             contentMarkdown: '## Foo',
@@ -42,7 +42,7 @@ describe('BlogEntryComponent', () => {
           }),
         }),
         MockProvider(PhotosService, {
-          getAlbum: () => throwError(() => new Error('test 404 not found')),
+          getAlbum$: () => throwError(() => new Error('test 404 not found')),
         }),
         MockProvider(AuthService, {
           isAuthenticated$: of(false),

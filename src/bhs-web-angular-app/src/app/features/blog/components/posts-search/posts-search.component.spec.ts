@@ -15,7 +15,7 @@ describe('PostsSearchComponent', () => {
       ],
       providers: [
         MockProvider(BlogService, {
-          searchPosts: () => EMPTY,
+          searchPosts$: () => EMPTY,
         }),
       ],
     })

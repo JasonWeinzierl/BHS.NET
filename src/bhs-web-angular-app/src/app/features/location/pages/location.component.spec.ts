@@ -15,7 +15,7 @@ describe('LocationComponent', () => {
       imports: [LocationComponent],
       providers: [
         MockProvider(MuseumService, {
-          getSchedule: () => scheduleSubject$,
+          getSchedule$: () => scheduleSubject$,
         }),
       ],
     })

@@ -53,7 +53,7 @@ export class ContactFormComponent {
       body: formValue.body,
     };
 
-    this.contactService.sendMessage(request).pipe(
+    this.contactService.sendMessage$(request).pipe(
       timeout(10_000),
     // eslint-disable-next-line rxjs-x/no-ignored-subscription, rxjs-angular-x/prefer-async-pipe
     ).subscribe({

@@ -12,12 +12,12 @@ export class AuthorService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/authors';
 
-  getAuthors(authUserId: string): Observable<Array<Author>> {
+  getAuthors$(authUserId: string): Observable<Array<Author>> {
     return this.http.get(this.baseUrl + '?authUserId=' + authUserId)
       .pipe(parseSchemaArray(authorSchema));
   }
 
-  getAuthorPosts(username: string): Observable<Array<PostPreview>> {
+  getAuthorPosts$(username: string): Observable<Array<PostPreview>> {
     return this.http.get(this.baseUrl + '/' + username + '/posts')
       .pipe(parseSchemaArray(postPreviewSchema));
   }

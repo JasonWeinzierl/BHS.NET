@@ -25,7 +25,7 @@ describe('AlbumComponent', () => {
       ],
       providers: [
         MockProvider(PhotosService, {
-          getAlbum: () => EMPTY,
+          getAlbum$: () => EMPTY,
         }),
         MockProvider(ActivatedRoute, {
           paramMap: of(convertToParamMap({

@@ -11,12 +11,12 @@ export class MuseumService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api/museum';
 
-  getSchedule(): Observable<MuseumSchedule | null> {
+  getSchedule$(): Observable<MuseumSchedule | null> {
     return this.http.get(this.baseUrl + '/schedule')
       .pipe(parseSchema(museumScheduleSchema));
   }
 
-  updateSchedule(schedule: MuseumSchedule): Observable<MuseumSchedule> {
+  updateSchedule$(schedule: MuseumSchedule): Observable<MuseumSchedule> {
     return this.http.put(this.baseUrl + '/schedule', schedule)
       .pipe(parseSchema(museumScheduleSchema));
   }
