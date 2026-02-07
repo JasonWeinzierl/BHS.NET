@@ -630,9 +630,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@auth0/auth0-angular@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "@auth0/auth0-angular@npm:2.5.0"
+"@auth0/auth0-angular@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "@auth0/auth0-angular@npm:2.6.0"
   dependencies:
     "@auth0/auth0-spa-js": "npm:^2.11.0"
     tslib: "npm:^2.0.0"
@@ -640,7 +640,7 @@ __metadata:
     "@angular/common": ">=13"
     "@angular/core": ">=13"
     "@angular/router": ">=13"
-  checksum: 10c0/f43b94de0db3f960bb2b624e860c5058c6aae8d2bd2534acedb6356d1e086ae536a6ab24a2a79d1128748d5d9ef2efa212d7211ec309e68996782e050ecb2fdb
+  checksum: 10c0/b8241ac31bee5238c66b1508ef9b35f56e077611855c4ce545e865d8ba8678305c13fb74c913c9bf57cf574cc2a2001579cc08179d73143878c92d23fbf460c7
   languageName: node
   linkType: hard
 
@@ -4542,7 +4542,7 @@ __metadata:
     "@angular/forms": "npm:21.1.3"
     "@angular/platform-browser": "npm:21.1.3"
     "@angular/router": "npm:21.1.3"
-    "@auth0/auth0-angular": "npm:^2.5.0"
+    "@auth0/auth0-angular": "npm:^2.6.0"
     "@microsoft/applicationinsights-analytics-js": "npm:3.3.11"
     "@microsoft/applicationinsights-angularplugin-js": "npm:^15.3.8"
     "@microsoft/applicationinsights-web": "npm:^3.3.11"
