@@ -54,7 +54,7 @@ describe('ContactFormComponent', () => {
       bodyInput = nativeElement.querySelector('#body');
       submitButton = nativeElement.querySelector('button[type="submit"]');
       sendMessageResponseSubject$ = new Subject<void>();
-      sendMessage = vi.spyOn(TestBed.inject(ContactService), 'sendMessage').mockImplementation(() => sendMessageResponseSubject$);
+      sendMessage = vi.spyOn(TestBed.inject(ContactService), 'sendMessage$').mockImplementation(() => sendMessageResponseSubject$);
     });
 
     it('should show contact form', () => {
