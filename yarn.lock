@@ -4562,8 +4562,8 @@ __metadata:
     eslint-plugin-better-tailwindcss: "npm:4.1.1"
     eslint-plugin-import-x: "npm:^4.16.1"
     eslint-plugin-jsdoc: "npm:^62.5.4"
-    eslint-plugin-rxjs-angular-x: "npm:^0.1.1"
-    eslint-plugin-rxjs-x: "npm:~0.9.4"
+    eslint-plugin-rxjs-angular-x: "npm:^0.1.2"
+    eslint-plugin-rxjs-x: "npm:~0.9.5"
     globals: "npm:^17.3.0"
     jsdom: "npm:^27.4.0"
     jwt-decode: "npm:^4.0.0"
@@ -6087,9 +6087,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-rxjs-angular-x@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "eslint-plugin-rxjs-angular-x@npm:0.1.1"
+"eslint-plugin-rxjs-angular-x@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "eslint-plugin-rxjs-angular-x@npm:0.1.2"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.19.1"
     common-tags: "npm:^1.8.0"
@@ -6097,18 +6097,18 @@ __metadata:
     tslib: "npm:^2.1.0"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
-    rxjs: ">=7.2.0"
-    typescript: ">=4.8.4"
+    rxjs: ^7.2.0
+    typescript: ">=4.8.4 <6.0.0"
   peerDependenciesMeta:
     rxjs:
       optional: true
-  checksum: 10c0/4e22a3a2667d76624502dc914a52af272513989c1f9800b43f8b573202132308f6a56243832e7839d6e4f3e7fd988955517bb53914fc69d17c645b02d52070c5
+  checksum: 10c0/0077242792a157b033bc26b551dfa13a80953354a42d168b1b040764bd92040fb9994db0afc78516c927c67a2d5b4d76de468f6e58a5cc77df371ca3a58808bf
   languageName: node
   linkType: hard
 
-"eslint-plugin-rxjs-x@npm:~0.9.4":
-  version: 0.9.4
-  resolution: "eslint-plugin-rxjs-x@npm:0.9.4"
+"eslint-plugin-rxjs-x@npm:~0.9.5":
+  version: 0.9.5
+  resolution: "eslint-plugin-rxjs-x@npm:0.9.5"
   dependencies:
     "@typescript-eslint/scope-manager": "npm:^8.32.0"
     "@typescript-eslint/utils": "npm:^8.32.0"
@@ -6118,12 +6118,12 @@ __metadata:
     tslib: "npm:^2.1.0"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
-    rxjs: ">=7.2.0"
-    typescript: ">=4.8.4"
+    rxjs: ^7.2.0
+    typescript: ">=4.8.4 <6.0.0"
   peerDependenciesMeta:
     rxjs:
       optional: true
-  checksum: 10c0/42911670d8a723bb0af7e8756ba3495d1182abc41d6350df41cc990b12eb8ddfc02f160a4b676f7c043990c6eef54baedaa0c5261e8a0938e3b0669f10c77738
+  checksum: 10c0/37bd9401a60221e757b0718690111278f2f59ff8bfac457c0b59870d44441ad41abd7e87543b0417ea03e7847659a3e44f37944506210eb9fbbf7435b83f5732
   languageName: node
   linkType: hard
 
