@@ -22,6 +22,10 @@ class BlogPage extends Page {
     const firstPostTestId = await $('app-post-card')
       .getAttribute('data-testid');
 
+    if (!firstPostTestId) {
+      throw new Error('No post cards found on the blog index page.');
+    }
+
     const postSlug = firstPostTestId
       .replace('PostCard-', '');
 
