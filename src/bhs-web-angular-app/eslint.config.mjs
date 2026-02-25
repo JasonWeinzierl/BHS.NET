@@ -10,6 +10,7 @@ import gitignore from 'eslint-config-flat-gitignore';
 import tailwindcss from 'eslint-plugin-better-tailwindcss';
 import { importX } from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
+import packageJson from 'eslint-plugin-package-json';
 import perfectionist from 'eslint-plugin-perfectionist';
 import rxjsAngularX from 'eslint-plugin-rxjs-angular-x';
 import rxjsX from 'eslint-plugin-rxjs-x';
@@ -381,4 +382,10 @@ export default defineConfig(gitignore(), {
     'vitest/padding-around-all': 'error',
   },
   // #endregion Unit tests
+}, {
+  extends: [
+    // ng lint won't check the package.json, so these are IDE-only.
+    packageJson.configs.recommended,
+    packageJson.configs.stylistic,
+  ],
 });

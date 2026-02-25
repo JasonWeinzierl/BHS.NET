@@ -216,6 +216,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@altano/repository-tools@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@altano/repository-tools@npm:2.0.1"
+  checksum: 10c0/080c8df928c0bfcc2f103b2090ecaf03dc93b2a161c572065ee7278dc02ffdbf3d3570cbada45c0ddb3f6d7bc3f3d0fd0788ea4aa03c3ebaf487e87a9e323190
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:2.3.0":
   version: 2.3.0
   resolution: "@ampproject/remapping@npm:2.3.0"
@@ -4161,7 +4168,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.15.0":
+"acorn@npm:^8.15.0, acorn@npm:^8.5.0":
   version: 8.16.0
   resolution: "acorn@npm:8.16.0"
   bin:
@@ -4636,11 +4643,13 @@ __metadata:
     eslint-plugin-better-tailwindcss: "npm:4.1.1"
     eslint-plugin-import-x: "npm:^4.16.1"
     eslint-plugin-jsdoc: "npm:^62.5.4"
+    eslint-plugin-package-json: "npm:^0.89.1"
     eslint-plugin-perfectionist: "npm:^5.6.0"
     eslint-plugin-rxjs-angular-x: "npm:^0.1.2"
     eslint-plugin-rxjs-x: "npm:~0.9.5"
     globals: "npm:^17.3.0"
     jsdom: "npm:^27.4.0"
+    jsonc-eslint-parser: "npm:^3.1.0"
     jwt-decode: "npm:^4.0.0"
     marked: "npm:^17.0.1"
     merge-partially: "npm:^2.0.2"
@@ -4941,6 +4950,13 @@ __metadata:
   version: 5.6.2
   resolution: "chalk@npm:5.6.2"
   checksum: 10c0/99a4b0f0e7991796b1e7e3f52dceb9137cae2a9dfc8fc0784a550dc4c558e15ab32ed70b14b21b52beb2679b4892b41a0aa44249bcb996f01e125d58477c6976
+  languageName: node
+  linkType: hard
+
+"change-case@npm:^5.4.4":
+  version: 5.4.4
+  resolution: "change-case@npm:5.4.4"
+  checksum: 10c0/2a9c2b9c9ad6ab2491105aaf506db1a9acaf543a18967798dcce20926c6a173aa63266cb6189f3086e3c14bf7ae1f8ea4f96ecc466fcd582310efa00372f3734
   languageName: node
   linkType: hard
 
@@ -5561,6 +5577,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"detect-indent@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "detect-indent@npm:7.0.2"
+  checksum: 10c0/adb1334ca3fe516dc6817aff0a777540b88643ab92fe13a72d0f5d12721ca796ffdd0e5fedb7b45e6e82657156c6ad44f5d5758157f0439532ae7d07b595146b
+  languageName: node
+  linkType: hard
+
 "detect-libc@npm:^1.0.3":
   version: 1.0.3
   resolution: "detect-libc@npm:1.0.3"
@@ -5574,6 +5597,13 @@ __metadata:
   version: 2.0.4
   resolution: "detect-libc@npm:2.0.4"
   checksum: 10c0/c15541f836eba4b1f521e4eecc28eefefdbc10a94d3b8cb4c507689f332cc111babb95deda66f2de050b22122113189986d5190be97d51b5a2b23b938415e67c
+  languageName: node
+  linkType: hard
+
+"detect-newline@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "detect-newline@npm:4.0.1"
+  checksum: 10c0/1cc1082e88ad477f30703ae9f23bd3e33816ea2db6a35333057e087d72d466f5a777809b71f560118ecff935d2c712f5b59e1008a8b56a900909d8fd4621c603
   languageName: node
   linkType: hard
 
@@ -6025,6 +6055,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-fix-utils@npm:~0.4.0":
+  version: 0.4.1
+  resolution: "eslint-fix-utils@npm:0.4.1"
+  peerDependencies:
+    "@types/estree": ">=1"
+    eslint: ">=8"
+  peerDependenciesMeta:
+    "@types/estree":
+      optional: true
+  checksum: 10c0/093e2967be03786d067fea826c713dc78c7249a170c0e39d9f9f35ecadf25bb8d23245d8ec8b234f9bb808a1892f9ea644669bf9feb761b4f2cc5388e4d31c19
+  languageName: node
+  linkType: hard
+
 "eslint-import-context@npm:^0.1.8, eslint-import-context@npm:^0.1.9":
   version: 0.1.9
   resolution: "eslint-import-context@npm:0.1.9"
@@ -6168,6 +6211,27 @@ __metadata:
   peerDependencies:
     eslint: ">=8.23.0"
   checksum: 10c0/3808dad65628bc2dd74ebb9e7a255398f87ca348b4970307898b422bfe2302764d518f6a70d891b1fc45b08ea99ccf5ea4b3cd2d1f21f872bb60a4cdbfb22b68
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-package-json@npm:^0.89.1":
+  version: 0.89.1
+  resolution: "eslint-plugin-package-json@npm:0.89.1"
+  dependencies:
+    "@altano/repository-tools": "npm:^2.0.1"
+    change-case: "npm:^5.4.4"
+    detect-indent: "npm:^7.0.2"
+    detect-newline: "npm:^4.0.1"
+    eslint-fix-utils: "npm:~0.4.0"
+    package-json-validator: "npm:~0.60.0"
+    semver: "npm:^7.7.3"
+    sort-object-keys: "npm:^2.0.0"
+    sort-package-json: "npm:^3.4.0"
+    validate-npm-package-name: "npm:^7.0.0"
+  peerDependencies:
+    eslint: ">=8.0.0"
+    jsonc-eslint-parser: ">=2.0.0"
+  checksum: 10c0/b1596f3d8b56fbee37f62903759ea74327b37057d2db0abd2ba05c53179e949f3e33c3a42030156345c9094ac1706b69892cf2edec134f33cfef2633fb779d38
   languageName: node
   linkType: hard
 
@@ -6979,6 +7043,13 @@ __metadata:
   bin:
     giget: dist/cli.mjs
   checksum: 10c0/606d81652643936ee7f76653b4dcebc09703524ff7fd19692634ce69e3fc6775a377760d7508162379451c03bf43cc6f46716aeadeb803f7cef3fc53d0671396
+  languageName: node
+  linkType: hard
+
+"git-hooks-list@npm:^4.1.1":
+  version: 4.2.1
+  resolution: "git-hooks-list@npm:4.2.1"
+  checksum: 10c0/c5cac4e0526dd186122739f87c9e687c62a5ae7daadc9852d1823435f18a21f43ee6938825b97ecbb53c8c45456d94cc081fd5a2cf7eb4ea7508e5d9fa5fb5f3
   languageName: node
   linkType: hard
 
@@ -7888,6 +7959,17 @@ __metadata:
   bin:
     json5: lib/cli.js
   checksum: 10c0/5a04eed94810fa55c5ea138b2f7a5c12b97c3750bc63d11e511dcecbfef758003861522a070c2272764ee0f4e3e323862f386945aeb5b85b87ee43f084ba586c
+  languageName: node
+  linkType: hard
+
+"jsonc-eslint-parser@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "jsonc-eslint-parser@npm:3.1.0"
+  dependencies:
+    acorn: "npm:^8.5.0"
+    eslint-visitor-keys: "npm:^5.0.0"
+    semver: "npm:^7.3.5"
+  checksum: 10c0/9af0aa3abf946f306ce823ccde33ab7d91cf215e1af26d33b2f65e9e230552bfa40aa93859b91aabf96738c66357a598cc7b2275ba99839ef4afd84edda3b11e
   languageName: node
   linkType: hard
 
@@ -9260,6 +9342,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"package-json-validator@npm:~0.60.0":
+  version: 0.60.0
+  resolution: "package-json-validator@npm:0.60.0"
+  dependencies:
+    semver: "npm:^7.7.2"
+    validate-npm-package-license: "npm:^3.0.4"
+    validate-npm-package-name: "npm:^7.0.0"
+    yargs: "npm:~18.0.0"
+  bin:
+    pjv: lib/bin/pjv.mjs
+  checksum: 10c0/f4d8a0867e2b4ee1be7a59362826b919a1350cb6025b2f89ab35339158ae88609e9cf4c9a976aada777b8855223d05ea9639bee514a88d2adbcbbbac26b2361f
+  languageName: node
+  linkType: hard
+
 "pacote@npm:21.0.4":
   version: 21.0.4
   resolution: "pacote@npm:21.0.4"
@@ -10427,6 +10523,30 @@ __metadata:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
   checksum: 10c0/d54a52bf9325165770b674a67241143a3d8b4e4c8884560c4e0e078aace2a728dffc7f70150660f51b85797c4e1a3b82f9b7aa25e0a0ceae1a243365da5c51a7
+  languageName: node
+  linkType: hard
+
+"sort-object-keys@npm:^2.0.0, sort-object-keys@npm:^2.0.1":
+  version: 2.1.0
+  resolution: "sort-object-keys@npm:2.1.0"
+  checksum: 10c0/3e10c4892c379800a920c83f943fd98b3d7cf3eb3db67b0470ead95f180c3fb95146e22ef176c4c71395537597deb8320a80ace8025c39eadc8da4b38ae26b5f
+  languageName: node
+  linkType: hard
+
+"sort-package-json@npm:^3.4.0":
+  version: 3.6.1
+  resolution: "sort-package-json@npm:3.6.1"
+  dependencies:
+    detect-indent: "npm:^7.0.2"
+    detect-newline: "npm:^4.0.1"
+    git-hooks-list: "npm:^4.1.1"
+    is-plain-obj: "npm:^4.1.0"
+    semver: "npm:^7.7.3"
+    sort-object-keys: "npm:^2.0.1"
+    tinyglobby: "npm:^0.2.15"
+  bin:
+    sort-package-json: cli.js
+  checksum: 10c0/169ea6b8fa233b77ff93f928c73392cbd53573b1faec24692b7b5afdd3487f1b1c3f390467628385dd64e3e01632b7be0c6b380fbb471c70d00c4c7884f44916
   languageName: node
   linkType: hard
 
@@ -11805,7 +11925,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:18.0.0, yargs@npm:^18.0.0":
+"yargs@npm:18.0.0, yargs@npm:^18.0.0, yargs@npm:~18.0.0":
   version: 18.0.0
   resolution: "yargs@npm:18.0.0"
   dependencies:
