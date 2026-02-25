@@ -128,11 +128,9 @@ public class EndpointTests(BhsWebApplicationFactory<Program> factory) : IClassFi
         var request = new PostRequest(
             "Hello, world!",
             "# Title",
-            null,
-            null,
-            new Author("me", "me :)"),
             datePublished,
-            [new Category("newsletters", "Newsletters")]);
+            [new Category("newsletters", "Newsletters")],
+            Author: new Author("me", "me :)"));
 
         using var response = await _httpClient.PostAsJsonAsync("/api/blog/posts", request, TestContext.Current.CancellationToken);
 
@@ -159,11 +157,9 @@ public class EndpointTests(BhsWebApplicationFactory<Program> factory) : IClassFi
         var createRequest = new PostRequest(
             "A post!",
             "# First revision",
-            null,
-            null,
-            new Author("me", "me :)"),
             DateTimeOffset.Now,
-            [new Category("cat1", "Cat1"), new Category("cat2", "Cat2")]);
+            [new Category("cat1", "Cat1"), new Category("cat2", "Cat2")],
+            Author: new Author("me", "me :)"));
         var updateRequest = createRequest with
         {
             ContentMarkdown = "# Second revision",
@@ -196,9 +192,6 @@ public class EndpointTests(BhsWebApplicationFactory<Program> factory) : IClassFi
         var createRequest = new PostRequest(
             "Doomed",
             "# Title",
-            null,
-            null,
-            null,
             DateTimeOffset.Now,
             []);
 

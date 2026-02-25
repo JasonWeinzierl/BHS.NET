@@ -3,6 +3,6 @@
 public record ContactAlertRequest(
     string? Name,
     string EmailAddress,
-    string? Message,
-    DateTimeOffset? DateRequested,
-    string? Body);
+    string? Message = null,
+    DateTimeOffset? DateRequested = null,
+    string? Body = null);

@@ -2,4 +2,4 @@
 
 public record Author(
     string Username,
-    string? Name);
+    string? Name = null);

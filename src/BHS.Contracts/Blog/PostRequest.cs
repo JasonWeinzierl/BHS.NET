@@ -5,8 +5,8 @@ namespace BHS.Contracts.Blog;
 public record PostRequest(
     string Title,
     string ContentMarkdown,
-    [Url] Uri? FilePath,
-    string? PhotosAlbumSlug,
-    Author? Author,
     DateTimeOffset DatePublished,
-    IEnumerable<Category> Categories);
+    IEnumerable<Category> Categories,
+    [Url] Uri? FilePath = null,
+    string? PhotosAlbumSlug = null,
+    Author? Author = null);
