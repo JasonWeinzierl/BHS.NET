@@ -54,38 +54,6 @@ export default defineConfig({
               continue;
             }
 
-            // Convenience change nullable primitives to nullish.
-            if (
-              propSchema.items.length === 2
-              && propSchema.items.some(x => x.type === 'null')
-            ) {
-              if (
-                propSchema.items.some(x => x.type === 'string' && !x.format)
-              ) {
-                shape.prop(key, $(z).attr('string').call().attr('nullish').call());
-              } else if (
-                propSchema.items.some(x => x.type === 'integer')
-              ) {
-                shape.prop(key, $(z).attr('int').call().attr('nullish').call());
-              } else if (
-                propSchema.items.some(x => x.type === 'boolean')
-              ) {
-                shape.prop(key, $(z).attr('boolean').call().attr('nullish').call());
-              } else if (
-                propSchema.items.some(x => x.type === 'number')
-              ) {
-                shape.prop(key, $(z).attr('number').call().attr('nullish').call());
-              } else if (
-                propSchema.items.some(x => x.type === 'string' && x.format === 'date-time')
-              ) {
-                shape.prop(key, $(z).attr('coerce').attr('date').call().attr('nullish').call());
-              } else if (
-                propSchema.items.some(x => x.type === 'string' && x.format === 'uri')
-              ) {
-                shape.prop(key, $(z).attr('url').call().attr('nullish').call());
-              }
-            }
-
           }
 
           return $(z).attr('object').call(shape);
