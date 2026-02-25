@@ -56,7 +56,7 @@ export class EditBlogEntryFormComponent {
       : undefined;
   });
 
-  readonly isMacOS = /(macintosh|macinte|macppc|mac68k|macos)/.test(globalThis.navigator.userAgent.toLowerCase());
+  readonly isMacOS = /macintosh|macinte|macppc|mac68k|macos/.test(globalThis.navigator.userAgent.toLowerCase());
 
   readonly contentSignal = toSignal(this.editFormGroup.controls.contentMarkdown.valueChanges);
 

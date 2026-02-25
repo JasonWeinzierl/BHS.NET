@@ -12,6 +12,7 @@ import { importX } from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
 import packageJson from 'eslint-plugin-package-json';
 import perfectionist from 'eslint-plugin-perfectionist';
+import regexp from 'eslint-plugin-regexp';
 import rxjsAngularX from 'eslint-plugin-rxjs-angular-x';
 import rxjsX from 'eslint-plugin-rxjs-x';
 import unicorn from 'eslint-plugin-unicorn';
@@ -41,6 +42,7 @@ export default defineConfig(gitignore(), {
     // @ts-expect-error -- ditto.
     importX.flatConfigs.typescript,
     jsdoc.configs['flat/recommended-mixed'],
+    regexp.configs.recommended,
   ]),
   plugins: {
     perfectionist,
