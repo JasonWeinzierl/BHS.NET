@@ -60,7 +60,6 @@ export class LocationComponent {
         toTimeDisplay: formatTime(day.toTime, this.timeFormatter),
       })),
       months: {
-        // Auto-generated types think this could be a string.
         startMonth: formatMonth(schedule.months.startMonth, this.monthFormatter),
         endMonth: formatMonth(schedule.months.endMonth, this.monthFormatter),
       },
