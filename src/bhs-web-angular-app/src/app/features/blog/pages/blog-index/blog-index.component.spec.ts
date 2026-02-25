@@ -5,10 +5,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter, RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { BehaviorSubject } from 'rxjs';
-import { BlogIndexComponent } from './blog-index.component';
-import { BlogService, CategorySummary } from '@data/blog';
 import { MockProvider } from 'ng-mocks';
+import { BehaviorSubject } from 'rxjs';
+import { BlogService, CategorySummary } from '@data/blog';
+import { BlogIndexComponent } from './blog-index.component';
 
 @Component({
   selector: 'app-categories-list-view',

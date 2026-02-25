@@ -2,11 +2,11 @@ import { AsyncPipe } from '@angular/common';
 import { Directive } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, RouterLink } from '@angular/router';
+import { MockProvider } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
-import { AlbumComponent } from './album.component';
 import { PhotosService } from '@data/photos/services/photos.service';
 import { SnippetPipe } from '@shared/pipes/snippet.pipe';
-import { MockProvider } from 'ng-mocks';
+import { AlbumComponent } from './album.component';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector

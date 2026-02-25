@@ -6,13 +6,14 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
 import angular from 'angular-eslint';
-import { defineConfig } from 'eslint/config';
 import gitignore from 'eslint-config-flat-gitignore';
 import tailwindcss from 'eslint-plugin-better-tailwindcss';
 import { importX } from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
+import perfectionist from 'eslint-plugin-perfectionist';
 import rxjsAngularX from 'eslint-plugin-rxjs-angular-x';
 import rxjsX from 'eslint-plugin-rxjs-x';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -38,6 +39,9 @@ export default defineConfig(gitignore(), {
     importX.flatConfigs.typescript,
     jsdoc.configs['flat/recommended-mixed'],
   ]),
+  plugins: {
+    perfectionist,
+  },
   rules: {
     // #region General
     // Maximum cyclomatic complexity.
@@ -108,23 +112,18 @@ export default defineConfig(gitignore(), {
     // #endregion Stylistic
 
     // #region Imports
-    'sort-imports': [
+    'perfectionist/sort-imports': [
       'warn',
       {
-        ignoreCase: true,
-        ignoreDeclarationSort: true,
+        newlinesBetween: 0,
+        internalPattern: [
+          // From tsconfig paths, minus ng-mocks.
+          '^@(core|data|shared|features|env|app)/.+',
+        ],
       },
     ],
-    'import-x/order': [
-      'warn',
-      {
-        alphabetize: {
-          order: 'asc',
-          orderImportKind: 'asc',
-          caseInsensitive: true,
-        },
-      },
-    ],
+    'perfectionist/sort-named-imports': 'warn',
+
     'import-x/no-rename-default': 'warn',
     'import-x/no-useless-path-segments': 'warn',
     // #endregion Imports

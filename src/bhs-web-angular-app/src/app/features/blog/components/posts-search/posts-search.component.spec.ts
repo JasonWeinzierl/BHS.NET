@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EMPTY } from 'rxjs';
-import { PostsSearchComponent } from './posts-search.component';
-import { BlogService } from '@data/blog';
 import { MockProvider } from 'ng-mocks';
+import { EMPTY } from 'rxjs';
+import { BlogService } from '@data/blog';
+import { PostsSearchComponent } from './posts-search.component';
 
 describe('PostsSearchComponent', () => {
   let component: PostsSearchComponent;

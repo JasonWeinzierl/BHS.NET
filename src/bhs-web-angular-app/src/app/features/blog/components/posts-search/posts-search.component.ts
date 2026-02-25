@@ -2,9 +2,9 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, catchError, map, of, switchMap, tap } from 'rxjs';
-import { PostCardComponent } from '../post-card/post-card.component';
 import { BlogService, PostPreview } from '@data/blog';
 import parseErrorMessage from '@shared/parseErrorMessage';
+import { PostCardComponent } from '../post-card/post-card.component';
 
 @Component({
   selector: 'app-posts-search',

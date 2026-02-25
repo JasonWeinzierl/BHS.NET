@@ -4,10 +4,10 @@ import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/ro
 import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
 import { provideToastr, ToastNoAnimation } from 'ngx-toastr';
-import { APP_ROUTES } from './app.routes';
 import { provideBhsAuth0Config } from '@core/providers/auth0-config.provider';
 import { BhsTitleStrategy } from '@core/services/bhs-title-strategy';
 import { InsightsService } from '@core/services/insights.service';
+import { APP_ROUTES } from './app.routes';
 
 export const APP_CONFIG: ApplicationConfig = {
   providers: [

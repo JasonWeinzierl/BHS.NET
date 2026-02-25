@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MuseumSchedule, museumScheduleSchema } from './museum-schedule';
 import { parseSchema } from '@core/operators/parse-schema.operator';
+import { MuseumSchedule, museumScheduleSchema } from './museum-schedule';
 
 @Injectable({
   providedIn: 'root',

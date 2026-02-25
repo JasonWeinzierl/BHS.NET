@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { MockProvider } from 'ng-mocks';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { MockInstance, vi } from 'vitest';
-import { ContactFormComponent } from './contact-form.component';
 import { InsightsService } from '@core/services/insights.service';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
-import { MockProvider } from 'ng-mocks';
+import { ContactFormComponent } from './contact-form.component';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;

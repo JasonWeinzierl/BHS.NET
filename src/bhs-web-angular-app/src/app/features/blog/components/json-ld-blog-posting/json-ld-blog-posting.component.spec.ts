@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { JsonLdBlogPostingComponent } from './json-ld-blog-posting.component';
 import { Post } from '@data/blog';
+import { JsonLdBlogPostingComponent } from './json-ld-blog-posting.component';
 
 describe('JsonLdBlogPostingComponent', () => {
   let component: JsonLdBlogPostingComponent;

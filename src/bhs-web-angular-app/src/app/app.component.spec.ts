@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 import { AppComponent } from '@app/app.component';
-import { MockProvider } from 'ng-mocks';
 
 describe('AppComponent', () => {
   let component: AppComponent;

@@ -2,9 +2,9 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
-import { PostCardComponent } from '../../components/post-card/post-card.component';
 import { BlogService } from '@data/blog';
 import parseErrorMessage from '@shared/parseErrorMessage';
+import { PostCardComponent } from '../../components/post-card/post-card.component';
 
 @Component({
   selector: 'app-category-posts',

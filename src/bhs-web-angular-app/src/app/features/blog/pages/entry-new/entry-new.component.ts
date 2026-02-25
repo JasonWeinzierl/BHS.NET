@@ -3,10 +3,10 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
-import { EditBlogEntryFormComponent } from '../../components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { Author, AuthorService } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
 import parseErrorMessage from '@shared/parseErrorMessage';
+import { EditBlogEntryFormComponent } from '../../components/edit-blog-entry-form/edit-blog-entry-form.component';
 
 interface EntryNewVm {
   currentAuthor?: Author | null;

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
-import { PostCardComponent } from './post-card.component';
 import { DateComponent } from '@shared/components/date/date.component';
+import { PostCardComponent } from './post-card.component';
 
 describe('PostCardComponent', () => {
   let component: PostCardComponent;

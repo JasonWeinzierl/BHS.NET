@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { AlbumComponent } from './pages/album/album.component';
 import { AlbumPageComponent } from './pages/album-page/album-page.component';
+import { AlbumComponent } from './pages/album/album.component';
 import { PhotosIndexComponent } from './pages/photos-index/photos-index.component';
 
 export default [

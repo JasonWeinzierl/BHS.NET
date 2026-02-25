@@ -3,10 +3,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError, map, of, startWith } from 'rxjs';
-import { CategoriesListViewComponent } from '../../components/categories-list-view/categories-list-view.component';
-import { PostsSearchComponent } from '../../components/posts-search/posts-search.component';
 import { BlogService } from '@data/blog';
 import parseErrorMessage from '@shared/parseErrorMessage';
+import { CategoriesListViewComponent } from '../../components/categories-list-view/categories-list-view.component';
+import { PostsSearchComponent } from '../../components/posts-search/posts-search.component';
 
 @Component({
   selector: 'app-blog-index',

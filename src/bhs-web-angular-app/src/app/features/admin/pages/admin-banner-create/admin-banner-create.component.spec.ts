@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { vi } from 'vitest';
-import AdminBannerCreateComponent from './admin-banner-create.component';
 import { SiteBannerService } from '@data/banners';
+import AdminBannerCreateComponent from './admin-banner-create.component';
 
 describe('AdminBannerCreateComponent', () => {
   let component: AdminBannerCreateComponent;
@@ -17,7 +17,7 @@ describe('AdminBannerCreateComponent', () => {
       providers: [
         provideRouter([]),
         { provide: SiteBannerService, useValue: {
-          // eslint-disable-next-line rxjs-x/finnish
+
           createBanner$: vi.fn(),
         } },
       ],

@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { MockProvider } from 'ng-mocks';
 import { Subject } from 'rxjs';
-import AdminBannersComponent from './admin-banners.component';
 import { SiteBannerService } from '@data/banners';
 import { SiteBannerHistory } from '@data/banners/models/site-banner-history';
-import { MockProvider } from 'ng-mocks';
+import AdminBannersComponent from './admin-banners.component';
 
 describe('AdminBannersComponent', () => {
   let component: AdminBannersComponent;

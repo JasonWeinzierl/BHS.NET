@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Author, authorSchema } from '../models/author';
 import { parseSchemaArray } from '@core/operators/parse-schema.operator';
 import { PostPreview, postPreviewSchema } from '@data/blog';
+import { Author, authorSchema } from '../models/author';
 
 @Injectable({
   providedIn: 'root',

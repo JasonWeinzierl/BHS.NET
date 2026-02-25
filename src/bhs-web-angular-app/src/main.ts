@@ -1,8 +1,8 @@
 import { mergeApplicationConfig } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { APP_CONFIG } from '@app/app.config';
 import { AppComponent } from './app/app.component';
 import { APP_ENVIRONMENT, APP_ENVIRONMENT_VALIDATOR, AppEnvironment } from './environments';
-import { APP_CONFIG } from '@app/app.config';
 
 // We can't use provideAppInitializer because:
 // - other app initializers (e.g. auth0) need AppEnvironment,

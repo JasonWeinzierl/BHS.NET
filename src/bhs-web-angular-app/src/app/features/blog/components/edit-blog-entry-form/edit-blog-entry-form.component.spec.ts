@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter, RouterLink } from '@angular/router';
-import { EditBlogEntryFormComponent } from './edit-blog-entry-form.component';
 import { Author } from '@data/authors';
 import { Category, Post } from '@data/blog';
+import { EditBlogEntryFormComponent } from './edit-blog-entry-form.component';
 
 const createPost = (): Post => ({
   slug: '1-post',

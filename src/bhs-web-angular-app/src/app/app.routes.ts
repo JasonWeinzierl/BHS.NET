@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 import { Routes } from '@angular/router';
 import { authGuardFn } from '@auth0/auth0-angular';
+import { resolveClosestPath } from '@core/resolvers/closest-path.resolver';
 import { APP_PATHS } from './app-paths';
 import { ContentLayoutComponent } from './core/components/content-layout/content-layout.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
-import { resolveClosestPath } from '@core/resolvers/closest-path.resolver';
 
 export const APP_ROUTES: Routes = [
   {

@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { EMPTY, of } from 'rxjs';
-import { EntryEditComponent } from './entry-edit.component';
-import { BlogService } from '@data/blog';
 import { MockProvider } from 'ng-mocks';
+import { EMPTY, of } from 'rxjs';
+import { BlogService } from '@data/blog';
+import { EntryEditComponent } from './entry-edit.component';
 
 describe('EntryEditComponent', () => {
   let component: EntryEditComponent;
