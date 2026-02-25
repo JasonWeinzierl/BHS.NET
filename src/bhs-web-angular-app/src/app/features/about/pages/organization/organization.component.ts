@@ -2,7 +2,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { catchError, combineLatest, map, of, startWith } from 'rxjs';
 import { LeadershipService } from '@data/leadership';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 @Component({
   selector: 'app-organization',
@@ -18,11 +18,11 @@ export default class OrganizationComponent {
   private readonly leadershipService = inject(LeadershipService);
 
   vm$ = combineLatest([this.leadershipService.getOfficers$(), this.leadershipService.getDirectors$()]).pipe(
-    map(value => ({ officers: value[0], directors: value[1], isLoading: false, error: null })),
-    startWith({ officers: [], directors: [], isLoading: true, error: null }),
+    map(value => ({ officers: value[0], directors: value[1], isLoading: false, error: undefined })),
+    startWith({ officers: [], directors: [], isLoading: true, error: undefined }),
     catchError((error: unknown) => {
-      const msg = parseErrorMessage(error) ?? 'An unknown error occurred.';
-      return of({ officers: [], directors: [], isLoading: false, error: msg });
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      return of({ officers: [], directors: [], isLoading: false, error: message });
     }),
   );
 }

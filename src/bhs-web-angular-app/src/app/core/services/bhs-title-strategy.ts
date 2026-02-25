@@ -13,10 +13,10 @@ export class BhsTitleStrategy extends TitleStrategy {
   override updateTitle(snapshot: RouterStateSnapshot): void {
     const title = this.buildTitle(snapshot);
 
-    if (title !== undefined) {
-      this.title.setTitle(title + ' | ' + APP_TITLE);
-    } else {
+    if (title === undefined) {
       this.title.setTitle(APP_TITLE);
+    } else {
+      this.title.setTitle(title + ' | ' + APP_TITLE);
     }
   }
 }

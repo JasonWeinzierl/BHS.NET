@@ -89,7 +89,7 @@ describe('AdminBannersComponent', () => {
             isEnabled: true,
           },
           {
-            dateModified: new Date(new Date().getTime() + 1000), // Future, should not get honored.
+            dateModified: new Date(Date.now() + 1000), // Future, should not get honored.
             isEnabled: false,
           },
         ],

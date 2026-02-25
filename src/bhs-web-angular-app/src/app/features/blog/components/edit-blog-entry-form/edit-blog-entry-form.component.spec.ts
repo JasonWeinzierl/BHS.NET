@@ -9,13 +9,10 @@ const createPost = (): Post => ({
   slug: '1-post',
   title: 'Post',
   contentMarkdown: '# Title',
-  filePath: null,
-  photosAlbumSlug: null,
-  author: null,
   datePublished: new Date(),
   dateLastModified: new Date(),
-  categories: [],
-});
+  categories: [] as Array<Category>,
+} as Post);
 
 describe('EditBlogEntryFormComponent', () => {
   let component: EditBlogEntryFormComponent;
@@ -63,9 +60,9 @@ describe('EditBlogEntryFormComponent', () => {
   });
 
   it('should not show warning if author is not changing', () => {
-    const dangerEl = (fixture.nativeElement as HTMLElement).querySelector('.form-text.text-danger');
+    const dangerElement = (fixture.nativeElement as HTMLElement).querySelector('.form-text.text-danger');
 
-    expect(dangerEl).toBeFalsy();
+    expect(dangerElement).toBeFalsy();
   });
 
   it('should show warning when author is changing', () => {
@@ -83,8 +80,8 @@ describe('EditBlogEntryFormComponent', () => {
     fixture.componentRef.setInput('allCategories', categories);
     fixture.detectChanges();
 
-    const dangerEl = (fixture.nativeElement as HTMLElement).querySelector('.alert.alert-error');
+    const dangerElement = (fixture.nativeElement as HTMLElement).querySelector('.alert.alert-error');
 
-    expect(dangerEl?.textContent).toBeTruthy();
+    expect(dangerElement?.textContent).toBeTruthy();
   });
 });

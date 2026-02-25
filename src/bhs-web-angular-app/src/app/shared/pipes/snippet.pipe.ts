@@ -11,7 +11,7 @@ export class SnippetPipe implements PipeTransform {
    * @param fuzz How much leeway to use when cutting the end of the string instead of just truncating mid-word.
    * @returns A beginning snippet of the given string.
    */
-  transform(value: string | null, length = 80, fuzz = 5): string | null {
+  transform(value: string | undefined, length = 80, fuzz = 5): string | undefined {
     if (!value) {
       return value;
     }

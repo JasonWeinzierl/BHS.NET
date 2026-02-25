@@ -14,6 +14,7 @@ import packageJson from 'eslint-plugin-package-json';
 import perfectionist from 'eslint-plugin-perfectionist';
 import rxjsAngularX from 'eslint-plugin-rxjs-angular-x';
 import rxjsX from 'eslint-plugin-rxjs-x';
+import unicorn from 'eslint-plugin-unicorn';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -26,6 +27,7 @@ export default defineConfig(gitignore(), {
   ],
   extends: ([
     js.configs.recommended,
+    unicorn.configs.recommended,
     stylistic.configs['disable-legacy'],
     stylistic.configs.customize({
       quotes: 'single',
@@ -74,6 +76,16 @@ export default defineConfig(gitignore(), {
 
     // Throwing a non-error is unexpected. Note the TypeScript equivalent only-throw-error is included in their config.
     'no-throw-literal': 'error',
+
+    // Makes computed signals painful.
+    'unicorn/consistent-function-scoping': [
+      'error',
+      {
+        checkArrowFunctions: false,
+      },
+    ],
+    // Conflicts with RxJS: of() !== of(undefined).
+    'unicorn/no-useless-undefined': 'off',
     // #endregion General
 
     // #region Rules with TypeScript equivalents

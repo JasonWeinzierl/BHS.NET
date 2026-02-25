@@ -12,7 +12,7 @@ import { AlbumComponent } from './album.component';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[ngSrc]',
 })
-class NgSrcStubComponent {}
+class NgSourceStubComponent {}
 
 describe('AlbumComponent', () => {
   let component: AlbumComponent;
@@ -38,7 +38,7 @@ describe('AlbumComponent', () => {
       set: {
         imports: [
           RouterLink,
-          NgSrcStubComponent,
+          NgSourceStubComponent,
           SnippetPipe,
           AsyncPipe,
         ],

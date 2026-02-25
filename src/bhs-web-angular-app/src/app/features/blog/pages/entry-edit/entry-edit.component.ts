@@ -7,7 +7,7 @@ import { Author } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
 import { EditBlogEntryFormComponent } from '@features/blog/components/edit-blog-entry-form/edit-blog-entry-form.component';
 import { DateComponent } from '@shared/components/date/date.component';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 interface EntryEditVm {
   post?: Post;
@@ -39,18 +39,18 @@ export class EntryEditComponent {
     // Start with loading indicator.
     startWith({ categories: [], isLoading: true } as EntryEditVm),
     // If an error occurs, populate the error property of the view model.
-    catchError((err: unknown) => {
-      const msg = parseErrorMessage(err) ?? 'An error occurred editing post.';
-      console.error(msg, err);
-      return of({ categories: [], isLoading: false, error: msg } as EntryEditVm);
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An error occurred editing post.';
+      console.error(message, error);
+      return of({ categories: [], isLoading: false, error: message } as EntryEditVm);
     }),
   );
 
   private getInitialPost$(): Observable<EntryEditVm> {
     return this.activatedRoute.paramMap.pipe(
       // Get the requested slug from the route.
-      map(params => {
-        const slug = params.get('slug');
+      map(parameters => {
+        const slug = parameters.get('slug');
         if (!slug) {
           throw new Error('Failed to get entry slug from URL.');
         }
@@ -108,11 +108,11 @@ export class EntryEditComponent {
     );
   }
 
-  private getAuthor(user?: User | null): Author | null {
+  private getAuthor(user?: User | null): Author | undefined {
     return user?.sub && user.name ? {
       username: user.sub,
       name: user.name,
-    } : null;
+    } : undefined;
   }
 
   onPublish(slug: string, request: PostRequest): void {

@@ -5,4 +5,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './who-we-are.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class WhoWeAreComponent { }
+export default class WhoWeAreComponent {}

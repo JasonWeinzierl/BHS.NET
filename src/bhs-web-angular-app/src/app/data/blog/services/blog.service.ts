@@ -12,18 +12,18 @@ export class BlogService {
   private readonly baseUrl = '/api/blog';
 
   searchPosts$(q?: string, from?: Date, to?: Date): Observable<Array<PostPreview>> {
-    let params = new HttpParams();
+    let parameters = new HttpParams();
     if (q) {
-      params = params.set('q', q);
+      parameters = parameters.set('q', q);
     }
     if (from) {
-      params = params.set('from', from.toISOString());
+      parameters = parameters.set('from', from.toISOString());
     }
     if (to) {
-      params = params.set('to', to.toISOString());
+      parameters = parameters.set('to', to.toISOString());
     }
 
-    return this.http.get(this.baseUrl + '/posts', { params })
+    return this.http.get(this.baseUrl + '/posts', { params: parameters })
       .pipe(parseSchemaArray(postPreviewSchema));
   }
 

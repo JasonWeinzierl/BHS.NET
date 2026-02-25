@@ -61,6 +61,7 @@
     "eslint-plugin-perfectionist": "^5.6.0",
     "eslint-plugin-rxjs-angular-x": "^0.1.2",
     "eslint-plugin-rxjs-x": "~0.9.5",
+    "eslint-plugin-unicorn": "^63.0.0",
     "globals": "^17.3.0",
     "jsdom": "^27.4.0",
     "jsonc-eslint-parser": "^3.1.0",

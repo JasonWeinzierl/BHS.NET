@@ -1,5 +1,5 @@
-import { SiteBannerZodType, zSiteBanner } from 'bhs-generated-models';
-
-export const siteBannerSchema = zSiteBanner;
+import { SiteBannerZodType } from 'bhs-generated-models';
 
 export type SiteBanner = SiteBannerZodType;
+
+export { zSiteBanner as siteBannerSchema } from 'bhs-generated-models';

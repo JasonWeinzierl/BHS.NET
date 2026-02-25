@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { BlogService } from '@data/blog';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 import { PostCardComponent } from '../../components/post-card/post-card.component';
 
 @Component({
@@ -20,8 +20,8 @@ export class CategoryPostsComponent {
   private readonly blogService = inject(BlogService);
 
   vm$ = this.activatedRoute.paramMap.pipe(
-    map(params => {
-      const slug = params.get('slug');
+    map(parameters => {
+      const slug = parameters.get('slug');
       if (!slug) {
         throw new Error('Failed to get category slug from URL.');
       }
@@ -34,12 +34,12 @@ export class CategoryPostsComponent {
         posts: category.posts.toSorted((a, b) => b.datePublished.getTime() - a.datePublished.getTime()),
       },
       isLoading: false,
-      error: null,
+      error: undefined,
     })),
-    startWith({ category: null, isLoading: true, error: null }),
-    catchError((err: unknown) => {
-      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
-      return of({ category: null, isLoading: false, error: msg });
+    startWith({ category: undefined, isLoading: true, error: undefined }),
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      return of({ category: undefined, isLoading: false, error: message });
     }),
   );
 }

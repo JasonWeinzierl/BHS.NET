@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, catchError, map, of, switchMap, tap } from 'rxjs';
 import { BlogService, PostPreview } from '@data/blog';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 import { PostCardComponent } from '../post-card/post-card.component';
 
 @Component({
@@ -25,12 +25,12 @@ export class PostsSearchComponent {
     switchMap(searchText => this.blogService.searchPosts$(searchText).pipe(
       map(posts => ({
         posts: posts.toSorted((a, b) => b.datePublished.getTime() - a.datePublished.getTime()),
-        error: null,
+        error: undefined,
       })),
       // Must do the catchError in this inner observable so it doesn't replace the outer observable and break search.
-      catchError((err: unknown) => {
-        const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
-        return of({ posts: [] as Array<PostPreview>, error: msg });
+      catchError((error: unknown) => {
+        const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+        return of({ posts: [] as Array<PostPreview>, error: message });
       }),
     )),
     tap(() => { this.isLoading.set(false); }),

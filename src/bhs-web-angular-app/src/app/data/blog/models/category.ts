@@ -1,5 +1,5 @@
-import { CategoryZodType, zCategory } from 'bhs-generated-models';
-
-export const categorySchema = zCategory;
+import { CategoryZodType } from 'bhs-generated-models';
 
 export type Category = CategoryZodType;
+
+export { zCategory as categorySchema } from 'bhs-generated-models';

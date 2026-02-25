@@ -19,7 +19,7 @@ export default class AdminBannerCreateComponent {
   private readonly router = inject(Router);
 
   readonly isSubmittingSignal = signal(false);
-  readonly errorSignal = signal<string | null>(null);
+  readonly errorSignal = signal<string | undefined>(undefined);
   readonly successSignal = signal(false);
 
   readonly themeOptions = Object.values(AlertTheme);
@@ -52,28 +52,28 @@ export default class AdminBannerCreateComponent {
   readonly bannerForm = form(this.bannerModel, schemaPath => {
     required(schemaPath.theme);
 
-    validate(schemaPath, ctx => {
-      const lead = ctx.valueOf(schemaPath.lead);
-      const body = ctx.valueOf(schemaPath.body);
+    validate(schemaPath, context => {
+      const lead = context.valueOf(schemaPath.lead);
+      const body = context.valueOf(schemaPath.body);
       if (!lead && !body) {
         return {
           kind: 'atLeastOneRequired',
           message: 'At least one of Lead Text or Body Text must be provided.',
         };
       }
-      return null;
+      return;
     });
 
-    validate(schemaPath.endDate, ctx => {
-      const hasEndDate = ctx.valueOf(schemaPath.hasEndDate);
-      const endDate = ctx.valueOf(schemaPath.endDate);
+    validate(schemaPath.endDate, context => {
+      const hasEndDate = context.valueOf(schemaPath.hasEndDate);
+      const endDate = context.valueOf(schemaPath.endDate);
       if (hasEndDate && !endDate) {
         return {
           kind: 'required',
           message: 'End date is required when "Set End Date" is checked.',
         };
       }
-      if (endDate && isNaN(Date.parse(endDate))) {
+      if (endDate && Number.isNaN(Date.parse(endDate))) {
         return {
           kind: 'invalidDate',
           message: 'End date must be a valid date.',
@@ -85,7 +85,7 @@ export default class AdminBannerCreateComponent {
           message: 'End date must be in the future.',
         };
       }
-      return null;
+      return;
     });
   });
 
@@ -97,7 +97,7 @@ export default class AdminBannerCreateComponent {
     }
 
     this.isSubmittingSignal.set(true);
-    this.errorSignal.set(null);
+    this.errorSignal.set(undefined);
     this.successSignal.set(false);
 
     const formValue = this.bannerModel();
@@ -109,8 +109,8 @@ export default class AdminBannerCreateComponent {
     // Create the banner request
     this.siteBannerService.createBanner$({
       theme: formValue.theme,
-      lead: formValue.lead || null,
-      body: formValue.body || null,
+      lead: formValue.lead || undefined,
+      body: formValue.body || undefined,
       endDate: formValue.hasEndDate ? new Date(formValue.endDate) : undefined,
     // eslint-disable-next-line rxjs-angular-x/prefer-async-pipe, rxjs-x/no-ignored-subscription
     }).subscribe({
@@ -120,8 +120,8 @@ export default class AdminBannerCreateComponent {
           void this.router.navigate(['/admin/banners']);
         }, 2500);
       },
-      error: (err: unknown) => {
-        console.error('Failed to create banner.', err);
+      error: (error: unknown) => {
+        console.error('Failed to create banner.', error);
         this.errorSignal.set('Failed to create banner.');
         this.isSubmittingSignal.set(false);
       },

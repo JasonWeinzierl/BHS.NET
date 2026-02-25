@@ -5,7 +5,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, of, scan, startWith, Subject, switchMap } from 'rxjs';
 import { SiteBannerService } from '@data/banners';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 @Component({
   selector: 'app-header',
@@ -29,15 +29,15 @@ export class HeaderComponent {
 
   private readonly hideSubject$ = new Subject<string>();
   readonly banners$ = this.bannerService.getEnabled$().pipe(
-    catchError((err: unknown) => {
-      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
       this.toastr.error(
-        msg,
+        message,
         'Site banners could not be loaded.');
       return of();
     }),
     switchMap(banners => this.hideSubject$.pipe(
-      scan((acc, bannerId) => acc.filter(banner => banner.id !== bannerId), banners),
+      scan((accumulator, bannerId) => accumulator.filter(banner => banner.id !== bannerId), banners),
       startWith(banners),
     )),
   );

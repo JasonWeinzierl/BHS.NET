@@ -18,7 +18,7 @@ export class NotFoundComponent {
   closestPath$ = this.route.data.pipe(
     map(data => {
       const closestPath: unknown = data['closestPath'];
-      return typeof closestPath === 'string' ? closestPath : null;
+      return typeof closestPath === 'string' ? closestPath : undefined;
     }),
   );
 }

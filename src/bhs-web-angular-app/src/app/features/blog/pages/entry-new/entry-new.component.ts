@@ -5,11 +5,11 @@ import { AuthService } from '@auth0/auth0-angular';
 import { catchError, combineLatest, exhaustMap, map, merge, Observable, of, startWith, Subject, switchMap } from 'rxjs';
 import { Author, AuthorService } from '@data/authors';
 import { BlogService, Category, Post, PostRequest } from '@data/blog';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 import { EditBlogEntryFormComponent } from '../../components/edit-blog-entry-form/edit-blog-entry-form.component';
 
 interface EntryNewVm {
-  currentAuthor?: Author | null;
+  currentAuthor?: Author;
   allCategories: Array<Category>;
   isLoading: boolean;
   error?: string;
@@ -36,10 +36,10 @@ export class EntryNewComponent {
 
   vm$ = merge(this.getInitialVm$(), this.getCreatedPost$(), this.getRouteError$()).pipe(
     startWith({ allCategories: [], isLoading: true } as EntryNewVm),
-    catchError((err: unknown) => {
-      const msg = parseErrorMessage(err) ?? 'An error occurred creating post.';
-      console.error(msg, err);
-      return of({ allCategories: [], isLoading: false, error: msg } as EntryNewVm);
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An error occurred creating post.';
+      console.error(message, error);
+      return of({ allCategories: [], isLoading: false, error: message } as EntryNewVm);
     }),
   );
 
@@ -54,7 +54,7 @@ export class EntryNewComponent {
         map(authors => ({ allCategories, authors })),
       )),
       map(({ allCategories, authors }) => {
-        const currentAuthor = authors.length ? authors[0] : null; // TODO: support user picking from multiple authors.
+        const currentAuthor = authors.length > 0 ? authors[0] : undefined; // TODO: support user picking from multiple authors.
 
         return { currentAuthor, allCategories, isLoading: false };
       }),
@@ -74,7 +74,7 @@ export class EntryNewComponent {
         .catch((error: unknown) => { this.routeErrorSubject$.next({ error, newPost }); });
 
         // Instead of mapping the post into the VM, just keep loading until the route changes.
-        return { isLoading: true, allCategories: [], currentAuthor: null };
+        return { isLoading: true, allCategories: [], currentAuthor: undefined };
       }),
     );
   }
@@ -82,11 +82,11 @@ export class EntryNewComponent {
   private getRouteError$(): Observable<never> {
     return this.routeErrorSubject$.pipe(
       map(({ error, newPost }) => {
-        let msg = `An error occurred while navigating to new post '${newPost?.title ?? newPost?.slug ?? '(null)'}'.`;
+        let message = `An error occurred while navigating to new post '${newPost?.title ?? newPost?.slug ?? '(null)'}'.`;
         if (typeof error === 'object' && error && 'message' in error && typeof error.message === 'string') {
-          msg = `${msg} ${error.message}`;
+          message = `${message} ${error.message}`;
         }
-        throw new Error(msg, { cause: error });
+        throw new Error(message, { cause: error });
       }),
     );
   }

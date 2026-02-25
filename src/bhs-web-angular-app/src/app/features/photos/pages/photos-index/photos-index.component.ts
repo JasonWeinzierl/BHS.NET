@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { catchError, map, of, startWith } from 'rxjs';
 import { PhotosService } from '@data/photos';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 import { SnippetPipe } from '@shared/pipes/snippet.pipe';
 
 @Component({
@@ -22,11 +22,11 @@ export class PhotosIndexComponent {
   private readonly photosService = inject(PhotosService);
 
   vm$ = this.photosService.getAlbums$().pipe(
-    map(albums => ({ albums, isLoading: false, error: null })),
-    startWith({ albums: [], isLoading: true, error: null }),
+    map(albums => ({ albums, isLoading: false, error: undefined })),
+    startWith({ albums: [], isLoading: true, error: undefined }),
     catchError((error: unknown) => {
-      const msg = parseErrorMessage(error) ?? 'An unknown error occurred.';
-      return of({ albums: [], isLoading: false, error: msg });
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      return of({ albums: [], isLoading: false, error: message });
     }),
   );
 }

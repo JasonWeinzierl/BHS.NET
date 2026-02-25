@@ -8,20 +8,20 @@ import { APP_ENVIRONMENT } from 'src/environments';
 export function provideBhsAuth0Config(): EnvironmentProviders {
   return makeEnvironmentProviders([
     provideAppInitializer(() => {
-      const env = inject(APP_ENVIRONMENT);
+      const environment = inject(APP_ENVIRONMENT);
       const cfg = inject(AuthClientConfig);
 
-      if (!env.auth0) {
+      if (!environment.auth0) {
         console.error('Auth0 config not provided via app environment. Authentication will not work.');
       }
 
-      const baseConfig: AuthConfig = env.auth0 ?? {
+      const baseConfig: AuthConfig = environment.auth0 ?? {
         domain: '',
         clientId: '',
       };
 
       baseConfig.authorizationParams = Object.assign({
-        redirect_uri: window.location.origin,
+        redirect_uri: globalThis.location.origin,
       }, baseConfig.authorizationParams);
 
       cfg.set({

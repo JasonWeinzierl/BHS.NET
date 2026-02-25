@@ -1,5 +1,5 @@
-import { PhotoZodType, zPhoto } from 'bhs-generated-models';
-
-export const photoSchema = zPhoto;
+import { PhotoZodType } from 'bhs-generated-models';
 
 export type Photo = PhotoZodType;
+
+export { zPhoto as photoSchema } from 'bhs-generated-models';

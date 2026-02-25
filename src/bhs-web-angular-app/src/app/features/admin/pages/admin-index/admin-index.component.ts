@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { jwtDecode } from 'jwt-decode';
 import { catchError, map, of, startWith } from 'rxjs';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 @Component({
   selector: 'app-admin-index',
@@ -38,9 +38,9 @@ export class AdminIndexComponent {
         permissions: 'permissions' in jwt && Array.isArray(jwt.permissions) && jwt.permissions.every(p => typeof p === 'string') ? jwt.permissions : [],
       };
     }),
-    catchError((err: unknown) => {
-      const message = parseErrorMessage(err) ?? 'An unknown error occurred.';
-      console.error(message, err);
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      console.error(message, error);
       return of({ type: 'error' as const, message });
     }),
     startWith({ type: 'loading' as const, message: 'Loading...' }),
@@ -49,13 +49,13 @@ export class AdminIndexComponent {
   handleLogout(): void {
     this.auth.logout({
       logoutParams: {
-        returnTo: window.location.origin,
+        returnTo: globalThis.location.origin,
       },
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
       // eslint-disable-next-line rxjs-angular-x/prefer-async-pipe
       .subscribe({
-        error: (err: unknown) => { console.error('An error occurred while logging out:', err); },
+        error: (error: unknown) => { console.error('An error occurred while logging out:', error); },
       });
   }
 }

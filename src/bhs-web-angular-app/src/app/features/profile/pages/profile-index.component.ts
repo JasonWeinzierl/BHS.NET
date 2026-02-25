@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { AuthorService } from '@data/authors';
 import { PostCardComponent } from '@features/blog/components/post-card/post-card.component';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 @Component({
   selector: 'app-profile-index',
@@ -20,19 +20,19 @@ export class ProfileIndexComponent {
   private readonly authorService = inject(AuthorService);
 
   vm$ = this.activatedRoute.paramMap.pipe(
-    map(params => {
-      const username = params.get('username');
+    map(parameters => {
+      const username = parameters.get('username');
       if (!username) {
         throw new Error('Failed to get username from URL.');
       }
       return username;
     }),
     switchMap(username => this.authorService.getAuthorPosts$(username)),
-    map(posts => ({ author: posts[0].author, posts, isLoading: false, error: null })),
-    startWith({ author: null, posts: [], isLoading: true, error: null }),
+    map(posts => ({ author: posts[0].author, posts, isLoading: false, error: undefined })),
+    startWith({ author: undefined, posts: [], isLoading: true, error: undefined }),
     catchError((error: unknown) => {
-      const msg = parseErrorMessage(error) ?? 'An unknown error occurred.';
-      return of({ author: null, posts: [], isLoading: false, error: msg });
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      return of({ author: undefined, posts: [], isLoading: false, error: message });
     }),
   );
 }

@@ -34,7 +34,9 @@ describe('BlogEntryComponent', () => {
             title: 'Hello!',
             contentMarkdown: '## Foo',
             photosAlbumSlug: 'does-not-exist',
+            // eslint-disable-next-line unicorn/no-null
             filePath: null,
+            // eslint-disable-next-line unicorn/no-null
             author: null,
             datePublished: new Date(),
             dateLastModified: new Date(),

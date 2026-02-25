@@ -18,15 +18,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- undefined in jsdom tests.
-    this.observer = window.IntersectionObserver ? new IntersectionObserver(entries => {
-      entries.forEach(entry => {
+    this.observer = globalThis.IntersectionObserver ? new IntersectionObserver(entries => {
+      for (const entry of entries) {
         // Keep index in sync with current viewport.
         if (entry.isIntersecting) {
-          this.indexValue = this.carouselItemElements().map(e => e.nativeElement).indexOf(entry.target as HTMLElement);
+          this.indexValue = this.carouselItemElements().map(elementReference => elementReference.nativeElement).indexOf(entry.target as HTMLElement);
           // Don't change too soon after user interaction.
           this.restartTimer();
         }
-      });
+      }
     }, {
       // Relative to the carousel viewport.
       root: this.carouselElement().nativeElement,
@@ -36,9 +36,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       threshold: 0,
     }) : undefined;
 
-    this.carouselItemElements().forEach(item => {
+    for (const item of this.carouselItemElements()) {
       this.observer?.observe(item.nativeElement);
-    });
+    }
 
     this.restartTimer();
   }

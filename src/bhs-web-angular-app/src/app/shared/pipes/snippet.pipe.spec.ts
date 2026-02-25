@@ -9,7 +9,7 @@ describe('SnippetPipe', () => {
 
   it('should return input if input is falsy', () => {
     const pipe = new SnippetPipe();
-    const input = null;
+    const input = undefined;
 
     const result = pipe.transform(input);
 

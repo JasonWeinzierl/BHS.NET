@@ -2,8 +2,8 @@ import { EnvironmentProviders } from '@angular/core';
 import { Mock, vi } from 'vitest';
 
 // jsdom doesn't implement scrollIntoView.
-if (window.navigator.userAgent.includes('jsdom')) {
-  Object.defineProperties(window.Element.prototype, {
+if (globalThis.navigator.userAgent.includes('jsdom')) {
+  Object.defineProperties(globalThis.Element.prototype, {
     _mockScrollIntoView: {
       writable: true,
       configurable: true,

@@ -7,4 +7,4 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ContactFormComponent],
 })
-export class ContactComponent { }
+export class ContactComponent {}

@@ -64,10 +64,10 @@ export class LocationComponent {
         endMonth: formatMonth(schedule.months.endMonth, this.monthFormatter),
       },
       isLoading: false as const,
-    } : null),
-    catchError((err: unknown) => {
-      console.error('Failed to load schedule.', err);
-      return of(null);
+    } : undefined),
+    catchError((error: unknown) => {
+      console.error('Failed to load schedule.', error);
+      return of(undefined);
     }),
     startWith({
       isLoading: true as const,

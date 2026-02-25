@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { APP_PATHS } from '@app/app-paths';
 
-export const resolveClosestPath: ResolveFn<string | null> = (
+export const resolveClosestPath: ResolveFn<string | undefined> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
 ) => {
@@ -10,8 +10,8 @@ export const resolveClosestPath: ResolveFn<string | null> = (
   const dictionary = Object.values(APP_PATHS)
     .filter(path => Math.abs(path.length - typoPath.length) < threshold);
 
-  if (!dictionary.length) {
-    return null;
+  if (dictionary.length === 0) {
+    return;
   }
 
   sortByDistance(typoPath, dictionary);
@@ -48,25 +48,21 @@ function levenshtein(a: string, b: string): number {
 
   const matrix = [];
 
-  for (let i = 0; i <= b.length; i++) {
-    matrix[i] = [i];
+  for (let index = 0; index <= b.length; index++) {
+    matrix[index] = [index];
   }
 
-  for (let j = 0; j <= a.length; j++) {
-    matrix[0][j] = j;
+  for (let index = 0; index <= a.length; index++) {
+    matrix[0][index] = index;
   }
 
-  for (let i = 1; i <= b.length; i++) {
-    for (let j = 1; j <= a.length; j++) {
-      if (b.charAt(i - 1) === a.charAt(j - 1)) {
-        matrix[i][j] = matrix[i - 1][j - 1];
-      } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1,
+  for (let index = 1; index <= b.length; index++) {
+    for (let index_ = 1; index_ <= a.length; index_++) {
+      matrix[index][index_] = b.charAt(index - 1) === a.charAt(index_ - 1) ? matrix[index - 1][index_ - 1] : Math.min(
+          matrix[index - 1][index_ - 1] + 1,
+          matrix[index][index_ - 1] + 1,
+          matrix[index - 1][index_] + 1,
         );
-      }
     }
   }
 

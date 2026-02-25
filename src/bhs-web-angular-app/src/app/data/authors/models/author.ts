@@ -1,5 +1,5 @@
-import { AuthorZodType, zAuthor } from 'bhs-generated-models';
-
-export const authorSchema = zAuthor;
+import { AuthorZodType } from 'bhs-generated-models';
 
 export type Author = AuthorZodType;
+
+export { zAuthor as authorSchema } from 'bhs-generated-models';

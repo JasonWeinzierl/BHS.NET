@@ -150,7 +150,7 @@ describe('ContactFormComponent', () => {
         expect((fixture.nativeElement as HTMLElement).querySelector('.progress')).toBeTruthy();
         expect(sendMessage).toHaveBeenCalled();
 
-        await vi.advanceTimersByTimeAsync(5_000);
+        await vi.advanceTimersByTimeAsync(5000);
         fixture.detectChanges();
 
         expect((fixture.nativeElement as HTMLElement).querySelector('.progress')).toBeTruthy();

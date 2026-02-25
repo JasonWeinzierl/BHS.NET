@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { SiteBannerService } from '@data/banners';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 @Component({
   selector: 'app-admin-banners',
@@ -18,29 +18,29 @@ import parseErrorMessage from '@shared/parseErrorMessage';
 export default class AdminBannersComponent {
   private readonly siteBannerService = inject(SiteBannerService);
 
-  readonly errorSignal = signal<string | null>(null);
-  readonly deletingBannerIdSignal = signal<string | null>(null);
-  readonly successMessageSignal = signal<string | null>(null);
+  readonly errorSignal = signal<string | undefined>(undefined);
+  readonly deletingBannerIdSignal = signal<string | undefined>(undefined);
+  readonly successMessageSignal = signal<string | undefined>(undefined);
 
   readonly bannersSignal = toSignal(this.siteBannerService.getHistory$().pipe(
     map(banners => banners.toReversed().map(banner => {
       const sortedChanges = banner.statusChanges
         .toSorted((a, b) => b.dateModified.getTime() - a.dateModified.getTime());
-      const pastChanges = sortedChanges
-        .filter(c => c.dateModified.getTime() < new Date().getTime());
+      const pastChange = sortedChanges
+        .find(c => c.dateModified.getTime() < Date.now());
       return {
         ...banner,
         statusChanges: sortedChanges,
-        isEnabled: pastChanges[0]?.isEnabled ?? false,
+        isEnabled: pastChange?.isEnabled ?? false,
       };
     })),
-    catchError((err: unknown) => {
-      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
-      console.error('Failed to load banners.', err);
-      this.errorSignal.set('Failed to load banners. ' + msg);
-      return of(null);
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      console.error('Failed to load banners.', error);
+      this.errorSignal.set('Failed to load banners. ' + message);
+      return of(undefined);
     }),
-  ), { initialValue: null });
+  ), { initialValue: undefined });
 
   onDeleteBanner(bannerId: string, event: Event): void {
     event.preventDefault();
@@ -59,16 +59,16 @@ export default class AdminBannersComponent {
     this.siteBannerService.deleteBanner$(bannerId).subscribe({
       next: () => {
         this.successMessageSignal.set('Banner hidden successfully.');
-        this.deletingBannerIdSignal.set(null);
+        this.deletingBannerIdSignal.set(undefined);
 
         // Reload page.
-        window.location.reload();
+        globalThis.location.reload();
       },
-      error: (err: unknown) => {
-        const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
-        console.error('Failed to delete banner.', err);
-        this.errorSignal.set('Failed to hide banner. ' + msg);
-        this.deletingBannerIdSignal.set(null);
+      error: (error: unknown) => {
+        const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+        console.error('Failed to delete banner.', error);
+        this.errorSignal.set('Failed to hide banner. ' + message);
+        this.deletingBannerIdSignal.set(undefined);
       },
     });
   }

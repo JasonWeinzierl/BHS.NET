@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { timeout, TimeoutError } from 'rxjs';
 import { InsightsService } from '@core/services/insights.service';
 import { ContactAlertRequest, ContactService } from '@data/contact-us';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 @Component({
   selector: 'app-contact-form',
@@ -61,12 +61,12 @@ export class ContactFormComponent {
           this.isAccepted.set(true);
           this.contactForm.reset();
         },
-        error: (err: unknown) => {
-          if (err instanceof TimeoutError) {
+        error: (error: unknown) => {
+          if (error instanceof TimeoutError) {
             this.errors.update(errors => [...errors, { id: errors.length, msg: 'Something took too long...' }]);
           } else {
-            const msg = parseErrorMessage(err) ?? 'An unexpected error occurred.';
-            this.errors.update(errors => [...errors, { id: errors.length, msg }]);
+            const message = parseErrorMessage(error) ?? 'An unexpected error occurred.';
+            this.errors.update(errors => [...errors, { id: errors.length, msg: message }]);
           }
           this.isSubmitted.set(false);
         },
@@ -74,6 +74,6 @@ export class ContactFormComponent {
   }
 
   removeError(id: number): void {
-    this.errors.update(errors => errors.filter(e => e.id !== id));
+    this.errors.update(errors => errors.filter(error => error.id !== id));
   }
 }

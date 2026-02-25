@@ -25,7 +25,7 @@ describe('JsonLdBlogPostingComponent', () => {
         name: 'Test Author',
         username: 'testauthor',
       },
-    } satisfies Post);
+    } as Post);
     fixture.detectChanges();
   });
 
@@ -34,11 +34,11 @@ describe('JsonLdBlogPostingComponent', () => {
   });
 
   it('should generate valid JSON-LD', () => {
-    const jsonLdScriptEl = fixture.nativeElement as HTMLScriptElement;
+    const jsonLdScriptElement = fixture.nativeElement as HTMLScriptElement;
 
-    expect(jsonLdScriptEl.innerHTML).toContain('<script type="application/ld+json">');
+    expect(jsonLdScriptElement.innerHTML).toContain('<script type="application/ld+json">');
 
-    const jsonLd = JSON.parse(jsonLdScriptEl.textContent) as Record<string, unknown>;
+    const jsonLd = JSON.parse(jsonLdScriptElement.textContent) as Record<string, unknown>;
 
     expect(jsonLd['@context']).toBe('https://schema.org');
     expect(jsonLd['@type']).toBe('BlogPosting');

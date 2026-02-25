@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError, map, of, startWith } from 'rxjs';
 import { BlogService } from '@data/blog';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 import { CategoriesListViewComponent } from '../../components/categories-list-view/categories-list-view.component';
 import { PostsSearchComponent } from '../../components/posts-search/posts-search.component';
 
@@ -24,11 +24,11 @@ export class BlogIndexComponent {
   private readonly auth = inject(AuthService);
 
   readonly categoriesVmSignal = toSignal(this.blogService.getCategories$().pipe(
-    map(categories => ({ categories, isLoading: false, error: null })),
-    startWith({ categories: [], isLoading: true, error: null }),
-    catchError((err: unknown) => {
-      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
-      return of({ categories: [], isLoading: false, error: msg });
+    map(categories => ({ categories, isLoading: false, error: undefined })),
+    startWith({ categories: [], isLoading: true, error: undefined }),
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      return of({ categories: [], isLoading: false, error: message });
     }),
   ));
 

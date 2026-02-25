@@ -1,5 +1,5 @@
-import { AlbumPhotosZodType, zAlbumPhotos } from 'bhs-generated-models';
-
-export const albumPhotosSchema = zAlbumPhotos;
+import { AlbumPhotosZodType } from 'bhs-generated-models';
 
 export type AlbumPhotos = AlbumPhotosZodType;
+
+export { zAlbumPhotos as albumPhotosSchema } from 'bhs-generated-models';

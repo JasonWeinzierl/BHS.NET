@@ -47,13 +47,13 @@ describe('LocationComponent', () => {
     });
 
     await fixture.whenStable();
-    const scheduleEl = nativeElement.querySelector('#location-museum-schedule');
-    const timeEls = scheduleEl?.querySelectorAll('time');
+    const scheduleElement = nativeElement.querySelector('#location-museum-schedule');
+    const timeEls = scheduleElement?.querySelectorAll('time');
 
     expect(nativeElement.querySelector('.spinner-grow')).toBeFalsy();
-    expect(scheduleEl).toBeTruthy();
-    expect(scheduleEl?.textContent).toContain('Sundays from 9:00 AM\u20135:00 PM');
-    expect(scheduleEl?.textContent).toContain('Open January to December');
+    expect(scheduleElement).toBeTruthy();
+    expect(scheduleElement?.textContent).toContain('Sundays from 9:00 AM\u20135:00 PM');
+    expect(scheduleElement?.textContent).toContain('Open January to December');
 
     expect(timeEls?.length).toBe(4);
     expect(timeEls?.[0].dateTime).toBe('09:00');
@@ -64,9 +64,9 @@ describe('LocationComponent', () => {
     scheduleSubject$.error(new Error('Test failure to load schedule.'));
 
     await fixture.whenStable();
-    const errorEl = nativeElement.querySelector('#location-museum-schedule-error');
+    const errorElement = nativeElement.querySelector('#location-museum-schedule-error');
 
     expect(nativeElement.querySelector('.spinner-grow')).toBeFalsy();
-    expect(errorEl?.textContent).toContain('Hours of operation are not available');
+    expect(errorElement?.textContent).toContain('Hours of operation are not available');
   });
 });

@@ -13,5 +13,4 @@ import { HeaderComponent } from '../header/header.component';
     FooterComponent,
   ],
 })
-export class ContentLayoutComponent {
-}
+export class ContentLayoutComponent {}

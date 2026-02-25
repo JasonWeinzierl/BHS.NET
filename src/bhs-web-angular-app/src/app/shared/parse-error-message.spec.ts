@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import parseErrorMessage from './parseErrorMessage';
+import parseErrorMessage from './parse-error-message';
 
 describe('parseErrorMessage', () => {
   it('should return the message from an Error instance', () => {
@@ -31,6 +31,7 @@ describe('parseErrorMessage', () => {
   });
 
   it.each([
+    // eslint-disable-next-line unicorn/no-null
     null,
     undefined,
     0,

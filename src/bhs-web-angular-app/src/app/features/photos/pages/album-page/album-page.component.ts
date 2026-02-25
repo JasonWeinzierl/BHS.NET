@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 interface AlbumPageVm {
   album?: AlbumPhotos;
@@ -30,13 +30,13 @@ export class AlbumPageComponent {
   private readonly photosService = inject(PhotosService);
 
   vm$ = this.activatedRoute.paramMap.pipe(
-    map(params => {
-      const albumSlug = params.get('slug');
+    map(parameters => {
+      const albumSlug = parameters.get('slug');
       if (!albumSlug) {
         throw new Error('Failed to get album slug from URL.');
       }
 
-      const photoId = params.get('id');
+      const photoId = parameters.get('id');
       if (!photoId) {
         throw new Error('Failed to get photo id from URL.');
       }
@@ -47,9 +47,9 @@ export class AlbumPageComponent {
       map(album => {
         const currentIndex = album.photos.findIndex(p => p.id === photoId);
 
-        if (currentIndex < 0) {
+        if (currentIndex === -1) {
           this.router.navigate(['not-found'], { replaceUrl: true })
-            .catch((err: unknown) => { console.error(err); });
+            .catch((error: unknown) => { console.error(error); });
           return { previousPhotoId: '', nextPhotoId: '', error: 'Not found.', isLoading: false };
         } else {
           const currentPhoto = album.photos[currentIndex];
@@ -65,9 +65,9 @@ export class AlbumPageComponent {
       }),
     )),
     startWith({ previousPhotoId: '', nextPhotoId: '', isLoading: true } as AlbumPageVm),
-    catchError((err: unknown) => {
-      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
-      return of({ previousPhotoId: '', nextPhotoId: '', error: msg, isLoading: false } as AlbumPageVm);
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      return of({ previousPhotoId: '', nextPhotoId: '', error: message, isLoading: false } as AlbumPageVm);
     }),
   );
 }

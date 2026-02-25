@@ -10,7 +10,7 @@ import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry
 import { JsonLdBlogPostingComponent } from '@features/blog/components/json-ld-blog-posting/json-ld-blog-posting.component';
 import { DateComponent } from '@shared/components/date/date.component';
 import { MarkdownComponent } from '@shared/components/markdown/markdown.component';
-import parseErrorMessage from '@shared/parseErrorMessage';
+import parseErrorMessage from '@shared/parse-error-message';
 
 @Component({
   selector: 'app-blog-entry',
@@ -33,8 +33,8 @@ export class BlogEntryComponent {
   private readonly toastr = inject(ToastrService);
 
   vm$ = this.activatedRoute.paramMap.pipe(
-    map(params => {
-      const slug = params.get('slug');
+    map(parameters => {
+      const slug = parameters.get('slug');
       if (!slug) {
         throw new Error('Failed to get entry slug from URL.');
       }
@@ -42,29 +42,27 @@ export class BlogEntryComponent {
     }),
     switchMap(slug => this.blogService.getPost$(slug)),
     switchMap(post => {
-      if (post.photosAlbumSlug) {
-        return this.photosService.getAlbum$(post.photosAlbumSlug).pipe(
+      return post.photosAlbumSlug
+        ? this.photosService.getAlbum$(post.photosAlbumSlug).pipe(
           // Alert but don't prevent the entire post from loading.
-          catchError((err: unknown) => {
-            const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
-            this.toastr.error(msg, 'Failed to load photos.');
-            console.warn(msg, err);
-            return of(null);
+          catchError((error: unknown) => {
+            const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+            this.toastr.error(message, 'Failed to load photos.');
+            console.warn(message, error);
+            return of(undefined);
           }),
-          map(album => ({ post, postAlbum: album, isLoading: false, error: null })),
-        );
-      } else {
-        return of({ post, postAlbum: null, isLoading: false, error: null });
-      }
+          map(album => ({ post, postAlbum: album, isLoading: false, error: undefined })),
+        )
+        : of({ post, postAlbum: undefined, isLoading: false, error: undefined });
     }),
     switchMap(vm => this.auth.isAuthenticated$.pipe(
       startWith(false),
       map(isAuthenticated => ({ ...vm, showEdit: isAuthenticated })),
     )),
-    startWith({ post: null, postAlbum: null, isLoading: true, error: null }),
-    catchError((err: unknown) => {
-      const msg = parseErrorMessage(err) ?? 'An unknown error occurred.';
-      return of({ post: null, postAlbum: null, isLoading: false, error: msg });
+    startWith({ post: undefined, postAlbum: undefined, isLoading: true, error: undefined }),
+    catchError((error: unknown) => {
+      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
+      return of({ post: undefined, postAlbum: undefined, isLoading: false, error: message });
     }),
   );
 }

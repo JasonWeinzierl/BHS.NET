@@ -16,7 +16,7 @@ export class MarkdownComponent {
 
   readonly parsed = computed(() => {
     const data = this.data();
-    if (data == null) {
+    if (!data) {
       return '';
     }
     return marked.parse(data, {

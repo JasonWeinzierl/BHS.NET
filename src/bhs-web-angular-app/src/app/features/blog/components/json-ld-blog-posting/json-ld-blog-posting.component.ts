@@ -32,7 +32,7 @@ export class JsonLdBlogPostingComponent {
       'datePublished': post.datePublished.toISOString(),
       'dateModified': post.dateLastModified.toISOString(),
       'keywords': post.categories.map(category => category.name),
-    }, null, 2);
+    }, undefined, 2);
     const html = `<script type="application/ld+json">${json}</script>`;
 
     return this.sanitizer.bypassSecurityTrustHtml(html);

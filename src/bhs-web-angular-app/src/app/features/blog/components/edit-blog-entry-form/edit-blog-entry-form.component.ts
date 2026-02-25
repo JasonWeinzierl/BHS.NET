@@ -53,10 +53,10 @@ export class EditBlogEntryFormComponent {
     const currentAuthor = this.currentAuthor();
     return isChangingAuthor && currentAuthor
       ? `Author is changing from '${this.initialPost()?.author?.username ?? '(null)'}' to '${currentAuthor.username}'.`
-      : null;
+      : undefined;
   });
 
-  readonly isMacOS = /(macintosh|macinte|macppc|mac68k|macos)/.test(window.navigator.userAgent.toLowerCase());
+  readonly isMacOS = /(macintosh|macinte|macppc|mac68k|macos)/.test(globalThis.navigator.userAgent.toLowerCase());
 
   readonly contentSignal = toSignal(this.editFormGroup.controls.contentMarkdown.valueChanges);
 
@@ -100,7 +100,7 @@ export class EditBlogEntryFormComponent {
         }
 
         // Re-enable listener right before browser paints.
-        window.requestAnimationFrame(() => {
+        globalThis.requestAnimationFrame(() => {
           isScrolling = false;
         });
       };
@@ -123,9 +123,9 @@ export class EditBlogEntryFormComponent {
     const request: PostRequest = {
       title: raw.title,
       contentMarkdown: raw.contentMarkdown,
-      filePath: this.initialPost()?.filePath ?? null,
-      photosAlbumSlug: this.initialPost()?.photosAlbumSlug ?? null,
-      author: this.isChangingAuthor() ? this.currentAuthor() ?? null : this.initialPost()?.author ?? null, // TODO: support multiple authors.
+      filePath: this.initialPost()?.filePath ?? undefined,
+      photosAlbumSlug: this.initialPost()?.photosAlbumSlug ?? undefined,
+      author: this.isChangingAuthor() ? this.currentAuthor() ?? undefined : this.initialPost()?.author ?? undefined, // TODO: support multiple authors.
       datePublished: new Date(raw.publishDate),
       categories: this.allCategories().filter(c => raw.categories.includes(c.slug)).map(c => categorySchema.parse(c)),
     };

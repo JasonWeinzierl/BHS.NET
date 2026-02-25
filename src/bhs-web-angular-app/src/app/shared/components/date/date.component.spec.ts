@@ -24,8 +24,8 @@ describe('DateComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
 
     const timeElement = element.querySelector('time');
-    const titleAttr = timeElement?.getAttribute('title');
+    const titleAttribute = timeElement?.getAttribute('title');
 
-    expect(titleAttr).toContain(component.datetime().getFullYear().toString());
+    expect(titleAttribute).toContain(component.datetime().getFullYear().toString());
   });
 });
