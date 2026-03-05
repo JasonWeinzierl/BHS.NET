@@ -47,7 +47,7 @@
     "@stylistic/eslint-plugin": "^5.7.1",
     "@tailwindcss/postcss": "^4.2.1",
     "@tailwindcss/typography": "^0.5.19",
-    "@vitest/coverage-v8": "^4.0.17",
+    "@vitest/coverage-v8": "^4.0.18",
     "@vitest/eslint-plugin": "^1.6.9",
     "angular-eslint": "21.2.0",
     "daisyui": "^5.5.19",
@@ -64,7 +64,7 @@
     "eslint-plugin-rxjs-x": "~0.9.5",
     "eslint-plugin-unicorn": "^63.0.0",
     "globals": "^17.3.0",
-    "jsdom": "^27.4.0",
+    "jsdom": "^28.1.0",
     "jsonc-eslint-parser": "^3.1.0",
     "merge-partially": "^2.0.2",
     "postcss": "^8.5.8",
@@ -72,6 +72,6 @@
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.54.0",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.18"
   }
 }
