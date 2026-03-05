@@ -22,8 +22,8 @@ export class SimpleGitHubActionsSummaryReporter extends WDIOReporter {
       .finally(() => {
         this.pendingWrites.delete(suiteStats.uid);
       })
-      .catch((e: unknown) => {
-        core.error(e as Error);
+      .catch((error: unknown) => {
+        core.error(error as Error);
         core.error(`Failed to report test summary of suite ${suiteStats.uid} to GitHub Actions.`);
       });
   }
@@ -52,14 +52,14 @@ async function writeSummary(
   await core.summary
     .addHeading(`${suiteCapLabel}: ${suiteStats.title}`, 2)
     .addList([
-      suiteStats.description ? `<b>Description:</b> ${suiteStats.description}` : null,
+      suiteStats.description ? `<b>Description:</b> ${suiteStats.description}` : undefined,
       `<b>Duration:</b> ${prettyMilliseconds(suiteStats.duration)}`,
-      suiteStats.cid ? `<b>Log Prefix (Capability ID):</b> ${suiteStats.cid}` : null,
-      capabilities?.browserName ? `<b>Browser:</b> ${capabilities.browserName as string}` : null,
-      capabilities?.browserVersion ? `<b>Browser Version:</b> ${capabilities.browserVersion as string}` : null,
-      capabilities?.platformName ? `<b>Platform:</b> ${capabilities.platformName as string}` : null,
-      capabilities?.['appium:platformVersion'] ? `<b>Platform Version:</b> ${capabilities['appium:platformVersion'] as string}` : null,
-    ].filter(x => x !== null))
+      suiteStats.cid ? `<b>Log Prefix (Capability ID):</b> ${suiteStats.cid}` : undefined,
+      capabilities?.browserName ? `<b>Browser:</b> ${capabilities.browserName as string}` : undefined,
+      capabilities?.browserVersion ? `<b>Browser Version:</b> ${capabilities.browserVersion as string}` : undefined,
+      capabilities?.platformName ? `<b>Platform:</b> ${capabilities.platformName as string}` : undefined,
+      capabilities?.['appium:platformVersion'] ? `<b>Platform Version:</b> ${capabilities['appium:platformVersion'] as string}` : undefined,
+    ].filter(x => x != undefined))
     .addTable([
       [
         { data: 'Test', header: true },

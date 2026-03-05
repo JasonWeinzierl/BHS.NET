@@ -1,13 +1,12 @@
-/* eslint-disable import-x/no-named-as-default */
-/* eslint-disable import-x/no-named-as-default-member */
 // @ts-check
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
-import { defineConfig } from 'eslint/config';
 import gitignore from 'eslint-config-flat-gitignore';
-import importX from 'eslint-plugin-import-x';
 import n from 'eslint-plugin-n';
+import perfectionist from 'eslint-plugin-perfectionist';
+import unicorn from 'eslint-plugin-unicorn';
 import * as wdio from 'eslint-plugin-wdio';
+import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(gitignore(), {
@@ -18,6 +17,7 @@ export default defineConfig(gitignore(), {
   ],
   extends: [
     js.configs.recommended,
+    unicorn.configs.recommended,
     stylistic.configs['disable-legacy'],
     stylistic.configs.customize({
       quotes: 'single',
@@ -26,12 +26,11 @@ export default defineConfig(gitignore(), {
       braceStyle: '1tbs',
       commaDangle: 'always-multiline',
     }),
-    // @ts-expect-error
-    importX.flatConfigs.recommended,
-    // @ts-expect-error
-    importX.flatConfigs.typescript,
     n.configs['flat/recommended-module'],
   ],
+  plugins: {
+    perfectionist,
+  },
   rules: {
     '@stylistic/arrow-parens': 'off',
     '@stylistic/quote-props': [
@@ -42,28 +41,33 @@ export default defineConfig(gitignore(), {
     // Use zod to safely parse process.env.
     'n/no-process-env': 'error',
 
-    'sort-imports': [
+    'perfectionist/sort-imports': [
       'warn',
       {
-        ignoreCase: true,
-        ignoreDeclarationSort: true,
+        newlinesBetween: 0,
+        internalPattern: [
+          // From tsconfig paths, minus ng-mocks.
+          '^@(core|data|shared|features|env|app)/.+',
+        ],
       },
     ],
-    'import-x/order': [
-      'warn',
-      {
-        alphabetize: {
-          order: 'asc',
-          orderImportKind: 'asc',
-          caseInsensitive: true,
-        },
-      },
-    ],
+    'perfectionist/sort-named-imports': 'warn',
 
     'n/no-unsupported-features/node-builtins': [
       'error',
       {
         version: '24',
+      },
+    ],
+
+    'unicorn/prevent-abbreviations': [
+      'error',
+      {
+        ignore: [
+          String.raw`\.e2e$`,
+          String.raw`\.conf$`,
+          /^ignore/i,
+        ],
       },
     ],
   },
@@ -75,11 +79,6 @@ export default defineConfig(gitignore(), {
     tseslint.configs.strictTypeChecked,
     tseslint.configs.stylisticTypeChecked,
   ],
-  settings: {
-    'import-x/resolver': {
-      typescript: true,
-    },
-  },
   languageOptions: {
     parserOptions: {
       projectService: true,

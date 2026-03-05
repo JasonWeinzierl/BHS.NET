@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
-import { SimpleGitHubActionsSummaryReporter } from './test/wdio-reporters/SimpleGitHubActionsSummaryReporter';
+import { SimpleGitHubActionsSummaryReporter } from './test/wdio-reporters/simple-github-actions-summary-reporter';
 
-const defaultRunnerEnv: Record<string, string> = {
+const defaultRunnerEnvironment: Record<string, string> = {
   E2E_auth0Domain: 'dev-wz656qr7u8q11d84.us.auth0.com',
   E2E_auth0ClientId: 'MEQJ4p2Y10CLMRebfZAEV2o2zxJVNFk7',
   // These credentials do not work on any published app; this Auth0 tenant is for local development only.
@@ -53,10 +53,10 @@ export const config: WebdriverIO.Config = {
     }
 
     cfg.runnerEnv = {};
-    for (const key in defaultRunnerEnv) {
+    for (const key in defaultRunnerEnvironment) {
       // eslint-disable-next-line n/no-process-env
       if (process.env[key] === undefined) {
-        cfg.runnerEnv[key] = defaultRunnerEnv[key];
+        cfg.runnerEnv[key] = defaultRunnerEnvironment[key];
       }
     }
   },

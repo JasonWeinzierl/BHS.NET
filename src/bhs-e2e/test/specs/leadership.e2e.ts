@@ -1,4 +1,4 @@
-import appHeaderPage from '../pageobjects/appHeader.page';
+import appHeaderPage from '../pageobjects/app-header.page';
 import homePage from '../pageobjects/home.page';
 import organizationPage from '../pageobjects/organization.page';
 

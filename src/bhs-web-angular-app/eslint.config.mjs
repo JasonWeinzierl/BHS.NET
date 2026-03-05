@@ -1,6 +1,3 @@
-/* eslint-disable import-x/no-named-as-default */
-/* eslint-disable import-x/no-named-as-default-member */
-/* eslint-disable import-x/no-rename-default */
 // @ts-check
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
@@ -8,7 +5,6 @@ import vitest from '@vitest/eslint-plugin';
 import angular from 'angular-eslint';
 import gitignore from 'eslint-config-flat-gitignore';
 import tailwindcss from 'eslint-plugin-better-tailwindcss';
-import { importX } from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
 import packageJson from 'eslint-plugin-package-json';
 import perfectionist from 'eslint-plugin-perfectionist';
@@ -37,10 +33,6 @@ export default defineConfig(gitignore(), {
       braceStyle: '1tbs',
       commaDangle: 'always-multiline',
     }),
-    // @ts-expect-error -- community is struggling with growing pains right now and plugin types aren't type-compatible for now.
-    importX.flatConfigs.recommended,
-    // @ts-expect-error -- ditto.
-    importX.flatConfigs.typescript,
     jsdoc.configs['flat/recommended-mixed'],
     regexp.configs.recommended,
   ]),
@@ -139,8 +131,6 @@ export default defineConfig(gitignore(), {
     ],
     'perfectionist/sort-named-imports': 'warn',
 
-    'import-x/no-rename-default': 'warn',
-    'import-x/no-useless-path-segments': 'warn',
     // #endregion Imports
 
     // #region JSDoc
@@ -171,11 +161,6 @@ export default defineConfig(gitignore(), {
       ...globals.node,
     },
   },
-  settings: {
-    'import-x/resolver': {
-      node: true,
-    },
-  },
   // #endregion Config and Script files
 }, {
   files: [
@@ -186,11 +171,6 @@ export default defineConfig(gitignore(), {
     tseslint.configs.stylisticTypeChecked,
     rxjsX.configs.strict,
   ],
-  settings: {
-    'import-x/resolver': {
-      typescript: true,
-    },
-  },
   languageOptions: {
     parserOptions: {
       projectService: true,

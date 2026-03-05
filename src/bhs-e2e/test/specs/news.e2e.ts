@@ -1,6 +1,6 @@
 import { PostPreviewZodType, zPostPreview } from 'bhs-generated-models';
 import { Agent, fetch } from 'undici';
-import appHeaderPage from '../pageobjects/appHeader.page';
+import appHeaderPage from '../pageobjects/app-header.page';
 import blogPage from '../pageobjects/blog.page';
 import homePage from '../pageobjects/home.page';
 
@@ -24,7 +24,7 @@ describe('news', () => {
     expect(response.status).toBe(200);
 
     const posts = zPostPreview.array().parse(await response.json());
-    if (!posts.length) {
+    if (posts.length === 0) {
       throw new Error('No posts found. Cannot test UI without sample data.');
     }
     posts.sort((a, b) => b.datePublished.getTime() - a.datePublished.getTime());
@@ -49,7 +49,7 @@ describe('news', () => {
     await expect(firstPostPage.self).toBeDisplayed();
 
     await expect(firstPostPage.title).toHaveText(firstPost.title);
-    await expect(firstPostPage.contentPreview).toHaveText(expect.stringContaining(firstPost.contentPreview.replace(/\n\n*/g, ' ')));
+    await expect(firstPostPage.contentPreview).toHaveText(expect.stringContaining(firstPost.contentPreview.replaceAll(/\n\n*/g, ' ')));
     await expect(firstPostPage.postedInfo).toHaveText(expect.stringContaining(firstPost.datePublished.getFullYear().toString()));
     if (firstPost.author?.name) {
       await expect(firstPostPage.postedInfo).toHaveText(expect.stringContaining(firstPost.author.name));

@@ -1,5 +1,5 @@
 import Page from './page';
-import { PostCardPage } from './postCard.page';
+import { PostCardPage } from './post-card.page';
 
 class BlogPage extends Page {
   override open() {

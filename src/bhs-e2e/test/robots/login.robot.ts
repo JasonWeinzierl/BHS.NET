@@ -1,9 +1,9 @@
 import * as core from '@actions/core';
-import getRunnerEnv from '../get-runner-env';
+import getRunnerEnvironment from '../get-runner-environment';
 
 class LoginRobot {
   async loginFromEnvironmentVariables() {
-    const runnerEnv = getRunnerEnv();
+    const runnerEnvironment = getRunnerEnvironment();
 
     const baseUrl = browser.options.baseUrl;
     if (!baseUrl) {
@@ -13,9 +13,10 @@ class LoginRobot {
     await browser.url(baseUrl + '/admin');
 
     const result = await browser.waitUntil(async () => {
-      if ((await browser.getUrl()).startsWith(`https://${runnerEnv.E2E_auth0Domain}/`)) {
+      const url = await browser.getUrl();
+      if (url.startsWith(`https://${runnerEnvironment.E2E_auth0Domain}/`)) {
         return 'ready-for-login';
-      } else if (await this.isUserLoggedIn(runnerEnv.E2E_auth0ClientId)) {
+      } else if (await this.isUserLoggedIn(runnerEnvironment.E2E_auth0ClientId)) {
         return 'logged-in';
       } else {
         await browser.url(baseUrl + '/admin');
@@ -23,7 +24,7 @@ class LoginRobot {
       }
     }, {
       timeout: 100_000,
-      interval: 2_000,
+      interval: 2000,
       timeoutMsg: 'Timed out waiting for Auth0 redirect.',
     });
 
@@ -32,16 +33,17 @@ class LoginRobot {
       return;
     }
 
-    await $('input#username').setValue(runnerEnv.E2E_auth0TestUsername);
-    await $('input#password').setValue(runnerEnv.E2E_auth0TestPassword);
+    await $('input#username').setValue(runnerEnvironment.E2E_auth0TestUsername);
+    await $('input#password').setValue(runnerEnvironment.E2E_auth0TestPassword);
     await $('button[value=default], button[type=submit]').click();
 
     await browser.waitUntil(async () => {
-      return (await browser.getUrl()).startsWith(baseUrl);
+      const url = await browser.getUrl();
+      return url.startsWith(baseUrl);
     }, { timeoutMsg: 'Timed out waiting for redirect after Auth0 login.' });
 
     await browser.waitUntil(async () => {
-      return this.isUserLoggedIn(runnerEnv.E2E_auth0ClientId);
+      return this.isUserLoggedIn(runnerEnvironment.E2E_auth0ClientId);
     }, { timeoutMsg: 'Timed out waiting for Auth0 to persist to storage.' });
   }
 
