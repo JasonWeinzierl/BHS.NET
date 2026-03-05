@@ -42,6 +42,7 @@ internal sealed class SendGridHealthCheck : IHealthCheck
         {
             SendGridStatusIndicator.None => HealthCheckResult.Healthy(description),
             SendGridStatusIndicator.Minor => HealthCheckResult.Degraded(description),
+            SendGridStatusIndicator.Maintenance => HealthCheckResult.Degraded(description),
             _ => HealthCheckResult.Unhealthy(description),
         };
     }
@@ -57,5 +58,6 @@ internal sealed class SendGridHealthCheck : IHealthCheck
         Minor,
         Major,
         Critical,
+        Maintenance,
     }
 }
