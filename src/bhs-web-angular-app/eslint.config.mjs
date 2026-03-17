@@ -5,6 +5,7 @@ import vitest from '@vitest/eslint-plugin';
 import angular from 'angular-eslint';
 import gitignore from 'eslint-config-flat-gitignore';
 import tailwindcss from 'eslint-plugin-better-tailwindcss';
+import importX from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
 import packageJson from 'eslint-plugin-package-json';
 import perfectionist from 'eslint-plugin-perfectionist';
@@ -33,6 +34,8 @@ export default defineConfig(gitignore(), {
       braceStyle: '1tbs',
       commaDangle: 'always-multiline',
     }),
+    importX.flatConfigs.recommended,
+    importX.flatConfigs.typescript,
     jsdoc.configs['flat/recommended-mixed'],
     regexp.configs.recommended,
   ]),
@@ -131,6 +134,8 @@ export default defineConfig(gitignore(), {
     ],
     'perfectionist/sort-named-imports': 'warn',
 
+    'import-x/no-rename-default': 'warn',
+    'import-x/no-useless-path-segments': 'warn',
     // #endregion Imports
 
     // #region JSDoc
@@ -161,6 +166,11 @@ export default defineConfig(gitignore(), {
       ...globals.node,
     },
   },
+  settings: {
+    'import-x/resolver': {
+      node: true,
+    },
+  },
   // #endregion Config and Script files
 }, {
   files: [
@@ -171,6 +181,11 @@ export default defineConfig(gitignore(), {
     tseslint.configs.stylisticTypeChecked,
     rxjsX.configs.strict,
   ],
+  settings: {
+    'import-x/resolver': {
+      typescript: true,
+    },
+  },
   languageOptions: {
     parserOptions: {
       projectService: true,
