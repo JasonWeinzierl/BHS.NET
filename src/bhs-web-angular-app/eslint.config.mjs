@@ -1,3 +1,6 @@
+/* eslint-disable import-x/no-named-as-default-member */
+/* eslint-disable import-x/no-named-as-default */
+/* eslint-disable import-x/no-rename-default */
 // @ts-check
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
