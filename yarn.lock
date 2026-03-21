@@ -4623,7 +4623,7 @@ __metadata:
     eslint-plugin-perfectionist: "npm:^5.6.0"
     eslint-plugin-regexp: "npm:^3.0.0"
     eslint-plugin-rxjs-angular-x: "npm:^1.0.0"
-    eslint-plugin-rxjs-x: "npm:^1.0.0"
+    eslint-plugin-rxjs-x: "npm:^1.0.1"
     eslint-plugin-unicorn: "npm:^63.0.0"
     globals: "npm:^17.3.0"
     jsdom: "npm:^28.1.0"
@@ -6273,21 +6273,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-rxjs-x@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "eslint-plugin-rxjs-x@npm:1.0.0"
+"eslint-plugin-rxjs-x@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "eslint-plugin-rxjs-x@npm:1.0.1"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.56.0"
     decamelize: "npm:^6.0.1"
     ts-api-utils: "npm:^2.4.0"
   peerDependencies:
-    eslint: ^10.0.0
+    eslint: ^10.0.1
     rxjs: ^7.2.0
     typescript: ">=4.8.4 <6.0.0"
   peerDependenciesMeta:
     rxjs:
       optional: true
-  checksum: 10c0/c408085fe2c78abd5fc6eac56d39875e27dc7c927bcd933295fcc23b82c236892da4d1c4beb4f1d770fc97d7835489460a9d2dd908509e35754de06e77d9e1a1
+  checksum: 10c0/2c664fd7df187152af6599dbbfc5ff4fe4886c47a13eec842e510750b14db46fc3a0ccfce5a335f18d0d5dc1652daebba675bb024f466794ce69eb72d733c92d
   languageName: node
   linkType: hard
 
