@@ -9,31 +9,33 @@
     "strict": true,
 
     /* Modules */
-    "baseUrl": "./",
     "module": "Preserve",
     "noUncheckedSideEffectImports": true,
     "paths": {
+      "*": [
+        "./*",
+      ],
       "@core/*": [
-        "src/app/core/*"
+        "./src/app/core/*"
       ],
       "@data/*": [
-        "src/app/data/*"
+        "./src/app/data/*"
       ],
       "@shared/*": [
-        "src/app/shared/*"
+        "./src/app/shared/*"
       ],
       "@features/*": [
-        "src/app/features/*"
+        "./src/app/features/*"
       ],
       "@env": [
-        "src/environments/environment"
+        "./src/environments/environment"
       ],
       "@app/*": [
-        "src/app/*"
+        "./src/app/*"
       ],
       // Shim until we find a better mocking library.
       "ng-mocks": [
-        "src/mocks/index.ts"
+        "./src/mocks/index.ts"
       ]
     },
 

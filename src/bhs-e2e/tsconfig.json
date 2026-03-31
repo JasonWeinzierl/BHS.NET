@@ -26,7 +26,6 @@
         "noEmit": true,
 
         /* Interop Constraints */
-        "esModuleInterop": true,
         "isolatedModules": true,
 
         /* Language and Environment */
