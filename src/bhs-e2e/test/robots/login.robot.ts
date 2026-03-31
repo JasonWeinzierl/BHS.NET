@@ -49,6 +49,7 @@ class LoginRobot {
 
   private async isUserLoggedIn(auth0ClientId: string): Promise<boolean> {
     return (await browser.execute(clientId => {
+      // eslint-disable-next-line n/no-unsupported-features/node-builtins -- this is running in the browser.
       return localStorage.getItem(`@@auth0spajs@@::${clientId}::@@user@@`);
     }, auth0ClientId)) !== null;
   }
