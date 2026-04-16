@@ -1,4 +1,4 @@
-namespace BHS.Domain.Banners;
+﻿namespace BHS.Domain.Banners;
 
 public class InvalidBannerIdException : Exception
 {

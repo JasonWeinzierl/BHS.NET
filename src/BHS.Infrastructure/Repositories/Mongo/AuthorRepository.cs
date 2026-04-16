@@ -1,4 +1,4 @@
-using BHS.Contracts;
+﻿using BHS.Contracts;
 using BHS.Domain.Authors;
 using MongoDB.Driver;
 

@@ -16,12 +16,12 @@ internal sealed record SiteBannerDto(
         {
             new(startDate, true)
         };
-        
+
         if (endDate.HasValue)
         {
             statusChanges.Add(new(endDate.Value, false));
         }
-        
+
         return new(ObjectId.GenerateNewId(now.UtcDateTime), (byte)theme, lead, body, statusChanges);
     }
 }

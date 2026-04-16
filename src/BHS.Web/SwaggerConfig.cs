@@ -78,7 +78,7 @@ internal static class SwaggerConfig
                     [schemeReference] = [], // Empty because the array is only used for OAuth2 scopes.
                 }
             ];
-            
+
             return Task.CompletedTask;
         }
     }

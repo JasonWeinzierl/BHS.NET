@@ -98,11 +98,11 @@ public class ResourceLifecycleTests : IClassFixture<BhsWebApplicationFactory<Pro
     {
         // CREATE
         var createRequest = new SiteBannerRequest(AlertTheme.Success, "Hello", "world");
-        
+
         using var createResponse = await _httpClient.PostAsJsonAsync("/api/banners", createRequest, TestContext.Current.CancellationToken);
         var newBanner = await createResponse.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<SiteBannerHistory>(TestContext.Current.CancellationToken);
         Assert.NotNull(newBanner);
-        
+
         // GET CURRENT
         var currentBanners = await _httpClient.GetFromJsonAsync<IEnumerable<SiteBanner>>("/api/banners/current", TestContext.Current.CancellationToken);
         Assert.NotNull(currentBanners);
