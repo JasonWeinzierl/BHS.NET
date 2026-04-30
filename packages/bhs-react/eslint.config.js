@@ -1,13 +1,12 @@
 // https://docs.expo.dev/guides/using-eslint/
-const { defineConfig } = require('eslint/config');
+const { defineConfig, globalIgnores } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const tailwindcss = require('eslint-plugin-better-tailwindcss');
+const packageJson = require('eslint-plugin-package-json');
 
 module.exports = defineConfig([
+  globalIgnores(['dist/*']),
   expoConfig,
-  {
-    ignores: ['dist/*'],
-  },
   {
     extends: [
       tailwindcss.configs.recommended,
@@ -34,4 +33,13 @@ module.exports = defineConfig([
       ],
     },
   },
+  {
+    files: [
+      'package.json',
+    ],
+    extends: [
+      packageJson.configs.recommended,
+      packageJson.configs.stylistic,
+    ],
+  }
 ]);

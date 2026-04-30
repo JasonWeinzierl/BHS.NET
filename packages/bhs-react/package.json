@@ -1,7 +1,9 @@
 {
   "name": "bhs-react",
+  "private": true,
+  "description": "expo rewrite of the BHS frontend",
+  "type": "commonjs",
   "main": "expo-router/entry",
-  "version": "1.0.0",
   "scripts": {
     "android": "expo start --android",
     "build-web": "expo export --platform web",
@@ -46,7 +48,8 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "eslint-plugin-better-tailwindcss": "^4.5.0",
+    "eslint-plugin-package-json": "^0.91.1",
+    "jsonc-eslint-parser": "^3.1.0",
     "typescript": "~5.9.2"
-  },
-  "private": true
+  }
 }
