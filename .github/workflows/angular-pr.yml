@@ -7,7 +7,6 @@ on:
     - main
     paths:
     - src/bhs-web-angular-app/**
-    - yarn.lock
 
 env:
   CLIENTAPP_PATH: ./src/bhs-web-angular-app
