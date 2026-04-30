@@ -21,7 +21,7 @@ public sealed class BhsWebApplicationFactory<TProgram> : WebApplicationFactory<T
     {
         _mongoRunner = MongoRunner.Run(new MongoRunnerOptions
         {
-            Version = MongoVersion.V6, // Must align with terraform-managed MongoDB version.
+            Version = MongoVersion.V7, // Must align with terraform-managed MongoDB version.
             MongoPort = 27018,
             StandardOutputLogger = null,
         });
