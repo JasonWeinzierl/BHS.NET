@@ -23,5 +23,5 @@ jobs:
       working-directory: packages/bhs-react
     - run: yarn lint
       working-directory: packages/bhs-react
-    - run: yarn tsc
+    - run: yarn build-web
       working-directory: packages/bhs-react
