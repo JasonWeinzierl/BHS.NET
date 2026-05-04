@@ -7,7 +7,6 @@ on:
     - main
     paths:
     - BHS.slnx
-    - packages/**
     - src/**
     - tests/**
     - yarn.lock
