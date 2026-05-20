@@ -4749,6 +4749,23 @@ __metadata:
 "bhs@workspace:.":
   version: 0.0.0-use.local
   resolution: "bhs@workspace:."
+  dependenciesMeta:
+    "@parcel/watcher":
+      built: true
+    browser-tabs-lock:
+      built: false
+    edgedriver:
+      built: true
+    esbuild:
+      built: true
+    geckodriver:
+      built: true
+    lmdb:
+      built: true
+    msgpackr-extract:
+      built: true
+    unrs-resolver:
+      built: false
   languageName: unknown
   linkType: soft
 

@@ -10,5 +10,31 @@
   },
   "scripts": {
     "codegen": "dotnet build src/BHS.Web && yarn models:build"
+  },
+  "dependenciesMeta": {
+    "@parcel/watcher": {
+      "built": true
+    },
+    "browser-tabs-lock": {
+      "built": false
+    },
+    "edgedriver": {
+      "built": true
+    },
+    "esbuild": {
+      "built": true
+    },
+    "geckodriver": {
+      "built": true
+    },
+    "lmdb": {
+      "built": true
+    },
+    "msgpackr-extract": {
+      "built": true
+    },
+    "unrs-resolver": {
+      "built": false
+    }
   }
 }
