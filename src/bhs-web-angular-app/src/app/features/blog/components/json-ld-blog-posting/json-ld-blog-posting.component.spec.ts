@@ -10,7 +10,7 @@ describe('JsonLdBlogPostingComponent', () => {
     await TestBed.configureTestingModule({
       imports: [JsonLdBlogPostingComponent],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(JsonLdBlogPostingComponent);
     component = fixture.componentInstance;
@@ -25,7 +25,7 @@ describe('JsonLdBlogPostingComponent', () => {
         name: 'Test Author',
         username: 'testauthor',
       },
-    } as Post);
+    } satisfies Partial<Post>);
     fixture.detectChanges();
   });
 

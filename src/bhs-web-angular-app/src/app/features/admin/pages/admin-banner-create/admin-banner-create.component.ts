@@ -42,6 +42,7 @@ export default class AdminBannerCreateComponent {
   });
 
   readonly bannerModel = signal({
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     theme: AlertTheme.Primary as AlertTheme,
     lead: '',
     body: '',
@@ -112,7 +113,7 @@ export default class AdminBannerCreateComponent {
       lead: formValue.lead || undefined,
       body: formValue.body || undefined,
       endDate: formValue.hasEndDate ? new Date(formValue.endDate) : undefined,
-    // eslint-disable-next-line rxjs-angular-x/prefer-async-pipe, rxjs-x/no-ignored-subscription
+      // eslint-disable-next-line rxjs-angular-x/prefer-async-pipe, rxjs-x/no-ignored-subscription
     }).subscribe({
       next: () => {
         this.successSignal.set(true);
