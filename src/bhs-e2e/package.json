@@ -31,14 +31,14 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/jasmine": "^5.1.15",
     "@types/node": "^24.10.13",
-    "eslint": "^10.2.0",
+    "eslint": "^10.4.0",
     "eslint-config-flat-gitignore": "^2.3.0",
-    "eslint-plugin-n": "^17.24.0",
-    "eslint-plugin-perfectionist": "^5.8.0",
+    "eslint-plugin-n": "^18.0.1",
+    "eslint-plugin-perfectionist": "^5.9.0",
     "eslint-plugin-unicorn": "^64.0.0",
     "eslint-plugin-wdio": "^9.27.1",
-    "globals": "^17.5.0",
+    "globals": "^17.6.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.58.2"
+    "typescript-eslint": "^8.59.4"
   }
 }
