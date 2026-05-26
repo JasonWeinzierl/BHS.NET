@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <PackageJsonName Condition="$(PackageJsonName) == ''">bhs-web-angular-app</PackageJsonName>
+    <PackageJsonVersion Condition="$(PackageJsonVersion) == ''">0.0.0</PackageJsonVersion>
+    <PackageJsonPrivate Condition="$(PackageJsonPrivate) == ''">true</PackageJsonPrivate>
+    <PackageJsonDescription Condition="$(PackageJsonDescription) == ''">Client-side Angular application for BHS.NET</PackageJsonDescription>
+    <PackageJsonType Condition="$(PackageJsonType) == ''">commonjs</PackageJsonType>
+    <PackageJsonScriptsBuild Condition="$(PackageJsonScriptsBuild) == ''">node ../bhs-generated-models/check-codegen.mjs &amp;&amp; ng build</PackageJsonScriptsBuild>
+    <PackageJsonScriptsBuildRelease Condition="$(PackageJsonScriptsBuildRelease) == ''">ng build --configuration release</PackageJsonScriptsBuildRelease>
+    <PackageJsonScriptsClean Condition="$(PackageJsonScriptsClean) == ''">ng cache clean</PackageJsonScriptsClean>
+    <PackageJsonScriptsLint Condition="$(PackageJsonScriptsLint) == ''">ng lint</PackageJsonScriptsLint>
+    <PackageJsonScriptsStart Condition="$(PackageJsonScriptsStart) == ''">ng serve</PackageJsonScriptsStart>
+    <PackageJsonScriptsStartProxy Condition="$(PackageJsonScriptsStartProxy) == ''">node scripts/aspnetcore-https.mjs &amp;&amp; run-script-os</PackageJsonScriptsStartProxy>
+    <PackageJsonScriptsStartProxyDefault Condition="$(PackageJsonScriptsStartProxyDefault) == ''">ng serve --configuration proxy --ssl-cert "$HOME/.aspnet/https/$npm_package_name.pem" --ssl-key "$HOME/.aspnet/https/$npm_package_name.key"</PackageJsonScriptsStartProxyDefault>
+    <PackageJsonScriptsStartProxyWindows Condition="$(PackageJsonScriptsStartProxyWindows) == ''">ng serve --configuration proxy --ssl-cert "%APPDATA%\ASP.NET\https\%npm_package_name%.pem" --ssl-key "%APPDATA%\ASP.NET\https\%npm_package_name%.key"</PackageJsonScriptsStartProxyWindows>
+    <PackageJsonScriptsTest Condition="$(PackageJsonScriptsTest) == ''">ng test</PackageJsonScriptsTest>
+    <PackageJsonScriptsTestCi Condition="$(PackageJsonScriptsTestCi) == ''">ng test --configuration ci</PackageJsonScriptsTestCi>
+    <PackageJsonScriptsTransformRelease Condition="$(PackageJsonScriptsTransformRelease) == ''">node scripts/transform-release.mjs</PackageJsonScriptsTransformRelease>
+    <PackageJsonDependenciesAngularAnimations Condition="$(PackageJsonDependenciesAngularAnimations) == ''">21.2.13</PackageJsonDependenciesAngularAnimations>
+    <PackageJsonDependenciesAngularCommon Condition="$(PackageJsonDependenciesAngularCommon) == ''">21.2.13</PackageJsonDependenciesAngularCommon>
+    <PackageJsonDependenciesAngularCompiler Condition="$(PackageJsonDependenciesAngularCompiler) == ''">21.2.13</PackageJsonDependenciesAngularCompiler>
+    <PackageJsonDependenciesAngularCore Condition="$(PackageJsonDependenciesAngularCore) == ''">21.2.13</PackageJsonDependenciesAngularCore>
+    <PackageJsonDependenciesAngularForms Condition="$(PackageJsonDependenciesAngularForms) == ''">21.2.13</PackageJsonDependenciesAngularForms>
+    <PackageJsonDependenciesAngularPlatformBrowser Condition="$(PackageJsonDependenciesAngularPlatformBrowser) == ''">21.2.13</PackageJsonDependenciesAngularPlatformBrowser>
+    <PackageJsonDependenciesAngularRouter Condition="$(PackageJsonDependenciesAngularRouter) == ''">21.2.13</PackageJsonDependenciesAngularRouter>
+    <PackageJsonDependenciesAuth0Auth0Angular Condition="$(PackageJsonDependenciesAuth0Auth0Angular) == ''">^2.7.0</PackageJsonDependenciesAuth0Auth0Angular>
+    <PackageJsonDependenciesMicrosoftApplicationinsightsAnalyticsJs Condition="$(PackageJsonDependenciesMicrosoftApplicationinsightsAnalyticsJs) == ''">3.3.11</PackageJsonDependenciesMicrosoftApplicationinsightsAnalyticsJs>
+    <PackageJsonDependenciesMicrosoftApplicationinsightsAngularpluginJs Condition="$(PackageJsonDependenciesMicrosoftApplicationinsightsAngularpluginJs) == ''">^15.3.8</PackageJsonDependenciesMicrosoftApplicationinsightsAngularpluginJs>
+    <PackageJsonDependenciesMicrosoftApplicationinsightsWeb Condition="$(PackageJsonDependenciesMicrosoftApplicationinsightsWeb) == ''">^3.3.11</PackageJsonDependenciesMicrosoftApplicationinsightsWeb>
+    <PackageJsonDependenciesStandardSchemaSpec Condition="$(PackageJsonDependenciesStandardSchemaSpec) == ''">^1.1.0</PackageJsonDependenciesStandardSchemaSpec>
+    <PackageJsonDependenciesBhsGeneratedModels Condition="$(PackageJsonDependenciesBhsGeneratedModels) == ''">workspace:^</PackageJsonDependenciesBhsGeneratedModels>
+    <PackageJsonDependenciesBootstrapIcons Condition="$(PackageJsonDependenciesBootstrapIcons) == ''">1.13.1</PackageJsonDependenciesBootstrapIcons>
+    <PackageJsonDependenciesJwtDecode Condition="$(PackageJsonDependenciesJwtDecode) == ''">^4.0.0</PackageJsonDependenciesJwtDecode>
+    <PackageJsonDependenciesMarked Condition="$(PackageJsonDependenciesMarked) == ''">^17.0.4</PackageJsonDependenciesMarked>
+    <PackageJsonDependenciesNgxToastr Condition="$(PackageJsonDependenciesNgxToastr) == ''">^20.0.5</PackageJsonDependenciesNgxToastr>
+    <PackageJsonDependenciesPrettyMs Condition="$(PackageJsonDependenciesPrettyMs) == ''">^9.3.0</PackageJsonDependenciesPrettyMs>
+    <PackageJsonDependenciesRxjs Condition="$(PackageJsonDependenciesRxjs) == ''">^7.8.2</PackageJsonDependenciesRxjs>
+    <PackageJsonDependenciesTslib Condition="$(PackageJsonDependenciesTslib) == ''">^2.8.1</PackageJsonDependenciesTslib>
+    <PackageJsonDependenciesZod Condition="$(PackageJsonDependenciesZod) == ''">^4.3.5</PackageJsonDependenciesZod>
+    <PackageJsonDevdependenciesAngularBuild Condition="$(PackageJsonDevdependenciesAngularBuild) == ''">^21.2.11</PackageJsonDevdependenciesAngularBuild>
+    <PackageJsonDevdependenciesAngularCli Condition="$(PackageJsonDevdependenciesAngularCli) == ''">21.2.11</PackageJsonDevdependenciesAngularCli>
+    <PackageJsonDevdependenciesAngularCompilerCli Condition="$(PackageJsonDevdependenciesAngularCompilerCli) == ''">21.2.13</PackageJsonDevdependenciesAngularCompilerCli>
+    <PackageJsonDevdependenciesEslintJs Condition="$(PackageJsonDevdependenciesEslintJs) == ''">^10.0.1</PackageJsonDevdependenciesEslintJs>
+    <PackageJsonDevdependenciesStylisticEslintPlugin Condition="$(PackageJsonDevdependenciesStylisticEslintPlugin) == ''">^5.10.0</PackageJsonDevdependenciesStylisticEslintPlugin>
+    <PackageJsonDevdependenciesTailwindcssPostcss Condition="$(PackageJsonDevdependenciesTailwindcssPostcss) == ''">^4.3.0</PackageJsonDevdependenciesTailwindcssPostcss>
+    <PackageJsonDevdependenciesTailwindcssTypography Condition="$(PackageJsonDevdependenciesTailwindcssTypography) == ''">^0.5.19</PackageJsonDevdependenciesTailwindcssTypography>
+    <PackageJsonDevdependenciesVitestCoverageV8 Condition="$(PackageJsonDevdependenciesVitestCoverageV8) == ''">^4.0.18</PackageJsonDevdependenciesVitestCoverageV8>
+    <PackageJsonDevdependenciesVitestEslintPlugin Condition="$(PackageJsonDevdependenciesVitestEslintPlugin) == ''">^1.6.17</PackageJsonDevdependenciesVitestEslintPlugin>
+    <PackageJsonDevdependenciesAngularEslint Condition="$(PackageJsonDevdependenciesAngularEslint) == ''">21.4.0</PackageJsonDevdependenciesAngularEslint>
+    <PackageJsonDevdependenciesDaisyui Condition="$(PackageJsonDevdependenciesDaisyui) == ''">^5.5.19</PackageJsonDevdependenciesDaisyui>
+    <PackageJsonDevdependenciesEslint Condition="$(PackageJsonDevdependenciesEslint) == ''">^10.4.0</PackageJsonDevdependenciesEslint>
+    <PackageJsonDevdependenciesEslintConfigFlatGitignore Condition="$(PackageJsonDevdependenciesEslintConfigFlatGitignore) == ''">^2.3.0</PackageJsonDevdependenciesEslintConfigFlatGitignore>
+    <PackageJsonDevdependenciesEslintImportResolverTypescript Condition="$(PackageJsonDevdependenciesEslintImportResolverTypescript) == ''">^4.4.4</PackageJsonDevdependenciesEslintImportResolverTypescript>
+    <PackageJsonDevdependenciesEslintPluginBetterTailwindcss Condition="$(PackageJsonDevdependenciesEslintPluginBetterTailwindcss) == ''">~4.3.2</PackageJsonDevdependenciesEslintPluginBetterTailwindcss>
+    <PackageJsonDevdependenciesEslintPluginImportX Condition="$(PackageJsonDevdependenciesEslintPluginImportX) == ''">^4.16.2</PackageJsonDevdependenciesEslintPluginImportX>
+    <PackageJsonDevdependenciesEslintPluginJsdoc Condition="$(PackageJsonDevdependenciesEslintPluginJsdoc) == ''">^63.0.0</PackageJsonDevdependenciesEslintPluginJsdoc>
+    <PackageJsonDevdependenciesEslintPluginPackageJson Condition="$(PackageJsonDevdependenciesEslintPluginPackageJson) == ''">^1.1.0</PackageJsonDevdependenciesEslintPluginPackageJson>
+    <PackageJsonDevdependenciesEslintPluginPerfectionist Condition="$(PackageJsonDevdependenciesEslintPluginPerfectionist) == ''">^5.9.0</PackageJsonDevdependenciesEslintPluginPerfectionist>
+    <PackageJsonDevdependenciesEslintPluginRegexp Condition="$(PackageJsonDevdependenciesEslintPluginRegexp) == ''">^3.1.0</PackageJsonDevdependenciesEslintPluginRegexp>
+    <PackageJsonDevdependenciesEslintPluginRxjsAngularX Condition="$(PackageJsonDevdependenciesEslintPluginRxjsAngularX) == ''">^1.0.1</PackageJsonDevdependenciesEslintPluginRxjsAngularX>
+    <PackageJsonDevdependenciesEslintPluginRxjsX Condition="$(PackageJsonDevdependenciesEslintPluginRxjsX) == ''">^1.0.2</PackageJsonDevdependenciesEslintPluginRxjsX>
+    <PackageJsonDevdependenciesEslintPluginUnicorn Condition="$(PackageJsonDevdependenciesEslintPluginUnicorn) == ''">^64.0.0</PackageJsonDevdependenciesEslintPluginUnicorn>
+    <PackageJsonDevdependenciesGlobals Condition="$(PackageJsonDevdependenciesGlobals) == ''">^17.6.0</PackageJsonDevdependenciesGlobals>
+    <PackageJsonDevdependenciesJsdom Condition="$(PackageJsonDevdependenciesJsdom) == ''">^28.1.0</PackageJsonDevdependenciesJsdom>
+    <PackageJsonDevdependenciesJsoncEslintParser Condition="$(PackageJsonDevdependenciesJsoncEslintParser) == ''">^3.1.0</PackageJsonDevdependenciesJsoncEslintParser>
+    <PackageJsonDevdependenciesMergePartially Condition="$(PackageJsonDevdependenciesMergePartially) == ''">^2.0.2</PackageJsonDevdependenciesMergePartially>
+    <PackageJsonDevdependenciesPostcss Condition="$(PackageJsonDevdependenciesPostcss) == ''">^8.5.15</PackageJsonDevdependenciesPostcss>
+    <PackageJsonDevdependenciesRunScriptOs Condition="$(PackageJsonDevdependenciesRunScriptOs) == ''">^1.1.6</PackageJsonDevdependenciesRunScriptOs>
+    <PackageJsonDevdependenciesTailwindcss Condition="$(PackageJsonDevdependenciesTailwindcss) == ''">^4.3.0</PackageJsonDevdependenciesTailwindcss>
+    <PackageJsonDevdependenciesTypescript Condition="$(PackageJsonDevdependenciesTypescript) == ''">~5.9.3</PackageJsonDevdependenciesTypescript>
+    <PackageJsonDevdependenciesTypescriptEslint Condition="$(PackageJsonDevdependenciesTypescriptEslint) == ''">^8.59.4</PackageJsonDevdependenciesTypescriptEslint>
+    <PackageJsonDevdependenciesVitest Condition="$(PackageJsonDevdependenciesVitest) == ''">^4.0.18</PackageJsonDevdependenciesVitest>
+  </PropertyGroup>
+</Project>
