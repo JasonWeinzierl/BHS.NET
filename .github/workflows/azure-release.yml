@@ -11,6 +11,8 @@ on:
     - tests/**
     - yarn.lock
 
+permissions: {}
+
 env:
   WEB_SRC_PATH: src/BHS.Web
   WEB_PUBLISH_PATH: artifacts/publish/BHS.Web/release
@@ -22,34 +24,37 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
 
     - name: Run actions/checkout with fetch-depth 0
-      uses: actions/checkout@v6
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       with:
         fetch-depth: 0
+        persist-credentials: false
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v5
+      uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7 # v5
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
     - name: Setup GitVersion
-      uses: gittools/actions/gitversion/setup@v3.1
+      uses: gittools/actions/gitversion/setup@b4372b9a14557a67171fe7292bf2f92b657c26a3 # v3.1
       with:
         versionSpec: '5.x'
 
     - run: corepack enable
     - name: Setup Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
       with:
         node-version: ${{ env.NODE_VERSION }}
 
 
     - name: Run gitversion
       id: gitversion
-      uses: gittools/actions/gitversion/execute@v3.1
+      uses: gittools/actions/gitversion/execute@b4372b9a14557a67171fe7292bf2f92b657c26a3 # v3.1
       with:
         useConfigFile: true
 
@@ -57,16 +62,23 @@ jobs:
       run: |
         echo "### GitVersion" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- SEMANTIC_VERSION: ${{ steps.gitversion.outputs.fullSemVer }}" >> $GITHUB_STEP_SUMMARY
-        echo "- INFORMATIONAL_VERSION: ${{ steps.gitversion.outputs.informationalVersion }}" >> $GITHUB_STEP_SUMMARY
-        echo "- COMMIT_DATE: ${{ steps.gitversion.outputs.commitDate }}" >> $GITHUB_STEP_SUMMARY
+        echo "- SEMANTIC_VERSION: ${STEPS_GITVERSION_OUTPUTS_FULLSEMVER}" >> $GITHUB_STEP_SUMMARY
+        echo "- INFORMATIONAL_VERSION: ${STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION}" >> $GITHUB_STEP_SUMMARY
+        echo "- COMMIT_DATE: ${STEPS_GITVERSION_OUTPUTS_COMMITDATE}" >> $GITHUB_STEP_SUMMARY
+      env:
+        STEPS_GITVERSION_OUTPUTS_FULLSEMVER: ${{ steps.gitversion.outputs.fullSemVer }}
+        STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION: ${{ steps.gitversion.outputs.informationalVersion }}
+        STEPS_GITVERSION_OUTPUTS_COMMITDATE: ${{ steps.gitversion.outputs.commitDate }}
 
 
     - name: Run dotnet restore
       run: dotnet restore
 
     - name: Run dotnet build
-      run: dotnet build --no-restore --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} -p:Version="${{ steps.gitversion.outputs.fullSemVer }}" -p:InformationalVersion="${{ steps.gitversion.outputs.informationalVersion }}"
+      run: dotnet build --no-restore --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} -p:Version="${STEPS_GITVERSION_OUTPUTS_FULLSEMVER}" -p:InformationalVersion="${STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION}"
+      env:
+        STEPS_GITVERSION_OUTPUTS_FULLSEMVER: ${{ steps.gitversion.outputs.fullSemVer }}
+        STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION: ${{ steps.gitversion.outputs.informationalVersion }}
 
     - name: Run dotnet test
       run: dotnet test --no-build --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} --verbosity normal
@@ -95,7 +107,7 @@ jobs:
       run: dotnet publish "${{ env.WEB_SRC_PATH }}" --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} --no-build
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
       with:
         name: webapp
         path: ${{ env.WEB_PUBLISH_PATH }}
@@ -115,18 +127,18 @@ jobs:
     steps:
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v8
+      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
       with:
         name: webapp
         path: ${{ env.WEB_PUBLISH_PATH }}
 
     - name: Azure Login
-      uses: azure/login@v3
+      uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
       with:
         creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
     - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v3
+      uses: azure/webapps-deploy@02a81bead70021f5284939794bcec79c271ab383 # v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.WEB_PUBLISH_PATH }}
@@ -138,7 +150,8 @@ jobs:
     with:
       environment: staging
       bail: true
-    secrets: inherit
+    secrets:
+      CYPRESS_AUTH0_TEST_PASSWORD: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
 
 
   deploy-prod:
@@ -156,18 +169,18 @@ jobs:
     steps:
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v8
+      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
       with:
         name: webapp
         path: ${{ env.WEB_PUBLISH_PATH }}
 
     - name: Azure Login
-      uses: azure/login@v3
+      uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
       with:
         creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
     - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v3
+      uses: azure/webapps-deploy@02a81bead70021f5284939794bcec79c271ab383 # v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.WEB_PUBLISH_PATH }}
@@ -179,4 +192,5 @@ jobs:
     with:
       environment: production
       bail: true
-    secrets: inherit
+    secrets:
+      CYPRESS_AUTH0_TEST_PASSWORD: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
