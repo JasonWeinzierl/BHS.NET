@@ -18,14 +18,14 @@
     "transform-release": "node scripts/transform-release.mjs"
   },
   "dependencies": {
-    "@angular/animations": "21.2.13",
-    "@angular/common": "21.2.13",
-    "@angular/compiler": "21.2.13",
-    "@angular/core": "21.2.13",
-    "@angular/forms": "21.2.13",
-    "@angular/platform-browser": "21.2.13",
-    "@angular/router": "21.2.13",
-    "@auth0/auth0-angular": "^2.7.0",
+    "@angular/animations": "22.0.0",
+    "@angular/common": "22.0.0",
+    "@angular/compiler": "22.0.0",
+    "@angular/core": "22.0.0",
+    "@angular/forms": "22.0.0",
+    "@angular/platform-browser": "22.0.0",
+    "@angular/router": "22.0.0",
+    "@auth0/auth0-angular": "^2.9.0",
     "@microsoft/applicationinsights-analytics-js": "3.3.11",
     "@microsoft/applicationinsights-angularplugin-js": "^15.3.8",
     "@microsoft/applicationinsights-web": "^3.3.11",
@@ -41,15 +41,15 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@angular/build": "^21.2.11",
-    "@angular/cli": "21.2.11",
-    "@angular/compiler-cli": "21.2.13",
+    "@angular/build": "^22.0.0",
+    "@angular/cli": "22.0.0",
+    "@angular/compiler-cli": "22.0.0",
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/typography": "^0.5.19",
-    "@vitest/coverage-v8": "^4.0.18",
-    "@vitest/eslint-plugin": "^1.6.17",
+    "@vitest/coverage-v8": "^4.1.8",
+    "@vitest/eslint-plugin": "^1.6.19",
     "angular-eslint": "21.4.0",
     "daisyui": "^5.5.19",
     "eslint": "^10.4.0",
@@ -71,8 +71,8 @@
     "postcss": "^8.5.15",
     "run-script-os": "^1.1.6",
     "tailwindcss": "^4.3.0",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.3",
     "typescript-eslint": "^8.59.4",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.8"
   }
 }
