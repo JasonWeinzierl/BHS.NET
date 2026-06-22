@@ -28,6 +28,10 @@ export const config: WebdriverIO.Config = {
         'window-size=1920,1080',
       ],
     },
+    'wdio:chromedriverOptions': {
+      // eslint-disable-next-line n/no-process-env
+      binary: process.env['CHROMEDRIVER_PATH'],
+    },
   }, {
     browserName: 'firefox',
     'moz:firefoxOptions': {
