@@ -20,6 +20,7 @@ export const config: WebdriverIO.Config = {
   maxInstances: 10,
   capabilities: [{
     browserName: 'chrome',
+    browserVersion: 'stable',
     'goog:chromeOptions': {
       args: [
         'headless',
