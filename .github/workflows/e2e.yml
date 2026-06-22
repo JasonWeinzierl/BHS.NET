@@ -62,6 +62,8 @@ jobs:
     - run: yarn workspaces focus bhs-generated-models
     - run: yarn codegen
 
+    - uses: browser-actions/setup-chrome@v2
+
     - run: yarn workspaces focus bhs-e2e
       working-directory: ${{ env.E2E_DIRECTORY }}
 
