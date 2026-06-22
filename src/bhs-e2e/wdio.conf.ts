@@ -21,6 +21,8 @@ export const config: WebdriverIO.Config = {
   capabilities: [{
     browserName: 'chrome',
     'goog:chromeOptions': {
+      // eslint-disable-next-line n/no-process-env
+      binary: process.env['CHROME_PATH'],
       args: [
         'headless',
         'window-size=1920,1080',
