@@ -25,6 +25,8 @@ export const config: WebdriverIO.Config = {
       binary: process.env['CHROME_PATH'],
       args: [
         'headless',
+        'no-sandbox',
+        'disable-dev-shm-usage',
         'window-size=1920,1080',
       ],
     },
@@ -46,6 +48,8 @@ export const config: WebdriverIO.Config = {
     'ms:edgeOptions': {
       args: [
         'headless',
+        'no-sandbox',
+        'disable-dev-shm-usage',
         'window-size=1920,1080',
       ],
     },
