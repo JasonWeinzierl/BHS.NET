@@ -56,7 +56,7 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
         cache: yarn
 
-    - uses: actions/setup-dotnet@v5
+    - uses: actions/setup-dotnet@v6
       with:
         dotnet-version: '10.0.x'
     - run: yarn workspaces focus bhs-generated-models
