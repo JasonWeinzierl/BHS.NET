@@ -27,10 +27,10 @@ internal sealed class SendGridHealthCheck : IHealthCheck
 
     public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
-        // See https://status.sendgrid.com/api for API documentation.
+        // See https://status.twilio.com/api for API documentation.
 
         using var client = _httpClientFactory.CreateClient("SendGridStatus");
-        var response = await client.GetAsync("https://status.sendgrid.com/api/v2/status.json", cancellationToken);
+        var response = await client.GetAsync("https://status.twilio.com/api/v2/status.json", cancellationToken);
 
         if (!response.IsSuccessStatusCode)
             return HealthCheckResult.Unhealthy(response.ReasonPhrase);
