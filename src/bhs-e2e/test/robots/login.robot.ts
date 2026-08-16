@@ -24,7 +24,7 @@ class LoginRobot {
       }
     }, {
       timeout: 100_000,
-      interval: 2000,
+      interval: 1800 + 400 * Math.random(),
       timeoutMsg: 'Timed out waiting for Auth0 redirect.',
     });
 

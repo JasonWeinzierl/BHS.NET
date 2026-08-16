@@ -4,6 +4,9 @@ import adminPage from '../pageobjects/admin.page';
 import homePage from '../pageobjects/home.page';
 import loginRobot from '../robots/login.robot';
 
+// The site can take a while to start up.
+const WARMUP_TIME = 60_000 + 10_000 * Math.random();
+
 describe('liveness', () => {
   it('should pass the health check', async () => {
     if (!browser.options.baseUrl) {
@@ -27,7 +30,7 @@ describe('liveness', () => {
     if (body === 'Degraded') {
       core.warning('The health check reports Degraded.');
     }
-  }, 61_000); // The site can take a while to start up.
+  }, WARMUP_TIME);
 
   it('should login and logout', async () => {
     await loginRobot.loginFromEnvironmentVariables();

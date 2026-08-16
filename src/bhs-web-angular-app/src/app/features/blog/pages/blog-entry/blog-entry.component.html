@@ -62,7 +62,7 @@
           Categories:
           @for (cat of vm.post.categories; track cat.slug) {
             <a [routerLink]="['/apps/blog/category', cat.slug]"
-              class="btn me-2 btn-outline btn-sm btn-secondary">
+              class="btn me-2 btn-outline btn-secondary btn-sm">
               {{cat.name}}
             </a>
           }
