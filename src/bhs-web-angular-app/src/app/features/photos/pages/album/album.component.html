@@ -19,8 +19,8 @@
         <h1>
           {{vm.album.name}}
         </h1>
-        @if (vm.album.author?.name) {
-          <p class="opacity-70">Provided by {{vm.album.author?.name}}</p>
+        @if (vm.album.author?.name; as name) {
+          <p class="opacity-70">Provided by {{name}}</p>
         }
         <p>{{vm.album.description}}</p>
         @if (vm.album.blogPostSlug) {

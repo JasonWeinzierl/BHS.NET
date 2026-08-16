@@ -28,7 +28,7 @@
               @if (banner.isEnabled) {
                 <button
                   type="button"
-                  class="btn btn-outline btn-sm btn-error"
+                  class="btn btn-outline btn-error btn-sm"
                   [disabled]="deletingBannerIdSignal()"
                   (click)="onDeleteBanner(banner.id, $event)"
                   title="Hide this banner (disable immediately)"

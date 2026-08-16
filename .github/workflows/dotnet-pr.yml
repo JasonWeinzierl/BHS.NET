@@ -29,11 +29,11 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
 
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: Setup dotnet
-      uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7 # v5
+      uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
       with:
         dotnet-version: '10.0.x'
     - run: dotnet restore
@@ -41,8 +41,15 @@ jobs:
       run: dotnet build --no-restore --configuration Release
     - name: Run dotnet test
       run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
-    - name: Code Coverage
-      uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 # v1.3.0
+    - name: Summarize coverage
+      uses: danielpalme/ReportGenerator-GitHub-Action@v5
       if: runner.os == 'Linux'
       with:
-        filename: coverage/**/coverage.cobertura.xml
+        reports: coverage/**/coverage.cobertura.xml
+        targetdir: coverage-summary
+        reporttypes: TextSummary;MarkdownSummaryGithub
+    - name: Publish coverage
+      if: runner.os == 'Linux'
+      run: |
+        cat coverage-summary/Summary.txt
+        cat coverage-summary/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"

@@ -37,4 +37,8 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+
 </Project>

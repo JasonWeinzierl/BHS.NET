@@ -50,22 +50,27 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
 
     - run: corepack enable
     - name: Setup Node.js with caching
-      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: yarn
 
-    - uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7 # v5
+    - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
       with:
         dotnet-version: '10.0.x'
     - run: yarn workspaces focus bhs-generated-models
     - run: yarn codegen
+
+    - uses: browser-actions/setup-chrome@v2
+      id: setup-chrome
+      with:
+        install-chromedriver: true
 
     - run: yarn workspaces focus bhs-e2e
       working-directory: ${{ env.E2E_DIRECTORY }}
@@ -75,6 +80,8 @@ jobs:
       run: yarn e2e --baseUrl=${VARS_CYPRESS_BASE_URL} --spec=liveness ${{ inputs.smoke != true && '--reporters=spec' || '' }}
       working-directory: ${{ env.E2E_DIRECTORY }}
       env:
+        CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+        CHROMEDRIVER_PATH: ${{ steps.setup-chrome.outputs.chromedriver-path }}
         E2E_auth0Domain: ${{ vars.CYPRESS_AUTH0_DOMAIN }}
         E2E_auth0ClientId: ${{ vars.CYPRESS_AUTH0_CLIENT_ID }}
         E2E_auth0TestUsername: ${{ vars.CYPRESS_AUTH0_TEST_USERNAME }}
@@ -87,6 +94,8 @@ jobs:
       run: yarn e2e --baseUrl=${VARS_CYPRESS_BASE_URL}
       working-directory: ${{ env.E2E_DIRECTORY }}
       env:
+        CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+        CHROMEDRIVER_PATH: ${{ steps.setup-chrome.outputs.chromedriver-path }}
         E2E_auth0Domain: ${{ vars.CYPRESS_AUTH0_DOMAIN }}
         E2E_auth0ClientId: ${{ vars.CYPRESS_AUTH0_CLIENT_ID }}
         E2E_auth0TestUsername: ${{ vars.CYPRESS_AUTH0_TEST_USERNAME }}

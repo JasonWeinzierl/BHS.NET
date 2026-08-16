@@ -21,10 +21,18 @@ export const config: WebdriverIO.Config = {
   capabilities: [{
     browserName: 'chrome',
     'goog:chromeOptions': {
+      // eslint-disable-next-line n/no-process-env
+      binary: process.env['CHROME_PATH'],
       args: [
         'headless',
+        'no-sandbox',
+        'disable-dev-shm-usage',
         'window-size=1920,1080',
       ],
+    },
+    'wdio:chromedriverOptions': {
+      // eslint-disable-next-line n/no-process-env
+      binary: process.env['CHROMEDRIVER_PATH'],
     },
   }, {
     browserName: 'firefox',
@@ -40,6 +48,8 @@ export const config: WebdriverIO.Config = {
     'ms:edgeOptions': {
       args: [
         'headless',
+        'no-sandbox',
+        'disable-dev-shm-usage',
         'window-size=1920,1080',
       ],
     },

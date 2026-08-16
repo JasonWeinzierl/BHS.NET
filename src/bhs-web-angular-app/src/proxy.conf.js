@@ -1,11 +1,11 @@
 // @ts-check
-import { env } from 'process';
+import { env } from 'node:process';
 
 const target = env.ASPNETCORE_HTTPS_PORT
   ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`
-  : env.ASPNETCORE_URLS
+  : (env.ASPNETCORE_URLS
     ? env.ASPNETCORE_URLS.split(';')[0]
-    : 'https://localhost:5001';
+    : 'https://localhost:5001');
 
 const PROXY_CONFIG = [
   {
