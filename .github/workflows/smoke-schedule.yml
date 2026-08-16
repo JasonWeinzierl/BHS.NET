@@ -4,17 +4,21 @@ on:
   schedule:
   - cron: '49 11 * * 6' # 11:49 UTC on Saturdays
   
+permissions: {}
+
 jobs:
   smoke-test-stage:
     uses: ./.github/workflows/e2e.yml
     with:
       environment: staging
       smoke: true
-    secrets: inherit
+    secrets:
+      CYPRESS_AUTH0_TEST_PASSWORD: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
 
   smoke-test-prod:
     uses: ./.github/workflows/e2e.yml
     with:
       environment: production
       smoke: true
-    secrets: inherit
+    secrets:
+      CYPRESS_AUTH0_TEST_PASSWORD: ${{ secrets.CYPRESS_AUTH0_TEST_PASSWORD }}
