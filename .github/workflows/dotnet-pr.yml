@@ -42,7 +42,7 @@ jobs:
     - name: Run dotnet test
       run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
     - name: Summarize coverage
-      uses: danielpalme/ReportGenerator-GitHub-Action@v5
+      uses: danielpalme/ReportGenerator-GitHub-Action@d3ebf1f760f7d8ab92cc44d9bcfee7ad73722a31 # v5.5.11
       if: runner.os == 'Linux'
       with:
         reports: coverage/**/coverage.cobertura.xml
