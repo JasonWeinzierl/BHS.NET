@@ -148,6 +148,8 @@ jobs:
 
   e2e-test-stage:
     needs: deploy-stage
+    permissions:
+      contents: read
     uses: ./.github/workflows/e2e.yml
     with:
       environment: staging
@@ -190,6 +192,8 @@ jobs:
 
   e2e-test-prod:
     needs: deploy-prod
+    permissions:
+      contents: read
     uses: ./.github/workflows/e2e.yml
     with:
       environment: production
