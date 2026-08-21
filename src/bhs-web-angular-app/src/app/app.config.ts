@@ -3,7 +3,7 @@ import { ApplicationConfig, ErrorHandler, inject, provideAppInitializer, provide
 import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
-import { provideToastr, ToastNoAnimation } from 'ngx-toastr';
+import { provideToastr, ToastNoAnimation } from '@openng/ngx-toastr';
 import { provideBhsAuth0Config } from '@core/providers/auth0-config.provider';
 import { BhsTitleStrategy } from '@core/services/bhs-title-strategy';
 import { InsightsService } from '@core/services/insights.service';

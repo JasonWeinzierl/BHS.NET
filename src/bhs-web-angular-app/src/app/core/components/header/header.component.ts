@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@openng/ngx-toastr';
 import { catchError, of, scan, startWith, Subject, switchMap } from 'rxjs';
 import { SiteBannerService } from '@data/banners';
 import parseErrorMessage from '@shared/parse-error-message';

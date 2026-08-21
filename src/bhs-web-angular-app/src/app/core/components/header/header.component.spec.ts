@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { ToastrService } from '@openng/ngx-toastr';
 import { MockProvider } from 'ng-mocks';
-import { ToastrService } from 'ngx-toastr';
 import { EMPTY } from 'rxjs';
 import { SiteBannerService } from '@data/banners';
 import { HeaderComponent } from './header.component';

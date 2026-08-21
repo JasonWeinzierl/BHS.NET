@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@openng/ngx-toastr';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';

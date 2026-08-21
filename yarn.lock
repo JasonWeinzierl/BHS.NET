@@ -2879,6 +2879,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@openng/ngx-toastr@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@openng/ngx-toastr@npm:1.0.0"
+  dependencies:
+    tslib: "npm:^2.8.1"
+  peerDependencies:
+    "@angular/common": ^21.0.0
+    "@angular/core": ^21.0.0
+    rxjs: ^7.8.2
+  checksum: 10c0/b78f68e0e04ddd29f368dd2d11c38b0cc8cad1f5147b3d0d52321d28fcdb63890a122e20e15f7dc0d4388664fb3654b5f534aaf87bdf2d65fd044b8754f72502
+  languageName: node
+  linkType: hard
+
 "@oxc-project/types@npm:=0.133.0":
   version: 0.133.0
   resolution: "@oxc-project/types@npm:0.133.0"
@@ -5111,6 +5124,7 @@ __metadata:
     "@microsoft/applicationinsights-analytics-js": "npm:3.4.3"
     "@microsoft/applicationinsights-angularplugin-js": "npm:^15.4.1"
     "@microsoft/applicationinsights-web": "npm:^3.4.3"
+    "@openng/ngx-toastr": "npm:^1.0.0"
     "@standard-schema/spec": "npm:^1.1.0"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@tailwindcss/postcss": "npm:^4.3.3"
@@ -5139,7 +5153,6 @@ __metadata:
     jwt-decode: "npm:^4.0.0"
     marked: "npm:^17.0.4"
     merge-partially: "npm:^2.0.2"
-    ngx-toastr: "npm:^20.0.5"
     postcss: "npm:^8.5.23"
     pretty-ms: "npm:^9.3.0"
     run-script-os: "npm:^1.1.6"
@@ -9537,19 +9550,6 @@ __metadata:
   version: 2.0.2
   resolution: "netmask@npm:2.0.2"
   checksum: 10c0/cafd28388e698e1138ace947929f842944d0f1c0b87d3fa2601a61b38dc89397d33c0ce2c8e7b99e968584b91d15f6810b91bef3f3826adf71b1833b61d4bf4f
-  languageName: node
-  linkType: hard
-
-"ngx-toastr@npm:^20.0.5":
-  version: 20.0.5
-  resolution: "ngx-toastr@npm:20.0.5"
-  dependencies:
-    tslib: "npm:^2.8.1"
-  peerDependencies:
-    "@angular/common": ^21.0.0
-    "@angular/core": ^21.0.0
-    rxjs: ^7.8.2
-  checksum: 10c0/362360481f340af030bf8f762cc73ce6a4117a72b7eb89e1f0749918c9be615bb23767b4d952975e17f676f1aea1bbe43ca35c8202bb5269a3e18dfb00305ed5
   languageName: node
   linkType: hard
 

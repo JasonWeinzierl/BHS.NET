@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { ActiveToast, ToastrService } from '@openng/ngx-toastr';
 import { MockProvider } from 'ng-mocks';
-import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { of, throwError } from 'rxjs';
 import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';
