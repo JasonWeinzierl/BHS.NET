@@ -29,7 +29,7 @@
     "@microsoft/applicationinsights-analytics-js": "3.4.3",
     "@microsoft/applicationinsights-angularplugin-js": "^15.4.1",
     "@microsoft/applicationinsights-web": "^3.4.3",
-    "@openng/ngx-toastr": "^1.0.0",
+    "@openng/ngx-toastr": "^1.1.0",
     "@standard-schema/spec": "^1.1.0",
     "bhs-generated-models": "workspace:^",
     "bootstrap-icons": "1.13.1",

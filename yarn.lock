@@ -2879,16 +2879,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openng/ngx-toastr@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@openng/ngx-toastr@npm:1.0.0"
+"@openng/ngx-toastr@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@openng/ngx-toastr@npm:1.1.0"
   dependencies:
     tslib: "npm:^2.8.1"
   peerDependencies:
-    "@angular/common": ^21.0.0
-    "@angular/core": ^21.0.0
+    "@angular/common": ^20.0.0 || ^21.0.0 || ^22.0.0
+    "@angular/core": ^20.0.0 || ^21.0.0 || ^22.0.0
+    "@angular/platform-browser": ^20.0.0 || ^21.0.0 || ^22.0.0
     rxjs: ^7.8.2
-  checksum: 10c0/b78f68e0e04ddd29f368dd2d11c38b0cc8cad1f5147b3d0d52321d28fcdb63890a122e20e15f7dc0d4388664fb3654b5f534aaf87bdf2d65fd044b8754f72502
+  checksum: 10c0/2636812420cb093380e0075ba736ef63c7b5a4fe2a68d92d3cffc944f67e254b6122976869ff8e05fa711a10ae71191452585a26bcbf9ab18e0bc475aeac8acb
   languageName: node
   linkType: hard
 
@@ -5124,7 +5125,7 @@ __metadata:
     "@microsoft/applicationinsights-analytics-js": "npm:3.4.3"
     "@microsoft/applicationinsights-angularplugin-js": "npm:^15.4.1"
     "@microsoft/applicationinsights-web": "npm:^3.4.3"
-    "@openng/ngx-toastr": "npm:^1.0.0"
+    "@openng/ngx-toastr": "npm:^1.1.0"
     "@standard-schema/spec": "npm:^1.1.0"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@tailwindcss/postcss": "npm:^4.3.3"
