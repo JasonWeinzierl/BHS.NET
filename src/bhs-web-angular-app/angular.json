@@ -71,7 +71,7 @@
             },
             "proxy": {
               "buildTarget": "::debug",
-              "proxyConfig": "src/proxy.conf.js",
+              "proxyConfig": "src/proxy.conf.mjs",
               "ssl": true,
               "host": "127.0.0.1"
             }
