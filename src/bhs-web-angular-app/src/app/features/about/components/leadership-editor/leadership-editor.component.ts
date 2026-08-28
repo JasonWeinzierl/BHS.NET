@@ -47,14 +47,16 @@ export class LeadershipEditorComponent {
     const officerByTitle = new Map(this.officers().map(officer => [officer.title, officer]));
     const today = new Date().toISOString().slice(0, 10);
     return {
-      officers: (this.officesResource.hasValue() ? this.officesResource.value() : []).map(office => {
-        const officer = officerByTitle.get(office.title);
-        return {
-          title: office.title,
-          name: officer?.name ?? '',
-          dateStarted: officer?.dateStarted.toISOString().slice(0, 10) ?? today,
-        };
-      }),
+      officers: (this.officesResource.hasValue() ? this.officesResource.value() : [])
+        .toSorted((a, b) => a.sortOrder - b.sortOrder)
+        .map(office => {
+          const officer = officerByTitle.get(office.title);
+          return {
+            title: office.title,
+            name: officer?.name ?? '',
+            dateStarted: officer?.dateStarted.toISOString().slice(0, 10) ?? today,
+          };
+        }),
       directors: this.directors().map(director => ({
         name: director.name,
         year: Number(director.year),
