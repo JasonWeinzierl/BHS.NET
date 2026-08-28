@@ -21,7 +21,8 @@
   "files.associations": {
     "*.css": "tailwindcss",
   },
-  "typescript.preferences.autoImportSpecifierExcludeRegexes": [
+  "js/ts.preferences.autoImportSpecifierExcludeRegexes": [
     "^zod$",
   ],
+  "js/ts.tsdk.path": "./src/bhs-web-angular-app/node_modules/typescript/lib"
 }
