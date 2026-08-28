@@ -240,12 +240,82 @@ public class EndpointTests(BhsWebApplicationFactory<Program> factory) : IClassFi
     }
 
     [Fact]
+    public async Task Leadership_UpdateOfficers()
+    {
+        var position = new OfficeRequest("President", 1);
+
+        using var createResponse = await _httpClient.PostAsJsonAsync("/api/leadership/offices", position, TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.NoContent, createResponse.StatusCode);
+        Assert.Empty(await createResponse.Content.ReadAsByteArrayAsync(TestContext.Current.CancellationToken));
+
+        var dateStarted = DateTimeOffset.FromUnixTimeMilliseconds(DateTimeOffset.UtcNow.AddMinutes(-1).ToUnixTimeMilliseconds());
+        OfficerRequest[] invalidRequest =
+        [
+            new("President", "Jane Doe", dateStarted),
+            new("Treasurer", "John Doe", dateStarted),
+        ];
+
+        using var invalidResponse = await _httpClient.PutAsJsonAsync("/api/leadership/officers", invalidRequest, TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.BadRequest, invalidResponse.StatusCode);
+        var officersAfterInvalidRequest = await _httpClient.GetFromJsonAsync<IEnumerable<Officer>>("/api/leadership/officers", TestContext.Current.CancellationToken);
+        Assert.Empty(Assert.IsAssignableFrom<IEnumerable<Officer>>(officersAfterInvalidRequest));
+
+        OfficerRequest[] request = [new("President", "Jane Doe", dateStarted)];
+
+        using var response = await _httpClient.PutAsJsonAsync("/api/leadership/officers", request, TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var officers = await response.Content.ReadFromJsonAsync<IEnumerable<Officer>>(TestContext.Current.CancellationToken);
+
+        Assert.NotNull(officers);
+        var officer = Assert.Single(officers);
+
+        Assert.Equal("President", officer.Title);
+        Assert.Equal("Jane Doe", officer.Name);
+        Assert.Equal(dateStarted, officer.DateStarted);
+
+        using var deleteResponse = await _httpClient.DeleteAsync($"/api/leadership/offices/{position.Title}", TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+    }
+
+    [Fact]
     public async Task Leadership_GetDirectors()
     {
         var directors = await _httpClient.GetFromJsonAsync<IEnumerable<Director>>("/api/leadership/directors", TestContext.Current.CancellationToken);
 
         Assert.NotNull(directors);
         Assert.Empty(directors);
+    }
+
+    [Fact]
+    public async Task Leadership_AddDirectors()
+    {
+        int year = DateTimeOffset.UtcNow.Year;
+        DirectorRequest[] request = [new("John Doe", year), new("Jane Doe", year + 1)];
+
+        using var response = await _httpClient.PostAsJsonAsync("/api/leadership/directors", request, TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var directors = await response.Content.ReadFromJsonAsync<IEnumerable<Director>>(TestContext.Current.CancellationToken);
+
+        Assert.NotNull(directors);
+        Assert.Collection(directors,
+            director => Assert.Equal(new Director("John Doe", year.ToString()), director),
+            director => Assert.Equal(new Director("Jane Doe", (year + 1).ToString()), director));
+
+        foreach (var director in request)
+        {
+            string escapedName = Uri.EscapeDataString(director.Name);
+
+            using var deleteResponse = await _httpClient.DeleteAsync($"/api/leadership/directors/{director.Year}/{escapedName}", TestContext.Current.CancellationToken);
+
+            Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+        }
     }
 
     [Fact]

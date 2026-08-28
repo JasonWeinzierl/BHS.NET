@@ -1,5 +1,6 @@
 ﻿using BHS.Domain.Banners;
 using BHS.Domain.ContactUs;
+using BHS.Domain.Leadership;
 using BHS.Domain.Photos;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,7 @@ public class ErrorController : ControllerBase
         exception switch
         {
             InvalidContactRequestException => StatusCodes.Status400BadRequest,
+            InvalidOfficeTitlesException => StatusCodes.Status400BadRequest,
             InvalidPhotoIdException => StatusCodes.Status400BadRequest,
             InvalidBannerIdException => StatusCodes.Status400BadRequest,
 
