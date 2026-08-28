@@ -18,7 +18,6 @@
     "transform-release": "node scripts/transform-release.mjs"
   },
   "dependencies": {
-    "@angular/animations": "22.0.7",
     "@angular/common": "22.0.7",
     "@angular/compiler": "22.0.7",
     "@angular/core": "22.0.7",
