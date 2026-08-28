@@ -25,6 +25,7 @@ public class ClientAppEnvironmentController : ControllerBase
             AppInsights = new
             {
                 ConnectionString = _configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"],
+                UserOverrideEndpointUrl = _configuration["APPLICATIONINSIGHTS_PROXY_URL"],
             },
             Auth0 = new
             {

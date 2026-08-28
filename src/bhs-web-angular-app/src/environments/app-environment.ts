@@ -4,6 +4,7 @@ import { z } from 'zod';
 export const APP_ENVIRONMENT_VALIDATOR = z.object({
   appInsights: z.object({
     connectionString: z.string().nullish(),
+    userOverrideEndpointUrl: z.string().nullish(),
   }).optional(),
   auth0: z.object({
     domain: z.string(),

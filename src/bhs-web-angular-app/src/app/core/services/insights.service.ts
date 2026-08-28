@@ -15,6 +15,7 @@ export class InsightsService {
   private readonly appInsights = new ApplicationInsights({
     config: {
       connectionString: this.env.appInsights?.connectionString ?? undefined,
+      userOverrideEndpointUrl: this.env.appInsights?.userOverrideEndpointUrl ?? undefined,
 
       enableCorsCorrelation: true,
       enableRequestHeaderTracking: true,
