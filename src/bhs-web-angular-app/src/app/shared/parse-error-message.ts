@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { ZodError } from 'zod';
 
 /**
  * Gets an error message from an `unknown`.
@@ -6,6 +7,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export default function parseErrorMessage(
   error: unknown,
 ): string | undefined {
+  if (error instanceof ZodError) {
+    return 'Validation error: ' + error.issues.map(issue => issue.message).join(', ');
+  }
   if (
     error instanceof Error
     || error instanceof HttpErrorResponse
