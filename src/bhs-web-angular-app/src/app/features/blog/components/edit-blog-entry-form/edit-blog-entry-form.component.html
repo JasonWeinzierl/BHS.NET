@@ -54,7 +54,14 @@
   </fieldset>
 
   <div class="flex gap-2">
-    <button type="submit" class="btn btn-primary">Publish</button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!canPublishSignal()"
+      [class.tooltip]="!canPublishSignal()"
+      [class.tooltip-info]="!canPublishSignal()"
+      [attr.data-tip]="'You do not have permission to publish blog posts.'"
+    >Publish</button>
     <a class="btn btn-error" role="link" [routerLink]="cancelRoute()">Cancel</a>
   </div>
 

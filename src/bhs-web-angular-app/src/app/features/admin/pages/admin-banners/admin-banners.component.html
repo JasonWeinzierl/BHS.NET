@@ -6,7 +6,16 @@
     </div>
     <div class="mb-2 flex items-center justify-between border-b-2 border-b-primary pb-2">
       <h2>Banners</h2>
-      <a class="btn btn-primary" [routerLink]="['/admin/banners/create']">
+      <a
+        class="btn btn-primary"
+        [routerLink]="canWriteBannersSignal() ? ['/admin/banners/create'] : undefined"
+        [class.btn-disabled]="!canWriteBannersSignal()"
+        [class.tooltip]="!canWriteBannersSignal()"
+        [class.tooltip-info]="!canWriteBannersSignal()"
+        [attr.aria-disabled]="!canWriteBannersSignal()"
+        [attr.data-tip]="'You do not have permission to create banners.'"
+        data-testid="AdminBanners-Create"
+      >
         <i class="bi bi-plus-circle"></i>
         Create Banner
       </a>
@@ -29,7 +38,11 @@
                 <button
                   type="button"
                   class="btn btn-outline btn-error btn-sm"
-                  [disabled]="deletingBannerIdSignal()"
+                  [disabled]="!canWriteBannersSignal() || deletingBannerIdSignal()"
+                  [class.tooltip]="!canWriteBannersSignal()"
+                  [class.tooltip-info]="!canWriteBannersSignal()"
+                  [attr.data-tip]="'You do not have permission to hide banners.'"
+                  data-testid="AdminBanners-Hide"
                   (click)="onDeleteBanner(banner.id, $event)"
                   title="Hide this banner (disable immediately)"
                 >

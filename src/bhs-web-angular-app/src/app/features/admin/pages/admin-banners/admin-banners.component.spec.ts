@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { PermissionsService } from '@core/services/permissions.service';
 import { SiteBannerService } from '@data/banners';
 import { SiteBannerHistory } from '@data/banners/models/site-banner-history';
 import AdminBannersComponent from './admin-banners.component';
@@ -10,9 +11,11 @@ describe('AdminBannersComponent', () => {
   let component: AdminBannersComponent;
   let fixture: ComponentFixture<AdminBannersComponent>;
   let bannersSubject$: Subject<Array<SiteBannerHistory>>;
+  let canWriteBannersSubject$: BehaviorSubject<boolean>;
 
   beforeEach(async () => {
     bannersSubject$ = new Subject();
+    canWriteBannersSubject$ = new BehaviorSubject(false);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -23,13 +26,16 @@ describe('AdminBannersComponent', () => {
         MockProvider(SiteBannerService, {
           getHistory$: () => bannersSubject$,
         }),
+        MockProvider(PermissionsService, {
+          hasPermission$: () => canWriteBannersSubject$.asObservable(),
+        }),
       ],
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(AdminBannersComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {
@@ -43,7 +49,32 @@ describe('AdminBannersComponent', () => {
     expect(loadingElement?.textContent).toContain('Loading...');
   });
 
-  it('should show banners after data is loaded', () => {
+  it('should only enable banner actions with banner permission', async () => {
+    bannersSubject$.next([{
+      id: 'abc',
+      lead: 'Test Banner',
+      body: 'This is a test banner',
+      theme: 'Info',
+      statusChanges: [{ dateModified: new Date('2023-01-01'), isEnabled: true }],
+    }]);
+    await fixture.whenStable();
+    const element = fixture.nativeElement as HTMLElement;
+    const createLink = element.querySelector<HTMLAnchorElement>('[data-testid="AdminBanners-Create"]');
+    const hideButton = element.querySelector<HTMLButtonElement>('[data-testid="AdminBanners-Hide"]');
+
+    expect(createLink?.getAttribute('href')).toBeNull();
+    expect(createLink?.getAttribute('aria-disabled')).toBe('true');
+    expect(hideButton?.disabled).toBe(true);
+
+    canWriteBannersSubject$.next(true);
+    await fixture.whenStable();
+
+    expect(createLink?.getAttribute('href')).toBe('/admin/banners/create');
+    expect(createLink?.getAttribute('aria-disabled')).toBe('false');
+    expect(hideButton?.disabled).toBe(false);
+  });
+
+  it('should show banners after data is loaded', async () => {
     bannersSubject$.next([
       {
         id: 'abc',
@@ -60,7 +91,7 @@ describe('AdminBannersComponent', () => {
         statusChanges: [],
       },
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('li.border-base-300');
 
@@ -68,7 +99,7 @@ describe('AdminBannersComponent', () => {
     expect(itemElements[0].textContent).toContain('Test Banner');
   });
 
-  it('should show the history of each banner', () => {
+  it('should show the history of each banner', async () => {
     bannersSubject$.next([
       {
         id: 'abc',
@@ -95,7 +126,7 @@ describe('AdminBannersComponent', () => {
         ],
       },
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const itemElement = (fixture.nativeElement as HTMLElement).querySelector('li.border-base-300');
     const badgeElements = itemElement?.querySelectorAll('span.badge') ?? [];
@@ -111,9 +142,9 @@ describe('AdminBannersComponent', () => {
     expect(statusElements[3].textContent).toContain('Shown');
   });
 
-  it('should show no banners after data is loaded', () => {
+  it('should show no banners after data is loaded', async () => {
     bannersSubject$.next([]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const itemElements = (fixture.nativeElement as HTMLElement).querySelectorAll('li');
 
@@ -121,9 +152,9 @@ describe('AdminBannersComponent', () => {
     expect(itemElements[0].textContent).toContain('No banners found.');
   });
 
-  it('should show error message on error', () => {
+  it('should show error message on error', async () => {
     bannersSubject$.error(new Error('test error'));
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const errorElement = (fixture.nativeElement as HTMLElement).querySelector('.alert.alert-error');
 

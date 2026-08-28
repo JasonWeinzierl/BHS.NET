@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
+import { PermissionsService } from '@core/services/permissions.service';
 import { SiteBannerService } from '@data/banners';
 import parseErrorMessage from '@shared/parse-error-message';
 
@@ -17,10 +18,15 @@ import parseErrorMessage from '@shared/parse-error-message';
 })
 export default class AdminBannersComponent {
   private readonly siteBannerService = inject(SiteBannerService);
+  private readonly permissionsService = inject(PermissionsService);
 
   readonly errorSignal = signal<string | undefined>(undefined);
   readonly deletingBannerIdSignal = signal<string | undefined>(undefined);
   readonly successMessageSignal = signal<string | undefined>(undefined);
+  readonly canWriteBannersSignal = toSignal(
+    this.permissionsService.hasPermission$('write:banners'),
+    { initialValue: false },
+  );
 
   readonly bannersSignal = toSignal(this.siteBannerService.getHistory$().pipe(
     map(banners => banners.toReversed().map(banner => {
@@ -45,7 +51,7 @@ export default class AdminBannersComponent {
   onDeleteBanner(bannerId: string, event: Event): void {
     event.preventDefault();
 
-    if (this.deletingBannerIdSignal()) {
+    if (!this.canWriteBannersSignal() || this.deletingBannerIdSignal()) {
       return;
     }
 

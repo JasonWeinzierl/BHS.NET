@@ -1,10 +1,11 @@
 import { AsyncPipe, DatePipe, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { jwtDecode } from 'jwt-decode';
 import { catchError, map, of, startWith } from 'rxjs';
+import { PermissionsService } from '@core/services/permissions.service';
 import parseErrorMessage from '@shared/parse-error-message';
 
 @Component({
@@ -21,9 +22,21 @@ import parseErrorMessage from '@shared/parse-error-message';
 })
 export class AdminIndexComponent {
   private readonly auth = inject(AuthService);
+  private readonly permissionsService = inject(PermissionsService);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly user$ = this.auth.user$;
+
+  readonly canWriteBlogSignal = toSignal(
+    this.permissionsService.hasPermission$('write:blog'),
+    { initialValue: false },
+  );
+
+  readonly canWriteBannersSignal = toSignal(
+    this.permissionsService.hasPermission$('write:banners'),
+    { initialValue: false },
+  );
+
   readonly permissionsVm$ = this.auth.getAccessTokenSilently({ cacheMode: 'cache-only' }).pipe(
     map((token: string | undefined) => {
       if (!token) {

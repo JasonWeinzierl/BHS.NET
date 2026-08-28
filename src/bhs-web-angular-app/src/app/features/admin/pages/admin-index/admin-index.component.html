@@ -52,8 +52,28 @@
         Log out
       </a>
 
-      <a class="link link-primary" [routerLink]="['/apps/blog/new']">New Blog Post</a>
-      <a class="link link-primary" [routerLink]="['/admin/banners']">Banners</a>
+      <a
+        class="link link-primary"
+        [routerLink]="canWriteBlogSignal() ? ['/apps/blog/new'] : undefined"
+        [class.cursor-not-allowed]="!canWriteBlogSignal()"
+        [class.opacity-50]="!canWriteBlogSignal()"
+        [class.tooltip]="!canWriteBlogSignal()"
+        [class.tooltip-info]="!canWriteBlogSignal()"
+        [attr.aria-disabled]="!canWriteBlogSignal()"
+        [attr.data-tip]="'You do not have permission to create blog posts.'"
+        data-testid="AdminIndex-NewBlogPost"
+      >New Blog Post</a>
+      <a
+        class="link link-primary"
+        [routerLink]="canWriteBannersSignal() ? ['/admin/banners'] : undefined"
+        [class.cursor-not-allowed]="!canWriteBannersSignal()"
+        [class.opacity-50]="!canWriteBannersSignal()"
+        [class.tooltip]="!canWriteBannersSignal()"
+        [class.tooltip-info]="!canWriteBannersSignal()"
+        [attr.aria-disabled]="!canWriteBannersSignal()"
+        [attr.data-tip]="'You do not have permission to manage banners.'"
+        data-testid="AdminIndex-Banners"
+      >Banners</a>
     </div>
 
   </div>

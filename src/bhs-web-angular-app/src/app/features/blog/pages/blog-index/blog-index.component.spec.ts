@@ -4,9 +4,9 @@ import { Component, DebugElement, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter, RouterLink } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
 import { MockProvider } from 'ng-mocks';
 import { BehaviorSubject } from 'rxjs';
+import { PermissionsService } from '@core/services/permissions.service';
 import { BlogService, CategorySummary } from '@data/blog';
 import { BlogIndexComponent } from './blog-index.component';
 
@@ -31,10 +31,12 @@ describe('BlogIndexComponent', () => {
   let fixture: ComponentFixture<BlogIndexComponent>;
   let categoriesSubject$: BehaviorSubject<Array<CategorySummary>>;
   let isAuthenticatedSubject$: BehaviorSubject<boolean>;
+  let canWriteBlogSubject$: BehaviorSubject<boolean>;
 
   beforeEach(async () => {
     categoriesSubject$ = new BehaviorSubject<Array<CategorySummary>>([]);
     isAuthenticatedSubject$ = new BehaviorSubject(false);
+    canWriteBlogSubject$ = new BehaviorSubject(false);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -45,8 +47,9 @@ describe('BlogIndexComponent', () => {
         MockProvider(BlogService, {
           getCategories$: () => categoriesSubject$,
         }),
-        MockProvider(AuthService, {
+        MockProvider(PermissionsService, {
           isAuthenticated$: isAuthenticatedSubject$.asObservable(),
+          hasPermission$: () => canWriteBlogSubject$.asObservable(),
         }),
       ],
     })
@@ -64,7 +67,7 @@ describe('BlogIndexComponent', () => {
 
     fixture = TestBed.createComponent(BlogIndexComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {
@@ -77,21 +80,35 @@ describe('BlogIndexComponent', () => {
     expect(compiled.querySelector('[data-testid="BlogIndex-NewPostButton"]')).toBeNull();
   });
 
-  it('should show New Post when authenticated', () => {
+  it('should disable New Post when authenticated without blog permission', async () => {
     isAuthenticatedSubject$.next(true);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
+    await fixture.whenStable();
+    const newPostButton = (fixture.nativeElement as HTMLElement)
+      .querySelector<HTMLAnchorElement>('[data-testid="BlogIndex-NewPostButton"]');
 
-    expect(compiled.querySelector('[data-testid="BlogIndex-NewPostButton"]')).not.toBeNull();
+    expect(newPostButton).not.toBeNull();
+    expect(newPostButton?.getAttribute('href')).toBeNull();
+    expect(newPostButton?.getAttribute('aria-disabled')).toBe('true');
   });
 
-  it('should display categories from the service', () => {
+  it('should enable New Post when authenticated with blog permission', async () => {
+    isAuthenticatedSubject$.next(true);
+    canWriteBlogSubject$.next(true);
+    await fixture.whenStable();
+    const newPostButton = (fixture.nativeElement as HTMLElement)
+      .querySelector<HTMLAnchorElement>('[data-testid="BlogIndex-NewPostButton"]');
+
+    expect(newPostButton?.getAttribute('href')).toBe('/apps/blog/new');
+    expect(newPostButton?.getAttribute('aria-disabled')).toBe('false');
+  });
+
+  it('should display categories from the service', async () => {
     const testCategories: Array<CategorySummary> = [
       { slug: 'cat1', name: 'Category 1', postsCount: 5 },
       { slug: 'cat2', name: 'Category 2', postsCount: 3 },
     ];
     categoriesSubject$.next(testCategories);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const categoriesListView = fixture.debugElement.query(By.directive(CategoriesListViewStubComponent)) as DebugElement | null;
     const categoriesInstance = categoriesListView?.componentInstance as CategoriesListViewStubComponent;
@@ -100,9 +117,9 @@ describe('BlogIndexComponent', () => {
     expect(categoriesInstance.categories()).toEqual(testCategories);
   });
 
-  it('should display error on failure to load categories', () => {
+  it('should display error on failure to load categories', async () => {
     categoriesSubject$.error(new HttpErrorResponse({}));
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const categoriesListView = fixture.debugElement.query(By.directive(CategoriesListViewStubComponent)) as DebugElement | null;
     const categoriesInstance = categoriesListView?.componentInstance as CategoriesListViewStubComponent;

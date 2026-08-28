@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
 import { catchError, map, of, startWith } from 'rxjs';
+import { PermissionsService } from '@core/services/permissions.service';
 import { BlogService } from '@data/blog';
 import parseErrorMessage from '@shared/parse-error-message';
 import { CategoriesListViewComponent } from '../../components/categories-list-view/categories-list-view.component';
@@ -21,7 +21,7 @@ import { PostsSearchComponent } from '../../components/posts-search/posts-search
 })
 export class BlogIndexComponent {
   private readonly blogService = inject(BlogService);
-  private readonly auth = inject(AuthService);
+  private readonly permissionsService = inject(PermissionsService);
 
   readonly categoriesVmSignal = toSignal(this.blogService.getCategories$().pipe(
     map(categories => ({ categories, isLoading: false, error: undefined })),
@@ -32,5 +32,9 @@ export class BlogIndexComponent {
     }),
   ));
 
-  readonly isAuthenticatedSignal = toSignal(this.auth.isAuthenticated$);
+  readonly isAuthenticatedSignal = toSignal(this.permissionsService.isAuthenticated$);
+  readonly canCreateSignal = toSignal(
+    this.permissionsService.hasPermission$('write:blog'),
+    { initialValue: false },
+  );
 }

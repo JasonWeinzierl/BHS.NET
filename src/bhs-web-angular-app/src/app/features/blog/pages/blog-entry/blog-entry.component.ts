@@ -1,9 +1,9 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
 import { ToastrService } from '@openng/ngx-toastr';
-import { catchError, map, of, startWith, switchMap } from 'rxjs';
+import { catchError, combineLatest, map, of, startWith, switchMap } from 'rxjs';
+import { PermissionsService } from '@core/services/permissions.service';
 import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';
 import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry-album.component';
@@ -29,7 +29,7 @@ export class BlogEntryComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly blogService = inject(BlogService);
   private readonly photosService = inject(PhotosService);
-  private readonly auth = inject(AuthService);
+  private readonly permissionsService = inject(PermissionsService);
   private readonly toastr = inject(ToastrService);
 
   vm$ = this.activatedRoute.paramMap.pipe(
@@ -55,9 +55,12 @@ export class BlogEntryComponent {
         )
         : of({ post, postAlbum: undefined, isLoading: false, error: undefined });
     }),
-    switchMap(vm => this.auth.isAuthenticated$.pipe(
-      startWith(false),
-      map(isAuthenticated => ({ ...vm, showEdit: isAuthenticated })),
+    switchMap(vm => combineLatest([
+      this.permissionsService.isAuthenticated$,
+      this.permissionsService.hasPermission$('write:blog'),
+    ]).pipe(
+      startWith([false, false]),
+      map(([isAuthenticated, canEdit]) => ({ ...vm, showEdit: isAuthenticated, canEdit })),
     )),
     startWith({ post: undefined, postAlbum: undefined, isLoading: true, error: undefined }),
     catchError((error: unknown) => {

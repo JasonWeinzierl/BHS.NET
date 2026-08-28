@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField, required, validate } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
 import prettyMs from 'pretty-ms';
+import { PermissionsService } from '@core/services/permissions.service';
 import { SiteBannerService } from '@data/banners';
 import { AlertTheme } from '@data/banners/models/alert-theme';
 
@@ -16,11 +18,16 @@ import { AlertTheme } from '@data/banners/models/alert-theme';
 })
 export default class AdminBannerCreateComponent {
   private readonly siteBannerService = inject(SiteBannerService);
+  private readonly permissionsService = inject(PermissionsService);
   private readonly router = inject(Router);
 
   readonly isSubmittingSignal = signal(false);
   readonly errorSignal = signal<string | undefined>(undefined);
   readonly successSignal = signal(false);
+  readonly canWriteBannersSignal = toSignal(
+    this.permissionsService.hasPermission$('write:banners'),
+    { initialValue: false },
+  );
 
   readonly themeOptions = Object.values(AlertTheme);
 
@@ -93,7 +100,7 @@ export default class AdminBannerCreateComponent {
   onSubmit(event: SubmitEvent): void {
     event.preventDefault();
 
-    if (this.bannerForm().invalid() || this.isSubmittingSignal()) {
+    if (!this.canWriteBannersSignal() || this.bannerForm().invalid() || this.isSubmittingSignal()) {
       return;
     }
 

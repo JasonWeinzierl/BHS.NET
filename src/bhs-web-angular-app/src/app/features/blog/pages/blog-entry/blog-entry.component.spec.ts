@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
 import { ActiveToast, ToastrService } from '@openng/ngx-toastr';
 import { MockProvider } from 'ng-mocks';
-import { of, throwError } from 'rxjs';
+import { BehaviorSubject, of, throwError } from 'rxjs';
+import { PermissionsService } from '@core/services/permissions.service';
 import { BlogService } from '@data/blog';
 import { PhotosService } from '@data/photos';
 import { EntryAlbumComponent } from '@features/blog/components/entry-album/entry-album.component';
@@ -13,8 +13,13 @@ import { BlogEntryComponent } from './blog-entry.component';
 describe('BlogEntryComponent', () => {
   let component: BlogEntryComponent;
   let fixture: ComponentFixture<BlogEntryComponent>;
+  let isAuthenticatedSubject$: BehaviorSubject<boolean>;
+  let canWriteBlogSubject$: BehaviorSubject<boolean>;
 
   beforeEach(async () => {
+    isAuthenticatedSubject$ = new BehaviorSubject(false);
+    canWriteBlogSubject$ = new BehaviorSubject(false);
+
     await TestBed.configureTestingModule({
       imports: [
         RouterModule,
@@ -46,8 +51,9 @@ describe('BlogEntryComponent', () => {
         MockProvider(PhotosService, {
           getAlbum$: () => throwError(() => new Error('test 404 not found')),
         }),
-        MockProvider(AuthService, {
-          isAuthenticated$: of(false),
+        MockProvider(PermissionsService, {
+          isAuthenticated$: isAuthenticatedSubject$.asObservable(),
+          hasPermission$: () => canWriteBlogSubject$.asObservable(),
         }),
         MockProvider(ToastrService, {
           error: () => ({}) as ActiveToast<unknown>,
@@ -58,7 +64,7 @@ describe('BlogEntryComponent', () => {
 
     fixture = TestBed.createComponent(BlogEntryComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {
@@ -69,5 +75,27 @@ describe('BlogEntryComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
 
     expect(element.querySelector('h1')?.textContent).toBe('Hello!'); // shows post title
+  });
+
+  it('should disable edit when authenticated without blog permission', async () => {
+    isAuthenticatedSubject$.next(true);
+    await fixture.whenStable();
+    const editLink = (fixture.nativeElement as HTMLElement)
+      .querySelector<HTMLAnchorElement>('[data-testid="BlogEntry-EditPost"]');
+
+    expect(editLink).not.toBeNull();
+    expect(editLink?.getAttribute('href')).toBeNull();
+    expect(editLink?.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  it('should enable edit when authenticated with blog permission', async () => {
+    isAuthenticatedSubject$.next(true);
+    canWriteBlogSubject$.next(true);
+    await fixture.whenStable();
+    const editLink = (fixture.nativeElement as HTMLElement)
+      .querySelector<HTMLAnchorElement>('[data-testid="BlogEntry-EditPost"]');
+
+    expect(editLink?.getAttribute('href')).toBe('/apps/blog/edit/1-test');
+    expect(editLink?.getAttribute('aria-disabled')).toBe('false');
   });
 });

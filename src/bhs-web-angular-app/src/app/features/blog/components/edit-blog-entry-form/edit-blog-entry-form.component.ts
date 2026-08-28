@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, injec
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { PermissionsService } from '@core/services/permissions.service';
 import { Author } from '@data/authors';
 import { Category, categorySchema, Post, PostRequest } from '@data/blog';
 import { MarkdownComponent } from '@shared/components/markdown/markdown.component';
@@ -24,6 +25,7 @@ import { MarkdownComponent } from '@shared/components/markdown/markdown.componen
 export class EditBlogEntryFormComponent {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly datePipe = inject(DatePipe);
+  private readonly permissionsService = inject(PermissionsService);
 
   readonly scrollableElements = viewChildren<string, ElementRef<HTMLElement>>('scrollable', { read: ElementRef });
 
@@ -31,6 +33,10 @@ export class EditBlogEntryFormComponent {
   readonly currentAuthor = input<Author | null>();
   readonly allCategories = input<Array<Category>>([]);
   readonly publish = output<PostRequest>();
+  readonly canPublishSignal = toSignal(
+    this.permissionsService.hasPermission$('write:blog'),
+    { initialValue: false },
+  );
 
   readonly cancelRoute = computed(() => {
     const initialPost = this.initialPost();
@@ -118,6 +124,10 @@ export class EditBlogEntryFormComponent {
   }
 
   onSubmit(): void {
+    if (!this.canPublishSignal()) {
+      return;
+    }
+
     const raw = this.editFormGroup.getRawValue();
 
     const request: PostRequest = {

@@ -6,7 +6,12 @@
       <div>
         <a
           class="btn btn-primary"
-          routerLink="/apps/blog/new"
+          [routerLink]="canCreateSignal() ? '/apps/blog/new' : undefined"
+          [class.btn-disabled]="!canCreateSignal()"
+          [class.tooltip]="!canCreateSignal()"
+          [class.tooltip-info]="!canCreateSignal()"
+          [attr.aria-disabled]="!canCreateSignal()"
+          [attr.data-tip]="'You do not have permission to create blog posts.'"
           data-testid="BlogIndex-NewPostButton"
         >New Post</a>
       </div>

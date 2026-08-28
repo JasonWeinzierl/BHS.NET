@@ -97,14 +97,17 @@
           Cancel
         </button>
         <div
-          [class.tooltip]="bannerForm().invalid()"
+          [class.tooltip]="bannerForm().invalid() || !canWriteBannersSignal()"
           [class.tooltip-error]="bannerForm().invalid()"
-          [attr.data-tip]="bannerForm().errorSummary()[0]?.message"
+          [class.tooltip-info]="!bannerForm().invalid() && !canWriteBannersSignal()"
+          [attr.data-tip]="bannerForm().invalid()
+            ? bannerForm().errorSummary()[0]?.message
+            : 'You do not have permission to create banners.'"
         >
           <button
             type="submit"
             class="btn btn-primary"
-            [disabled]="bannerForm().invalid() || isSubmittingSignal()"
+            [disabled]="!canWriteBannersSignal() || bannerForm().invalid() || isSubmittingSignal()"
           >
             @if (isSubmittingSignal()) {
               <span class="loading loading-spinner"></span>

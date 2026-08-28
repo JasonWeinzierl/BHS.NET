@@ -51,7 +51,17 @@
         <hr>
         <div class="card-body">
           <p class="text-sm">
-            <a class="link link-primary" [routerLink]="['/apps/blog/edit', vm.post.slug]">Edit this post</a>
+            <a
+              class="link link-primary"
+              [routerLink]="vm.canEdit ? ['/apps/blog/edit', vm.post.slug] : undefined"
+              [class.cursor-not-allowed]="!vm.canEdit"
+              [class.opacity-50]="!vm.canEdit"
+              [class.tooltip]="!vm.canEdit"
+              [class.tooltip-info]="!vm.canEdit"
+              [attr.aria-disabled]="!vm.canEdit"
+              [attr.data-tip]="'You do not have permission to edit blog posts.'"
+              data-testid="BlogEntry-EditPost"
+            >Edit this post</a>
           </p>
         </div>
       }
