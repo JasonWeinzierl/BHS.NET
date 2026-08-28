@@ -67,6 +67,13 @@ public class LeadershipRepository(
             .Project(x => new Officer(x.Title, x.PositionHolders.Name!, x.PositionHolders.DateStarted))
             .ToListAsync(cancellationToken);
 
+    public async Task<IReadOnlyCollection<Office>> GetOffices(CancellationToken cancellationToken = default)
+        => await _mongoClient.GetBhsCollection<OfficerPositionDto>("officerPositions")
+            .Find(Builders<OfficerPositionDto>.Filter.Empty)
+            .SortBy(position => position.SortOrder)
+            .Project(position => new Office(position.Title, position.SortOrder))
+            .ToListAsync(cancellationToken);
+
     public async Task CreateOffice(
         OfficeRequest office,
         CancellationToken cancellationToken = default)

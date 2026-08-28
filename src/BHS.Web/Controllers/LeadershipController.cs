@@ -20,6 +20,10 @@ public class LeadershipController(
     public async Task<ActionResult<IList<Officer>>> GetOfficers(CancellationToken cancellationToken = default)
         => Ok(await _leadershipRepo.GetCurrentOfficers(cancellationToken));
 
+    [HttpGet("offices")]
+    public async Task<ActionResult<IList<Office>>> GetOffices(CancellationToken cancellationToken = default)
+        => Ok(await _leadershipRepo.GetOffices(cancellationToken));
+
     /// <summary>
     /// Creates a new office.
     /// </summary>

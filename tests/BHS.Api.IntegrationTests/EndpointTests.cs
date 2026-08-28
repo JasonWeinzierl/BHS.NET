@@ -249,6 +249,10 @@ public class EndpointTests(BhsWebApplicationFactory<Program> factory) : IClassFi
         Assert.Equal(HttpStatusCode.NoContent, createResponse.StatusCode);
         Assert.Empty(await createResponse.Content.ReadAsByteArrayAsync(TestContext.Current.CancellationToken));
 
+        var offices = await _httpClient.GetFromJsonAsync<IEnumerable<Office>>("/api/leadership/offices", TestContext.Current.CancellationToken);
+        var office = Assert.Single(Assert.IsAssignableFrom<IEnumerable<Office>>(offices));
+        Assert.Equal(new Office("President", 1), office);
+
         var dateStarted = DateTimeOffset.FromUnixTimeMilliseconds(DateTimeOffset.UtcNow.AddMinutes(-1).ToUnixTimeMilliseconds());
         OfficerRequest[] invalidRequest =
         [
