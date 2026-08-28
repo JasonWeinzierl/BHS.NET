@@ -68,10 +68,17 @@ public class LeadershipRepository(
             .ToListAsync(cancellationToken);
 
     public async Task<IReadOnlyCollection<Office>> GetOffices(CancellationToken cancellationToken = default)
-        => await _mongoClient.GetBhsCollection<OfficerPositionDto>("officerPositions")
+    {
+        var positions = await _mongoClient.GetBhsCollection<OfficerPositionDto>("officerPositions")
             .Find(Builders<OfficerPositionDto>.Filter.Empty)
-            .Project(position => new Office(position.Title, position.SortOrder))
+            // Cannot project to Office because CosmosDB doesn't support "$_id" in finds.
+            .Project(position => new OfficeProjectionDto(position.Title, position.SortOrder))
             .ToListAsync(cancellationToken);
+
+        return positions
+            .Select(office => office.ToOffice())
+            .ToList();
+    }
 
     public async Task CreateOffice(
         OfficeRequest office,
