@@ -1,0 +1,114 @@
+@if (errorSignal(); as error) {
+  <div role="alert" class="alert alert-soft alert-error">
+    {{error}}
+  </div>
+}
+
+@if (officesErrorSignal(); as error) {
+  <div role="alert" class="alert alert-soft alert-error">
+    {{error}}
+  </div>
+} @else if (officesResource.isLoading()) {
+  <div class="loading loading-ring" role="status">
+    <span class="hidden">Loading offices...</span>
+  </div>
+} @else {
+  <form class="space-y-5" (submit)="onSubmit($event)">
+  <div class="grid gap-8 md:grid-cols-2">
+    <section>
+      <h2>Officers</h2>
+      <div class="space-y-4">
+        @for (officer of editModel().officers; track officer.title) {
+          <fieldset class="fieldset rounded-box border border-base-300 p-3">
+            <legend class="fieldset-legend">{{officer.title}}</legend>
+
+            <label class="fieldset-label" [for]="`officer-${$index}-name`">Name</label>
+            <input
+              class="input w-full"
+              [id]="`officer-${$index}-name`"
+              type="text"
+              [formField]="leadershipForm.officers[$index].name"
+            />
+
+            <label class="fieldset-label" [for]="`officer-${$index}-date-started`">Start date</label>
+            <input
+              class="input w-full"
+              [id]="`officer-${$index}-date-started`"
+              type="date"
+              [formField]="leadershipForm.officers[$index].dateStarted"
+            />
+          </fieldset>
+        }
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-center justify-between gap-3">
+        <h2>Directors</h2>
+        <button type="button" class="btn btn-outline btn-sm" (click)="onAddDirector()">
+          <i class="bi bi-plus-circle" aria-hidden="true"></i>
+          Add
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        @for (director of editModel().directors; track $index) {
+          <fieldset class="fieldset rounded-box border border-base-300 p-3">
+            <legend class="sr-only">Director {{$index + 1}}</legend>
+
+            <label class="fieldset-label" [for]="`director-${$index}-name`">Name</label>
+            <input
+              class="input w-full"
+              [id]="`director-${$index}-name`"
+              type="text"
+              [formField]="leadershipForm.directors[$index].name"
+            />
+
+            <label class="fieldset-label" [for]="`director-${$index}-year`">Year</label>
+            <div class="flex items-center gap-2">
+              <input
+                class="input min-w-0 flex-1"
+                [id]="`director-${$index}-year`"
+                type="number"
+                [formField]="leadershipForm.directors[$index].year"
+              />
+
+              <button
+                type="button"
+                class="btn btn-square btn-error"
+                [attr.aria-label]="`Remove ${director.name || 'director'}`"
+                (click)="onRemoveDirector($index)"
+              >
+                <i class="bi bi-trash" aria-hidden="true"></i>
+              </button>
+            </div>
+          </fieldset>
+        }
+      </div>
+    </section>
+  </div>
+
+  <div class="flex justify-end gap-2">
+    <button
+      type="button"
+      class="btn btn-outline"
+      data-testid="Organization-Leadership-Editor-Cancel"
+      [disabled]="isSubmittingSignal()"
+      (click)="cancelled.emit()"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="leadershipForm().invalid() || isSubmittingSignal()"
+    >
+      @if (isSubmittingSignal()) {
+        <span class="loading loading-spinner" aria-hidden="true"></span>
+      }
+      Save
+    </button>
+  </div>
+  </form>
+}

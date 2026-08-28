@@ -1,25 +1,55 @@
 <div class="card mb-5 bg-base-100">
   <div class="card-body">
-    <h1>Leadership</h1>
-    @if (vm$ | async; as vm) {
-      @if (vm.error) {
-        <div role="alert" class="mb-5 alert alert-soft alert-error">
-          {{vm.error}}
-        </div>
+    <div class="flex items-center justify-between gap-3">
+      <h1>Leadership</h1>
+      @if (isAuthenticatedSignal() && !isLoadingSignal() && !errorMessageSignal() && !isEditingSignal()) {
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-testid="Organization-Leadership-Edit"
+          (click)="onEdit()"
+          [disabled]="!canEditSignal()"
+          [class.tooltip]="!canEditSignal()"
+          [class.tooltip-info]="!canEditSignal()"
+          [attr.data-tip]="'You do not have permission to edit leadership information.'"
+        >
+          <i class="bi bi-pencil" aria-hidden="true"></i>
+          Edit
+        </button>
       }
-      <div class="flex flex-wrap">
+    </div>
+    @if (errorMessageSignal(); as errorMessage) {
+      <div role="alert" class="mb-5 alert alert-soft alert-error">
+        {{errorMessage}}
+      </div>
+    }
+
+    @if (isEditingSignal()) {
+      <app-leadership-editor
+        [officers]="officersSignal()"
+        [directors]="directorsSignal()"
+        (saved)="onSaved()"
+        (cancelled)="onCancel()"
+        animate.enter="slide-fade-in"
+      />
+    } @else {
+      <div class="flex flex-wrap" animate.enter="slide-fade-in">
 
         <div class="flex-1">
           <h2>Officers</h2>
 
-          @if (vm.isLoading) {
-            <div class="loading loading-ring" role="status" data-testid="Organization-Leadership-Officers-Loading">
+          @if (officersResource.isLoading()) {
+            <div
+              class="loading loading-ring"
+              role="status"
+              data-testid="Organization-Leadership-Officers-Loading"
+            >
               <span class="hidden">Loading...</span>
             </div>
           }
 
           <dl data-testid="Organization-Leadership-Officers-Container">
-            @for (officer of vm.officers; track officer) {
+            @for (officer of officersSignal(); track officer) {
               <dt
                 class="font-bold"
                 [attr.data-testid]="`Organization-Leadership-Officers-${officer.title}-Title`"
@@ -40,14 +70,18 @@
         <div class="flex-1">
           <h2>Directors</h2>
 
-          @if (vm.isLoading) {
-            <div class="loading loading-ring" role="status" data-testid="Organization-Leadership-Directors-Loading">
+          @if (directorsResource.isLoading()) {
+            <div
+              class="loading loading-ring"
+              role="status"
+              data-testid="Organization-Leadership-Directors-Loading"
+            >
               <span class="hidden">Loading...</span>
             </div>
           }
 
           <ul data-testid="Organization-Leadership-Directors-Container">
-            @for (director of vm.directors; track director) {
+            @for (director of directorsSignal(); track director) {
               <li [attr.data-testid]="`Organization-Leadership-Directors-${director.year}-${director.name}-Item`">
                 {{director.name}} ({{director.year}})
               </li>

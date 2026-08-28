@@ -1,8 +1,16 @@
 import Page from './page';
 
 class OrganizationPage extends Page {
+  override open() {
+    return super.open('/about/by-laws-and-leadership');
+  }
+
   get self() {
     return this.getByTestID('Organization');
+  }
+
+  get editButton() {
+    return this.getByTestID('Organization-Leadership-Edit');
   }
 
   get officersLoading() {

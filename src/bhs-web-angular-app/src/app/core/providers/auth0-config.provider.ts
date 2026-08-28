@@ -60,6 +60,26 @@ export function provideBhsAuth0Config(): EnvironmentProviders {
               uri: '/api/banners/*',
               httpMethod: 'DELETE',
             },
+            {
+              uri: '/api/leadership/officers',
+              httpMethod: 'PUT',
+            },
+            {
+              uri: '/api/leadership/offices',
+              httpMethod: 'POST',
+            },
+            {
+              uri: '/api/leadership/offices/*',
+              httpMethod: 'DELETE',
+            },
+            {
+              uri: '/api/leadership/directors',
+              httpMethod: 'POST',
+            },
+            {
+              uri: '/api/leadership/directors/*',
+              httpMethod: 'DELETE',
+            },
           ],
         },
       });

@@ -1,6 +1,7 @@
 import appHeaderPage from '../pageobjects/app-header.page';
 import homePage from '../pageobjects/home.page';
 import organizationPage from '../pageobjects/organization.page';
+import loginRobot from '../robots/login.robot';
 
 describe('leadership', () => {
   beforeAll(async () => {
@@ -21,5 +22,12 @@ describe('leadership', () => {
 
     await expect(organizationPage.officersContainer).toBeDisplayed();
     await expect(organizationPage.directorsContainer).toBeDisplayed();
+  });
+
+  it('should show the edit button when logged in', async () => {
+    await loginRobot.loginFromEnvironmentVariables();
+    await organizationPage.open();
+
+    await expect(organizationPage.editButton).toBeDisplayed();
   });
 });
