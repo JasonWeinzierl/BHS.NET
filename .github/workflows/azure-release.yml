@@ -13,6 +13,10 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: azure-release
+  cancel-in-progress: false
+
 env:
   WEB_SRC_PATH: src/BHS.Web
   WEB_PUBLISH_PATH: artifacts/publish/BHS.Web/release
