@@ -8,6 +8,7 @@ on:
     paths:
       - Directory.Build.props
       - Directory.Packages.props
+      - global.json
       - BHS.slnx
       - src/**
       - '!src/bhs-web-angular-app/**'
@@ -40,12 +41,12 @@ jobs:
     - name: Run dotnet build
       run: dotnet build --no-restore --configuration Release
     - name: Run dotnet test
-      run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+      run: dotnet test --no-build --configuration Release --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage
     - name: Summarize coverage
       uses: danielpalme/ReportGenerator-GitHub-Action@d3ebf1f760f7d8ab92cc44d9bcfee7ad73722a31 # v5.5.11
       if: runner.os == 'Linux'
       with:
-        reports: coverage/**/coverage.cobertura.xml
+        reports: coverage/**/*.cobertura.xml
         targetdir: coverage-summary
         reporttypes: TextSummary;MarkdownSummaryGithub
     - name: Publish coverage
