@@ -4617,7 +4617,7 @@ __metadata:
     eslint-plugin-n: "npm:^18.2.2"
     eslint-plugin-perfectionist: "npm:^5.10.0"
     eslint-plugin-unicorn: "npm:^64.0.0"
-    eslint-plugin-wdio: "npm:^9.29.1"
+    eslint-plugin-wdio: "npm:^9.31.3"
     expect-webdriverio: "npm:^5.7.0"
     globals: "npm:^17.7.0"
     pretty-ms: "npm:^9.3.0"
@@ -6349,17 +6349,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-wdio@npm:^9.29.1":
-  version: 9.29.1
-  resolution: "eslint-plugin-wdio@npm:9.29.1"
+"eslint-plugin-wdio@npm:^9.31.3":
+  version: 9.31.3
+  resolution: "eslint-plugin-wdio@npm:9.31.3"
   peerDependencies:
-    eslint: ^9.39.2
-    globals: ^16.5.0
+    eslint: ^9.39.2 || ^10.0.0
+    globals: ^16.5.0 || ^17.0.0
     typescript-eslint: ^8.54.0
   peerDependenciesMeta:
     typescript-eslint:
       optional: true
-  checksum: 10c0/b7500ee5672ef2af27ceeccdd4bc42611a609adf93fa614fad16172080694efc07e9642d451bb173bed0d024847289fd9be6e580cf7f80c7c8f293d3908f1cce
+  checksum: 10c0/0cb11922cc7cb7fa559e599b0b336f70ddaa18bc9f1ac7cf3da2c2ff826c6ee27fa44cdd3e8324262345b0900b1c4c56ca4c6f092ec138724ac034d0393f3cf0
   languageName: node
   linkType: hard
 
