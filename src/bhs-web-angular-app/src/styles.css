@@ -5,13 +5,18 @@
 @theme {
   /* custom serif font */
   --font-serif: 'Josefin Slab', serif;
+}
+
+@layer base {
   /*
   HTML has this neat trick where if the root element (`html`) has no background,
   then `body`'s background will be applied to the whole canvas and not the `body`.
   DaisyUI turns that off probably because it's unexpected,
   but we want to opt back in.
   */
-  --page-scroll-bg: transparent !important;
+  :root {
+    background: transparent !important;
+  }
 }
 
 @plugin '@tailwindcss/typography';
