@@ -105,4 +105,60 @@ describe('EditBlogEntryFormComponent', () => {
 
     expect(dangerElement?.textContent).toBeTruthy();
   });
+
+  it('should ignore scroll events caused by synchronizing the other editor pane', () => {
+    const source = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('textarea');
+    const target = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('app-markdown');
+
+    expect(source).toBeTruthy();
+    expect(target).toBeTruthy();
+
+    if (!source || !target) {
+      throw new Error('Expected both editor panes to exist.');
+    }
+
+    Object.defineProperties(source, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 400 },
+    });
+    Object.defineProperties(target, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 200 },
+    });
+
+    source.scrollTop = 2;
+    source.dispatchEvent(new Event('scroll'));
+
+    expect(target.scrollTop).toBe(1);
+
+    target.dispatchEvent(new Event('scroll'));
+
+    expect(source.scrollTop).toBe(2);
+  });
+
+  it('should not synchronize from a pane without a scrollable range', () => {
+    const source = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('textarea');
+    const target = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('app-markdown');
+
+    expect(source).toBeTruthy();
+    expect(target).toBeTruthy();
+
+    if (!source || !target) {
+      throw new Error('Expected both editor panes to exist.');
+    }
+
+    Object.defineProperties(source, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 100 },
+    });
+    Object.defineProperties(target, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 200 },
+    });
+
+    target.scrollTop = 17;
+    source.dispatchEvent(new Event('scroll'));
+
+    expect(target.scrollTop).toBe(17);
+  });
 });

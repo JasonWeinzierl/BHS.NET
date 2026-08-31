@@ -81,34 +81,40 @@ export class EditBlogEntryFormComponent {
     effect(onCleanup => {
       const scrollableElements = this.scrollableElements();
 
-      let isScrolling = false;
+      const expectedScrollTops = new WeakMap<HTMLElement, number>();
       const scrollListener = (event: Event): void => {
-        // Prevent infinite loop when scroll causes scroll.
-        if (isScrolling) {
+        const scrolledElement = event.target as HTMLElement;
+        const expectedScrollTop = expectedScrollTops.get(scrolledElement);
+
+        if (expectedScrollTop !== undefined) {
+          expectedScrollTops.delete(scrolledElement);
+        }
+
+        if (scrolledElement.scrollTop === expectedScrollTop) {
           return;
         }
-        isScrolling = true;
 
-        const scrolledElement = event.target as HTMLElement;
+        const sourceMaxScrollTop = scrolledElement.scrollHeight - scrolledElement.clientHeight;
+        if (sourceMaxScrollTop <= 0) {
+          return;
+        }
 
         for (const { nativeElement } of scrollableElements) {
           if (nativeElement === scrolledElement) {
             continue;
           }
-          // Keep in sync via percentages, assuming heights are equal.
-          const heightPercent = scrolledElement.scrollTop / (scrolledElement.scrollHeight - scrolledElement.clientHeight);
-          const top = heightPercent * (nativeElement.scrollHeight - nativeElement.clientHeight);
 
-          nativeElement.scrollTo({
-            behavior: 'instant',
-            top,
-          });
+          const targetMaxScrollTop = Math.max(0, nativeElement.scrollHeight - nativeElement.clientHeight);
+          const targetScrollTop = Math.min(
+            targetMaxScrollTop,
+            Math.max(0, Math.round(scrolledElement.scrollTop / sourceMaxScrollTop * targetMaxScrollTop)),
+          );
+
+          if (nativeElement.scrollTop !== targetScrollTop) {
+            expectedScrollTops.set(nativeElement, targetScrollTop);
+            nativeElement.scrollTop = targetScrollTop;
+          }
         }
-
-        // Re-enable listener right before browser paints.
-        globalThis.requestAnimationFrame(() => {
-          isScrolling = false;
-        });
       };
 
       for (const ele of scrollableElements) {
