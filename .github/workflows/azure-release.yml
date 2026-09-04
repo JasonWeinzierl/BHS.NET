@@ -22,8 +22,6 @@ env:
   WEB_PUBLISH_PATH: artifacts/publish/BHS.Web/release
   CLIENTAPP_PATH: ./src/bhs-web-angular-app
   DOTNET_BUILD_CONFIGURATION: Release
-  DOTNET_CORE_VERSION: 10.0.x
-  NODE_VERSION: '24'
 
 jobs:
   build:
@@ -41,8 +39,6 @@ jobs:
 
     - name: Setup .NET
       uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
-      with:
-        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
     - name: Setup GitVersion
       uses: gittools/actions/gitversion/setup@51d325634925d7d9ce0a7efc2c586c0bc2b9eee6 # v3.2.1
@@ -53,7 +49,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
-        node-version: ${{ env.NODE_VERSION }}
+        node-version-file: .nvmrc
 
 
     - name: Run gitversion
