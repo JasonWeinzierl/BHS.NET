@@ -18,4 +18,11 @@ static class AssemblyUtil
     /// Gets the semantic version of the current assembly.
     /// </summary>
     public static string? SemVer => Assembly.GetExecutingAssembly().GetName().Version?.ToString(3);
+
+    /// <summary>
+    /// Gets the informational version of the current assembly.
+    /// </summary>
+    public static string? InformationalVersion => Assembly.GetExecutingAssembly()
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+        .InformationalVersion;
 }
