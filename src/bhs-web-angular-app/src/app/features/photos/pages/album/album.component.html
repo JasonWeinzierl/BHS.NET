@@ -1,57 +1,64 @@
-@if (vm$ | async; as vm) {
-  @if (vm.isLoading) {
-    <div class="card bg-base-100">
-      <div class="card-body skeleton" role="status">
-        <span class="hidden">Loading album...</span>
-      </div>
+@if (albumResource.isLoading()) {
+  <div class="card bg-base-100">
+    <div class="card-body skeleton" role="status">
+      <span class="hidden">Loading album...</span>
     </div>
-  }
+  </div>
+}
 
-  @if (vm.error) {
-    <div class="alert alert-error" role="alert">
-      {{vm.error}}
-    </div>
-  }
+@if (errorMessageSignal(); as errorMessage) {
+  <div class="alert alert-error" role="alert">
+    {{errorMessage}}
+  </div>
+}
 
-  @if (vm.album) {
-    <div class="card mb-5 bg-base-100">
-      <div class="card-body">
-        <h1>
-          {{vm.album.name}}
-        </h1>
-        @if (vm.album.author?.name; as name) {
-          <p class="opacity-70">Provided by {{name}}</p>
-        }
-        <p>{{vm.album.description}}</p>
-        @if (vm.album.blogPostSlug) {
-          <p>
-            <a class="link link-primary" [routerLink]="['/apps/blog/entry', vm.album.blogPostSlug]">This album has a linked blog post.</a>
-          </p>
-        }
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-5 md:grid-cols-4">
-      @for (photo of vm.album.photos; track photo.id) {
-        <div class="card relative aspect-square bg-base-100" [class.image-full]="photo.description">
-          <figure>
-            <img [ngSrc]="photo.imagePath" alt="image could not load" class="rounded-sm object-cover" fill>
-          </figure>
-          <div class="card-body">
-            <h2>
-              <a
-                [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', photo.id]"
-                class="link link-primary after:absolute after:inset-0 after:z-2"
-              >
-                {{photo.name}}
-              </a>
-            </h2>
-            @if (photo.description) {
-              <p class="opacity-70">{{photo.description | snippet}}</p>
-            }
-          </div>
-        </div>
+@if (albumSignal(); as album) {
+  <div class="card mb-5 bg-base-100">
+    <div class="card-body">
+      <h1>
+        {{album.name}}
+      </h1>
+      @if (album.author?.name; as name) {
+        <p class="opacity-70">Provided by {{name}}</p>
+      }
+      <p>{{album.description}}</p>
+      @if (album.blogPostSlug) {
+        <p>
+          <a class="link link-primary" [routerLink]="['/apps/blog/entry', album.blogPostSlug]">This album has a linked blog post.</a>
+        </p>
       }
     </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-4">
+    @for (photo of album.photos; track photo.id) {
+      <div class="card relative aspect-square bg-base-100" [class.image-full]="photo.description">
+        <figure>
+          <img [ngSrc]="photo.imagePath" alt="image could not load" class="rounded-sm object-cover" fill>
+        </figure>
+        <div class="card-body">
+          <h2>
+            <a
+              [routerLink]="['/apps/photos/album', album.slug, 'photo', photo.id]"
+              class="link link-primary after:absolute after:inset-0 after:z-2"
+            >
+              {{photo.name}}
+            </a>
+          </h2>
+          @if (photo.description) {
+            <p class="opacity-70">{{photo.description | snippet}}</p>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (previewSignal(); as preview) {
+    <app-album-page
+      [album]="album"
+      [currentPhoto]="preview.currentPhoto"
+      [previousPhotoId]="preview.previousPhotoId"
+      [nextPhotoId]="preview.nextPhotoId"
+    />
   }
 }

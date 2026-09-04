@@ -1,10 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute, convertToParamMap, RouterLink, RouterModule } from '@angular/router';
-import { MockProvider } from 'ng-mocks';
-import { of } from 'rxjs';
+import { provideRouter, Router, RouterLink } from '@angular/router';
 import { AlbumPhotos } from '@data/photos';
-import { PhotosService } from '@data/photos/services/photos.service';
 import { AlbumPageComponent } from './album-page.component';
 
 const createAlbum = (): AlbumPhotos => ({
@@ -33,42 +30,32 @@ describe('AlbumPageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterModule,
         AlbumPageComponent,
       ],
       providers: [
-        MockProvider(PhotosService, {
-          getAlbum$: () => of(createAlbum()),
-        }),
-        MockProvider(ActivatedRoute, {
-          paramMap: of(convertToParamMap({
-            slug: 'album-three',
-            id: 'photo-four',
-          })),
-        }),
+        provideRouter([]),
       ],
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(AlbumPageComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.componentRef.setInput('album', createAlbum());
+    fixture.componentRef.setInput('currentPhoto', createAlbum().photos[0]);
+    fixture.componentRef.setInput('previousPhotoId', 'photo-six');
+    fixture.componentRef.setInput('nextPhotoId', 'photo-five');
+    await fixture.whenStable();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should finish loading', () => {
+  it('should render a fullscreen modal', () => {
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(element.querySelector('.spinner-grow')).toBeNull();
-  });
-
-  it('should not show error', () => {
-    const element = fixture.nativeElement as HTMLElement;
-
-    expect(element.querySelector('.alert-danger')?.textContent).toBeUndefined();
+    expect(element.querySelector('dialog.modal[open]')).toBeTruthy();
+    expect(element.querySelector('.modal-box')?.classList).toContain('h-dvh');
   });
 
   it('should show album name', () => {
@@ -82,14 +69,23 @@ describe('AlbumPageComponent', () => {
     const routerLinks = linkDebugElements.map(de => de.injector.get(RouterLink));
 
     // eslint-disable-next-line @typescript-eslint/no-deprecated -- only the setter is deprecated
-    expect(routerLinks.map(l => l.href)).toEqual([
-      '/apps/photos/album/album-three/photo/photo-six',
+    expect(routerLinks.map(link => link.href)).toEqual([
       '/apps/photos/album/album-three',
-      '/apps/blog/entry/1-post',
-      '/apps/photos/album/album-three/photo/photo-five',
       '/apps/photos/album/album-three/photo/photo-six',
-      '/apps/photos/album/album-three',
       '/apps/photos/album/album-three/photo/photo-five',
     ]);
+  });
+
+  it('should navigate for keyboard shortcuts', () => {
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+    component.onPreviousPhotoKeyboardShortcut();
+    component.onNextPhotoKeyboardShortcut();
+    component.onCloseKeyboardShortcut();
+
+    expect(navigateSpy).toHaveBeenNthCalledWith(1, ['/apps/photos/album', 'album-three', 'photo', 'photo-six']);
+    expect(navigateSpy).toHaveBeenNthCalledWith(2, ['/apps/photos/album', 'album-three', 'photo', 'photo-five']);
+    expect(navigateSpy).toHaveBeenNthCalledWith(3, ['/apps/photos/album', 'album-three']);
   });
 });

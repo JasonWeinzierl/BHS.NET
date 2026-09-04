@@ -1,73 +1,62 @@
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { catchError, map, of, startWith, switchMap } from 'rxjs';
-import { AlbumPhotos, Photo, PhotosService } from '@data/photos';
-import parseErrorMessage from '@shared/parse-error-message';
-
-interface AlbumPageVm {
-  album?: AlbumPhotos;
-  currentPhoto?: Photo;
-  previousPhotoId: string;
-  nextPhotoId: string;
-  isLoading: boolean;
-  error?: string;
-}
+import { NgOptimizedImage } from '@angular/common';
+import { afterNextRender, Component, ElementRef, inject, input, viewChild } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AlbumPhotos, Photo } from '@data/photos';
 
 @Component({
   selector: 'app-album-page',
   templateUrl: './album-page.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
     NgOptimizedImage,
-    AsyncPipe,
   ],
+  host: {
+    '(document:keydown.arrowleft)': 'onPreviousPhotoKeyboardShortcut()',
+    '(document:keydown.arrowright)': 'onNextPhotoKeyboardShortcut()',
+    '(document:keydown.escape)': 'onCloseKeyboardShortcut()',
+  },
 })
 export class AlbumPageComponent {
   private readonly router = inject(Router);
-  private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly photosService = inject(PhotosService);
+  private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
+  private readonly closeButton = viewChild.required<ElementRef<HTMLAnchorElement>>('closeButton');
 
-  vm$ = this.activatedRoute.paramMap.pipe(
-    map(parameters => {
-      const albumSlug = parameters.get('slug');
-      if (!albumSlug) {
-        throw new Error('Failed to get album slug from URL.');
+  readonly album = input.required<AlbumPhotos>();
+  readonly currentPhoto = input.required<Photo>();
+  readonly previousPhotoId = input.required<string>();
+  readonly nextPhotoId = input.required<string>();
+
+  constructor() {
+    afterNextRender(() => {
+      const dialog = this.dialog().nativeElement;
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute('open', '');
       }
+      this.closeButton().nativeElement.focus();
+    });
+  }
 
-      const photoId = parameters.get('id');
-      if (!photoId) {
-        throw new Error('Failed to get photo id from URL.');
-      }
+  onCloseKeyboardShortcut(): void {
+    this.navigate();
+  }
 
-      return { albumSlug, photoId };
-    }),
-    switchMap(({ albumSlug, photoId }) => this.photosService.getAlbum$(albumSlug).pipe(
-      map(album => {
-        const currentIndex = album.photos.findIndex(p => p.id === photoId);
+  onPreviousPhotoKeyboardShortcut(): void {
+    this.navigate(this.previousPhotoId());
+  }
 
-        if (currentIndex === -1) {
-          this.router.navigate(['not-found'], { replaceUrl: true })
-            .catch((error: unknown) => { console.error(error); });
-          return { previousPhotoId: '', nextPhotoId: '', error: 'Not found.', isLoading: false };
-        } else {
-          const currentPhoto = album.photos[currentIndex];
+  onNextPhotoKeyboardShortcut(): void {
+    this.navigate(this.nextPhotoId());
+  }
 
-          const previousIndex = currentIndex - 1 < 0 ? album.photos.length - 1 : currentIndex - 1;
-          const nextIndex = currentIndex + 1 >= album.photos.length ? 0 : currentIndex + 1;
+  private navigate(photoId?: string): void {
+    const commands = ['/apps/photos/album', this.album().slug];
+    if (photoId) {
+      commands.push('photo', photoId);
+    }
 
-          const previousPhotoId = album.photos[previousIndex].id;
-          const nextPhotoId = album.photos[nextIndex].id;
-
-          return { album, currentPhoto, previousPhotoId, nextPhotoId, isLoading: false };
-        }
-      }),
-    )),
-    startWith({ previousPhotoId: '', nextPhotoId: '', isLoading: true } as AlbumPageVm),
-    catchError((error: unknown) => {
-      const message = parseErrorMessage(error) ?? 'An unknown error occurred.';
-      return of({ previousPhotoId: '', nextPhotoId: '', error: message, isLoading: false } as AlbumPageVm);
-    }),
-  );
+    this.router.navigate(commands)
+      .catch((error: unknown) => { console.error(error); });
+  }
 }

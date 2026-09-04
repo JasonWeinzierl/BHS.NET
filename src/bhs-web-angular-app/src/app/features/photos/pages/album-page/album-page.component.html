@@ -1,71 +1,57 @@
-@if (vm$ | async; as vm) {
-    @if (vm.isLoading) {
-      <div class="card bg-base-100">
-        <div class="card-body skeleton" role="status">
-          <span class="hidden">Loading photo...</span>
-        </div>
-      </div>
-    }
+<dialog
+  #dialog
+  class="modal bg-neutral/75"
+  aria-labelledby="photo-preview-title"
+  aria-modal="true"
+>
+  <div
+    class="modal-box grid h-dvh w-screen max-w-none grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden rounded-none bg-transparent p-3 text-neutral-content shadow-none md:p-5"
+  >
+    <header class="flex items-center justify-between">
+      <p class="truncate font-medium">{{album().name}}</p>
+      <a
+        #closeButton
+        class="btn btn-circle"
+        [routerLink]="['/apps/photos/album', album().slug]"
+        aria-label="Close photo preview"
+        title="Close"
+      >
+        <i class="bi bi-x-lg text-xl" aria-hidden="true"></i>
+      </a>
+    </header>
 
-    @if (vm.album) {
-      <div class="card bg-base-100/90">
-        <div class="card-body">
-          <div class="flex items-center text-center">
-            <div class="flex-2">
-              <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.previousPhotoId]">&laquo; Previous</a>
-            </div>
-            <div class="flex-8">
-              Album: <a class="link link-primary" [routerLink]="['/apps/photos/album', vm.album.slug]">{{vm.album.name}}</a>
-              @if (vm.album.blogPostSlug) {
-                <br>
-                <a class="link link-primary" [routerLink]="['/apps/blog/entry', vm.album.blogPostSlug]">Blog Post</a>
-              }
-            </div>
-            <div class="flex-2">
-              <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.nextPhotoId]">Next &raquo;</a>
-            </div>
-          </div>
-        </div>
-        <hr>
+    <div class="relative">
+      <img
+        class="object-contain"
+        [ngSrc]="currentPhoto().imagePath"
+        [alt]="currentPhoto().name || album().name"
+        fill
+        priority
+      >
 
-        @if (vm.currentPhoto) {
-          <div class="relative min-h-64 md:min-h-96">
-            <img [ngSrc]="vm.currentPhoto.imagePath" [title]="vm.currentPhoto.name" alt="image failed to load" class="object-contain" fill>
-          </div>
-        }
+      <a
+        class="btn absolute top-1/2 left-0 btn-circle -translate-y-1/2"
+        [routerLink]="['/apps/photos/album', album().slug, 'photo', previousPhotoId()]"
+        aria-label="Previous photo"
+        title="Previous photo"
+      >
+        <i class="bi bi-chevron-left text-xl" aria-hidden="true"></i>
+      </a>
+      <a
+        class="btn absolute top-1/2 right-0 btn-circle -translate-y-1/2"
+        [routerLink]="['/apps/photos/album', album().slug, 'photo', nextPhotoId()]"
+        aria-label="Next photo"
+        title="Next photo"
+      >
+        <i class="bi bi-chevron-right text-xl" aria-hidden="true"></i>
+      </a>
+    </div>
 
-        @if (vm.currentPhoto && (vm.currentPhoto.name || vm.currentPhoto.description)) {
-          <hr>
-          <div class="card-body">
-            <h2>
-              {{vm.currentPhoto.name}}
-            </h2>
-            @if (vm.currentPhoto.description) {
-              <p>{{vm.currentPhoto.description}}</p>
-            }
-          </div>
-        }
-
-        <hr>
-        <div class="card-body">
-          <div class="flex items-center text-center">
-            <div class="flex-2">
-              <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.previousPhotoId]">&laquo; Previous</a>
-            </div>
-            <div class="flex-8">
-              <a class="link link-primary" [routerLink]="['/apps/photos/album', vm.album.slug]">{{vm.album.name}}</a>
-            </div>
-            <div class="flex-2">
-              <a class="btn btn-secondary" [routerLink]="['/apps/photos/album', vm.album.slug, 'photo', vm.nextPhotoId]">Next &raquo;</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    }
-
-    @if (vm.error) {
-      <div class="alert alert-error" role="alert">
-        {{vm.error}}
-      </div>
-    }
-}
+    <footer class="mx-auto max-w-3xl bg-neutral/75 px-4 py-2 text-center">
+      <h2 id="photo-preview-title" class="text-lg font-semibold">{{currentPhoto().name || 'Photo'}}</h2>
+      @if (currentPhoto().description; as description) {
+        <p class="mt-1 text-sm">{{description}}</p>
+      }
+    </footer>
+  </div>
+</dialog>
