@@ -28,4 +28,5 @@ jobs:
       - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
 
       - run: yarn install
+      - run: dotnet restore ./src/BHS.Web/BHS.Web.csproj
       - run: yarn codegen
