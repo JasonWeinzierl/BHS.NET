@@ -79,7 +79,7 @@ jobs:
       run: dotnet restore
 
     - name: Run dotnet build
-      run: dotnet build --no-restore --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} -p:Version="${STEPS_GITVERSION_OUTPUTS_FULLSEMVER}" -p:InformationalVersion="${STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION}"
+      run: dotnet build --no-restore --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} -p:Version="${STEPS_GITVERSION_OUTPUTS_FULLSEMVER}" -p:InformationalVersion="${STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION}" -p:IncludeSourceRevisionInInformationalVersion=false
       env:
         STEPS_GITVERSION_OUTPUTS_FULLSEMVER: ${{ steps.gitversion.outputs.fullSemVer }}
         STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION: ${{ steps.gitversion.outputs.informationalVersion }}
