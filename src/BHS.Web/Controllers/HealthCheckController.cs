@@ -36,4 +36,13 @@ public class HealthCheckController : ControllerBase
 
         return StatusCode(statusCode, report.Status.ToString());
     }
+
+    /// <summary>
+    /// Get the identity of the deployed build.
+    /// </summary>
+    [HttpGet("version")]
+    [AllowAnonymous]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public ActionResult<string> GetVersion()
+        => Content(AssemblyUtil.InformationalVersion ?? AssemblyUtil.SemVer ?? "unknown", "text/plain");
 }

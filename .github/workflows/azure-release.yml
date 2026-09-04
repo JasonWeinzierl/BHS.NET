@@ -28,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      informational-version: ${{ steps.gitversion.outputs.informationalVersion }}
 
     steps:
 
@@ -145,6 +147,39 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.WEB_PUBLISH_PATH }}
 
+    - name: Wait for deployed build to be ready
+      shell: bash
+      run: |
+        app_url="https://${AZURE_WEBAPP_NAME}.azurewebsites.net"
+        consecutive_successes=0
+
+        for attempt in {1..30}; do
+          version="$(curl --fail --silent --show-error --max-time 10 \
+            -H 'Cache-Control: no-store' \
+            "${app_url}/api/healthcheck/version?build=${GITHUB_SHA}-${attempt}" || true)"
+          health="$(curl --fail --silent --show-error --max-time 10 \
+            -H 'Cache-Control: no-store' \
+            "${app_url}/api/healthcheck/status?build=${GITHUB_SHA}-${attempt}" || true)"
+
+          if [[ "${version}" == "${EXPECTED_VERSION}" && ("${health}" == "Healthy" || "${health}" == "Degraded") ]]; then
+            ((consecutive_successes += 1))
+            echo "Readiness probe ${attempt} returned the expected build (${consecutive_successes}/3)."
+            if ((consecutive_successes == 3)); then
+              exit 0
+            fi
+          else
+            consecutive_successes=0
+            echo "Readiness probe ${attempt} has not reached the expected build. Version: '${version:-unavailable}', health: '${health:-unavailable}'."
+          fi
+
+          sleep 10
+        done
+
+        echo "::error::The expected build did not become ready at ${app_url}."
+        exit 1
+      env:
+        EXPECTED_VERSION: ${{ needs.build.outputs.informational-version }}
+
 
   e2e-test-stage:
     needs: deploy-stage
@@ -188,6 +223,39 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.WEB_PUBLISH_PATH }}
+
+    - name: Wait for deployed build to be ready
+      shell: bash
+      run: |
+        app_url="https://${AZURE_WEBAPP_NAME}.azurewebsites.net"
+        consecutive_successes=0
+
+        for attempt in {1..30}; do
+          version="$(curl --fail --silent --show-error --max-time 10 \
+            -H 'Cache-Control: no-store' \
+            "${app_url}/api/healthcheck/version?build=${GITHUB_SHA}-${attempt}" || true)"
+          health="$(curl --fail --silent --show-error --max-time 10 \
+            -H 'Cache-Control: no-store' \
+            "${app_url}/api/healthcheck/status?build=${GITHUB_SHA}-${attempt}" || true)"
+
+          if [[ "${version}" == "${EXPECTED_VERSION}" && ("${health}" == "Healthy" || "${health}" == "Degraded") ]]; then
+            ((consecutive_successes += 1))
+            echo "Readiness probe ${attempt} returned the expected build (${consecutive_successes}/3)."
+            if ((consecutive_successes == 3)); then
+              exit 0
+            fi
+          else
+            consecutive_successes=0
+            echo "Readiness probe ${attempt} has not reached the expected build. Version: '${version:-unavailable}', health: '${health:-unavailable}'."
+          fi
+
+          sleep 10
+        done
+
+        echo "::error::The expected build did not become ready at ${app_url}."
+        exit 1
+      env:
+        EXPECTED_VERSION: ${{ needs.build.outputs.informational-version }}
 
 
   e2e-test-prod:
