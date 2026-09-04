@@ -108,10 +108,12 @@ Tailwind classes must be sorted according to the ESLint plugin.
 
 This is a bleeding-edge Angular app, which always uses the latest versions.
 
-All modern Angular features are preferred, including:
+All modern Angular features are preferred.
+When working in older areas that aren't using modern features, modernize at will.
 
 - Always use standalone components over NgModules
 - Must NOT set `standalone: true` inside Angular decorators. It's the default in Angular v20+.
+- Do NOT set `changeDetection: ChangeDetectionStrategy.OnPush` explicitly. `OnPush` is the default in Angular v22+.
 - Use signals for state management
 - Implement lazy loading for feature routes
 - Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
@@ -127,10 +129,12 @@ All modern Angular features are preferred, including:
 
 - Keep components small and focused on a single responsibility
 - Use `input()` and `output()` functions instead of decorators
+- Use `model()` for two-way bound properties with `[(prop)]` syntax instead of pairing `input()` with `output()`
 - Use `computed()` for derived state
-- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
+- Use `linkedSignal()` for state derived from multiple reactive sources that must stay synchronized
 - Prefer inline templates for small components
-- Prefer Signal forms (`@angular/forms/signals`) instead of Reactive or Template-driven ones
+- Prefer Signal Forms (`@angular/forms/signals`) for new forms. They are stable in Angular v22+ and provide signal-based state, type-safe field access, and schema-based validation
+- When not using Signal Forms, prefer Reactive forms instead of Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
@@ -154,7 +158,14 @@ All modern Angular features are preferred, including:
 
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
+- Prefer the `@Service` decorator over `@Injectable({providedIn: 'root'})` for new singleton services (Angular v22+)
 - Use the `inject()` function instead of constructor injection
+
+##### Testing
+
+- `TestBed` runs zoneless by default (when `zone.js` is not present).
+- Do not use `fixture.detectChanges()` when `TestBed` is running zoneless. This forces change detection to run when Angular might otherwise have not scheduled change detection.
+- Use `fixture.componentRef.setInput()` and wait for scheduled rendering with `await fixture.whenStable()`.
 
 ## Testing Strategy
 
