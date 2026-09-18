@@ -28,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      informational-version: ${{ steps.gitversion.outputs.informationalVersion }}
 
     steps:
 
@@ -77,7 +79,13 @@ jobs:
       run: dotnet restore
 
     - name: Run dotnet build
-      run: dotnet build --no-restore --configuration ${{ env.DOTNET_BUILD_CONFIGURATION }} -p:Version="${STEPS_GITVERSION_OUTPUTS_FULLSEMVER}" -p:InformationalVersion="${STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION}"
+      run: |
+        dotnet build \
+          --no-restore \
+          --configuration "${DOTNET_BUILD_CONFIGURATION}" \
+          -p:Version="${STEPS_GITVERSION_OUTPUTS_FULLSEMVER}" \
+          -p:InformationalVersion="${STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION}" \
+          -p:IncludeSourceRevisionInInformationalVersion=false
       env:
         STEPS_GITVERSION_OUTPUTS_FULLSEMVER: ${{ steps.gitversion.outputs.fullSemVer }}
         STEPS_GITVERSION_OUTPUTS_INFORMATIONALVERSION: ${{ steps.gitversion.outputs.informationalVersion }}
@@ -145,6 +153,66 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.WEB_PUBLISH_PATH }}
 
+    - name: Wait for deployed build to be ready
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+      with:
+        script: |
+          const appUrl = `https://${process.env.AZURE_WEBAPP_NAME}.azurewebsites.net`;
+          let consecutiveSuccesses = 0;
+
+          const probe = async (path, attempt) => {
+            try {
+              const response = await fetch(
+                `${appUrl}${path}?build=${process.env.GITHUB_SHA}-${attempt}`,
+                {
+                  headers: { 'Cache-Control': 'no-store' },
+                  signal: AbortSignal.timeout(10_000),
+                },
+              );
+              if (!response.ok) {
+                core.warning(`${path} returned HTTP ${response.status}.`);
+                return;
+              }
+              return await response.text();
+            } catch (error) {
+              core.warning(`${path} probe failed: ${error.message}`);
+            }
+          };
+
+          for (let attempt = 1; attempt <= 30; attempt++) {
+            const [version, health] = await Promise.all([
+              probe('/api/healthcheck/version', attempt),
+              probe('/api/healthcheck/status', attempt),
+            ]);
+
+            if (
+              version === process.env.EXPECTED_VERSION
+              && ['Healthy', 'Degraded'].includes(health)
+            ) {
+              consecutiveSuccesses++;
+              core.info(
+                `Readiness probe ${attempt} returned the expected build `
+                + `(${consecutiveSuccesses}/3).`,
+              );
+              if (consecutiveSuccesses === 3) {
+                return;
+              }
+            } else {
+              consecutiveSuccesses = 0;
+              core.info(
+                `Readiness probe ${attempt} has not reached the expected build. `
+                + `Version: '${version ?? 'unavailable'}', `
+                + `health: '${health ?? 'unavailable'}'.`,
+              );
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 10_000));
+          }
+
+          throw new Error(`The expected build did not become ready at ${appUrl}.`);
+      env:
+        EXPECTED_VERSION: ${{ needs.build.outputs.informational-version }}
+
 
   e2e-test-stage:
     needs: deploy-stage
@@ -188,6 +256,66 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.WEB_PUBLISH_PATH }}
+
+    - name: Wait for deployed build to be ready
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+      with:
+        script: |
+          const appUrl = `https://${process.env.AZURE_WEBAPP_NAME}.azurewebsites.net`;
+          let consecutiveSuccesses = 0;
+
+          const probe = async (path, attempt) => {
+            try {
+              const response = await fetch(
+                `${appUrl}${path}?build=${process.env.GITHUB_SHA}-${attempt}`,
+                {
+                  headers: { 'Cache-Control': 'no-store' },
+                  signal: AbortSignal.timeout(10_000),
+                },
+              );
+              if (!response.ok) {
+                core.warning(`${path} returned HTTP ${response.status}.`);
+                return;
+              }
+              return await response.text();
+            } catch (error) {
+              core.warning(`${path} probe failed: ${error.message}`);
+            }
+          };
+
+          for (let attempt = 1; attempt <= 30; attempt++) {
+            const [version, health] = await Promise.all([
+              probe('/api/healthcheck/version', attempt),
+              probe('/api/healthcheck/status', attempt),
+            ]);
+
+            if (
+              version === process.env.EXPECTED_VERSION
+              && ['Healthy', 'Degraded'].includes(health)
+            ) {
+              consecutiveSuccesses++;
+              core.info(
+                `Readiness probe ${attempt} returned the expected build `
+                + `(${consecutiveSuccesses}/3).`,
+              );
+              if (consecutiveSuccesses === 3) {
+                return;
+              }
+            } else {
+              consecutiveSuccesses = 0;
+              core.info(
+                `Readiness probe ${attempt} has not reached the expected build. `
+                + `Version: '${version ?? 'unavailable'}', `
+                + `health: '${health ?? 'unavailable'}'.`,
+              );
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 10_000));
+          }
+
+          throw new Error(`The expected build did not become ready at ${appUrl}.`);
+      env:
+        EXPECTED_VERSION: ${{ needs.build.outputs.informational-version }}
 
 
   e2e-test-prod:
