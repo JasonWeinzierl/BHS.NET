@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import getRunnerEnvironment from '../get-runner-environment';
+import adminPage from '../pageobjects/admin.page';
 
 class LoginRobot {
   async loginFromEnvironmentVariables() {
@@ -16,15 +17,13 @@ class LoginRobot {
       const url = await browser.getUrl();
       if (url.startsWith(`https://${runnerEnvironment.E2E_auth0Domain}/`)) {
         return 'ready-for-login';
-      } else if (await this.isUserLoggedIn(runnerEnvironment.E2E_auth0ClientId)) {
+      } else if (await adminPage.self.isDisplayed()) {
         return 'logged-in';
-      } else {
-        await browser.url(baseUrl + '/admin');
-        return false;
       }
+
+      return false;
     }, {
       timeout: 100_000,
-      interval: 1800 + 400 * Math.random(),
       timeoutMsg: 'Timed out waiting for Auth0 redirect.',
     });
 
@@ -42,16 +41,9 @@ class LoginRobot {
       return url.startsWith(baseUrl);
     }, { timeoutMsg: 'Timed out waiting for redirect after Auth0 login.' });
 
-    await browser.waitUntil(async () => {
-      return this.isUserLoggedIn(runnerEnvironment.E2E_auth0ClientId);
-    }, { timeoutMsg: 'Timed out waiting for Auth0 to persist to storage.' });
-  }
-
-  private async isUserLoggedIn(auth0ClientId: string): Promise<boolean> {
-    return (await browser.execute(clientId => {
-      // eslint-disable-next-line n/no-unsupported-features/node-builtins -- this is running in the browser.
-      return localStorage.getItem(`@@auth0spajs@@::${clientId}::@@user@@`);
-    }, auth0ClientId)) !== null;
+    await adminPage.self.waitForDisplayed({
+      timeoutMsg: 'Timed out waiting for the authenticated admin page.',
+    });
   }
 }
 export default new LoginRobot();

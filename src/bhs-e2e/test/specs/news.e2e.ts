@@ -49,7 +49,8 @@ describe('news', () => {
     await expect(firstPostPage.self).toBeDisplayed();
 
     await expect(firstPostPage.title).toHaveText(firstPost.title);
-    await expect(firstPostPage.contentPreview).toHaveText(expect.stringContaining(firstPost.contentPreview.replaceAll(/\n\n*/g, ' ')));
+    const expectedContentPreview = firstPost.contentPreview.replaceAll(/\s+/g, ' ').trim();
+    await expect(firstPostPage.contentPreview).toHaveText(expect.stringContaining(expectedContentPreview));
     await expect(firstPostPage.postedInfo).toHaveText(expect.stringContaining(firstPost.datePublished.getFullYear().toString()));
     if (firstPost.author?.name) {
       await expect(firstPostPage.postedInfo).toHaveText(expect.stringContaining(firstPost.author.name));
