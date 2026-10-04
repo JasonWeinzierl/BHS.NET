@@ -416,17 +416,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/router@npm:22.1.7":
-  version: 22.1.7
-  resolution: "@angular/router@npm:22.1.7"
+"@angular/router@npm:22.2.0":
+  version: 22.2.0
+  resolution: "@angular/router@npm:22.2.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
-    "@angular/common": 22.1.7
-    "@angular/core": 22.1.7
-    "@angular/platform-browser": 22.1.7
+    "@angular/common": 22.2.0
+    "@angular/core": 22.2.0
+    "@angular/platform-browser": 22.2.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 10c0/a2122d4d7cb7c0b37b9caa774f431e8a8893f2809e8d0701e5c6efbf37b969c235226dd2a650ffd0f043e7d08b6777abefd4af41669817b175eabb6cd479b3ce
+  checksum: 10c0/6b31cd16a6c28682073def1c1acc36c180f789a417ef3ead1593c29d488b6d2428fd3f133ed3a7c4f62e93dd1a8dffdfe14fd2c62714246738253dad91c71dbf
   languageName: node
   linkType: hard
 
@@ -4703,7 +4703,7 @@ __metadata:
     "@angular/core": "npm:22.1.7"
     "@angular/forms": "npm:22.1.7"
     "@angular/platform-browser": "npm:22.1.7"
-    "@angular/router": "npm:22.1.7"
+    "@angular/router": "npm:22.2.0"
     "@auth0/auth0-angular": "npm:^2.11.0"
     "@eslint/js": "npm:^10.0.1"
     "@microsoft/applicationinsights-analytics-js": "npm:3.4.3"
