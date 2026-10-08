@@ -38,6 +38,8 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
+# Ignore malformed Windows-style build output paths created on non-Windows systems.
+*\\*
 [Ll]og/
 [Ll]ogs/
 
