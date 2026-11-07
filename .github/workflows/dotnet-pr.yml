@@ -41,7 +41,7 @@ jobs:
     - name: Run dotnet test
       run: dotnet test --no-build --configuration Release --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage
     - name: Summarize coverage
-      uses: danielpalme/ReportGenerator-GitHub-Action@d3ebf1f760f7d8ab92cc44d9bcfee7ad73722a31 # v5.5.11
+      uses: danielpalme/ReportGenerator-GitHub-Action@861674232075b2c6bd1405a04c4bb9b150653e81 # v5.5.12
       if: runner.os == 'Linux'
       with:
         reports: coverage/**/*.cobertura.xml
