@@ -9,7 +9,7 @@
     "models:check": "node check-codegen.mjs"
   },
   "dependencies": {
-    "zod": "^4.3.5"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@hey-api/openapi-ts": "^0.99.0",
